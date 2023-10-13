@@ -2,13 +2,12 @@ const userProviders = {
   NUMBER: 'number',
   GOOGLE: 'google',
   FACEBOOK: 'facebook',
+  EMAIL: 'email'
 };
 
 const userRoles = [
   'Super Admin',
-  'Admin',
-  'Seller',
-  'Delivery Partner'
+  'Admin'
 ]
 
 const userStatus = {

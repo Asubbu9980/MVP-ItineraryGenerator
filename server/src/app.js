@@ -16,7 +16,6 @@ const { errorConverter, errorHandler } = require('./middleware/error');
 const ApiError = require('./utils/ApiError');
 const { checkUserAuthStatus } = require('./middleware/auth.middleware');
 
-
 const app = express();
 
 global.__basedir = __dirname + "/..";
@@ -26,6 +25,7 @@ app.use(express.static(`${__dirname}/assets`))
 // Logger
 app.use(morgan.successHandler);
 app.use(morgan.errorHandler);
+
 
 // set security HTTP headers
 app.use(helmet({
@@ -95,6 +95,7 @@ app.use(function customErrorHandler(err, req, res, next) {
   res.status(400).send(output);
   return false;
 });
+
 
 
 // IsAuth 

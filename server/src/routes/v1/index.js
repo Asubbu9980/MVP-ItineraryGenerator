@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 const routeFiles = [
+    {
+        path: '/user',
+        route: require('./user.route.js')
+    },
+    {
+        path: '/trip',
+        route: require('./trip.route.js')
+    },
 ]
 
 const adminRoutesFiles = [

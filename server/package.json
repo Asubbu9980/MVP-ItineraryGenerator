@@ -1,11 +1,11 @@
 {
-  "name": "api.neelias.in",
+  "name": "ml-travel-application",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "local": "nodemon src/server.js"
+    "dev": "node src/server.js"
   },
   "jest": {
     "testEnvironment": "node",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.1120.0",
+    "axios": "^1.5.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
     "compression": "^1.7.4",
@@ -32,6 +33,7 @@
     "express-useragent": "^1.0.15",
     "express-validator": "^6.3.1",
     "fast-csv": "^4.3.6",
+    "google-auth-library": "^9.1.0",
     "helmet": "^4.6.0",
     "http": "0.0.1-security",
     "http-status": "^1.5.0",
@@ -46,10 +48,12 @@
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.13",
     "nodemailer-smtp-transport": "^2.4.2",
+    "openai": "^3.2.1",
+    "readline-sync": "^1.4.10",
     "rootpath": "^0.1.2",
     "shortid": "^2.2.16",
     "slugify": "^1.6.3",
-    "socket.io": "^2.4.1",
+    "socket.io": "^4.7.2",
     "text-to-image": "^2.4.4",
     "uuid": "^8.3.2",
     "winston": "^3.10.0",
