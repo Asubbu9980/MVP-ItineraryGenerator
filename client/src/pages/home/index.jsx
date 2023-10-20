@@ -242,7 +242,6 @@ const IndexPage = () => {
                                 </Grid>
                             </form>
 
-
                         </Box>
                     </Container>
                 </div>
@@ -258,34 +257,6 @@ const IndexPage = () => {
 
                         </div>
                         <div>
-                            {/* <Container>
-                            <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
-                                <ul>
-                                    {tripPlans.map((eachTripPlan) => (
-                                        <li className='tripDetails-item' key={eachTripPlan.day}>
-                                            <div className="dot">
-                                                <div className="center"></div>
-                                                <div className="ring"></div>
-                                            </div>
-                                            <div className='viewmap_btn'> View Map</div>
-                                            <h5>{eachTripPlan.day}</h5>
-                                            <h6>{eachTripPlan.date}</h6>
-                                            <ul className="trip-points">
-                                                {eachTripPlan.points.map((eachPoint) => (
-                                                    <li key={eachPoint}>{eachPoint}</li>
-                                                ))}
-
-                                            </ul>
-                                        </li>
-                                    ))}
-                                </ul>
-
-
-                            </Card>
-
-
-                        </Container> */}
-
                             <Container>
 
                                 <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
@@ -356,7 +327,6 @@ const IndexPage = () => {
 
                     </div>
                 }
-
             </div>
             <MapModal open={modelState} onCloseModal={onCloseModal} />
         </div>
