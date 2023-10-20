@@ -16,16 +16,16 @@
     background: #fff;
     border-radius: 4px;
 }
-.viewmap_btn{
-    padding: 7px;
+.viewmap_btn button{
+    padding: 6px 11px;
     border-radius: 8px;
     border: 1px solid #018AD3;
     color: #018AD3;
-    font-size: 16px;
+    font-size: 14px;
     float: right;
     position: relative;
     top: 10px;
-    cursor: pointer;
+    align-items: center;
 }
 .search-form input {
     /* background: #fff; */
@@ -151,3 +151,60 @@
 .errors {
     color: red;
 }
+.search_info{
+    padding-top: 15px;
+}
+.search_info img{
+    width: 76px;
+    height: 76px;
+    display:block;
+    margin: 0 auto;
+}
+
+.search_info h5{
+    color: #33393D;
+font-size: 22px;
+font-weight: 400;
+line-height: 139.682%; 
+letter-spacing: 0.33px;
+text-align: center;
+    margin-top: 15px;
+}
+
+.custom-map-modal{}
+.custom-map-modal .map-modal{
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 370px;
+    flex-shrink: 0;
+    box-shadow: none;
+    padding:15px;
+    border-radius: 8px;
+    border: 1px solid #E8E8E8;
+    background: #FFF;
+}
+
+.custom-map-modal .map_btns{
+    margin-top: 30px;
+    display: flex;
+  }
+  .custom-map-modal .btn-close,
+  .custom-map-modal .btn-start{
+    border-radius: 8px !important;
+    border: 1px solid #018AD3 !important;
+    margin-left: 8px !important;
+    text-transform: capitalize;
+  
+  }
+  .custom-map-modal .map_btns .btn-start{
+    background:#018AD3 !important;
+    color: #fff;
+  }
+  .custom-map-modal .btn-close{
+    background-color: transparent !important;
+    color:#000;
+  }
