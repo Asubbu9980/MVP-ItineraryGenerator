@@ -106,7 +106,7 @@ app.use(function customErrorHandler(err, req, res, next) {
 
 
 // v1 api routes
-app.use('/api/v1', routesv1);
+app.use('/api', routesv1);
 
 
 
