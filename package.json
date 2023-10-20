@@ -1,0 +1,25 @@
+{
+  "name": "MVP-ITINERARY-APP",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm start --prefix server",
+    "client": "npm start --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "ci": "npm i && npm i --force --prefix server && npm i --force --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Asubbu9980/MVP-ItineraryGenerator.git"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    
+  }
+}
