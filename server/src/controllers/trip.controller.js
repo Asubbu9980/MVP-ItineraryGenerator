@@ -13,11 +13,12 @@ class tripController {
     }
     generate = async (req, res, next) => {
         try {
-            const { from, to, days, date } = req.body;
+            const { source, destination, days, start_date, end_date } = req.body;
             const response = await openai.createCompletion({
                 model: 'gpt-3.5-turbo-instruct',
                 // prompt: `Goa Trip Itinerary in json array of objects format without newlines\n\n[ `,
-                prompt: `${from} to ${to} Trip Itinerary for ${days} days from ${date} as json response `,
+                // prompt: `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} JSON format `,
+                prompt: `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  JSON format `,
                 max_tokens: 3050,
                 temperature: 0,
                 // "model": "gpt-3.5-turbo",
@@ -42,7 +43,7 @@ class tripController {
                 req,
                 res,
                 status: true,
-                data: [reData],
+                data: reData,
                 statusCode: 200,
             })
         } catch (error) {
