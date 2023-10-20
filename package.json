@@ -18,5 +18,13 @@
     "concurrently": "^7.6.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.14",
+    "@mui/x-date-pickers": "^6.16.2",
+    "dayjs": "^1.11.10",
+    "formik": "^2.4.5"
+  }
 }
