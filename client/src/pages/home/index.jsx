@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 // import Header from './Header'
 import '../home/home.css'
 import { TextField, Button, Container, Grid, Box } from '@mui/material';
+import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Card from '@mui/material/Card';
@@ -90,8 +91,11 @@ const IndexPage = () => {
         validate,
         onSubmit: (values) => {
             // Handle form submission here
-            const formattedStartDate = dayjs(values.start_date).format('DD MMMM, YYYY');
-            const formattedEndDate = dayjs(values.end_date).format('DD MMMM, YYYY');
+            // const formattedStartDate = dayjs(values.start_date).format('DD MMMM, YYYY');
+            const formattedStartDate = dayjs(values.start_date).format('DD-MM-YYYY');
+            // const formattedEndDate = dayjs(values.end_date).format('DD MMMM, YYYY');
+            const formattedEndDate = dayjs(values.end_date).format('DD-MM-YYYY');
+
 
             // Update the values with the formatted dates
             const formattedValues = {
@@ -124,11 +128,32 @@ const IndexPage = () => {
     }) => {
 
         try {
+            let checkIfInArray = (key, list) => list.some(obj => JSON.stringify(obj).indexOf(key) > -1);
             getTripDetailsApi(payload).then((r) => {
-
                 console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
-                setTripData(r.data)
+                // setTripData(r.data)
+                const p = r.data;
+                const fR = {}
+                const lastKey = Object.keys(p).pop();
+                console.log("lastKey", lastKey);
+                Object.keys(p).forEach(function (key) {
+                    var value = p[key];
+                    console.log(typeof (value));
+                    console.log(key + ':' + value);
+                    if (typeof (value) == 'object') {
+                        // const childType = typeof (p[key])
+
+                        // console.log("childType", );
+                        // if (checkIfInArray(key, p[key])) {
+                        fR['places_visited'] = value
+                        // }
+                    } else {
+                        fR[key] = value
+                    }
+                });
+                console.log("ft", fR);
+                setTripData(fR)
                 //console.log("Resp Json Data", tripData);
 
             }).then((e) => {
@@ -294,13 +319,17 @@ const IndexPage = () => {
 
                                                         <h6>{m.date}</h6>
 
-                                                        <ul className="trip-points">
-                                                            {
-                                                                m.activities?.map((sm, si) => {
-                                                                    return <li key={si}>{sm}</li>
-                                                                })
-
-                                                            }
+                                                    <ul className="trip-points">
+                                                        {
+                                                            m.activities?.map((sm, si) => {
+                                                                return <li key={si}>{sm}</li>
+                                                            })
+                                                        }
+                                                        {
+                                                            m.activity?.split(",")?.map((sm, si) => {
+                                                                return <li key={si}>{sm}</li>
+                                                            })
+                                                        }
 
                                                         </ul>
 
