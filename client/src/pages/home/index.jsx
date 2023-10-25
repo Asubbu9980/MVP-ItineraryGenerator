@@ -22,7 +22,7 @@ import searchIocn from "../../assets/search-icon.svg";
 import TransportModes from './TransportModes';
 
 
-  
+
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -78,9 +78,19 @@ const IndexPage = () => {
         const errors = {};
 
         // Add your validation logic here
-        // if (!values.destination) {
-        //     errors.destination = 'Destination is required';
-        // }
+        if (!values.destination) {
+            errors.destination = 'Destination is required';
+        }
+        if (!values.source) {
+            errors.source = 'Location is required';
+        }
+        if (!values.start_date) {
+            errors.start_date = 'Start Date is required';
+        }
+        if (!values.end_date) {
+            errors.end_date = 'End Date is required';
+        }
+        console.log("Errors", errors);
         // // Add validation for other fields as needed
 
         return errors;
@@ -136,26 +146,17 @@ const IndexPage = () => {
                 const p = r.data;
                 const fR = {}
                 const lastKey = Object.keys(p).pop();
-                console.log("lastKey", lastKey);
                 Object.keys(p).forEach(function (key) {
                     var value = p[key];
                     console.log(typeof (value));
                     console.log(key + ':' + value);
                     if (typeof (value) == 'object') {
-                        // const childType = typeof (p[key])
-
-                        // console.log("childType", );
-                        // if (checkIfInArray(key, p[key])) {
                         fR['places_visited'] = value
-                        // }
                     } else {
                         fR[key] = value
                     }
                 });
-                console.log("ft", fR);
                 setTripData(fR)
-                //console.log("Resp Json Data", tripData);
-
             }).then((e) => {
 
             })
@@ -165,7 +166,9 @@ const IndexPage = () => {
         }
 
     }
-    //console.log("Resp Json Data 2", tripData);
+    function isKeyInArray(array, key) {
+        return array.some(obj => obj.hasOwnProperty(key));
+    }
     return (
         <div>
             <div>
@@ -202,7 +205,7 @@ const IndexPage = () => {
                                                 onChange={(e, value) => formik.setFieldValue('source', value)}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
-                                            {formik.errors.location ? <p className='errors'>{formik.errors.location}</p> : null}
+                                            {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
                                         </div>
 
                                         {/* Budget */}
@@ -229,6 +232,7 @@ const IndexPage = () => {
                                                     onChange={(date) => formik.setFieldValue('start_date', date)}
                                                 />
                                             </LocalizationProvider>
+                                            {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null}
                                         </div>
 
                                         {/* End Date */}
@@ -241,6 +245,8 @@ const IndexPage = () => {
                                                     onChange={(date) => formik.setFieldValue('end_date', date)}
                                                 />
                                             </LocalizationProvider>
+                                            {formik.errors.end_date ? <p className='errors'>{formik.errors.end_date}</p> : null}
+
                                         </div>
                                     </div>
                                 </div>
@@ -264,9 +270,9 @@ const IndexPage = () => {
                                 </Grid> */}
 
                                 <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', color: '#000' }}>
-                                <TransportModes></TransportModes>
+                                    <TransportModes></TransportModes>
                                 </div>
-                              
+
                                 <Grid item xs={12} style={{ display: 'flex', height: '0' }}>
                                     <Button type='submit' className='btn-submit' style={{ margin: '20px auto', position: "relative", top: '-5px' }}>
                                         Start Planning
@@ -277,76 +283,86 @@ const IndexPage = () => {
                         </Box>
                     </Container>
                 </div>
-                <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px'}}>
-
-
+                <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
                     {
-                        tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 &&
+                        tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData.places_visited, 'activities') || isKeyInArray(tripData.places_visited, 'activity')) ?
 
-                        <div>
                             <div>
-                                <Container>
-                                    <h2 style={{ marginBottom: '32px' }}>Your Plan Details</h2>
-                                </Container>
+                                <div>
+                                    <Container>
+                                        <h2 style={{ marginBottom: '32px' }}>Your Plan Details</h2>
+                                    </Container>
+
+                                </div>
+                                <div>
+                                    <Container>
+
+                                        <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
+
+                                            <ul>
+                                                {
+                                                    tripData.places_visited.map((m, i) => {
+                                                        return < li className='tripDetails-item' key={i}>
+
+                                                            <div className="dot">
+
+                                                                <div className="center"></div>
+
+                                                                <div className="ring"></div>
+
+                                                            </div>
+
+
+                                                            <div className='viewmap_btn'> <Button className='' onClick={onChangeModalState}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
+
+                                                            </Button>
+
+                                                            </div>
+
+                                                            <h5>Day {i + 1}</h5>
+
+                                                            <h6>{m.date}</h6>
+
+                                                            <ul className="trip-points">
+                                                                {
+                                                                    m.activities?.map((sm, si) => {
+                                                                        return <li key={si}>{sm}</li>
+                                                                    })
+                                                                }
+                                                                {
+                                                                    m.activity?.split(",")?.map((sm, si) => {
+                                                                        return <li key={si}>{sm}</li>
+                                                                    })
+                                                                }
+
+                                                            </ul>
+
+                                                        </li>
+
+                                                    })
+
+                                                }
+
+                                            </ul>
+
+                                        </Card>
+
+                                    </Container>
+
+                                </div>
+                            </div>
+                            : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && <div>
+                                <div className='search_info'>
+
+                                    <img src={searchIocn} alt='logo' />
+
+                                    <h5>No Trip Data available <br />
+
+                                        Please check for other popular locations.</h5>
+
+                                </div>
 
                             </div>
-                            <div>
-                                <Container>
-
-                                    <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
-
-                                        <ul>
-                                            {
-                                                tripData.places_visited.map((m, i) => {
-                                                    return < li className='tripDetails-item' key={i}>
-
-                                                        <div className="dot">
-
-                                                            <div className="center"></div>
-
-                                                            <div className="ring"></div>
-
-                                                        </div>
-
-
-                                                        <div className='viewmap_btn'> <Button className='' onClick={onChangeModalState}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
-
-                                                        </Button>
-
-                                                        </div>
-
-                                                        <h5>Day {i + 1}</h5>
-
-                                                        <h6>{m.date}</h6>
-
-                                                    <ul className="trip-points">
-                                                        {
-                                                            m.activities?.map((sm, si) => {
-                                                                return <li key={si}>{sm}</li>
-                                                            })
-                                                        }
-                                                        {
-                                                            m.activity?.split(",")?.map((sm, si) => {
-                                                                return <li key={si}>{sm}</li>
-                                                            })
-                                                        }
-
-                                                        </ul>
-
-                                                    </li>
-
-                                                })
-
-                                            }
-
-                                        </ul>
-
-                                    </Card>
-
-                                </Container>
-
-                            </div>
-                        </div>
 
                     }
                     {
@@ -368,7 +384,7 @@ const IndexPage = () => {
                 </div>
             </div>
             <MapModal open={modelState} onCloseModal={onCloseModal} />
-        </div>
+        </div >
     );
 };
 
