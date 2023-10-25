@@ -19,8 +19,10 @@ import MapModal from './MapModal';
 
 import circum_share from "../../assets/circum_share.svg";
 import searchIocn from "../../assets/search-icon.svg";
+import TransportModes from './TransportModes';
 
 
+  
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -170,40 +172,41 @@ const IndexPage = () => {
                 {/* <Header /> */}
                 <div className='searchBanner'>
                     <Container className='banner-container'>
-                        <Box style={{ borderRadius: '8px', paddingTop: "40px", background: 'rgba(0, 0, 0, 0.50)', padding: '25px' }}>
+                        <Box style={{ borderRadius: '8px', paddingTop: "40px", background: '#fff', padding: '25px', paddingBottom: '35px' }}>
 
                             <form autoComplete='off' className="search-form" onSubmit={formik.handleSubmit}>
-                                <Grid container spacing={2}>
-                                    {/* Destination */}
-                                    <Grid item xs={2}>
-                                        <label style={{ marginBottom: '8px' }}>Destination</label>
-                                        <Autocomplete
-                                            disablePortal
-                                            id="combo-box-destination"
-                                            options={famousTouristCitiesInIndia}
-                                            value={formik.values.destination}
-                                            onChange={(e, value) => formik.setFieldValue('destination', value)}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                        {formik.errors.destination ? <p className='errors'>{formik.errors.destination}</p> : null}
-                                    </Grid>
+                                <div className="container">
+                                    <div className="row">
+                                        {/* Destination */}
+                                        <div className="col col-3">
+                                            <label style={{ marginBottom: '8px' }}>Destination </label>
+                                            <Autocomplete
+                                                disablePortal
+                                                id="combo-box-destination"
+                                                options={famousTouristCitiesInIndia}
+                                                value={formik.values.destination}
+                                                onChange={(e, value) => formik.setFieldValue('destination', value)}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                            {formik.errors.destination ? <p className='errors'>{formik.errors.destination}</p> : null}
+                                        </div>
 
-                                    {/* Location */}
-                                    <Grid item xs={2}>
-                                        <label style={{ marginBottom: '8px' }}>Location</label>
-                                        <Autocomplete
-                                            disablePortal
-                                            id="combo-box-location"
-                                            options={famousTouristCitiesInIndia}
-                                            value={formik.values.source}
-                                            onChange={(e, value) => formik.setFieldValue('source', value)}
-                                            renderInput={(params) => <TextField {...params} />}
-                                        />
-                                        {formik.errors.location ? <p className='errors'>{formik.errors.location}</p> : null}
-                                    </Grid>
+                                        {/* Location */}
+                                        <div className="col col-3">
+                                            <label style={{ marginBottom: '8px' }}>Location</label>
+                                            <Autocomplete
+                                                disablePortal
+                                                id="combo-box-location"
+                                                options={famousTouristCitiesInIndia}
+                                                value={formik.values.source}
+                                                onChange={(e, value) => formik.setFieldValue('source', value)}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                            {formik.errors.location ? <p className='errors'>{formik.errors.location}</p> : null}
+                                        </div>
 
-                                    {/* Budget */}
-                                    {/* <Grid item xs={2}>
+                                        {/* Budget */}
+                                        {/* <Grid item xs={2}>
                                         <label style={{ marginBottom: '8px' }}>Budget</label>
                                         <Autocomplete
                                             disablePortal
@@ -217,30 +220,31 @@ const IndexPage = () => {
                                     </Grid> */}
 
 
-                                    {/* Start Date */}
-                                    <Grid item xs={2}>
-                                        <label style={{ marginBottom: '8px' }}>Start Date</label>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DatePicker
-                                                value={formik.values.start_date}
-                                                onChange={(date) => formik.setFieldValue('start_date', date)}
-                                            />
-                                        </LocalizationProvider>
-                                    </Grid>
+                                        {/* Start Date */}
+                                        <div className="col col-3">
+                                            <label style={{ marginBottom: '8px' }}>Start Date</label>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                    value={formik.values.start_date}
+                                                    onChange={(date) => formik.setFieldValue('start_date', date)}
+                                                />
+                                            </LocalizationProvider>
+                                        </div>
 
-                                    {/* End Date */}
-                                    <Grid item xs={2}>
-                                        <label style={{ marginBottom: '8px' }}>End Date</label>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DatePicker
-                                                value={formik.values.end_date}
-                                                onChange={(date) => formik.setFieldValue('end_date', date)}
-                                            />
-                                        </LocalizationProvider>
-                                    </Grid>
-                                </Grid>
-
-                                <Grid container spacing={2} style={{ marginTop: '8px' }}>
+                                        {/* End Date */}
+                                        <div className="col col-3">
+                                            <label style={{ marginBottom: '8px' }}>End Date</label>
+                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                    className="end-date"
+                                                    value={formik.values.end_date}
+                                                    onChange={(date) => formik.setFieldValue('end_date', date)}
+                                                />
+                                            </LocalizationProvider>
+                                        </div>
+                                    </div>
+                                </div>
+                                {/* <Grid container spacing={2} style={{ marginTop: '8px' }}>
                                     <RadioGroup
                                         row
                                         aria-labelledby="transport-label"
@@ -257,10 +261,14 @@ const IndexPage = () => {
                                         <FormControlLabel className='custom-radio' value="flight" control={<Radio />} label="Flight" />
                                     </RadioGroup>
                                     {formik.errors.transport ? <p className='errors'>{formik.errors.transport}</p> : null}
-                                </Grid>
+                                </Grid> */}
 
+                                <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', color: '#000' }}>
+                                <TransportModes></TransportModes>
+                                </div>
+                              
                                 <Grid item xs={12} style={{ display: 'flex', height: '0' }}>
-                                    <Button type='submit' className='btn-submit' style={{ margin: '20px auto', position: "relative", top: '-30px' }}>
+                                    <Button type='submit' className='btn-submit' style={{ margin: '20px auto', position: "relative", top: '-5px' }}>
                                         Start Planning
                                     </Button>
                                 </Grid>
@@ -269,45 +277,47 @@ const IndexPage = () => {
                         </Box>
                     </Container>
                 </div>
+                <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px', height:'calc(100vh - 385px)' }}>
 
-                {
-                    tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 &&
 
-                    <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
+                    {
+                        tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 &&
+
                         <div>
-                            <Container>
-                                <h2 style={{ marginBottom: '32px' }}>Your Plan Details</h2>
-                            </Container>
+                            <div>
+                                <Container>
+                                    <h2 style={{ marginBottom: '32px' }}>Your Plan Details</h2>
+                                </Container>
 
-                        </div>
-                        <div>
-                            <Container>
+                            </div>
+                            <div>
+                                <Container>
 
-                                <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
+                                    <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
 
-                                    <ul>
-                                        {
-                                            tripData.places_visited.map((m, i) => {
-                                                return < li className='tripDetails-item' key={i}>
+                                        <ul>
+                                            {
+                                                tripData.places_visited.map((m, i) => {
+                                                    return < li className='tripDetails-item' key={i}>
 
-                                                    <div className="dot">
+                                                        <div className="dot">
 
-                                                        <div className="center"></div>
+                                                            <div className="center"></div>
 
-                                                        <div className="ring"></div>
+                                                            <div className="ring"></div>
 
-                                                    </div>
+                                                        </div>
 
 
-                                                    <div className='viewmap_btn'> <Button className='' onClick={onChangeModalState}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
+                                                        <div className='viewmap_btn'> <Button className='' onClick={onChangeModalState}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
 
-                                                    </Button>
+                                                        </Button>
 
-                                                    </div>
+                                                        </div>
 
-                                                    <h5>Day {i + 1}</h5>
+                                                        <h5>Day {i + 1}</h5>
 
-                                                    <h6>{m.date}</h6>
+                                                        <h6>{m.date}</h6>
 
                                                     <ul className="trip-points">
                                                         {
@@ -321,40 +331,41 @@ const IndexPage = () => {
                                                             })
                                                         }
 
-                                                    </ul>
+                                                        </ul>
 
-                                                </li>
+                                                    </li>
 
-                                            })
+                                                })
 
-                                        }
+                                            }
 
-                                    </ul>
+                                        </ul>
 
-                                </Card>
+                                    </Card>
 
-                            </Container>
+                                </Container>
 
-                        </div>
-                    </div>
-
-                }
-                {
-                    tripData === null &&
-
-                    <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
-                        <div className='search_info'>
-
-                            <img src={searchIocn} alt='logo' />
-
-                            <h5>Click the Top Button start your <br />
-
-                                vacation planning.</h5>
-
+                            </div>
                         </div>
 
-                    </div>
-                }
+                    }
+                    {
+                        tripData === null &&
+
+                        <div>
+                            <div className='search_info'>
+
+                                <img src={searchIocn} alt='logo' />
+
+                                <h5>Click the Top Button start your <br />
+
+                                    vacation planning.</h5>
+
+                            </div>
+
+                        </div>
+                    }
+                </div>
             </div>
             <MapModal open={modelState} onCloseModal={onCloseModal} />
         </div>
