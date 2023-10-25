@@ -136,7 +136,7 @@ const LoginPage = () => {
         <div className='login-sing-container container-fluid'>
             <Grid container spacing={2} style={{ height: "100vh" }}>
                 <Grid item xs={12} sm={12} style={{ background: '#F1F4FE' }}>
-                    <Container className='login-header' sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                    {/* <Container className='login-header' sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                         <div className='itineraryGenerator'>
                             <p> <img src={puzzleIcon} alt='puzzleIcon' /> </p>
                             <p>Itinerary Generator</p>
@@ -153,7 +153,7 @@ const LoginPage = () => {
                                 Sign Up
                             </Button></p>
                         </div>
-                    </Container>
+                    </Container> */}
                     <Container maxWidth="xs" className='boxCenter' style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: ' calc(100vh - 60px)' }} >
 
                         <form className='form' onSubmit={handleSubmit}>
