@@ -277,7 +277,7 @@ const IndexPage = () => {
                         </Box>
                     </Container>
                 </div>
-                <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px', height:'calc(100vh - 385px)' }}>
+                <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px'}}>
 
 
                     {
