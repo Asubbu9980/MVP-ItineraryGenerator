@@ -14,11 +14,12 @@ class tripController {
     generate = async (req, res, next) => {
         try {
             const { source, destination, days, start_date, end_date } = req.body;
+            const q =`${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  JSON format `
             const response = await openai.createCompletion({
                 model: 'gpt-3.5-turbo-instruct',
                 // prompt: `Goa Trip Itinerary in json array of objects format without newlines\n\n[ `,
                 // prompt: `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} JSON format `,
-                prompt: `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  JSON format `,
+                prompt: q,
                 max_tokens: 3050,
                 temperature: 0,
                 // "model": "gpt-3.5-turbo",
