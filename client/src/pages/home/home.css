@@ -1,7 +1,7 @@
 .searchBanner {
     background: url("../../assets/banner.png") no-repeat;
     background-size: cover;
-    height: 280px;
+    height: 310px;
     padding-top: 50px;
 
 }
@@ -13,10 +13,12 @@
 
 
 .search-form .MuiTextField-root {
-    background: #fff;
+    /* background: #fff; */
     border-radius: 4px;
+    width: 100%;
 }
-.viewmap_btn button{
+
+.viewmap_btn button {
     padding: 6px 11px;
     border-radius: 8px;
     border: 1px solid #018AD3;
@@ -27,8 +29,15 @@
     top: 10px;
     align-items: center;
 }
+
 .search-form input {
     /* background: #fff; */
+    padding-top: 38px !important;
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    /* 122.222% */
 }
 
 .search-form legend {
@@ -38,18 +47,22 @@
 .search-form fieldset {
     /* background-color: #fff; */
     /* color: ; */
+    border-right: 0;
+}
+
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline:nth-child() {
+    background-color: red;
+    border-right: solid 1px rgba(0, 0, 0, 0.23) !important;
 }
 
 .search-form .btn-submit {
     border-radius: 8px;
     background: #018AD3;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.26);
-    width: 160px;
-    height: 58px;
+    padding: 20px 15px;
     color: #FFF;
     text-align: center;
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
     text-transform: capitalize;
 }
 
@@ -59,6 +72,118 @@
 
 .custom-radio .css-hyxlzm {
     color: #018AD3;
+}
+
+
+.search-form .container .col {
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+    position: relative;
+
+}
+
+.search-form .container .col:last-child .MuiOutlinedInput-root {
+    /* background-color: red; */
+    border-right: solid 1px #c4c4c4;
+}
+
+.search-form .container .col label {
+    color: #616161;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 22px;
+    display: flex;
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}
+
+.search-form .container .col label::after {
+    content: "";
+    display: inline-block;
+    background: url('/src/assets/lable_down-line.svg');
+    width: 20px;
+    height: 20px;
+}
+
+
+.MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon.css-1h51icj-MuiAutocomplete-root .MuiOutlinedInput-root,
+.MuiAutocomplete-hasPopupIcon.css-1h51icj-MuiAutocomplete-root .MuiOutlinedInput-root,
+.MuiAutocomplete-hasClearIcon.css-1h51icj-MuiAutocomplete-root .MuiOutlinedInput-root,
+.css-o9k5xi-MuiInputBase-root-MuiOutlinedInput-root {
+    height: 70px;
+    border-radius: 0 !important;
+}
+
+.css-1h51icj-MuiAutocomplete-root .MuiOutlinedInput-root .MuiAutocomplete-input {
+    padding-top: 30px !important;
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 22px;
+    /* 122.222% */
+}
+
+.radio_sheets {
+    display: flex;
+    gap: 24px;
+}
+
+.radio_sheets .radio_btn {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 4px;
+    width: 115px;
+    height: 65px;
+    border: 1px solid #D3D3D3;
+    background: #FFF;
+    justify-content: center;
+    box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.0.3);
+
+}
+.radio_sheets .radio_btn:hover {
+color:#018AD3 ;
+border: 1px solid #018AD3;
+background: rgba(1, 138, 211, 0.10);
+}
+
+.radio_sheets .radio_btn:hover label {
+color:#018AD3 ;
+
+}
+.radio_sheets .Mui-checked{
+background: rgba(1, 138, 211, 0.10);
+
+}
+.radio_sheets .radio-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+
+}
+
+.radio_sheets .flight-icon {
+    background: url('../../assets/flight-icon.svg');
+   
+}
+
+.radio_sheets .car-icon {
+    background: url('../../assets/car-icon.svg');
+
+
+}
+
+.radio_sheets .bus-icon {
+    background: url('../../assets/bus-icon.svg');
+
+}
+
+.radio_sheets .train-icon {
+    background: url('../../assets/train-icon.svg');
 }
 
 .tripDetails-grid .tripDetails-item {
@@ -151,28 +276,31 @@
 .errors {
     color: red;
 }
-.search_info{
+
+.search_info {
     padding-top: 15px;
 }
-.search_info img{
+
+.search_info img {
     width: 76px;
     height: 76px;
-    display:block;
+    display: block;
     margin: 0 auto;
 }
 
-.search_info h5{
+.search_info h5 {
     color: #33393D;
-font-size: 22px;
-font-weight: 400;
-line-height: 139.682%; 
-letter-spacing: 0.33px;
-text-align: center;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 139.682%;
+    letter-spacing: 0.33px;
+    text-align: center;
     margin-top: 15px;
 }
 
-.custom-map-modal{}
-.custom-map-modal .map-modal{
+.custom-map-modal {}
+
+.custom-map-modal .map-modal {
 
     position: absolute;
     top: 50%;
@@ -182,29 +310,32 @@ text-align: center;
     height: 370px;
     flex-shrink: 0;
     box-shadow: none;
-    padding:15px;
+    padding: 15px;
     border-radius: 8px;
     border: 1px solid #E8E8E8;
     background: #FFF;
 }
 
-.custom-map-modal .map_btns{
+.custom-map-modal .map_btns {
     margin-top: 30px;
     display: flex;
-  }
-  .custom-map-modal .btn-close,
-  .custom-map-modal .btn-start{
+}
+
+.custom-map-modal .btn-close,
+.custom-map-modal .btn-start {
     border-radius: 8px !important;
     border: 1px solid #018AD3 !important;
     margin-left: 8px !important;
     text-transform: capitalize;
-  
-  }
-  .custom-map-modal .map_btns .btn-start{
-    background:#018AD3 !important;
+
+}
+
+.custom-map-modal .map_btns .btn-start {
+    background: #018AD3 !important;
     color: #fff;
-  }
-  .custom-map-modal .btn-close{
+}
+
+.custom-map-modal .btn-close {
     background-color: transparent !important;
-    color:#000;
-  }
+    color: #000;
+}
