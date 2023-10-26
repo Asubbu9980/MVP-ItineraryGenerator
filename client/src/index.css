@@ -7,15 +7,16 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Zen Kaku Gothic Antique';
 }
- 
 
-.login-sing-container{
+
+.login-sing-container {
   margin: 15px 0;
   padding: 0;
+  padding-right: 0 !important;
 }
 
- .login-sing-container .itineraryGenerator,
-.login-sing-container .alreadyMember{
+.login-sing-container .itineraryGenerator,
+.login-sing-container .alreadyMember {
   display: flex;
   color: #212121;
   font-size: 16px;
@@ -23,101 +24,154 @@ body {
   align-items: center;
   gap: 10px;
 }
-.login-sing-container .btn-login{
 
-}
-.login-sing-container .btn-sign{
- border: 1px solid #212121;
-background: none;
+.login-sing-container .btn-login {}
+
+.login-sing-container .btn-sign {
+  border: 1px solid #212121;
+  background: none;
   color: #212121;
-font-weight: 500;
-letter-spacing: 0.7px;
-box-shadow: none;
+  font-weight: 500;
+  letter-spacing: 0.7px;
+  box-shadow: none;
 }
-.login-sing-container .btn-sign:hover{
+
+.login-sing-container .btn-sign:hover {
   background: none;
 }
-.login-sing-container  .itineraryGenerator p, 
-.login-sing-container .alreadyMember p{
+
+.login-sing-container .itineraryGenerator p,
+.login-sing-container .alreadyMember p {
   margin: 0;
 }
-.form .heading{
+
+.form {
+  width: 480px;
+  border-radius: 22px;
+  background: #FFF;
+  padding: 30px;
+  box-shadow: 1px 9px 7px 6px rgb(0 0 0 / 10%);
+
+
+}
+
+.form .heading {
   color: #000;
-text-align: center;
-font-size: 25px;
-font-style: normal;
-font-weight: 700;
-letter-spacing: -0.5px;
-margin-bottom: 40px;
-}
+  text-align: center;
+  letter-spacing: -0.5px;
+  margin-bottom: 20px;
 
-.form .custom-input input{
-font-size: 14px;
-font-weight: 400;
+font-size: 30px;
+font-weight: 500;
+
 
 }
-.form  fieldset{
-  border-radius: 0 !important;
+.form .subtext{
+  color: #000;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.9px;
 }
-.form .custom-input label{
-font-size: 14px;
-font-weight: 400;
-}
- .form .btn{
-background: #4067EC;
-flex-shrink: 0; 
-color: #FFF;
-text-align: center;
-font-size: 14px;
-font-weight: 700;
-height: 48px;
-margin-bottom: 16px;
-border-radius: 0 !important;
-margin-top: 30px;
-}
-.note{
-color: #9E9E9E;
+.form .custom-input input {
+  font-size: 14px;
+  font-weight: 400;
 
-font-size: 10.24px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-decoration-line: underline;
 }
+
+.form fieldset {
+  border-radius: 8px;
+}
+
+.form .custom-input label {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.form .btn {
+  background: #0A2FB6;
+  color: #FFF;
+  text-align: center;
+  font-size: 14px;
+  height: 48px;
+  margin-bottom: 16px;
+  margin-top: 30px;
+  border-radius: 8px;
+  border: 1px solid #0A2FB6;
+}
+
+.note {
+  color: #9E9E9E;
+
+  font-size: 10.24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+
 .note a {
   color: #424242;
 
-font-size: 10.24px;
-font-style: normal;
-font-weight: 400;
-line-height: normal;
-text-decoration-line: underline;
+  font-size: 10.24px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration-line: underline;
 }
-.remember-me{
-padding-left: 15px;
-color: #616161;
-font-size: 13px;
-font-style: normal;
-font-weight: 400;
+
+.remember-me {
+  padding-left: 15px;
+  color: #616161;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
 }
-.remember-me label{
-  padding-left:8px;
+
+.remember-me label {
+  padding-left: 8px;
 }
-.remember-me .MuiCheckbox-root{
-color: #4067EC;
-width: 22px;
-height: 22px;
+
+.remember-me .MuiCheckbox-root {
+  color: #4067EC;
+  width: 22px;
+  height: 22px;
 }
-.remember-grid{
-  display:flex;
+
+.remember-grid {
+  display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  margin-top:10px;
+  margin-top: 10px;
+  
 }
-.forgotPassword p{
+.forgotPassword {
+  width: 100%;
+  text-align: right;
+}
+.forgotPassword p {
   color: #616161;
-font-size: 13px;
-font-weight: 400;
+  font-size: 13px;
+  font-weight: 400;
 }
- 
+.loginSocial {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.loginSocial .facebook button,
+.loginSocial .google button{
+  font-size: 0 !important;
+  border-radius: 50% !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0px 7px !important;
+}
+.loginSocial .facebook button svg,
+.loginSocial .google button svg{
+  width: 18px !important;
+  height: 18px !important;
+
+}
+  
