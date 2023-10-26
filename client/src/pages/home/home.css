@@ -307,7 +307,7 @@ background: rgba(1, 138, 211, 0.10);
     left: 50%;
     transform: translate(-50%, -50%);
     width: 800px;
-    height: 370px;
+    min-height: 370px;
     flex-shrink: 0;
     box-shadow: none;
     padding: 15px;
@@ -323,7 +323,7 @@ background: rgba(1, 138, 211, 0.10);
 
 .custom-map-modal .btn-close,
 .custom-map-modal .btn-start {
-    border-radius: 8px !important;
+    border-radius: 4px !important;
     border: 1px solid #018AD3 !important;
     margin-left: 8px !important;
     text-transform: capitalize;
@@ -336,6 +336,8 @@ background: rgba(1, 138, 211, 0.10);
 }
 
 .custom-map-modal .btn-close {
+    background-image: none;
     background-color: transparent !important;
     color: #000;
+    width: 80px;
 }
