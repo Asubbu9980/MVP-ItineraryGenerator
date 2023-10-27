@@ -123,7 +123,9 @@ const IndexPage = () => {
     });
 
     // You can use this array of city names in your application as needed for referencing famous tourist cities in India.
-
+    function isKeyInArray(array, key) {
+        return array.some(obj => obj.hasOwnProperty(key));
+    }
 
     const getResult = (payload = {
 
@@ -142,21 +144,21 @@ const IndexPage = () => {
             getTripDetailsApi(payload).then((r) => {
                 console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
-                // setTripData(r.data)
-                const p = r.data;
-                const fR = {}
-                const lastKey = Object.keys(p).pop();
-                Object.keys(p).forEach(function (key) {
-                    var value = p[key];
-                    console.log(typeof (value));
-                    console.log(key + ':' + value);
-                    if (typeof (value) == 'object') {
-                        fR['places_visited'] = value
-                    } else {
-                        fR[key] = value
-                    }
-                });
-                setTripData(fR)
+                setTripData(r.data.hasOwnProperty('trip') ? r.data.trip : r.data)
+                // const p = r.data;
+                // const fR = {}
+                // const lastKey = Object.keys(p).pop();
+                // Object.keys(p).forEach(function (key) {
+                //     var value = p[key];
+                //     // console.log(typeof (value));
+                //     // console.log(key + ':' + value);
+                //     if (typeof (value) == 'object') {
+                //         fR['places_visited'] = value
+                //     } else {
+                //         fR[key] = value
+                //     }
+                // });
+                // setTripData(fR)
             }).then((e) => {
 
             })
@@ -166,9 +168,7 @@ const IndexPage = () => {
         }
 
     }
-    function isKeyInArray(array, key) {
-        return array.some(obj => obj.hasOwnProperty(key));
-    }
+
     return (
         <div>
             <div>
@@ -284,8 +284,9 @@ const IndexPage = () => {
                     </Container>
                 </div>
                 <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
+                    {/* && (isKeyInArray(tripData.places, 'activities') || isKeyInArray(tripData.places_visited, 'activity')) */}
                     {
-                        tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData.places_visited, 'activities') || isKeyInArray(tripData.places_visited, 'activity')) ?
+                        tripData != null && tripData?.activities && tripData?.activities.length > 0 ?
 
                             <div>
                                 <div>
@@ -301,7 +302,7 @@ const IndexPage = () => {
 
                                             <ul>
                                                 {
-                                                    tripData.places_visited.map((m, i) => {
+                                                    tripData.activities.map((m, i) => {
                                                         return < li className='tripDetails-item' key={i}>
 
                                                             <div className="dot">
@@ -319,19 +320,24 @@ const IndexPage = () => {
 
                                                             </div>
 
-                                                            <h5>Day {i + 1}</h5>
+                                                            <h5>Day {i + 1}  {" - " + m.activity}</h5>
 
                                                             <h6>{m.date}</h6>
 
                                                             <ul className="trip-points">
-                                                                {
-                                                                    m.activities?.map((sm, si) => {
+                                                                {/* {
+                                                                    m.activity?.map((sm, si) => {
                                                                         return <li key={si}>{sm}</li>
                                                                     })
-                                                                }
+                                                                } */}
                                                                 {
-                                                                    m.activity?.split(",")?.map((sm, si) => {
-                                                                        return <li key={si}>{sm}</li>
+                                                                    m.description?.split(".")?.map((sm, si) => {
+                                                                        return sm != "" && <li key={si}>{sm}</li>
+                                                                        {/* <span>
+                                                                                <br></br>
+
+                                                                                {m.description}
+                                                                            </span> */}
                                                                     })
                                                                 }
 

@@ -11,10 +11,46 @@ class tripController {
             }
         }
     }
+    stringToJson(input) {
+        var result = [];
+
+        // Replace leading and trailing [], if present
+        input = input.replace(/^\[/, '');
+        input = input.replace(/\]$/, '');
+
+        // Change the delimiter to
+        input = input.replace(/},{/g, '};;;{');
+
+        // Preserve newlines, etc. - use valid JSON
+        //https://stackoverflow.com/questions/14432165/uncaught-syntaxerror-unexpected-token-with-json-parse
+        input = input.replace(/\\n/g, "\\n")
+            .replace(/\\'/g, "\\'")
+            .replace(/\\"/g, '\\"')
+            .replace(/\\&/g, "\\&")
+            .replace(/\\r/g, "\\r")
+            .replace(/\\t/g, "\\t")
+            .replace(/\\b/g, "\\b")
+            .replace(/\\f/g, "\\f");
+
+        // Remove non-printable and other non-valid JSON characters
+        input = input.replace(/[\u0000-\u0019]+/g, "");
+
+        input = input.split(';;;');
+
+        input.forEach(function (element) {
+            //console.log(JSON.stringify(element));
+
+            result.push(JSON.parse(element));
+        }, this);
+
+        return result;
+    }
     generate = async (req, res, next) => {
         try {
             const { source, destination, days, start_date, end_date } = req.body;
-            const q =`${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  JSON format `
+            // const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  with activities with detailed accommodation,prices in rupees with co-ordinates & transportation in valid JSON format `;
+            const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format`;
+            console.log("q", q);
             const response = await openai.createCompletion({
                 model: 'gpt-3.5-turbo-instruct',
                 // prompt: `Goa Trip Itinerary in json array of objects format without newlines\n\n[ `,
@@ -37,6 +73,7 @@ class tripController {
             // console.log("response", response.data.choices[0].text);
             // console.log("lines", lines);
             const reData = JSON.parse(response.data.choices[0].text);
+            // const reData = JSON.stringify(response.data.choices[0].text);
             // const stringWithoutNewlines = reData.replace(/[\n\r!@#$%^&*()]/g, '');
             // obj.forEach(.removeNewlines);
             // console.log(JSON.stringify(obj, null, 2));
