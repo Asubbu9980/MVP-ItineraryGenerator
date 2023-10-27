@@ -144,21 +144,26 @@ const IndexPage = () => {
             getTripDetailsApi(payload).then((r) => {
                 console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
-                setTripData(r.data.hasOwnProperty('trip') ? r.data.trip : r.data)
-                // const p = r.data;
-                // const fR = {}
+                // setTripData(r.data.hasOwnProperty('trip') ? r.data.trip : r.data)
+                const p = r.data.hasOwnProperty('trip') ? r.data.trip : r.data;
+                const fR = {}
                 // const lastKey = Object.keys(p).pop();
-                // Object.keys(p).forEach(function (key) {
-                //     var value = p[key];
-                //     // console.log(typeof (value));
-                //     // console.log(key + ':' + value);
-                //     if (typeof (value) == 'object') {
-                //         fR['places_visited'] = value
-                //     } else {
-                //         fR[key] = value
-                //     }
-                // });
-                // setTripData(fR)
+                Object.keys(p).forEach(function (key) {
+                    var value = p[key];
+                    if (key == 'activities' || key == "places") {
+                        fR['places_visited'] = value
+                    } else {
+                        fR[key] = value
+                    }
+                    //     // console.log(typeof (value));
+                    //     // console.log(key + ':' + value);
+                    //     if (typeof (value) == 'object') {
+                    //         fR['places_visited'] = value
+                    //     } else {
+                    // fR[key] = value
+                    //     }
+                });
+                setTripData(fR)
             }).then((e) => {
 
             })
@@ -284,9 +289,9 @@ const IndexPage = () => {
                     </Container>
                 </div>
                 <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
-                    {/* && (isKeyInArray(tripData.places, 'activities') || isKeyInArray(tripData.places_visited, 'activity')) */}
+                    {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
                     {
-                        tripData != null && tripData?.activities && tripData?.activities.length > 0 ?
+                        tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
 
                             <div>
                                 <div>
@@ -302,7 +307,7 @@ const IndexPage = () => {
 
                                             <ul>
                                                 {
-                                                    tripData.activities.map((m, i) => {
+                                                    tripData.places_visited.map((m, i) => {
                                                         return < li className='tripDetails-item' key={i}>
 
                                                             <div className="dot">
@@ -320,7 +325,7 @@ const IndexPage = () => {
 
                                                             </div>
 
-                                                            <h5>Day {i + 1}  {" - " + m.activity}</h5>
+                                                            <h5>Day {i + 1}  {m?.activity && " - " + m.activity}</h5>
 
                                                             <h6>{m.date}</h6>
 
