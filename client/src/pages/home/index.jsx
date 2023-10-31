@@ -55,6 +55,7 @@ const IndexPage = () => {
     const [tripData, setTripData] = useState(null);
     const [modelState, setModelState] = useState(false);
     const loaderContext = useContext(LoaderContext);
+    const [coordinatesData, setCoordinates] = useState([])
 
     const initialValues = {
         destination: '',
@@ -66,7 +67,8 @@ const IndexPage = () => {
     };
 
 
-    const onChangeModalState = () => {
+    const onChangeModalState = (coordinates) => {
+        setCoordinates([coordinates])
         setModelState(true)
     }
 
@@ -101,11 +103,10 @@ const IndexPage = () => {
         validate,
         onSubmit: (values) => {
             // Handle form submission here
-            // const formattedStartDate = dayjs(values.start_date).format('DD MMMM, YYYY');
-            const formattedStartDate = dayjs(values.start_date).format('DD-MM-YYYY');
-            // const formattedEndDate = dayjs(values.end_date).format('DD MMMM, YYYY');
-            const formattedEndDate = dayjs(values.end_date).format('DD-MM-YYYY');
-
+            const formattedStartDate = dayjs(values.start_date).format('DD MMMM, YYYY');
+            // const formattedStartDate = dayjs(values.start_date).format('DD-MM-YYYY');
+            const formattedEndDate = dayjs(values.end_date).format('DD MMMM, YYYY');
+            // const formattedEndDate = dayjs(values.end_date).format('DD-MM-YYYY');
 
             // Update the values with the formatted dates
             const formattedValues = {
@@ -319,7 +320,7 @@ const IndexPage = () => {
                                                             </div>
 
 
-                                                            <div className='viewmap_btn'> <Button className='' onClick={onChangeModalState}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
+                                                            <div className='viewmap_btn'> <Button className='' onClick={(e) => onChangeModalState(m.coordinates)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
 
                                                             </Button>
 
@@ -394,7 +395,7 @@ const IndexPage = () => {
                     }
                 </div>
             </div>
-            <MapModal open={modelState} onCloseModal={onCloseModal} />
+            {coordinatesData.length > 0 && <MapModal open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />}
         </div >
     );
 };
