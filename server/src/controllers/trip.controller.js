@@ -49,22 +49,22 @@ class tripController {
         try {
             const { source, destination, days, start_date, end_date } = req.body;
             // const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  with activities with detailed accommodation,prices in rupees with co-ordinates & transportation in valid JSON format `;
-            //w  const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format`;
-            const q = `create Itinerary to ${ destination } from ${ source } in between ${ start_date } to ${ end_date } with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in below valid JSON format 
+            // const t q = `create Itinerary to ${ destination } from ${ source } from ${ start_date } to ${ end_date } with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in below valid JSON format 
+
+             const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format
             {
             "trip_start_date": "",
              "trip_end_date": "",
              "trip_duration": "",
              "starting_location": "",
              "ending_location": "",
-             "activities": [],
-             "places": [
+             "activities": [
                {
                  "name": "",
                  "description": "",
                  "coordinates": "",
                  "recommended_stay": "",
-                 activities:[],
+                 activity:[],
                  "accommodation": {
                    "name": "",
                    "type": "",
