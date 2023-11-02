@@ -51,7 +51,7 @@ class tripController {
             // const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  with activities with detailed accommodation,prices in rupees with co-ordinates & transportation in valid JSON format `;
             // const t q = `create Itinerary to ${ destination } from ${ source } from ${ start_date } to ${ end_date } with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in below valid JSON format 
 
-             const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format
+            const q = `create Trip Itinerary to ${destination} from ${start_date} to ${end_date} with activities, detailed descriptions for activities, accommodation with map coordinates along with transportation charges including bus,car,train,flight in indian rupees from ${source} in valid JSON format
             {
             "trip_start_date": "",
              "trip_end_date": "",
@@ -75,6 +75,7 @@ class tripController {
                     "bus":{},
                     "train":{},
                     "flight":{},
+                    "car":{},
                  },
                  "food_choices": [{
                    "name":"",

@@ -17,8 +17,8 @@ const MapModal = (props) => {
         height: '88%',
         overflow: 'visible !important'
     };
-
-    console.log(props.MapCoordinates, "MapCoordinates")
+    // const data = props.MapCoordinates.length > 0 props.MapCoordinates[0].replace("° N", "").replace("° E", "");
+    // console.log(props.MapCoordinates, "MapCoordinates")
 
 
     const onMarkerClick = (event) => {
@@ -41,7 +41,7 @@ const MapModal = (props) => {
             >
                 <Box className="map-modal">
                     <Map
-                        google={props.google}
+                        google={[17.3850, 78.4867]}
                         //center={[17.3850, 78.4867]}
                         initialCenter={{
                             lat: 17.3850,
@@ -70,7 +70,7 @@ const MapModal = (props) => {
                             </Marker>
                         ))} */}
                     </Map>
-                   
+
                 </Box>
             </Modal>
         </div>
@@ -80,6 +80,6 @@ const MapModal = (props) => {
 // export default MapModal
 
 export default GoogleApiWrapper({
-    apiKey: 'Use_Your_Api_key', // Replace Your API Key
+    apiKey: 'AIzaSyDomfxcX--OMcX9GeVxW91L9cFmPY3r2Tw', // Replace Your API Key
     LoadingContainer: LoadingContainer
 })(MapModal);

@@ -325,27 +325,27 @@ const IndexPage = () => {
                                                             </Button>
 
                                                             </div>
-
-                                                            <h5>Day {i + 1}  {m?.activity && " - " + m.activity}</h5>
+                                                            {/* {m?.activity && " - " + m.activity} */}
+                                                            <h5>Day {i + 1}  {" - " + m.name} </h5>
 
                                                             <h6>{m.date}</h6>
+                                                            <p className='mt-2 mb-0 pb-0'>
+                                                                {m.description}
 
+                                                            </p>
                                                             <ul className="trip-points">
-                                                                {/* {
+                                                                {
                                                                     m.activity?.map((sm, si) => {
                                                                         return <li key={si}>{sm}</li>
                                                                     })
-                                                                } */}
-                                                                {
+                                                                }
+                                                                <br />
+                                                                {/* {
                                                                     m.description?.split(".")?.map((sm, si) => {
                                                                         return sm != "" && <li key={si}>{sm}</li>
-                                                                        {/* <span>
-                                                                                <br></br>
-
-                                                                                {m.description}
-                                                                            </span> */}
+                                                                       
                                                                     })
-                                                                }
+                                                                } */}
 
                                                             </ul>
 
