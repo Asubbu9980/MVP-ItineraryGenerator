@@ -7,10 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 //import Components
 import Header from './header';
 import Footer from './footer';
-
-
+import { useLocation } from 'react-router-dom';
 
 const UserLayout = (props) => {
+
+    const location = useLocation();
+    // console.log(location.pathname);
 
     const [headerClass, setHeaderClass] = useState("");
     // class add remove in header
@@ -30,7 +32,7 @@ const UserLayout = (props) => {
         <React.Fragment>
             <div id="layout-wrapper">
                 <ToastContainer autoClose={2000} />
-                <Header />
+               {(location.pathname!='/homesearch')  &&  <Header />}
                 <div className="main-content">{props.children}
                 </div>
                 <Footer />
