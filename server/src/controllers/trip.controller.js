@@ -62,15 +62,25 @@ class tripController {
                {
                  "name": "",
                  "description": "",
-                 "coordinates": "",
+                 "coordinates": {
+                    "title":"",
+                    "lat":"",
+                    "lng":"",
+                 },
                  "recommended_stay": "",
-                 activity:[],
-                 "accommodation": {
+                 "activity":[],
+                 "popular_places":[],
+                 "accommodation": [{
+                   "address":"",
                    "name": "",
                    "type": "",
-                   "coordinates": "",
-                   "price_per_night": ""
+                   "coordinates":  {
+                    "title":"",
+                    "lat":"",
+                    "lng":"",
                  },
+                   "price_per_night": ""
+                 }],
                  "transportation": {
                     "bus":{},
                     "train":{},
@@ -80,7 +90,12 @@ class tripController {
                  "food_choices": [{
                    "name":"",
                    "price":"",
-                   "coordinates": "",
+                   "address":"",
+                   "coordinates":  {
+                    "title":"",
+                    "lat":"",
+                    "lng":"",
+                 },
                  }]
                },
              ]
