@@ -340,7 +340,7 @@ const IndexPage = () => {
 
                                         <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
 
-                                            <ul>
+                                             <ul>
                                                 {
                                                     tripData.places_visited.map((m, i) => {
                                                         return < li className='tripDetails-item' key={i}>
@@ -354,32 +354,32 @@ const IndexPage = () => {
                                                             </div>
 
 
-                                                            <div className='viewmap_btn'> <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
+                                                            <div className='viewmap_btn'> <Button className='' onClick={(e) => onChangeModalState(m.coordinates)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
 
                                                             </Button>
 
                                                             </div>
-
-                                                            <h5>Day {i + 1}  {m?.activity && " - " + m.activity}</h5>
+                                                            {/* {m?.activity && " - " + m.activity} */}
+                                                            <h5>Day {i + 1}  {" - " + m.name} </h5>
 
                                                             <h6>{m.date}</h6>
+                                                            <p className='mt-2 mb-0 pb-0'>
+                                                                {m.description}
 
+                                                            </p>
                                                             <ul className="trip-points">
-                                                                {/* {
+                                                                {
                                                                     m.activity?.map((sm, si) => {
                                                                         return <li key={si}>{sm}</li>
                                                                     })
-                                                                } */}
-                                                                {
+                                                                }
+                                                                <br />
+                                                                {/* {
                                                                     m.description?.split(".")?.map((sm, si) => {
                                                                         return sm != "" && <li key={si}>{sm}</li>
-                                                                        {/* <span>
-                                                                                <br></br>
-
-                                                                                {m.description}
-                                                                            </span> */}
+                                                                       
                                                                     })
-                                                                }
+                                                                } */}
 
                                                             </ul>
 
