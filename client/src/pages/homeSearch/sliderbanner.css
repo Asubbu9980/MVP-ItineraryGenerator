@@ -186,6 +186,25 @@
 	height: 152px;
  }
  .sliderBoxTwo .css-9pcneq-JoyRadio-action:hover,
- .sliderBoxTwo .css-pg3u7k-JoyRadio-action.css-pg3u7k-JoyRadio-action{
+ .sliderBoxTwo .css-pg3u7k-JoyRadio-action.css-pg3u7k-JoyRadio-action,
+ .sliderBoxFour .css-9pcneq-JoyRadio-action:hover,
+ .sliderBoxFour .css-pg3u7k-JoyRadio-action.css-pg3u7k-JoyRadio-action
+ {
 	background: transparent !important;
  }
+ .sliderBoxFour .box{
+	width: 220px;
+	height: 152px;
+ }
+
+ .sliderBoxFive .box{
+	width: 210px;
+	height: 152px;
+	text-align: center;
+ }
+
+.sliderBoxSix .MuiPaper-root,
+.sliderBoxSix .MuiFormControl-root{
+		background-color: #fff;
+		width: 100%;
+} 

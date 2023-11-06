@@ -17,22 +17,24 @@ import bannerThree from '../../assets/banners/3.jpg'
 import bannerFour from '../../assets/banners/4.jpg'
 import bannerFive from '../../assets/banners/5.jpg'
 import bannerSix from '../../assets/banners/6.jpg'
-
 import agraImage from '../../assets/agra.jpg'
 import delhiImage from '../../assets/delhi.jpg'
 import hydImage from '../../assets/hyderabad.jpg'
 import goaImage from '../../assets/goa.jpg'
-
 import singleImage from '../../assets/person.png'
 import coupleImage from '../../assets/parents.png'
 import friendsImage from '../../assets/friends.png'
 import familyImage from '../../assets/family.png'
-
-
-
+import vegImage from '../../assets/veg.jpg'
+import nonVegImage from '../../assets/nog-veg.jpg'
+import eggImage from '../../assets/egg.jpg'
 import Autocomplete from '@mui/joy/Autocomplete';
 import Stack from '@mui/joy/Stack';
 import SearchIcon from '@mui/icons-material/Search';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Card from '@mui/material/Card';
 
 const IndexPage = () => {
     const slider = useRef(null);
@@ -43,9 +45,7 @@ const IndexPage = () => {
         slider.current.slickPrev();
     };
     const [currentSlide, setCurrentSlide] = useState(0);
-
     // console.log(currentSlide,'ffff')
-
     const settings = {
         dots: false,
         infinite: false,
@@ -54,9 +54,7 @@ const IndexPage = () => {
         slidesToScroll: 1,
         arrows: false,
         beforeChange: (current, next) => setCurrentSlide(next),
-
     };
-
     const totalSlides = slider.current ? slider.current.props.children.length : 0;
     console.log(totalSlides, 'totalSlides')
     console.log(currentSlide, 'currentSlide')
@@ -171,17 +169,17 @@ const IndexPage = () => {
         {
             id: '1',
             item: 'Vegetarian ',
-            url: '',
+            url: vegImage,
         },
         {
             id: '2',
             item: 'Non-vegetarian',
-            url: '',
+            url: nonVegImage,
         },
         {
             id: '3',
             item: 'Eggetarian',
-            url: '',
+            url: eggImage,
         }
     ]
     const tripTheme = [
@@ -192,56 +190,35 @@ const IndexPage = () => {
         },
         {
             id: '2',
-            item: 'Cultural Immersion',
-            url: '',
-        },
-        {
-            id: '3',
-            item: 'Culinary Exploration',
-            url: '',
-        },
-        {
-            id: '4',
             item: 'Wellness and Relaxation',
             url: '',
         },
         {
-            id: '5',
+            id: '3',
             item: 'Eco-Tourism',
             url: '',
         },
         {
-            id: '6',
+            id: '4',
             item: 'Beach Getaway',
             url: '',
         },
         {
-            id: '7',
+            id: '5',
             item: 'Wildlife Safari',
             url: '',
-        },
-        {
-            id: '8',
-            item: 'Educational Travel',
-            url: '',
-        },
+        }
     ]
     const cityNames = [
-        { label: 'Agra'},
-        { label: 'Jaipur'},
-        { label: 'Varanasi'},
-        { label: '"Kochi (Cochin)'},
-        { label: 'Goa'},
-        { label: "Hyderabad"},
-        { label: 'Delhi'}, 
-        { label: 'Amritsar'}    
+        { label: 'Agra' },
+        { label: 'Jaipur' },
+        { label: 'Varanasi' },
+        { label: '"Kochi (Cochin)' },
+        { label: 'Goa' },
+        { label: "Hyderabad" },
+        { label: 'Delhi' },
+        { label: 'Amritsar' }
     ]
-
-      
-        
-       
-         
-        
     const sliderImages = [bannerOne, bannerTwo, bannerThree, bannerFour, bannerFive, bannerSix]
     return (
         <div className='homeSearch'>
@@ -252,8 +229,6 @@ const IndexPage = () => {
                             <li key={index}><span style={{ backgroundImage: `url(${each})` }}></span><div><h3></h3></div></li>
                         ))}
                     </ul>
-
-
                     {/* code here */}
                     <div className='main-code position-absolute top-0 w-100'>
                         <div className="container slidecontainer">
@@ -263,143 +238,165 @@ const IndexPage = () => {
                                         <Slider ref={slider} {...settings}>
                                             <div className='sliderBox sliderBoxOne'>
                                                 <h3>Where do you want to go?</h3>
-
                                                 <div className='citySearch'>
-                                                     <Stack spacing={2}>
-                                                    <Autocomplete
-                                                        startDecorator={<SearchIcon />}
-                                                        placeholder="Search for a city"
-                                                        options={cityNames}
-                                                        style={{ height: '45px' }}
-                                                    />
-                                                   
-                                                </Stack></div>
+                                                    <Stack spacing={2}>
+                                                        <Autocomplete
+                                                            startDecorator={<SearchIcon />}
+                                                            placeholder="Search for a city"
+                                                            options={cityNames}
+                                                            style={{ height: '45px' }}
+                                                        />
+                                                    </Stack></div>
                                                 <div className='RadioGroupBox'>
                                                     <RadioGroup
                                                         aria-labelledby="city"
                                                         defaultValue="Goa"
                                                         size="lg"
                                                         sx={{ gap: 1.5 }}
-                                                        style={{ display: 'flex', flexDirection: 'row',justifyContent:'center' }}
+                                                        style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
                                                     >
-                                                            
-                                                                {tripCity.map((info) => (
-                                                                    <div className='box'>
-                                                                            <Sheet
-                                                                                key={info.id}
-                                                                                className='locationSheet'
-                                                                                sx={{
-                                                                                    p: 1,
-                                                                                    // borderRadius: 'md',
-                                                                                    // height: '140px',
-
-                                                                                }}
-                                                                                style={{ backgroundImage: `url(${info.url})`, }}
-                                                                            >
-                                                                                <Radio
-                                                                                    label={`${info.item}`}
-                                                                                    overlay
-                                                                                    disableIcon
-                                                                                    value={info.item}
-                                                                                    slotProps={{
-                                                                                        label: ({ checked }) => ({
-                                                                                            sx: {
-                                                                                                fontWeight: 'lg',
-                                                                                                fontSize: 'md',
-                                                                                                color: checked ? 'text.primary' : 'text.secondary',
-                                                                                            },
-                                                                                        }),
-                                                                                        action: ({ checked }) => ({
-                                                                                            className: 'radioButton',
-                                                                                            sx: (theme) => ({
-                                                                                                ...(checked && {
-                                                                                                    '--variant-borderWidth': '2px',
-                                                                                                    '&&': {
-                                                                                                        // className: '',
-                                                                                                        // && to increase the specificity to win the base :hover styles
-                                                                                                        // borderColor: theme.vars.palette.primary[500],
-                                                                                                    },
-                                                                                                }),
-                                                                                            }),
-                                                                                        }),
-                                                                                    }}
-                                                                                />
-                                                                            </Sheet>
-                                                                        
-                                                                    </div>
-                                                                ))}
-                                                             
-                                                        
+                                                        {tripCity.map((info) => (
+                                                            <div className='box'>
+                                                                <Sheet
+                                                                    key={info.id}
+                                                                    className='locationSheet'
+                                                                    sx={{
+                                                                        p: 1,
+                                                                        // borderRadius: 'md',
+                                                                        // height: '140px',
+                                                                    }}
+                                                                    style={{ backgroundImage: `url(${info.url})`, }}
+                                                                >
+                                                                    <Radio
+                                                                        label={`${info.item}`}
+                                                                        overlay
+                                                                        disableIcon
+                                                                        value={info.item}
+                                                                        slotProps={{
+                                                                            label: ({ checked }) => ({
+                                                                                sx: {
+                                                                                    fontWeight: 'lg',
+                                                                                    fontSize: 'md',
+                                                                                    color: checked ? 'text.primary' : 'text.secondary',
+                                                                                },
+                                                                            }),
+                                                                            action: ({ checked }) => ({
+                                                                                className: 'radioButton',
+                                                                                sx: (theme) => ({
+                                                                                    ...(checked && {
+                                                                                        '--variant-borderWidth': '2px',
+                                                                                        '&&': {
+                                                                                            // className: '',
+                                                                                            // && to increase the specificity to win the base :hover styles
+                                                                                            // borderColor: theme.vars.palette.primary[500],
+                                                                                        },
+                                                                                    }),
+                                                                                }),
+                                                                            }),
+                                                                        }}
+                                                                    />
+                                                                </Sheet>
+                                                            </div>
+                                                        ))}
                                                     </RadioGroup>
                                                 </div>
-
+                                            </div>
+                                            <div className='sliderBox sliderBoxSix'>
+                                                <h3> Who’s coming with you?</h3>
+                                                <div style={{ height: '70px' }}>  </div>
+                                                <div className='d-flex align-items-center justify-content-center'>
+                                                    {/* Start Date */}
+                                                    <div className="col col-5 d-flex flex-column p-2">
+                                                    <label style={{ marginBottom: '8px', color:'#000', fontWeight:'bold' }}>Start Date</label>
+                                                        <Card>
+                                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                                <DatePicker
+                                                                    className="date-picker-classname"
+                                                                    style={{ background: '#fff' }}
+                                                                />
+                                                            </LocalizationProvider>
+                                                        </Card>
+                                                    </div>
+                                                    {/* End Date */}
+                                                    <div className="col col-5 d-flex flex-column p-2">
+                                                        <label style={{ marginBottom: '8px', color:'#000', fontWeight:'bold' }}>End Date</label>
+                                                        <Card>
+                                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                                <DatePicker
+                                                                    className="date-picker-classname"
+                                                                    style={{ background: '#fff' }}
+                                                                />
+                                                            </LocalizationProvider>
+                                                        </Card>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className='sliderBox sliderBoxTwo'>
                                                 <h3> Who’s coming with you?</h3>
-                                                        <div className='RadioGroupBox'>
-                                                            <RadioGroup
-                                                                aria-labelledby="city"
-                                                                defaultValue="Goa"
-                                                                size="lg"
-                                                                sx={{ gap: 1.5 }}
-                                                                style={{ display: 'flex', flexDirection: 'row',justifyContent:'center' }}
-                                                            >
-                                                                {comingWith.map((info) => (
-                                                                    <div className=''>
-                                                                        <div className='box' >
-                                                                            <Sheet
-                                                                                key={info.id}
-                                                                                sx={{
-                                                                                    p: 2,
-                                                                                    borderRadius: 'md',
-                                                                                    boxShadow: 'sm',
-                                                                                }}
-                                                                                style={{ height: '100px', width: '88%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                                                                            >
-                                                                                <img src={info.url} alt='' width={25} style={{display:'block', marginRight:'5px'}}  />
-                                                                                <Radio
-                                                                                    label={`${info.item}`}
-                                                                                    overlay
-                                                                                    disableIcon
-                                                                                    value={info.item}
-                                                                                    slotProps={{
-                                                                                        label: ({ checked }) => ({
-                                                                                            sx: {
-                                                                                                fontWeight: 'lg',
-                                                                                                fontSize: 'md',
-                                                                                                color: checked ? 'text.primary' : 'text.secondary',
+                                                <div style={{ height: '70px' }}>  </div>
+                                                <div className='RadioGroupBox'>
+                                                    <RadioGroup
+                                                        aria-labelledby="city"
+                                                        defaultValue="Goa"
+                                                        size="lg"
+                                                        sx={{ gap: 1.5 }}
+                                                        style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
+                                                    >
+                                                        {comingWith.map((info) => (
+                                                            <div className=''>
+                                                                <div className='box' >
+                                                                    <Sheet
+                                                                        key={info.id}
+                                                                        sx={{
+                                                                            p: 2,
+                                                                            borderRadius: 'md',
+                                                                            boxShadow: 'sm',
+                                                                        }}
+                                                                        style={{ height: '100px', width: '88%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                                                    >
+                                                                        <img src={info.url} alt='' width={25} style={{ display: 'block', marginRight: '5px' }} />
+                                                                        <Radio
+                                                                            label={`${info.item}`}
+                                                                            overlay
+                                                                            disableIcon
+                                                                            value={info.item}
+                                                                            slotProps={{
+                                                                                label: ({ checked }) => ({
+                                                                                    sx: {
+                                                                                        fontWeight: 'lg',
+                                                                                        fontSize: 'md',
+                                                                                        color: checked ? 'text.primary' : 'text.secondary',
+                                                                                    },
+                                                                                }),
+                                                                                action: ({ checked }) => ({
+                                                                                    sx: (theme) => ({
+                                                                                        ...(checked && {
+                                                                                            '--variant-borderWidth': '2px',
+                                                                                            '&&': {
+                                                                                                // && to increase the specificity to win the base :hover styles
+                                                                                                borderColor: theme.vars.palette.primary[500],
                                                                                             },
                                                                                         }),
-                                                                                        action: ({ checked }) => ({
-                                                                                            sx: (theme) => ({
-                                                                                                ...(checked && {
-                                                                                                    '--variant-borderWidth': '2px',
-                                                                                                    '&&': {
-                                                                                                        // && to increase the specificity to win the base :hover styles
-                                                                                                        borderColor: theme.vars.palette.primary[500],
-                                                                                                    },
-                                                                                                }),
-                                                                                            }),
-                                                                                        }),
-                                                                                    }}
-                                                                                />
-                                                                            </Sheet>
-                                                                        </div>
-                                                                    </div>
-                                                                ))}
-                                                            </RadioGroup>
-                                                        </div>
-                                                     
-                                                
+                                                                                    }),
+                                                                                }),
+                                                                            }}
+                                                                        />
+                                                                    </Sheet>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </RadioGroup>
+                                                </div>
                                             </div>
                                             <div className='sliderBox sliderBoxThree'>
                                                 <h3> How do you want to spend your time?</h3>
+                                                <div style={{ height: '70px' }}>  </div>
                                                 <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                                                    <div>
+                                                  
                                                         <Box
-                                                            role="group"
+                                                            role="group" 
                                                             aria-labelledby="fav-movie"
-                                                            sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, }}
+                                                            sx={{ display: 'flex', flexWrap: 'wrap', gap: 2,justifyContent: 'center' }}
                                                         >
                                                             {spendTime.map((name) => {
                                                                 const checked = selected.includes(name.item);
@@ -419,6 +416,7 @@ const IndexPage = () => {
                                                                             overlay
                                                                             label={name.item}
                                                                             checked={checked}
+                                                                            style={{ fontSize: '12px', padding: '5px' }}
                                                                             onChange={(event) => {
                                                                                 setSelected((names) =>
                                                                                     !event.target.checked
@@ -431,125 +429,120 @@ const IndexPage = () => {
                                                                 );
                                                             })}
                                                         </Box>
-                                                    </div>
+                                                    
                                                 </Box>
                                             </div>
                                             <div className='sliderBox sliderBoxFour'>
-                                                <h3>Select Food</h3>
-                                                <div className='container'>
-                                                    <div className='row'>
-                                                        <div className='RadioGroupBox'>
-                                                            <RadioGroup
-                                                                aria-labelledby="city"
-                                                                defaultValue="Goa"
-                                                                size="lg"
-                                                                sx={{ gap: 1.5 }}
-                                                                style={{ display: 'flex', flexDirection: 'row' }}
-                                                            >
-                                                                {food.map((info) => (
-                                                                    <div className='col-md-3'>
-                                                                        <div className='' >
-                                                                            <Sheet
-                                                                                key={info.id}
-                                                                                sx={{
-                                                                                    p: 2,
-                                                                                    borderRadius: 'md',
-                                                                                    boxShadow: 'sm',
-                                                                                }}
-                                                                                style={{ height: '100px', width: '88%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                                                                            >
-                                                                                <Radio
-                                                                                    label={`${info.item}`}
-                                                                                    overlay
-                                                                                    disableIcon
-                                                                                    value={info.item}
-                                                                                    slotProps={{
-                                                                                        label: ({ checked }) => ({
-                                                                                            sx: {
-                                                                                                fontWeight: 'lg',
-                                                                                                fontSize: 'md',
-                                                                                                color: checked ? 'text.primary' : 'text.secondary',
+                                                <h3>Choose your foods</h3>
+                                                <div style={{ height: '70px' }}>  </div>
+                                                <div className='RadioGroupBox'>
+                                                    <RadioGroup
+                                                        aria-labelledby="city"
+                                                        defaultValue="food"
+                                                        size="lg"
+                                                        sx={{ gap: 1.5 }}
+                                                        style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
+                                                    >
+                                                        {food.map((info) => (
+                                                            <div className='box'>
+                                                                <div className='' >
+                                                                    <Sheet
+                                                                        key={info.id}
+                                                                        sx={{
+                                                                            p: 2,
+                                                                            borderRadius: 'md',
+                                                                            boxShadow: 'sm',
+                                                                        }}
+                                                                        style={{ height: '100px', width: '88%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                                                    >
+                                                                        <img src={info.url} alt='' width={25} style={{ display: 'block', marginRight: '5px' }} />
+                                                                        <Radio
+                                                                            label={`${info.item}`}
+                                                                            overlay
+                                                                            disableIcon
+                                                                            value={info.item}
+                                                                            slotProps={{
+                                                                                label: ({ checked }) => ({
+                                                                                    sx: {
+                                                                                        fontWeight: 'lg',
+                                                                                        fontSize: 'md',
+                                                                                        color: checked ? 'text.primary' : 'text.secondary',
+                                                                                    },
+                                                                                }),
+                                                                                action: ({ checked }) => ({
+                                                                                    sx: (theme) => ({
+                                                                                        ...(checked && {
+                                                                                            '--variant-borderWidth': '2px',
+                                                                                            '&&': {
+                                                                                                // && to increase the specificity to win the base :hover styles
+                                                                                                borderColor: theme.vars.palette.primary[500],
                                                                                             },
                                                                                         }),
-                                                                                        action: ({ checked }) => ({
-                                                                                            sx: (theme) => ({
-                                                                                                ...(checked && {
-                                                                                                    '--variant-borderWidth': '2px',
-                                                                                                    '&&': {
-                                                                                                        // && to increase the specificity to win the base :hover styles
-                                                                                                        borderColor: theme.vars.palette.primary[500],
-                                                                                                    },
-                                                                                                }),
-                                                                                            }),
-                                                                                        }),
-                                                                                    }}
-                                                                                />
-                                                                            </Sheet>
-                                                                        </div>
-                                                                    </div>
-                                                                ))}
-                                                            </RadioGroup>
-                                                        </div>
-                                                    </div>
+                                                                                    }),
+                                                                                }),
+                                                                            }}
+                                                                        />
+                                                                    </Sheet>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </RadioGroup>
                                                 </div>
                                             </div>
                                             <div className='sliderBox sliderBoxFive'>
                                                 <h3>Select your Trip Theme</h3>
-                                                <div className='container'>
-                                                    <div className='row'>
-                                                        <div className='RadioGroupBox'>
-                                                            <RadioGroup
-                                                                aria-labelledby="city"
-                                                                defaultValue="Goa"
-                                                                size="lg"
-                                                                sx={{ gap: 1.5 }}
-                                                                style={{ display: 'flex', flexDirection: 'row' }}
-                                                            >
-                                                                {tripTheme.map((info) => (
-                                                                    <div className='col-md-3'>
-                                                                        <div className='tripTheme' >
-                                                                            <Sheet
-                                                                                key={info.id}
-                                                                                sx={{
-                                                                                    p: 2,
-                                                                                    borderRadius: 'md',
-                                                                                    boxShadow: 'sm',
-                                                                                }}
-                                                                                style={{ height: '100px', width: '88%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                                                                            >
-                                                                                <Radio
-                                                                                    label={`${info.item}`}
-                                                                                    overlay
-                                                                                    disableIcon
-                                                                                    value={info.item}
-                                                                                    slotProps={{
-                                                                                        label: ({ checked }) => ({
-                                                                                            sx: {
-                                                                                                fontWeight: 'lg',
-                                                                                                fontSize: 'md',
-                                                                                                color: checked ? 'text.primary' : 'text.secondary',
+                                                <div style={{ height: '70px' }}>  </div>
+                                                <div className='RadioGroupBox'>
+                                                    <RadioGroup
+                                                        aria-labelledby="city"
+                                                        defaultValue="Goa"
+                                                        size="lg"
+                                                        sx={{ gap: 1.5 }}
+                                                        style={{ display: 'flex', flexFlow: 'wrap' }}
+                                                    >
+                                                        {tripTheme.map((info) => (
+                                                            <div className='box'>
+                                                                <div className='tripTheme' >
+                                                                    <Sheet
+                                                                        key={info.id}
+                                                                        sx={{
+                                                                            p: 2,
+                                                                            borderRadius: 'md',
+                                                                            boxShadow: 'sm',
+                                                                        }}
+                                                                        style={{ height: '100px', width: '88%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+                                                                    >
+                                                                        <Radio
+                                                                            label={`${info.item}`}
+                                                                            overlay
+                                                                            disableIcon
+                                                                            value={info.item}
+                                                                            slotProps={{
+                                                                                label: ({ checked }) => ({
+                                                                                    sx: {
+                                                                                        fontWeight: 'lg',
+                                                                                        fontSize: 'md',
+                                                                                        color: checked ? 'text.primary' : 'text.secondary',
+                                                                                    },
+                                                                                }),
+                                                                                action: ({ checked }) => ({
+                                                                                    sx: (theme) => ({
+                                                                                        ...(checked && {
+                                                                                            '--variant-borderWidth': '2px',
+                                                                                            '&&': {
+                                                                                                // && to increase the specificity to win the base :hover styles
+                                                                                                borderColor: theme.vars.palette.primary[500],
                                                                                             },
                                                                                         }),
-                                                                                        action: ({ checked }) => ({
-                                                                                            sx: (theme) => ({
-                                                                                                ...(checked && {
-                                                                                                    '--variant-borderWidth': '2px',
-                                                                                                    '&&': {
-                                                                                                        // && to increase the specificity to win the base :hover styles
-                                                                                                        borderColor: theme.vars.palette.primary[500],
-                                                                                                    },
-                                                                                                }),
-                                                                                            }),
-                                                                                        }),
-                                                                                    }}
-                                                                                />
-                                                                            </Sheet>
-                                                                        </div>
-                                                                    </div>
-                                                                ))}
-                                                            </RadioGroup>
-                                                        </div>
-                                                    </div>
+                                                                                    }),
+                                                                                }),
+                                                                            }}
+                                                                        />
+                                                                    </Sheet>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </RadioGroup>
                                                 </div>
                                             </div>
                                             {/* <div className='sliderBox sliderBoxFour'>
@@ -560,11 +553,9 @@ const IndexPage = () => {
                                             {currentSlide != 0 && <button className="button" onClick={previous} >
                                                 Previous
                                             </button>}
-
                                             {currentSlide != totalSlides - 1 && <button className="button" onClick={next} >
                                                 Next
                                             </button>}
-
                                             {currentSlide == totalSlides - 1 && <button className="button"  >
                                                 Submit
                                             </button>}
@@ -574,10 +565,7 @@ const IndexPage = () => {
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
             </div>
             <div>fdsfdsfsdf sfsfsf jksf fds </div>
         </div >
