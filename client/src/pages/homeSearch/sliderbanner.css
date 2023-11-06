@@ -16,7 +16,7 @@
  
 
  .banner {
- 	height: 350px;
+ 	height: 380px;
  	overflow: hidden;
  	position: relative;
  }
@@ -124,8 +124,9 @@
  }
 
  .sliderBox h3 {
- 	margin-top: 30px;
- 	margin-bottom: 30px;
+ 	margin-top: 20px;
+ 	margin-bottom: 20px;
+	text-align: center;
  }
 
  .slickArrows {
@@ -133,22 +134,22 @@
  }
 
  .slickArrows .button {
- 	width: 160px;
- 	height: 58px;
- 	flex-shrink: 0;
- 	border-radius: 8px;
- 	background: #018AD3;
- 	box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.26);
- 	color: #FFF;
- 	text-align: center;
- 	border: 0;
- 	font-size: 18px;
- 	margin: 0 10px;
+ 	min-width: 100px;
+	border-radius: 8px;
+	background: #018AD3;
+	box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.26);
+	padding: 10px;
+	color: #FFF;
+	text-align: center;
+	font-size: 16px;
+	text-transform: capitalize;
+	margin: 10px;
+	margin-top: 20px;
+	border: 0;
+
  }
 
- .naresh_radioButton:hover {
- 	background-color: rgba(0, 0, 0, 0.26) !important;
- }
+
 
  .locationSheet {
  	background-size: cover;
@@ -158,4 +159,33 @@
  	justify-content: center;
  	align-items: center;
  	border-radius: 18px;
+ }
+
+ /*sliderBoxOne*/ 
+
+ .sliderBoxOne .citySearch{
+	width: 300px;
+	margin: 0 auto 25px;
+ }
+ .sliderBoxOne .box{
+	width: 220px;
+	height: 152px;
+ }
+ .sliderBoxOne .box label{
+	color: #FFF;
+	text-shadow: 2px 2px 2px black;
+
+ }
+ .sliderBoxOne .radioButton:hover,
+ .sliderBoxTwo .radioButton:hover  {
+	background-color: rgba(0, 0, 0, 0.26) !important;
+}
+
+.sliderBoxTwo .box{
+	width: 220px;
+	height: 152px;
+ }
+ .sliderBoxTwo .css-9pcneq-JoyRadio-action:hover,
+ .sliderBoxTwo .css-pg3u7k-JoyRadio-action.css-pg3u7k-JoyRadio-action{
+	background: transparent !important;
  }
