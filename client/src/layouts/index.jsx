@@ -32,7 +32,8 @@ const UserLayout = (props) => {
         <React.Fragment>
             <div id="layout-wrapper">
                 <ToastContainer autoClose={2000} />
-               {(location.pathname!='/homesearch')  &&  <Header />}
+                {/* {(location.pathname != '/homesearch') && <Header />} */}
+                <Header />
                 <div className="main-content">{props.children}
                 </div>
                 <Footer />
