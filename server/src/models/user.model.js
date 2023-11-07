@@ -151,13 +151,13 @@ userSchema.methods.isPasswordMatch = async function (password) {
 //   return this.image == '' ? gravatarUrl(this.email, { size: 200 }) : ''// or day.js/moment.js 
 // });
 
-userSchema.pre('save', async function (next) {
-  const user = this;
-  if (user.isModified('password')) {
-    user.password = await bcrypt.hash(user.password, 8);
-  }
-  next();
-});
+// userSchema.pre('save', async function (next) {
+//   const user = this;
+//   if (user.isModified('password')) {
+//     user.password = await bcrypt.hash(user.password, 8);
+//   }
+//   next();
+// });
 
 /**
  * @typedef User

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react'
+import axios from "axios";
 import {
     LoginSocialGoogle,
     LoginSocialFacebook,
@@ -7,8 +8,8 @@ import {
     FacebookLoginButton,
     GoogleLoginButton,
 } from 'react-social-login-buttons'
-
-import { createUserApi } from "../../helpers/users_helper.js"
+import { toast } from 'react-toastify';
+import { authUserApi, createUserApi } from "../../helpers/users_helper.js"
 
 
 import Card from '@mui/material/Card';
@@ -19,9 +20,11 @@ import { AccountCircle, VpnKey } from '@mui/icons-material';
 
 import puzzleIcon from '../../assets/puzzle-icon.png';
 import Checkbox from '@mui/material/Checkbox';
+import { Link, useHistory } from "react-router-dom";
 
 
 const LoginPage = () => {
+    const history = useHistory();
     const [provider, setProvider] = useState('')
     const [profile, setProfile] = useState(null)
     const onLoginStart = useCallback(() => {
@@ -65,20 +68,41 @@ const LoginPage = () => {
 
         if (!formData.email) {
             newErrors.email = "Enter email id";
-            console.log('d');
         }
         if (!formData.password) {
             newErrors.password = "Enter password";
-            console.log('df');
-
         }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
         } else {
             console.log(formData);
-            setFormData({ email: '', password: '' });
-            setErrors({});
+            authUserApi({
+                email: formData.email,
+                password: formData.password,
+                provider: 'email',
+            }).then((res) => {
+                if (res?.status == true) {
+                    window.localStorage.setItem("authUser", JSON.stringify(res.data));
+                    const t = res.data.tokens?.refresh?.token;
+                    if (t) {
+                        axios.defaults.headers.common["Authorization"] = "Bearer " + t;
+                    }
+                    toast.success("Logged In Successfully", { autoClose: 3000 });
+                    setFormData({ email: '', password: '' });
+                    setTimeout(() => {
+                        history.push("/");
+                    }, 2000);
+                    setErrors({});
+                } else {
+                    toast.warning(res?.message, { autoClose: 3000 });
+                    setFormData({ email: '', password: '' });
+                }
+            }).catch((err) => {
+                console.log(err)
+            })
+            // setFormData({ email: '', password: '' });
+            // setErrors({});
 
         }
     }
@@ -157,7 +181,7 @@ const LoginPage = () => {
                                             error={!!errors.email}
 
                                         />
-                                        {errors.email && <div style={{ color: 'red', fontSize:'12px' }}>{errors.email}</div>}
+                                        {errors.email && <div style={{ color: 'red', fontSize: '12px' }}>{errors.email}</div>}
 
                                     </Grid>
                                     <Grid item xs={12}>
@@ -176,7 +200,7 @@ const LoginPage = () => {
                                             }}
 
                                         />
-                                        {errors.password && <div style={{ color: 'red', fontSize:'12px' }}>{errors.password}</div>}
+                                        {errors.password && <div style={{ color: 'red', fontSize: '12px' }}>{errors.password}</div>}
 
                                     </Grid>
                                     <Grid className='remember-grid' >
@@ -204,46 +228,46 @@ const LoginPage = () => {
                                 </Button>
                                 <div className='loginSocial'>
                                     <div className='facebook'>
-                                    <LoginSocialFacebook
-                                        appId={process.env.REACT_APP_FB_APP_ID || ''}
-                                        onLoginStart={onLoginStart}
-                                        onResolve={({ provider, data }) => {
-                                            setProvider(provider)
-                                            setProfile(data)
-                                        }}
-                                        onReject={(err) => {
-                                            console.log(err)
-                                        }}
-                                    >
-                                        <FacebookLoginButton />
-                                    </LoginSocialFacebook>
+                                        <LoginSocialFacebook
+                                            appId={process.env.REACT_APP_FB_APP_ID || ''}
+                                            onLoginStart={onLoginStart}
+                                            onResolve={({ provider, data }) => {
+                                                setProvider(provider)
+                                                setProfile(data)
+                                            }}
+                                            onReject={(err) => {
+                                                console.log(err)
+                                            }}
+                                        >
+                                            <FacebookLoginButton />
+                                        </LoginSocialFacebook>
                                     </div>
                                     <div className='google'>
-                                    <LoginSocialGoogle
-                                        scope=' https://www.googleapis.com/auth/userinfo.email'
-                                        client_id={process.env.REACT_APP_GG_APP_ID || ''}
-                                        onLoginStart={onLoginStart}
-                                        onResolve={({ provider, data }) => {
-                                            setProvider(provider)
-                                            setProfile(data)
-                                            createUserApi({
-                                                profile_url: data.picture,
-                                                name: data.name,
-                                                email: data.email,
-                                                provider: 'google',
-                                                isEmailVerified: data.email_verified
-                                            }).then((res) => {
-                                                console.log("res", res);
-                                            }).catch((err) => {
+                                        <LoginSocialGoogle
+                                            scope=' https://www.googleapis.com/auth/userinfo.email'
+                                            client_id={process.env.REACT_APP_GG_APP_ID || ''}
+                                            onLoginStart={onLoginStart}
+                                            onResolve={({ provider, data }) => {
+                                                setProvider(provider)
+                                                setProfile(data)
+                                                createUserApi({
+                                                    profile_url: data.picture,
+                                                    name: data.name,
+                                                    email: data.email,
+                                                    provider: 'google',
+                                                    isEmailVerified: data.email_verified
+                                                }).then((res) => {
+                                                    console.log("res", res);
+                                                }).catch((err) => {
+                                                    console.log(err)
+                                                })
+                                            }}
+                                            onReject={(err) => {
                                                 console.log(err)
-                                            })
-                                        }}
-                                        onReject={(err) => {
-                                            console.log(err)
-                                        }}
-                                    >
-                                        <GoogleLoginButton />
-                                    </LoginSocialGoogle>
+                                            }}
+                                        >
+                                            <GoogleLoginButton />
+                                        </LoginSocialGoogle>
                                     </div>
                                 </div>
                             </form>

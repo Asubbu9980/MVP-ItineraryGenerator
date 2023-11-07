@@ -1,20 +1,17 @@
-// const jwt = require('jsonwebtoken');
-// const { v4: uuidv4 } = require('uuid');
-// const config = require('../../config/config');
-// // const { APILog } = require('../database/models');
-// const {
-//     commonResponse
-// } = require('../utils/Response.utils');
-// const {
-//     tokenTypes
-// } = require('../../config/tokens');
-// const {
-//     Users,
-//     UserAuthTokens,
-//     UserLoginActivity,
-//     UserRoles,
-//     UserRolesMapping
-// } = require('../database/models');
+const jwt = require('jsonwebtoken');
+const { v4: uuidv4 } = require('uuid');
+const config = require('../../config/config');
+// const { APILog } = require('../database/models');
+const {
+    commonResponse
+} = require('../utils/Response.utils');
+const {
+    tokenTypes
+} = require('../../config/tokens');
+const {
+    Users,
+    UserLoginActivity,
+} = require('../models');
 // const
 //     tokenService = require('../services/token.service')
 // const {
@@ -23,20 +20,20 @@
 // } = jwt;
 
 
-// const catchError = (err, res) => {
-//     if (err instanceof TokenExpiredError) {
-//         return res.status(401).send({
-//             message: "Unauthorized! Access Token was expired!"
-//         });
-//     } else if (err instanceof JsonWebTokenError) {
-//         return res.status(401).send({
-//             message: "Unauthorized! Invalid Access Token!"
-//         });
-//     }
-//     return res.sendStatus(401).send({
-//         message: "Unauthorized!"
-//     });
-// }
+const catchError = (err, res) => {
+    if (err instanceof TokenExpiredError) {
+        return res.status(401).send({
+            message: "Unauthorized! Access Token was expired!"
+        });
+    } else if (err instanceof JsonWebTokenError) {
+        return res.status(401).send({
+            message: "Unauthorized! Invalid Access Token!"
+        });
+    }
+    return res.sendStatus(401).send({
+        message: "Unauthorized!"
+    });
+}
 
 // module.exports.initCookies = async function (req, res, next) {
 //     const sessionToken = req.cookies['tempUserId']
@@ -68,98 +65,96 @@
 //     next();
 // }
 
-// module.exports.checkUserAuthStatus = async function (req, res, next) {
-//     var token = req.cookies?.token || req.headers?.authorization;
-//     // var token = req.cookies['token'];
-//     // console.log("token", token);
-//     if (token != '' && token != undefined) {
-//         // next()
-//         jwt.verify(token.replace(/^Bearer\s/, ''), config.jwt.secret, async (err, decoded) => {
-//             if (!err) {
-//                 console.log(token.replace(/^Bearer\s/, ''));
-//                 const verifyToken = await tokenService.verifyToken(token.replace(/^Bearer\s/, ''), tokenTypes.REFRESH);
-//                 if (verifyToken != null && verifyToken != 'Token not found' && verifyToken != undefined) {
-//                     const sessionRoleId = req.headers?.rolesessionid
-//                     const userSessionData = await prepareSessionData(verifyToken);
-//                     req.auth = userSessionData;
-//                     req.body.userId = userSessionData.userData.id
-//                     req.body.created_by = userSessionData.userData.id
-//                     req.body.updated_by = userSessionData.userData.id
-//                     if (sessionRoleId != '' && sessionRoleId != undefined) {
-//                         const activeRole = userSessionData.rolepermission.filter(function (freelancer) {
-//                             // console.log("freelancer", freelancer.dataValues.id);
-//                             // console.log("sessionRoleId", sessionRoleId);
-//                             return freelancer.dataValues.id == sessionRoleId
-//                         });
-//                         if (activeRole.length > 0) {
-//                             // console.log("activeRole", activeRole[0].role_permissions);
-//                             const per = activeRole[0].role_permissions
-//                             // console.log(per);
-//                             req.auth.activeRole = activeRole[0]
-//                             req.auth.permissions = per
-//                             // activeRole.UserRoles role_permissions
-//                         }
-//                     }
-//                 }
-//                 // Cookies that have not been signed
-//                 // res.cookie('token', token.replace(/^Bearer\s/, ''), { httpOnly: true });
-//                 next();
-//             } else {
-//                 // console.log("Jwt Error", err);
-//                 next();
-//             }
-//         })
-//     } else {
-//         next();
-//     }
-// }
+module.exports.authenticate = (req, res, next) => {
+    const accessToken = req.headers['authorization'];
+    const refreshToken = req.cookies['refreshToken'];
 
-// async function prepareSessionData(verifyToken) {
-//     // console.log("verifyToken", verifyToken);
-//     const loginActivity = await UserLoginActivity.findOne({
-//         where: {
-//             tokenId: verifyToken.id
-//         }
-//     });
-//     // console.log("loginActivity", loginActivity);
-//     if (loginActivity != null && !loginActivity.logged_out) {
-//         const userData = await Users.findByPk(loginActivity.userId, {
-//             include: [{
-//                 model: UserRoles,
-//                 attributes: ["id", ["role_name", "role"], "role_permissions", "is_super_admin"],
-//                 through: {
-//                     attributes: ["status"],
-//                 },
-//             },],
-//         })
-//         const userEnabledRoles = [];
-//         userData['UserRoles'].forEach((element, index) => {
-//             if (element['UserRolesMapping']['status'] == 'granted') {
-//                 userEnabledRoles.push(
-//                     element.dataValues.role,
-//                 )
-//             }
-//         });
-//         return {
-//             userData,
-//             "rolepermission": userData['UserRoles']
-//         };
-//     }
-// }
+    if (!accessToken && !refreshToken) {
+        return res.status(401).send('Access Denied. No token provided.');
+    }
+    console.log("accessToken", accessToken);
 
-// module.exports.isAuthenticated = async function (req, res, next) {
-//     if (req.auth != '' && req.auth != undefined) {
-//         next()
-//     } else {
-//         return commonResponse({
-//             req,
-//             res,
-//             status: false,
-//             message: 'Unauthorized',
-//             statusCode: 401,
-//         })
-//     }
-// }
+    try {
+        const decoded = jwt.verify(accessToken.replace(/^Bearer\s/, ''), config.jwt.secret);
+        console.log("decoded", decoded);
+        req.userId = decoded.sub;
+        next();
+    } catch (error) {
+        console.log("error", error);
+        // if (!refreshToken) {
+        //     return res.status(401).send('Access Denied. No refresh token provided.');
+        // }
+        // try {
+        //     const decoded = jwt.verify(refreshToken, config.jwt.secret);
+        //     const accessToken = jwt.sign({ user: decoded.user }, secretKey, { expiresIn: '1h' });
+        //     res
+        //         .cookie('refreshToken', refreshToken, { httpOnly: true, sameSite: 'strict' })
+        //         .header('Authorization', accessToken)
+        //         .send(decoded.user);
+        // } catch (error) {
+        //     return res.status(400).send('Invalid Token.');
+        // }
+    }
+};
+
+module.exports.checkUserAuthStatus = async function (req, res, next) {
+    // var token = req.cookies?.token || req.headers?.authorization;
+    // // var token = req.cookies['token'];
+    // // console.log("token", token);
+    // if (token != '' && token != undefined) {
+    //     // next()
+    //     jwt.verify(token.replace(/^Bearer\s/, ''), config.jwt.secret, async (err, decoded) => {
+    //         if (!err) {
+    //             console.log(token.replace(/^Bearer\s/, ''));
+    //             const verifyToken = await tokenService.verifyToken(token.replace(/^Bearer\s/, ''), tokenTypes.REFRESH);
+    //             if (verifyToken != null && verifyToken != 'Token not found' && verifyToken != undefined) {
+    //                 const userSessionData = await prepareSessionData(verifyToken);
+    //                 req.auth = userSessionData;
+    //                 req.body.userId = userSessionData.userData.id
+    //                 req.body.created_by = userSessionData.userData.id
+    //                 req.body.updated_by = userSessionData.userData.id
+    //             }
+    //             // res.cookie('token', token.replace(/^Bearer\s/, ''), { httpOnly: true });
+    //             next();
+    //         } else {
+    //             // console.log("Jwt Error", err);
+    //             next();
+    //         }
+    //     })
+    // } else {
+    //     next();
+    // }
+}
+
+async function prepareSessionData(verifyToken) {
+    // console.log("verifyToken", verifyToken);
+    const loginActivity = await UserLoginActivity.findOne({
+        where: {
+            tokenId: verifyToken.id
+        }
+    });
+    // console.log("loginActivity", loginActivity);
+    if (loginActivity != null && !loginActivity.logged_out) {
+        const userData = await Users.findByPk(loginActivity.userId)
+        return {
+            userData,
+        };
+    }
+}
+
+module.exports.isAuthenticated = async function (req, res, next) {
+    if (req.auth != '' && req.auth != undefined) {
+        // next()
+    } else {
+        return commonResponse({
+            req,
+            res,
+            status: false,
+            message: 'Unauthorized',
+            statusCode: 401,
+        })
+    }
+}
 
 // // module.exports. = async function (req, res, next) {
 // //     if (req.auth != '' && req.auth != undefined) {

@@ -4,7 +4,9 @@ const UserModel = require('../models/user.model');
 const UserLoginActivity = require('../models/user.login.activity.model');
 const { sendVerificationEmail } = require('./common/emailService');
 const { generateVerifyEmailToken, generateAuthTokens } = require('./common/tokenService');
-
+const auth0 = require('auth0-js');
+const bcrypt = require('bcryptjs');
+const axios = require('axios');
 class userService {
     createUser = async (userBody) => {
         try {
@@ -28,10 +30,12 @@ class userService {
                 } else {
                     userBody.slug = formatedSlug;
                 }
+                const encyP = await bcrypt.hash(userBody.password, 8);
                 const payload = {
                     "name": userBody.name,
                     "slug": userBody.slug,
                     "email": userBody.email,
+                    "password": encyP,
                     "provider": userBody.provider,
                     "profile_url": userBody
                         ?.profile_url && userBody.profile_url != ''
@@ -49,6 +53,10 @@ class userService {
                 const user = new UserModel(payload)
                 const createdUser = await user.save();
                 console.log(createdUser._id);
+                if (createdUser) {
+                    userBody.id = createdUser._id
+                    await this.createUserOnAuthO(userBody);
+                }
                 await generateVerifyEmailToken(createdUser);
                 // await sendVerificationEmail(createdUser.email, verifyEmailToken.token);
                 return { status: true, data: createdUser }
@@ -58,6 +66,33 @@ class userService {
         } catch (error) {
             console.log("Error", error);
             return { status: false, data: error.message }
+        }
+    }
+    createUserOnAuthO = async (userBody) => {
+        try {
+            let paydata = JSON.stringify({
+                "client_id": "Kd16lPoUWpRQ1YeGBsW94tgyISN6hubI",
+                "email": userBody.email,
+                "password": userBody.password,
+                "connection": "Username-Password-Authentication",
+                "name": userBody.name,
+                "user_metadata": {
+                    mongo_user_id: userBody.id
+                }
+            });
+            let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'https://dev-w1bmqazbzn600xvo.us.auth0.com/dbconnections/signup',
+                headers: {
+                    'content-type': 'application/json',
+                },
+                data: paydata
+            };
+            const { data, error } = await axios.request(config);
+            return data;
+        } catch (error) {
+
         }
     }
     authUser = async (req) => {
@@ -75,45 +110,48 @@ class userService {
                     }
                 })
             if (account) {
-                console.log("account", account);
-                var ip = (req.headers['x-forwarded-for'] || '').split(',').pop().trim() ||
-                    req.connection.remoteAddress ||
-                    req.socket.remoteAddress ||
-                    req.connection.socket.remoteAddress;
-                var device = req.headers["user-agent"];
-                const tokens = await generateAuthTokens(account, ip, device);
-                const checkLoginActivityActivity = await UserLoginActivity.findOne({
-                    where: {
-                        token: tokens.authId
-                    }
-                })
 
-                if (!checkLoginActivityActivity) {
-                    await UserLoginActivity.create({
-                        "token": tokens.authId,
-                        "user": account.id,
-                        "logged_in_at": Date.now()
-                    })
-                } 
                 if (provider && provider == 'google') {
                     return {
                         data: { tokens, user: account, message: "User Logged In Successfully" },
                     }
                 } else {
-                    // const passwordCheck = await bcrypt.compare(password, account.password);
-
+                    var ip = (req.headers['x-forwarded-for'] || '').split(',').pop().trim() ||
+                        req.connection.remoteAddress ||
+                        req.socket.remoteAddress ||
+                        req.connection.socket.remoteAddress;
+                    var device = req.headers["user-agent"];
+                    const tokens = await generateAuthTokens(account, ip, device);
+                    const checkLoginActivityActivity = await UserLoginActivity.findOne({
+                        where: {
+                            token: tokens.authId
+                        }
+                    })
+                    if (!checkLoginActivityActivity) {
+                        await UserLoginActivity.create({
+                            "token": tokens.authId,
+                            "user": account.id,
+                            "logged_in_at": Date.now()
+                        })
+                    }
+                    const passwordCheck = await bcrypt.compare(password, account.password);
+                    if (passwordCheck) {
+                        console.log("token", tokens);
+                        return {
+                            data: { tokens: tokens, user: account },
+                            message: "User Logged In Successfully",
+                            status: true,
+                        }
+                    } else {
+                        return { status: false, error: "Invalid Password", message: "Invalid Password" }
+                    }
                 }
             } else {
-                // return commonResponse({
-                //     req,
-                //     res,
-                //     status: false,
-                //     message: "Invalid User",
-                //     statusCode: 200,
-                // })
+
             }
         } catch (error) {
-            return { status: false, data: error.message }
+            console.log("e", error);
+            return { error: error.message }
         }
     }
     getUsers = async () => {

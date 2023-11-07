@@ -39,14 +39,17 @@ class userController {
         try {
             const { status, data, message, error } = await userService.authUser(req);
             if (data !== undefined) {
-                return commonResponse({
-                    req,
-                    res,
-                    status: status,
-                    message: message,
-                    data: data,
-                    statusCode: 200,
-                })
+                let finalMessage = status ? message == '' ? "Success" : message : message == '' ? "Error Something went wrong" : message;
+                console.log("data.tokens", data.tokens);
+                return res
+                    .cookie('refreshToken', data.tokens.refresh.token, { httpOnly: true, sameSite: 'strict' })
+                    .cookie('authId', data.tokens.authId, { httpOnly: true, sameSite: 'strict' })
+                    .status(parseInt(200)).json({
+                        status,
+                        "message": finalMessage,
+                        data,
+                        error
+                    });
             } else {
                 return commonResponse({
                     req,
@@ -58,6 +61,7 @@ class userController {
                 })
             }
         } catch (error) {
+            console.log("error", error);
             return commonResponse({
                 req,
                 res,
