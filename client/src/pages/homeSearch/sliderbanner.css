@@ -143,8 +143,8 @@
 	text-align: center;
 	font-size: 16px;
 	text-transform: capitalize;
-	margin: 10px;
-	margin-top: 20px;
+	/* margin: 10px; */
+	/* margin-top: 20px; */
 	border: 0;
 
  }
@@ -165,7 +165,7 @@
 
  .sliderBoxOne .citySearch{
 	width: 300px;
-	margin: 0 auto 25px;
+	margin: 0 auto 20px;
  }
  .sliderBoxOne .box{
 	width: 220px;

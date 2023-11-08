@@ -51,40 +51,54 @@ class tripController {
             // const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  with activities with detailed accommodation,prices in rupees with co-ordinates & transportation in valid JSON format `;
             // const t q = `create Itinerary to ${ destination } from ${ source } from ${ start_date } to ${ end_date } with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in below valid JSON format 
 
-            const q = `create Trip Itinerary to ${destination} from ${start_date} to ${end_date} with activities, detailed descriptions for activities, accommodation with map coordinates along with transportation charges including bus,car,train,flight in indian rupees from ${source} in valid JSON format
-            {
-            "trip_start_date": "",
-             "trip_end_date": "",
-             "trip_duration": "",
-             "starting_location": "",
-             "ending_location": "",
-             "activities": [
-               {
-                 "name": "",
-                 "description": "",
-                 "coordinates": "",
-                 "recommended_stay": "",
-                 activity:[],
-                 "accommodation": {
-                   "name": "",
-                   "type": "",
-                   "coordinates": "",
-                   "price_per_night": ""
-                 },
-                 "transportation": {
-                    "bus":{},
-                    "train":{},
-                    "flight":{},
-                    "car":{},
-                 },
-                 "food_choices": [{
-                   "name":"",
-                   "price":"",
-                   "coordinates": "",
-                 }]
-               },
-             ]
-            }`;
+            const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format
+        {
+        "trip_start_date": "",
+         "trip_end_date": "",
+         "trip_duration": "",
+         "starting_location": "",
+         "ending_location": "",
+         "activities": [
+           {
+             "name": "",
+             "description": "",
+             "coordinates": {
+                "title":"",
+                "lat":"",
+                "lng":"",
+             },
+             "recommended_stay": "",
+             "activity":[],
+             "popular_places":[],
+             "accommodation": [{
+               "address":"",
+               "name": "",
+               "type": "",
+               "coordinates":  {
+                "title":"",
+                "lat":"",
+                "lng":"",
+             },
+               "price_per_night": ""
+             }],
+             "transportation": {
+                "bus":{},
+                "train":{},
+                "flight":{},
+             },
+             "food_choices": [{
+               "name":"",
+               "price":"",
+               "address":"",
+               "coordinates":  {
+                "title":"",
+                "lat":"",
+                "lng":"",
+             },
+             }]
+           },
+         ]
+        }`;
             //testg const q = `create Itinerary to ${ destination } from ${ source } in between ${ start_date } to ${ end_date } with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in valid JSON format`;
             // const q = `create Itinerary to Kochi(Cochin) from Goa in between 31 October, 2023 to 04 November, 2023 with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in below valid JSON format
             // "itinerary": [
