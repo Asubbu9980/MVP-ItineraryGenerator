@@ -6,6 +6,7 @@
 
 }
 
+
 .search-form {
     color: #fff;
 }
@@ -69,9 +70,9 @@
     background: #018AD3;
 }
 
-/* .custom-radio .css-hyxlzm {
+.custom-radio .css-hyxlzm {
     color: #018AD3;
-} */
+}
 
 
 .search-form .container .col {
@@ -125,8 +126,8 @@
 }
 
 .radio_sheets {
-    /* display: flex;
-    gap: 24px; */
+    display: flex;
+    gap: 24px;
 }
 
 .radio_sheets .radio_btn {
@@ -144,6 +145,7 @@
 
 }
 .radio_sheets .radio_btn:hover {
+color:#018AD3 ;
 border: 1px solid #018AD3;
 background: rgba(1, 138, 211, 0.10);
 }
@@ -153,15 +155,14 @@ color:#018AD3 ;
 
 }
 .radio_sheets .Mui-checked{
-/* background: rgba(1, 138, 211, 0.10); */
-}
+background: rgba(1, 138, 211, 0.10);
 
+}
 .radio_sheets .radio-icon {
     display: inline-block;
     width: 24px;
     height: 24px;
     background-repeat: no-repeat;
-    background-color: red;
 
 }
 
