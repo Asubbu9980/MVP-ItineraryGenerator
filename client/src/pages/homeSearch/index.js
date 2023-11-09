@@ -102,7 +102,9 @@ const IndexPage = () => {
     const totalSlides = slider.current ? slider.current.props.children.length : 0;
 
 
-    const sliderImages = [bannerOne, bannerTwo, bannerThree, bannerFour, bannerFive, bannerSix]
+    const sliderImages = [bannerSix]
+    // const sliderImages = [bannerOne, bannerTwo, bannerThree, bannerFour, bannerFive, bannerSix]
+
 
 
 
@@ -268,11 +270,11 @@ const IndexPage = () => {
                                                             startDecorator={<SearchIcon />}
                                                             placeholder="Search for a city"
                                                             value={tripPayloadState.destination}
-
+                                                            width='400px'
                                                             name='destination'
                                                             onChange={(e, value) => handleChangeTripDestination('destination', value)}
                                                             options={cityNames}
-                                                            style={{ height: '45px' }}
+                                                            style={{ height: '48px' }}
                                                         />
                                                     </Stack>
                                                 </div>
@@ -539,7 +541,7 @@ const IndexPage = () => {
                                             </div>
 
                                         </Slider>
-                                        <div className='slickArrows' style={{ textAlign: "center" }}>
+                                        <div className='slickArrows' >
                                             {currentSlide != 0 && <button className="button mx-2" onClick={previous} >
                                                 Previous
                                             </button>}

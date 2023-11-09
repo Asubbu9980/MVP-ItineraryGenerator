@@ -9,6 +9,7 @@ import Header from './header';
 import Footer from './footer';
 import { useLocation } from 'react-router-dom';
 
+
 const UserLayout = (props) => {
 
     const location = useLocation();

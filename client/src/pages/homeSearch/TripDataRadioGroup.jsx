@@ -40,13 +40,14 @@ const TripDataRadioGroup = ({ fieldName = '', data = [] }) => {
                     <div className='box'>
                         <Sheet
                             key={info.id}
-                            className='locationSheet'
+                            className='radioSheet'
                             sx={{
                                 p: 1,
-                                // borderRadius: 'md',
+                                 borderRadius: '8px',
                                 // height: '140px',
+                                border: '1px solid #D3D3D3',
                             }}
-                            style={{ backgroundImage: fieldName === 'destination' ? `url(${info.url})` : '', }}
+                            style={{ backgroundImage: fieldName !== 'trip_status_type' ? `url(${info.url})` : '', }}
                         >
                             {fieldName === 'trip_status_type' || fieldName === 'food_type' ? <img src={info.url} alt='' width={25} style={{ display: 'block', marginRight: '5px' }} /> : null}
 
@@ -57,9 +58,8 @@ const TripDataRadioGroup = ({ fieldName = '', data = [] }) => {
                                 value={info.item}
                                 slotProps={{
                                     label: ({ checked }) => ({
+                                        className: 'radioLabel',
                                         sx: {
-                                            fontWeight: 'lg',
-                                            fontSize: 'md',
                                             color: checked ? 'text.primary' : 'text.secondary',
                                         },
                                     }),
