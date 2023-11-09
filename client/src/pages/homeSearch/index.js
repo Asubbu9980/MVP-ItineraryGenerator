@@ -26,7 +26,8 @@ import MapModal from '../home/MapModal';
 import TripDataRadioGroup from './TripDataRadioGroup';
 import TripDatePicker from './TripDatePicker';
 import { cityNames, tripCity, comingWith, spendTime, food, tripTheme } from './TripDataFile';
-
+import dayjs from 'dayjs';
+import { startDateInitialValue, endDateInitialValue } from '../../context/TripDataContext';
 
 
 const IndexPage = () => {
@@ -179,9 +180,17 @@ const IndexPage = () => {
     const handleSubmit = () => {
         if (tripPayloadState.trip_theme_type) {
 
+            const formattedStartDate = dayjs(tripPayloadState.start_date).format('DD MMMM, YYYY');
+
+            const formattedEndDate = dayjs(tripPayloadState.end_date).format('DD MMMM, YYYY');
+
             setErrors({ ...errors, trip_theme_type: '' })
             loaderContext.startLoading(true)
-            getResult(tripPayloadState)
+
+            getResult({
+                ...tripPayloadState, start_date: formattedStartDate, end_date: formattedEndDate, "source": "Hyderabad"
+            })
+
         } else {
             setErrors({ ...errors, trip_theme_type: 'Please Select Your Trip Theme Type' })
         }
@@ -202,14 +211,14 @@ const IndexPage = () => {
 
         try {
             // let checkIfInArray = (key, list) => list.some(obj => JSON.stringify(obj).indexOf(key) > -1);
-            getTripDetailsApi({ ...payload, "source": "Hyderabad" }).then((r) => {
+            getTripDetailsApi(payload).then((r) => {
                 console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
                 setTripPayloadState({
                     destination: '',
-                    start_date: '',
-                    end_date: '',
-                    trip_status_type: '',
+                    start_date: startDateInitialValue,
+                    end_date: endDateInitialValue,
+                    trip_status_type: 'Going solo',
                     activities: [],
                     transport: '',
                     food_type: '',

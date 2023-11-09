@@ -1,20 +1,27 @@
 import React, { useContext } from 'react'
-import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Card from '@mui/material/Card';
 import { TripPayloadContext } from '../../context/TripDataContext';
+import dayjs from 'dayjs';
 
 
 const TripDatePicker = ({ fieldName = '' }) => {
     const { tripPayloadState, setTripPayloadState } = useContext(TripPayloadContext);
+    // console.log(tripPayloadState)
+
+    const MaxEndDate = dayjs(tripPayloadState.start_date).add(6, 'day')
 
     const onChangeDate = (name, date) => {
-        const formattedDate = dayjs(date.$d).format('DD MMMM, YYYY');
-        // console.log(name, formattedDate)
+        if (name === 'start_date') {
+            const minimumTripEndDate = dayjs(date).add(3, 'day')
+            setTripPayloadState((prevState) => ({ ...prevState, start_date: date, end_date: minimumTripEndDate }));
 
-        setTripPayloadState((prevState) => ({ ...prevState, [name]: formattedDate }));
+        } else {
+            setTripPayloadState((prevState) => ({ ...prevState, [name]: date }));
+        }
+
     };
 
     return (
@@ -25,7 +32,10 @@ const TripDatePicker = ({ fieldName = '' }) => {
                         className="date-picker-classname"
                         style={{ background: '#fff' }}
                         value={tripPayloadState[fieldName]}
+                        maxDate={fieldName === 'start_date' ? '' : MaxEndDate}
+                        minDate={fieldName === 'start_date' ? dayjs(new Date()) : tripPayloadState.start_date}
                         name={fieldName}
+                        disablePast
                         onChange={(date) => onChangeDate(fieldName, date)}
                     />
                 </LocalizationProvider>
