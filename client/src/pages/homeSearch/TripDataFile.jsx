@@ -162,7 +162,6 @@ export const tripTheme = [
 ]
 export const cityNames = [
     "Agra",
-    "Jaipur",
     "Varanasi",
     "Kochi (Cochin)",
     "Goa",
