@@ -6,11 +6,11 @@ import Box from '@mui/joy/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@mui/joy/Checkbox';
 import Chip from '@mui/joy/Chip';
-import bannerOne from '../../assets/banners/1.jpg'
-import bannerTwo from '../../assets/banners/2.jpg'
-import bannerThree from '../../assets/banners/3.jpg'
-import bannerFour from '../../assets/banners/4.jpg'
-import bannerFive from '../../assets/banners/5.jpg'
+// import bannerOne from '../../assets/banners/1.jpg'
+// import bannerTwo from '../../assets/banners/2.jpg'
+// import bannerThree from '../../assets/banners/3.jpg'
+// import bannerFour from '../../assets/banners/4.jpg'
+// import bannerFive from '../../assets/banners/5.jpg'
 import bannerSix from '../../assets/banners/6.jpg'
 import Autocomplete from '@mui/joy/Autocomplete';
 import Stack from '@mui/joy/Stack';
@@ -28,6 +28,8 @@ import TripDatePicker from './TripDatePicker';
 import { cityNames, tripCity, comingWith, spendTime, food, tripTheme } from './TripDataFile';
 import dayjs from 'dayjs';
 import { startDateInitialValue, endDateInitialValue } from '../../context/TripDataContext';
+import TripDailyPlanningData from './TripDailyPlanningData';
+import NoTripDataAvailable from './NoTripDataAvailable';
 
 
 const IndexPage = () => {
@@ -574,77 +576,79 @@ const IndexPage = () => {
                     {
                         tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
 
-                            <div>
-                                <div>
-                                    <Container>
-                                        <h2 style={{ marginBottom: '32px' }}>Your Plan Details</h2>
-                                    </Container>
+                            // <div>
+                            //     <div>
+                            //         <Container>
+                            //             <h2 style={{ marginBottom: '32px' }}>Your Plan Details</h2>
+                            //         </Container>
 
-                                </div>
-                                <div>
-                                    <Container>
+                            //     </div>
+                            //     <div>
+                            //         <Container>
 
-                                        <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
+                            //             <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
 
-                                            <ul>
-                                                {
-                                                    tripData.places_visited.map((m, i) => {
-                                                        return < li className='tripDetails-item' key={i}>
+                            //                 <ul>
+                            //                     {
+                            //                         tripData.places_visited.map((m, i) => {
+                            //                             return < li className='tripDetails-item' key={i}>
 
-                                                            <div className="dot">
+                            //                                 <div className="dot">
 
-                                                                <div className="center"></div>
+                            //                                     <div className="center"></div>
 
-                                                                <div className="ring"></div>
+                            //                                     <div className="ring"></div>
 
-                                                            </div>
+                            //                                 </div>
 
 
-                                                            <div className='viewmap_btn'> <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
+                            //                                 <div className='viewmap_btn'> <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
 
-                                                            </Button>
+                            //                                 </Button>
 
-                                                            </div>
-                                                            {/* {m?.activity && " - " + m.activity} */}
-                                                            <h5>Day {i + 1}  {" - " + m.name} </h5>
+                            //                                 </div>
+                            //                                 {/* {m?.activity && " - " + m.activity} */}
+                            //                                 <h5>Day {i + 1}  {" - " + m.name} </h5>
 
-                                                            <h6>{m.date}</h6>
-                                                            <p className='mt-2 mb-0 pb-0'>
-                                                                {m.description}
+                            //                                 <h6>{m.date}</h6>
+                            //                                 <p className='mt-2 mb-0 pb-0'>
+                            //                                     {m.description}
 
-                                                            </p>
-                                                            <ul className="trip-points">
-                                                                {
-                                                                    m.activity?.map((sm, si) => {
-                                                                        return <li key={si}>{sm}</li>
-                                                                    })
-                                                                }
-                                                                <br />
-                                                                {/* {
-                                                                    m.description?.split(".")?.map((sm, si) => {
-                                                                        return sm != "" && <li key={si}>{sm}</li>
-                                                                       
-                                                                    })
-                                                                } */}
+                            //                                 </p>
+                            //                                 <ul className="trip-points">
+                            //                                     {
+                            //                                         m.activity?.map((sm, si) => {
+                            //                                             return <li key={si}>{sm}</li>
+                            //                                         })
+                            //                                     }
+                            //                                     <br />
+                            //                                     {/* {
+                            //                                         m.description?.split(".")?.map((sm, si) => {
+                            //                                             return sm != "" && <li key={si}>{sm}</li>
 
-                                                            </ul>
+                            //                                         })
+                            //                                     } */}
 
-                                                        </li>
+                            //                                 </ul>
 
-                                                    })
+                            //                             </li>
 
-                                                }
+                            //                         })
 
-                                            </ul>
+                            //                     }
 
-                                        </Card>
+                            //                 </ul>
 
-                                    </Container>
+                            //             </Card>
 
-                                </div>
-                            </div>
+                            //         </Container>
+
+                            //     </div>
+                            // </div>
+                            <TripDailyPlanningData tripData={tripData} onChangeModalState={onChangeModalState} />
+
                             : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && <div>
-                                <div className='search_info'>
+                                {/* <div className='search_info'>
 
                                     <img src={searchIocn} alt='logo' />
 
@@ -652,7 +656,8 @@ const IndexPage = () => {
 
                                         Please check for other popular locations.</h5>
 
-                                </div>
+                                </div> */}
+                                <NoTripDataAvailable />
 
                             </div>
 
