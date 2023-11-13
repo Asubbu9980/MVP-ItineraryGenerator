@@ -115,7 +115,7 @@ const IndexPage = () => {
             errors.destination = 'Destination is required';
         }
         if (!values.source) {
-            errors.source = 'Location is required';
+            errors.source = 'Origin is required';
         }
         if (!values.start_date) {
             errors.start_date = 'Start Date is required';
@@ -220,6 +220,19 @@ const IndexPage = () => {
                             <form autoComplete='off' className="search-form" onSubmit={formik.handleSubmit}>
                                 <div className="container">
                                     <div className="row">
+                                        {/* Location */}
+                                        <div className="col col-3">
+                                            <label style={{ marginBottom: '8px' }}>Origin</label>
+                                            <Autocomplete
+                                                disablePortal
+                                                id="combo-box-location"
+                                                options={famousTouristCitiesInIndia}
+                                                value={formik.values.source}
+                                                onChange={(e, value) => formik.setFieldValue('source', value)}
+                                                renderInput={(params) => <TextField {...params} />}
+                                            />
+                                            {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
+                                        </div>
                                         {/* Destination */}
                                         <div className="col col-3">
                                             <label style={{ marginBottom: '8px' }}>Destination </label>
@@ -234,19 +247,7 @@ const IndexPage = () => {
                                             {formik.errors.destination ? <p className='errors'>{formik.errors.destination}</p> : null}
                                         </div>
 
-                                        {/* Location */}
-                                        <div className="col col-3">
-                                            <label style={{ marginBottom: '8px' }}>Location</label>
-                                            <Autocomplete
-                                                disablePortal
-                                                id="combo-box-location"
-                                                options={famousTouristCitiesInIndia}
-                                                value={formik.values.source}
-                                                onChange={(e, value) => formik.setFieldValue('source', value)}
-                                                renderInput={(params) => <TextField {...params} />}
-                                            />
-                                            {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
-                                        </div>
+
 
                                         {/* Budget */}
                                         {/* <Grid item xs={2}>
@@ -340,7 +341,7 @@ const IndexPage = () => {
 
                                         <Card className='tripDetails-grid' style={{ padding: '20px', borderRadius: '25px' }}>
 
-                                             <ul>
+                                            <ul>
                                                 {
                                                     tripData.places_visited.map((m, i) => {
                                                         return < li className='tripDetails-item' key={i}>
@@ -367,21 +368,67 @@ const IndexPage = () => {
                                                                 {m.description}
 
                                                             </p>
-                                                            <ul className="trip-points">
-                                                                {
-                                                                    m.activity?.map((sm, si) => {
-                                                                        return <li key={si}>{sm}</li>
-                                                                    })
-                                                                }
-                                                                <br />
-                                                                {/* {
-                                                                    m.description?.split(".")?.map((sm, si) => {
-                                                                        return sm != "" && <li key={si}>{sm}</li>
-                                                                       
-                                                                    })
-                                                                } */}
+                                                            {
+                                                                m.activity && m.activity.length > 0 ? <>
+                                                                    <h5 className='mt-2'>
+                                                                        Activities :
+                                                                    </h5>
+                                                                    <ul className="trip-points">
+                                                                        {
+                                                                            m.activity?.map((sm, si) => {
+                                                                                return <li key={si}>{sm}</li>
+                                                                            })
+                                                                        }
+                                                                    </ul>
+                                                                </> : null
+                                                            }
 
-                                                            </ul>
+                                                            {
+                                                                m.popular_places && m.popular_places.length > 0 ? <>
+                                                                    <h5 className='mt-2'>
+                                                                        Popular Places :
+                                                                    </h5>
+                                                                    <ul className="trip-points">
+                                                                        {
+                                                                            m.popular_places?.map((sm, si) => {
+                                                                                return <li key={si}>{sm}</li>
+                                                                            })
+                                                                        }
+                                                                    </ul>
+                                                                </> : null
+                                                            }
+                                                            {
+                                                                m.food_choices && m.food_choices.length > 0 ? <>
+                                                                    <h5 className='mt-2'>
+                                                                        Must Try Food:
+                                                                    </h5>
+                                                                    <ul className="trip-points">
+                                                                        {
+                                                                            m.food_choices?.map((sm, si) => {
+                                                                                return <li key={si}>{sm.name + " - Price: " + sm.price}</li>
+                                                                            })
+                                                                        }
+
+                                                                    </ul>
+                                                                </> : null
+                                                            }
+                                                            {
+                                                                m.accommodation && m.accommodation.length > 0 ? <>
+                                                                    <h5 className='mt-2'>
+                                                                        Recommended Stay:
+                                                                    </h5>
+                                                                    <ul className="trip-points">
+                                                                        {
+                                                                            m.accommodation?.map((sm, si) => {
+                                                                                return <li key={si}>
+                                                                                    <span>Hotel Name:{sm.name}</span>
+                                                                                </li>
+                                                                            })
+                                                                        }
+
+                                                                    </ul>
+                                                                </> : null
+                                                            }
 
                                                         </li>
 

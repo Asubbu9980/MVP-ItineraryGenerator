@@ -261,7 +261,7 @@ background: rgba(1, 138, 211, 0.10);
 }
 
 .tripDetails-grid .tripDetails-item .trip-points {
-    padding-left: 15px;
+    /* padding-left: 15px; */
 }
 
 .tripDetails-grid .tripDetails-item .trip-points li {

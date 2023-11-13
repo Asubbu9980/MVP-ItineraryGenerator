@@ -162,6 +162,41 @@ class tripController {
             })
         }
     }
+    getUserSearchHistory = async (req, res, next) => {
+        try {
+            const data = await SearchHistoryModel.find({
+                'user': req.userId
+            })
+            if (data !== undefined) {
+                return commonResponse({
+                    req,
+                    res,
+                    status: true,
+                    data: data,
+                    message: "Success",
+                    statusCode: 200,
+                })
+            } else {
+                return commonResponse({
+                    req,
+                    res,
+                    status: false,
+                    error: error,
+                    message: "Failed",
+                    statusCode: 500,
+                })
+            }
+        } catch (error) {
+            console.log("error", error);
+            return commonResponse({
+                req,
+                res,
+                status: false,
+                data: error,
+                statusCode: 500,
+            })
+        }
+    }
     // generate = async (req, res, next) => {
     //     try {
     //         console.log("openai", openai);

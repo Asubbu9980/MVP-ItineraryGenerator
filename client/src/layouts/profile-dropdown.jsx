@@ -17,18 +17,21 @@ const ProfileDropdown = () => {
     const avatarClose = () => {
         setAnchorEl(null);
     };
+    const handleLogOut = () => {
+        window.localStorage.removeItem("authUser");
+    }
     useEffect(() => {
         if (window.localStorage.getItem("authUser")) {
             const obj = JSON.parse(window.localStorage.getItem("authUser"));
             console.log("obj", obj);
             setUser(obj);
         }
-    }, []);
+    }, [window.localStorage.getItem("authUser")]);
     return (
         <Box>
             <div style={{ cursor: 'pointer' }}>
                 {
-                    user == null ? <>{"Login"}</> : <><div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    user == null ? <a className='link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover' href='/login'> {"Login"}</a> : <><div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Avatar
                             alt={user.user.name}
                             src={avatarIcon}
@@ -42,7 +45,7 @@ const ProfileDropdown = () => {
                         >
                             <MenuItem>Profile</MenuItem>
                             <MenuItem>Settings</MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem onClick={() => handleLogOut()} >Logout</MenuItem>
                         </Menu>
                     </>
                 }
