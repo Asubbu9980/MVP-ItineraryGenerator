@@ -1,7 +1,7 @@
 
 // Users
 
-export const USERS = "/v1/user";
+export const USERS = "/user";
 export const TRIP = "/trip";
 
 
