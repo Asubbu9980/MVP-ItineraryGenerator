@@ -8,8 +8,14 @@ import MenuItem from '@mui/material/MenuItem';
 import avatarIcon from "../assets/avatar.png";
 import lableDownLine from "../assets/lable_down-line.svg";
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth0 } from '@auth0/auth0-react';
+
+
 const HeaderComponent = () => {
     const [anchorEl, setAnchorEl] = useState(null);
+
+    const { user, isAuthenticated, logout } = useAuth0();
+
     const location = useLocation();
     console.log(location.pathname)
     const avatarClick = (event) => {
@@ -28,13 +34,14 @@ const HeaderComponent = () => {
                     <Link to={location.pathname === "/" ? "/homesearch" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
                         <p >{location.pathname === "/" ? 'New Home Search' : 'Old Home Search'}</p>
                     </Link>
-                    <div style={{ cursor: 'pointer' }}>
+                    {/* {isAuthenticated ? <Button onClick={() => logout()} variant='contained' className='mx-3'>Logout</Button> : <Button onClick={() => loginWithRedirect()} variant='contained'>Login</Button>} */}
+                    {isAuthenticated && <div style={{ cursor: 'pointer' }}>
                         <div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Avatar
                                 alt="John Doe"
                                 src={avatarIcon}
                             />
-                            <div style={{ marginLeft: "8px" }}>John Deo   <img src={lableDownLine} alt='lableDownLine' /></div>
+                            <div style={{ marginLeft: "8px", fontWeight: '500' }}>{user?.nickname?.toLocaleUpperCase()}  <img src={lableDownLine} alt='lableDownLine' /></div>
                         </div>
                         <Menu
                             anchorEl={anchorEl}
@@ -43,9 +50,11 @@ const HeaderComponent = () => {
                         >
                             <MenuItem>Profile</MenuItem>
                             <MenuItem>Settings</MenuItem>
-                            <MenuItem>Logout</MenuItem>
+                            <MenuItem>
+                                <Button onClick={() => logout()} variant='contained' size='small'>Logout</Button>
+                            </MenuItem>
                         </Menu>
-                    </div>
+                    </div>}
                 </Box>
             </Container>
         </div>

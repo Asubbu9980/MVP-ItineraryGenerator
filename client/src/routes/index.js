@@ -14,18 +14,20 @@ const Index = () => {
         <React.Fragment>
             <Switch>
                 <Route path={availablePublicRoutesPaths}>
-                    <UserLayout>
-                        <Switch>
-                            {publicRoutes.map((route, idx) => (
-                                <Route
-                                    path={route.path}
-                                    component={route.component}
-                                    key={idx}
-                                    exact={true}
-                                />
-                            ))}
-                        </Switch>
-                    </UserLayout>
+                    <AuthProtected>
+                        <UserLayout>
+                            <Switch>
+                                {publicRoutes.map((route, idx) => (
+                                    <Route
+                                        path={route.path}
+                                        component={route.component}
+                                        key={idx}
+                                        exact={true}
+                                    />
+                                ))}
+                            </Switch>
+                        </UserLayout>
+                    </AuthProtected>
                 </Route>
             </Switch>
         </React.Fragment>

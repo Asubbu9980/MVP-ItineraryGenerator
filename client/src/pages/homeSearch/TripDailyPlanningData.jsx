@@ -61,6 +61,31 @@ const TripDailyPlanningData = ({ tripData = {}, onChangeModalState }) => {
                                     } */}
 
                                         </ul>
+                                        {m.accommodation && m.accommodation.length > 0 ? <>
+                                            <h6 className='trip-recommended-hotel'>Recommended Hotels For Stay:</h6>
+                                            <ol className='mb-3'>
+                                                {m.accommodation.map((sm, si) => {
+                                                    return <li key={sm} className='trip-hotel-title my-2'>{sm.name}
+                                                        <br />
+                                                        <p className='trip-hotel-address my-1 py-0'>Address:{" "}<span className='trip-hotel-details-span'>{sm.address}.</span></p>
+                                                        <p className='trip-hotel-price my-0 py-0'>Price Per Night:{" "}<span className='trip-hotel-details-span'>{sm.price_per_night}.</span></p>
+                                                    </li>
+                                                })}
+                                            </ol>
+                                        </> : null}
+
+                                        {m.food_choices && m.food_choices.length > 0 ? <>
+                                            <h6 className='trip-recommended-hotel'>Recommended Famous Food Items:</h6>
+                                            <ol >
+                                                {m.food_choices.map((sm, si) => {
+                                                    return <li key={sm} className='trip-hotel-title my-2'>{sm.name}
+                                                        <br />
+                                                        <p className='trip-hotel-address my-1 py-0'>Address:{" "}<span className='trip-hotel-details-span'>{sm.address}.</span></p>
+                                                        <p className='trip-hotel-price my-0 py-0'>Price:{" "}<span className='trip-hotel-details-span'>{sm.price}.</span></p>
+                                                    </li>
+                                                })}
+                                            </ol>
+                                        </> : null}
 
                                     </li>
 

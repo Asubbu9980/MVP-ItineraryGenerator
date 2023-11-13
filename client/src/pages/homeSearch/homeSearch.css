@@ -16,3 +16,24 @@
     width: 40%;
     /* text-align: center !important; */
 }
+.trip-recommended-hotel{
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    text-decoration: underline;
+}
+.trip-hotel-address{
+    font-size: 13px;
+    font-weight: 500;
+}
+.trip-hotel-price{
+    font-size: 13px;
+    font-weight: 500;
+}
+.trip-hotel-title{
+    font-size: 15px;
+    font-weight: 500;
+}
+.trip-hotel-details-span{
+    font-size: 13px;
+    font-weight: 400;
+}
