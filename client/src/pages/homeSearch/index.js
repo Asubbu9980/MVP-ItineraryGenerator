@@ -6,11 +6,11 @@ import Box from '@mui/joy/Box';
 import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@mui/joy/Checkbox';
 import Chip from '@mui/joy/Chip';
-// import bannerOne from '../../assets/banners/1.jpg'
-// import bannerTwo from '../../assets/banners/2.jpg'
-// import bannerThree from '../../assets/banners/3.jpg'
-// import bannerFour from '../../assets/banners/4.jpg'
-// import bannerFive from '../../assets/banners/5.jpg'
+import bannerOne from '../../assets/banners/1.jpg'
+import bannerTwo from '../../assets/banners/2.jpg'
+import bannerThree from '../../assets/banners/3.jpg'
+import bannerFour from '../../assets/banners/4.jpg'
+import bannerFive from '../../assets/banners/5.jpg'
 import bannerSix from '../../assets/banners/6.jpg'
 import Autocomplete from '@mui/joy/Autocomplete';
 import Stack from '@mui/joy/Stack';
@@ -281,11 +281,11 @@ const IndexPage = () => {
                                                             startDecorator={<SearchIcon />}
                                                             placeholder="Search for a city"
                                                             value={tripPayloadState.destination}
-                                                            width='400px'
+                                                            // width='400px'
                                                             name='destination'
                                                             onChange={(e, value) => handleChangeTripDestination('destination', value)}
                                                             options={cityNames}
-                                                            style={{ height: '48px' }}
+                                                            style={{ height: '35px' }}
                                                         />
                                                     </Stack>
                                                 </div>
@@ -297,16 +297,16 @@ const IndexPage = () => {
                                             </div>
                                             <div className='sliderBox sliderBoxSix'>
                                                 <h3> Select Your Trip Dates</h3>
-                                                <div style={{ height: '70px' }}>  </div>
-                                                <div className='d-flex align-items-center justify-content-center'>
+                                                {/* <div style={{ height: '70px' }}>  </div> */}
+                                                <div className='dataBgColor d-flex align-items-center justify-content-center'>
                                                     {/* Start Date */}
                                                     <div className="col col-5 d-flex flex-column p-2">
-                                                        <label style={{ marginBottom: '8px', color: '#000', fontWeight: 'bold' }}>Start Date</label>
+                                                        <label style={{ marginBottom: '8px' }}>Start Date</label>
                                                         <TripDatePicker fieldName="start_date" />
                                                     </div>
                                                     {/* End Date */}
                                                     <div className="col col-5 d-flex flex-column p-2">
-                                                        <label style={{ marginBottom: '8px', color: '#000', fontWeight: 'bold' }}>End Date</label>
+                                                        <label style={{ marginBottom: '8px' }}>End Date</label>
                                                         <TripDatePicker fieldName="end_date" />
                                                     </div>
 
@@ -316,9 +316,10 @@ const IndexPage = () => {
                                             </div>
                                             <div className='sliderBox sliderBoxTwo'>
                                                 <h3> Who’s coming with you?</h3>
-                                                <div style={{ height: '70px' }}>  </div>
-                                                <div className='RadioGroupBox'>
-                                                    {/* <RadioGroup
+                                                {/* <div style={{ height: '70px' }}>  </div> */}
+                                                <div className='dataBgColor'>
+                                                    <div className=' RadioGroupBox'>
+                                                        {/* <RadioGroup
                                                         aria-labelledby="city"
                                                         defaultValue="Goa"
                                                         size="lg"
@@ -372,19 +373,20 @@ const IndexPage = () => {
                                                             </div>
                                                         ))}
                                                     </RadioGroup> */}
-                                                    <TripDataRadioGroup fieldName='trip_status_type' data={comingWith} />
+                                                        <TripDataRadioGroup fieldName='trip_status_type' data={comingWith} />
 
+                                                    </div>
                                                 </div>
                                                 {errors.trip_status_type && !tripPayloadState.trip_status_type ? <p className='errors trip-errors mx-auto'>{errors.trip_status_type}</p> : null}
                                             </div>
                                             <div className='sliderBox sliderBoxThree'>
                                                 <h3> How do you want to spend your time?</h3>
-                                                <div style={{ height: '70px' }}>  </div>
-                                                <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-
+                                                {/* <div style={{ height: '70px' }}>  </div> */}
+                                                <div className='dataBgColor'>
                                                     <Box
                                                         role="group"
-                                                        aria-labelledby="fav-movie"
+                                                        aria-labelledby="fav-time"
+                                                        style={{ backgroundColor: 'transport' }}
                                                         sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}
                                                     >
                                                         {spendTime.map((name) => {
@@ -393,11 +395,13 @@ const IndexPage = () => {
                                                             return (
                                                                 <Chip
                                                                     key={name.id}
-                                                                    variant="plain"
-                                                                    color={checked ? 'primary' : 'neutral'}
-                                                                    startDecorator={
-                                                                        checked && <CheckIcon sx={{ zIndex: 1, pointerEvents: 'none' }} />
-                                                                    }
+                                                                    variant={checked ? "default" : "outlined"}
+                                                                    color={checked ? 'select' : 'nonSelect'}
+                                                                    className='ccccheckbox'
+                                                                // style={{  backgroundColor: 'transparent',color:'#fff'}}
+                                                                // startDecorator={
+                                                                //     checked && <CheckIcon sx={{ zIndex: 1, pointerEvents: 'none' }} />
+                                                                // }
                                                                 >
                                                                     <Checkbox
                                                                         variant="outlined"
@@ -409,7 +413,7 @@ const IndexPage = () => {
                                                                         value={name.item}
                                                                         onChange={handleChangeTripPayloadState}
                                                                         checked={checked}
-                                                                        style={{ fontSize: '12px', padding: '5px' }}
+                                                                        style={{ fontSize: '12px', padding: '5px', color: '#fff' }}
                                                                     // onChange={(event) => {
                                                                     //     setSelected((names) =>
                                                                     //         !event.target.checked
@@ -423,13 +427,14 @@ const IndexPage = () => {
                                                         })}
                                                     </Box>
 
-                                                </Box>
+                                                </div>
                                             </div>
                                             <div className='sliderBox sliderBoxFour'>
                                                 <h3>Choose your foods</h3>
-                                                <div style={{ height: '70px' }}>  </div>
-                                                <div className='RadioGroupBox'>
-                                                    {/* <RadioGroup
+                                                {/* <div style={{ height: '70px' }}>  </div> */}
+                                                <div className='dataBgColor'>
+                                                    <div className='RadioGroupBox'>
+                                                        {/* <RadioGroup
                                                         aria-labelledby="city"
                                                         defaultValue="food"
                                                         size="lg"
@@ -483,15 +488,17 @@ const IndexPage = () => {
                                                             </div>
                                                         ))}
                                                     </RadioGroup> */}
-                                                    <TripDataRadioGroup fieldName='food_type' data={food} />
+                                                        <TripDataRadioGroup fieldName='food_type' data={food} />
 
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div className='sliderBox sliderBoxFive'>
                                                 <h3>Select your Trip Theme</h3>
-                                                <div style={{ height: '70px' }}>  </div>
-                                                <div className='RadioGroupBox'>
-                                                    {/* <RadioGroup
+                                                {/* <div style={{ height: '70px' }}>  </div> */}
+                                                <div className='dataBgColor'>
+                                                    <div className='RadioGroupBox'>
+                                                        {/* <RadioGroup
                                                         aria-labelledby="city"
                                                         defaultValue="Goa"
                                                         size="lg"
@@ -544,8 +551,9 @@ const IndexPage = () => {
                                                             </div>
                                                         ))}
                                                     </RadioGroup> */}
-                                                    <TripDataRadioGroup fieldName='trip_theme_type' data={tripTheme} />
+                                                        <TripDataRadioGroup fieldName='trip_theme_type' data={tripTheme} />
 
+                                                    </div>
                                                 </div>
                                                 {errors.trip_theme_type && !tripPayloadState.trip_theme_type ? <p className='errors trip-errors mx-auto'>{errors.trip_theme_type}</p> : null}
 
@@ -553,7 +561,7 @@ const IndexPage = () => {
 
                                         </Slider>
                                         <div className='slickArrows' >
-                                            {currentSlide != 0 && <button className="button mx-2" onClick={previous} >
+                                            {currentSlide != 0 && <button className="button pre-button mx-2" onClick={previous} >
                                                 Previous
                                             </button>}
                                             {currentSlide != totalSlides - 1 && <button className="button mx-2" onClick={next} >

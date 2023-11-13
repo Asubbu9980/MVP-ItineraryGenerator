@@ -49,7 +49,7 @@ const TripDataRadioGroup = ({ fieldName = '', data = [] }) => {
                             }}
                             style={{ backgroundImage: fieldName !== 'trip_status_type' ? `url(${info.url})` : '', }}
                         >
-                            {fieldName === 'trip_status_type' || fieldName === 'food_type' ? <img src={info.url} alt='' width={25} style={{ display: 'block', marginRight: '5px' }} /> : null}
+                            {fieldName === 'trip_status_type' || fieldName === 'food_type' ? <span className='img' ><img src={info.url} alt='' width={25} style={{ display: 'block', marginRight: '5px' }} /></span> : null}
 
                             <Radio
                                 label={`${info.item}`}

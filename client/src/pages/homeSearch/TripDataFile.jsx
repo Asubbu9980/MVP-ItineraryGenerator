@@ -6,9 +6,25 @@ import singleImage from '../../assets/person.png'
 import coupleImage from '../../assets/parents.png'
 import friendsImage from '../../assets/friends.png'
 import familyImage from '../../assets/family.png'
+
 import vegImage from '../../assets/veg.jpg'
 import nonVegImage from '../../assets/nog-veg.jpg'
 import eggImage from '../../assets/egg.jpg'
+
+
+import vegBg from '../../assets/veg-bg.png'
+import nonVegBG from '../../assets/nonVeg-bg.png'
+import eggBg from '../../assets/egg-bg.png'
+
+
+import adventureBg from '../../assets/adventureBg.png'
+import relaxationBg from '../../assets/relaxationBg.png'
+import ecoBg from '../../assets/ecoBg.png'
+import getawayBg from '../../assets/getawayBg.png'
+import safariBg from '../../assets/safariBg.png'
+
+
+
 
 export const tripCity = [
     {
@@ -50,7 +66,7 @@ export const comingWith = [
     },
     {
         id: '4',
-        item: 'Family-friendly',
+        item: 'Family',
         url: familyImage,
     },
 ]
@@ -120,48 +136,52 @@ export const food = [
     {
         id: '1',
         item: 'Vegetarian ',
-        url: vegImage,
+        url: vegBg,
+        icon: vegImage,
     },
     {
         id: '2',
         item: 'Non-vegetarian',
-        url: nonVegImage,
+        url: nonVegBG,
+        icon:nonVegImage,
     },
     {
         id: '3',
         item: 'Eggetarian',
-        url: eggImage,
+        url: eggBg,
+        icon: eggImage
     }
 ]
 export const tripTheme = [
     {
         id: '1',
         item: 'Adventure ',
-        url: '',
+        url: adventureBg,
     },
     {
         id: '2',
         item: 'Wellness and Relaxation',
-        url: '',
+        url: relaxationBg,
     },
     {
         id: '3',
         item: 'Eco-Tourism',
-        url: '',
+        url: ecoBg,
     },
     {
         id: '4',
         item: 'Beach Getaway',
-        url: '',
+        url: getawayBg,
     },
     {
         id: '5',
         item: 'Wildlife Safari',
-        url: '',
+        url: safariBg,
     }
 ]
 export const cityNames = [
     "Agra",
+    "Jaipur",
     "Varanasi",
     "Kochi (Cochin)",
     "Goa",

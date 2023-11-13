@@ -127,40 +127,62 @@
 }
 
 .sliderBox h3 {
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 10px;
+	margin-bottom: 15px;
 	text-align: center;
 	text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.16);
-	/* font-size: 40px; */
 	font-weight: 600;
 	letter-spacing: 0.2px;
+	color: #FFF;
+	line-height: 48.5px;
+
+}
+
+.sliderBox .dataBgColor {
+	border-radius: 8px;
+	background: rgba(20, 20, 20, 0.23);
+	box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+	backdrop-filter: blur(2.5px);
+}
+
+
+.sliderBox .dataBgColor {
+	min-height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 3px;
 }
 
 .slickArrows {
-	margin-bottom: 20px;
+	margin-bottom: 26px;
 	text-align: center;
+	margin-top: 5px;
 }
 
 .slickArrows .button {
-	min-width: 100px;
-	border-radius: 8px;
-	background: #18A0FB;
 	box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.26);
-	padding: 10px;
 	color: #FFF;
 	text-align: center;
 	font-size: 16px;
 	text-transform: capitalize;
 	border: 0;
-	
-
+	border-radius: 4px;
+	background: #18A0FB;
+	/* min-width: 140px; */
+	padding: 8px 32px
 }
 
+.slickArrows .pre-button {
+	background: transparent;
+	color: #fff;
+	border: 1px #fff solid;
+}
 
 
 .sliderBox .radioSheet {
 	background-size: cover;
-	height: 150px;
+	height: 100%;
 	/* width: 88%; */
 	display: flex;
 	justify-content: left;
@@ -169,26 +191,31 @@
 
 
 }
-.sliderBox .radioLabel{
+
+.sliderBox .radioLabel {
+	color: #FFF;
 	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	font-size: 26px;
+	font-size: 20px;
 	font-weight: 600;
 	line-height: 24px;
-	letter-spacing: 0.39px;
-	 color: #FFF;
-	 padding-bottom: 16px;
-	 padding-left: 16px;
+	letter-spacing: 0.3px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+
 }
+
+
+
 /*sliderBoxOne*/
 
 .sliderBoxOne .citySearch {
-	width: 400px;
-	margin: 0 auto 39px;
+	width: 300px;
+	margin: 0 auto 25px;
 }
 
-.sliderBoxOne .box {
-	width: 287px;
-	height: 154px;
+.sliderBox .box {
+	width: 267px;
+	height: 120px;
 }
 
 .sliderBoxOne .box label {
@@ -197,36 +224,82 @@
 
 }
 
-.sliderBoxOne .radioButton:hover,
-.sliderBoxTwo .radioButton:hover {
+.sliderBox .radioButton:hover,
+.sliderBox .radioButton:hover {
 	background-color: rgba(0, 0, 0, 0.26) !important;
+	/* background: transparent ; */
+}
+.sliderBox .radioButton:hover {
+	/* background: transparent; */
+}
+
+.sliderBoxTwo .radioSheet {
+	background: #fff;
 }
 
 .sliderBoxTwo .box {
-	width: 220px;
-	height: 152px;
+	width: 230px;
 }
 
-.sliderBoxTwo .css-9pcneq-JoyRadio-action:hover,
-.sliderBoxTwo .css-pg3u7k-JoyRadio-action.css-pg3u7k-JoyRadio-action,
-.sliderBoxFour .css-9pcneq-JoyRadio-action:hover,
-.sliderBoxFour .css-pg3u7k-JoyRadio-action.css-pg3u7k-JoyRadio-action {
-	background: transparent !important;
+.sliderBoxTwo .box .MuiSheet-root {
+	display: block;
+	text-align: center;
+	margin: 0 auto;
 }
 
-.sliderBoxFour .box {
-	width: 220px;
-	height: 152px;
+.sliderBoxTwo .radioLabel {
+	color: #000;
+	margin-top: 10px;
+	font-size: 20px;
+	font-weight: 500;
+	letter-spacing: 0.3px;
+
+}
+
+.sliderBoxTwo .img {
+	display: block;
+	background: #000;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	color: #fff;
+	margin: 0 auto;
+	margin-top: 5px
+}
+
+.sliderBoxTwo .img img {
+	width: 32px;
+	display: inline-block !important;
+	margin-top: 11px;
+	margin-right: 0 !important;
+}
+
+.sliderBoxThree .MuiChip-colorNonSelect {
+	background: transparent;
+}
+
+.sliderBoxThree .MuiChip-colorSelect,
+.sliderBoxThree .MuiCheckbox-action:hover {
+	background: #18A0FB;
 }
 
 .sliderBoxFive .box {
-	width: 210px;
-	height: 152px;
-	text-align: center;
+	width: 200px;
 }
 
 .sliderBoxSix .MuiPaper-root,
 .sliderBoxSix .MuiFormControl-root {
-	background-color: #fff;
+	background-color: transparent;
 	width: 100%;
+	color: #fff;
+}
+
+
+.sliderBoxSix fieldset,
+.sliderBoxSix fieldset:hover {
+	border-color: #fff !important;
+}
+
+.sliderSection .trip-errors {
+	font-size: 13px;
 }
