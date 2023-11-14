@@ -30,12 +30,10 @@ class userService {
                 } else {
                     userBody.slug = formatedSlug;
                 }
-                const encyP = await bcrypt.hash(userBody.password, 8);
                 const payload = {
                     "name": userBody.name,
                     "slug": userBody.slug,
                     "email": userBody.email,
-                    "password": encyP,
                     "provider": userBody.provider,
                     "profile_url": userBody
                         ?.profile_url && userBody.profile_url != ''
@@ -46,6 +44,10 @@ class userService {
                         ? userBody.is_email_verified
                         : false,
 
+                }
+                if (userBody.provider == 'email') {
+                    const encyP = await bcrypt.hash(userBody.password, 8);
+                    payload.password = encyP;
                 }
                 if (userBody?.is_email_verified && userBody.is_email_verified != '' && userBody?.is_email_verified == true) {
                     payload.email_verified_at = new Date
@@ -73,13 +75,18 @@ class userService {
             let paydata = JSON.stringify({
                 "client_id": "Kd16lPoUWpRQ1YeGBsW94tgyISN6hubI",
                 "email": userBody.email,
-                "password": userBody.password,
-                "connection": "Username-Password-Authentication",
                 "name": userBody.name,
                 "user_metadata": {
                     mongo_user_id: userBody.id
                 }
             });
+            if (userBody.provider == 'email') {
+                paydata.password = userBody.password;
+                paydata.connection = "Username-Password-Authentication"
+            }
+            if (userBody.provider == 'google') {
+                paydata.connection = "google-oauth2"
+            }
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
@@ -92,7 +99,7 @@ class userService {
             const { data, error } = await axios.request(config);
             return data;
         } catch (error) {
-
+            console.log("error", error);
         }
     }
     authUser = async (req) => {

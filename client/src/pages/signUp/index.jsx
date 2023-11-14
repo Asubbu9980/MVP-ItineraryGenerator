@@ -19,7 +19,9 @@ const SignUpPage = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-
+    const onLoginStart = useCallback(() => {
+        // alert('login start')
+    }, [])
     const handleSubmit = (e) => {
         e.preventDefault();
         const newErrors = {};
@@ -143,7 +145,7 @@ const SignUpPage = () => {
                                 Sign Up
                             </Button>
                             <div className='loginSocial'>
-                                <div className='facebook'>
+                                {/* <div className='facebook'>
                                     <LoginSocialFacebook
                                         appId={process.env.REACT_APP_FB_APP_ID || ''}
                                     // onLoginStart={onLoginStart}
@@ -157,30 +159,33 @@ const SignUpPage = () => {
                                     >
                                         <FacebookLoginButton />
                                     </LoginSocialFacebook>
-                                </div>
+                                </div> */}
                                 <div className='google'>
                                     <LoginSocialGoogle
                                         scope=' https://www.googleapis.com/auth/userinfo.email'
                                         client_id={process.env.REACT_APP_GG_APP_ID || ''}
-                                    // onLoginStart={onLoginStart}
-                                    // onResolve={({ provider, data }) => {
-                                    //     setProvider(provider)
-                                    //     setProfile(data)
-                                    //     createUserApi({
-                                    //         profile_url: data.picture,
-                                    //         name: data.name,
-                                    //         email: data.email,
-                                    //         provider: 'google',
-                                    //         isEmailVerified: data.email_verified
-                                    //     }).then((res) => {
-                                    //         console.log("res", res);
-                                    //     }).catch((err) => {
-                                    //         console.log(err)
-                                    //     })
-                                    // }}
-                                    // onReject={(err) => {
-                                    //     console.log(err)
-                                    // }}
+                                        // onLoginStart={onLoginStart}
+                                        onResolve={({ provider, data }) => {
+                                            console.log("data", data);
+                                            createUserApi({
+                                                profile_url: data.picture,
+                                                name: data.name,
+                                                email: data.email,
+                                                provider: 'google',
+                                                isEmailVerified: data.email_verified
+                                            }).then((res) => {
+                                                if (res?.status == true) {
+                                                    toast.success("Registered Successfully", { autoClose: 3000 });
+                                                } else {
+                                                    toast.warning(res?.message, { autoClose: 3000 });
+                                                }
+                                            }).catch((error) => {
+                                                toast.error(error, { autoClose: 3000 });
+                                            })
+                                        }}
+                                        onReject={(err) => {
+                                            console.log(err)
+                                        }}
                                     >
                                         <GoogleLoginButton />
                                     </LoginSocialGoogle>

@@ -51,13 +51,9 @@ class tripController {
             // const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date}  with activities with detailed accommodation,prices in rupees with co-ordinates & transportation in valid JSON format `;
             // const t q = `create Itinerary to ${ destination } from ${ source } from ${ start_date } to ${ end_date } with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in below valid JSON format 
 
-            const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format
+            // const q = `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format
+            const q = `Create ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format
             {
-            "trip_start_date": "",
-             "trip_end_date": "",
-             "trip_duration": "",
-             "starting_location": "",
-             "ending_location": "",
              "activities": [
                {
                  "name": "",
@@ -135,11 +131,13 @@ class tripController {
             // console.log("response", response.data.choices[0].text);
             // console.log("lines", lines);
             const reData = JSON.parse(response.data.choices[0].text);
-            await SearchHistoryModel.create({
-                user: req?.userId,
-                input: JSON.stringify({ source, destination, start_date, end_date }),
-                output: response.data.choices[0].text
-            })
+            if (req?.userId != undefined && req.userId != "") {
+                await SearchHistoryModel.create({
+                    user: req?.userId,
+                    input: JSON.stringify({ source, destination, start_date, end_date }),
+                    output: response.data.choices[0].text
+                })
+            }
             // const reData = JSON.stringify(response.data.choices[0].text);
             // const stringWithoutNewlines = reData.replace(/[\n\r!@#$%^&*()]/g, '');
             // obj.forEach(.removeNewlines);
