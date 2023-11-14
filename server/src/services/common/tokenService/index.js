@@ -38,13 +38,13 @@ const generateToken = (userId, expires, type, secret = config.jwt.secret) => {
  */
 const saveToken = async (token, userId, expires, type, blacklisted = false, ip = '', device = '') => {
     const tokenDoc = await UserAuthTokens.create({
-        token,
+        token:token,
         "user": userId,
         expires: expires.toDate(),
-        type,
-        blacklisted,
+        type:type,
+        blacklisted:blacklisted,
         ip_address: ip,
-        device
+        device:device
     });
     return tokenDoc;
 };
@@ -85,7 +85,6 @@ const generateAuthTokens = async (user, ip, device) => {
             device: device,
             blacklisted: 0
         });
-        console.log("foundItem", foundItem);
         if (!foundItem) {
             const accessTokenExpires = moment().add(config.jwt.accessExpirationMinutes, 'minutes');
             const accessToken = generateToken(user._id.toString(), accessTokenExpires, tokenTypes.ACCESS);

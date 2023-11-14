@@ -11,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 
 
 const UserLayout = (props) => {
-
     const location = useLocation();
     // console.log(location.pathname);
 
