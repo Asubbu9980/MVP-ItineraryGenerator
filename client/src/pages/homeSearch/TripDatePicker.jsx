@@ -5,7 +5,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Card from '@mui/material/Card';
 import { TripPayloadContext } from '../../context/TripDataContext';
 import dayjs from 'dayjs';
-import { TextField } from '@mui/material';
+// import { TextField } from '@mui/material';
 
 
 const TripDatePicker = ({ fieldName = '' }) => {
@@ -39,7 +39,7 @@ const TripDatePicker = ({ fieldName = '' }) => {
                         onChange={(date) => onChangeDate(fieldName, date)}
                         sx={{
                             svg: { color: '#fff' },
-                           input: { color: '#fff'},
+                            input: { color: '#fff' },
                         }}
 
 

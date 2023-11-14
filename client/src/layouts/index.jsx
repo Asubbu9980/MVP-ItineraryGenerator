@@ -7,14 +7,14 @@ import "react-toastify/dist/ReactToastify.css";
 //import Components
 import Header from './header';
 import Footer from './footer';
-import { useLocation } from 'react-router-dom';
+// import { useLocation } from 'react-router-dom';
 
 
 const UserLayout = (props) => {
-    const location = useLocation();
+    // const location = useLocation();
     // console.log(location.pathname);
 
-    const [headerClass, setHeaderClass] = useState("");
+    // const [headerClass, setHeaderClass] = useState("");
     // class add remove in header
     useEffect(() => {
         window.addEventListener("scroll", scrollNavigation, true);
@@ -22,9 +22,9 @@ const UserLayout = (props) => {
     function scrollNavigation() {
         var scrollup = document.documentElement.scrollTop;
         if (scrollup > 50) {
-            setHeaderClass("topbar-shadow");
+            // setHeaderClass("topbar-shadow");
         } else {
-            setHeaderClass("");
+            // setHeaderClass("");
         }
     }
 

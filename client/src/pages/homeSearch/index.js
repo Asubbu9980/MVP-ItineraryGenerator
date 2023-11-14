@@ -3,25 +3,25 @@ import '../homeSearch/homeSearch.css'
 import '../homeSearch/sliderbanner.css'
 import Slider from "react-slick";
 import Box from '@mui/joy/Box';
-import CheckIcon from '@mui/icons-material/Check';
+// import CheckIcon from '@mui/icons-material/Check';
 import Checkbox from '@mui/joy/Checkbox';
 import Chip from '@mui/joy/Chip';
-import bannerOne from '../../assets/banners/1.jpg'
-import bannerTwo from '../../assets/banners/2.jpg'
-import bannerThree from '../../assets/banners/3.jpg'
-import bannerFour from '../../assets/banners/4.jpg'
-import bannerFive from '../../assets/banners/5.jpg'
+// import bannerOne from '../../assets/banners/1.jpg'
+// import bannerTwo from '../../assets/banners/2.jpg'
+// import bannerThree from '../../assets/banners/3.jpg'
+// import bannerFour from '../../assets/banners/4.jpg'
+// import bannerFive from '../../assets/banners/5.jpg'
 import bannerSix from '../../assets/banners/6.jpg'
 import Autocomplete from '@mui/joy/Autocomplete';
 import Stack from '@mui/joy/Stack';
 import SearchIcon from '@mui/icons-material/Search';
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import { TripPayloadContext } from '../../context/TripDataContext';
 import LoaderContext from '../../context/LoaderContext';
 import { getTripDetailsApi } from '../../helpers/trip_helper';
-import circum_share from "../../assets/circum_share.svg";
+// import circum_share from "../../assets/circum_share.svg";
 import searchIocn from "../../assets/search-icon.svg";
-import { Button, Container } from '@mui/material';
+// import { Button, Container } from '@mui/material';
 import MapModal from '../home/MapModal';
 import TripDataRadioGroup from './TripDataRadioGroup';
 import TripDatePicker from './TripDatePicker';
@@ -232,7 +232,7 @@ const IndexPage = () => {
                 // const lastKey = Object.keys(p).pop();
                 Object.keys(p).forEach(function (key) {
                     var value = p[key];
-                    if (key == 'activities' || key == "places") {
+                    if (key === 'activities' || key === "places") {
                         fR['places_visited'] = value
                     } else {
                         fR[key] = value
@@ -561,13 +561,13 @@ const IndexPage = () => {
 
                                         </Slider>
                                         <div className='slickArrows' >
-                                            {currentSlide != 0 && <button className="button pre-button mx-2" onClick={previous} >
+                                            {currentSlide !== 0 && <button className="button pre-button mx-2" onClick={previous} >
                                                 Previous
                                             </button>}
-                                            {currentSlide != totalSlides - 1 && <button className="button mx-2" onClick={next} >
+                                            {currentSlide !== totalSlides - 1 && <button className="button mx-2" onClick={next} >
                                                 Next
                                             </button>}
-                                            {currentSlide == totalSlides - 1 && <button className="button mx-2" onClick={handleSubmit}>
+                                            {currentSlide === totalSlides - 1 && <button className="button mx-2" onClick={handleSubmit}>
                                                 Submit
                                             </button>}
                                         </div>

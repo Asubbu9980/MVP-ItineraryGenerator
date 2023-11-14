@@ -12,15 +12,15 @@ import { toast } from 'react-toastify';
 import { authUserApi, createUserApi } from "../../helpers/users_helper.js"
 
 
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 // import './login.css'
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
 import { TextField, Button, Container, Grid } from '@mui/material';
-import { AccountCircle, VpnKey } from '@mui/icons-material';
+// import { AccountCircle, VpnKey } from '@mui/icons-material';
 
-import puzzleIcon from '../../assets/puzzle-icon.png';
-import Checkbox from '@mui/material/Checkbox';
-import { Link, useHistory } from "react-router-dom";
+// import puzzleIcon from '../../assets/puzzle-icon.png';
+// import Checkbox from '@mui/material/Checkbox';
+import { useHistory } from "react-router-dom";
 
 
 const LoginPage = () => {
@@ -31,11 +31,11 @@ const LoginPage = () => {
         // alert('login start')
     }, [])
 
-    const onLogoutSuccess = useCallback(() => {
-        setProfile(null)
-        setProvider('')
-        // alert('logout success')
-    }, [])
+    // const onLogoutSuccess = useCallback(() => {
+    //     setProfile(null)
+    //     setProvider('')
+    //     // alert('logout success')
+    // }, [])
     const decodeJwt = (token) => {
         var base64Payload = token.split(".")[1];
         var payload = decodeURIComponent(
@@ -50,13 +50,13 @@ const LoginPage = () => {
     }
     console.log(decodeJwt("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1ODJlZGU4ZC1kODVkLTQ4NWQtODBiZi01ODdhYjM2ZDFjODEiLCJpYXQiOjE2OTU3MTE0MTMsImV4cCI6MTY5ODMwMzQxMywidHlwZSI6InJlZnJlc2gifQ.tPQuhtS1L61nLYZYGh5HBc211JlJqLa2uM8j6_zJXkY"));
 
-    const [checked, setChecked] = useState(false);
+    // const [checked, setChecked] = useState(false);
     const [formData, setFormData] = useState({ email: '', password: '' });
     const [errors, setErrors] = useState({});
 
-    const handleCheckboxChange = (event) => {
-        setChecked(event.target.checked);
-    };
+    // const handleCheckboxChange = (event) => {
+    //     setChecked(event.target.checked);
+    // };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -82,7 +82,7 @@ const LoginPage = () => {
                 password: formData.password,
                 provider: 'email',
             }).then((res) => {
-                if (res?.status == true) {
+                if (res?.status === true) {
                     window.localStorage.setItem("authUser", JSON.stringify(res.data));
                     const t = res.data.tokens?.refresh?.token;
                     if (t) {
