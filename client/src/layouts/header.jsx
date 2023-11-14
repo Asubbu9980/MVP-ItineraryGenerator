@@ -44,12 +44,15 @@ const HeaderComponent = () => {
         <div className='header-container'>
             <Container style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Box style={{ display: 'flex', alignItems: 'center', height: '75px' }} >
-                    <img src={Logo} alt='logo' style={{ cursor: 'pointer' }} />
+                    <Link to='/' className='text-decoration-none'>
+                        <img src={Logo} alt='logo' style={{ cursor: 'pointer' }} />
+                    </Link>
+
                 </Box>
                 {/* <ProfileDropdown /> */}
                 <Box className='d-flex align-items-center'>
                     <Link to={location.pathname === "/" ? "/homesearch" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
-                        <p >{location.pathname === "/" ? 'New Home' : 'Old Home'}</p>
+                        <p >{location.pathname === "/" ? 'Home 2' : 'Home 1'}</p>
                     </Link>
                     {!isAuthenticated ? <Button onClick={() => loginWithRedirect()} variant='contained' size='small'>Login</Button> : null}
                     {isAuthenticated && <div style={{ cursor: 'pointer' }}>

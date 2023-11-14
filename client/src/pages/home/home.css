@@ -341,3 +341,25 @@ background: rgba(1, 138, 211, 0.10);
     color: #000;
     width: 80px;
 }
+
+.trip-recommended-hotel{
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    /* text-decoration: underline; */
+}
+.trip-hotel-address{
+    font-size: 14px;
+    font-weight: 500;
+}
+.trip-hotel-price{
+    font-size: 14px;
+    font-weight: 500;
+}
+.trip-hotel-title{
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+.trip-hotel-details-span{
+    font-size: 14px;
+    font-weight: 400;
+}
