@@ -23,7 +23,8 @@ const MapModal = (props) => {
 
       const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyDomfxcX--OMcX9GeVxW91L9cFmPY3r2Tw",
+        googleMapsApiKey: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+
       })
       
 
@@ -37,11 +38,12 @@ const MapModal = (props) => {
         }
         map.fitBounds(bounds);
         setMap(map)
-      }, [])
+      }, [props])
     
       const onUnmount =useCallback(function callback(map) {
         setMap(null)
-      }, [])
+      }, [props])
+
       const handleMarkerClick = (id, lat, lng, address) => {
         mapRef?.panTo({ lat, lng });
         console.log("address",address);
@@ -143,7 +145,7 @@ export default MapModal
 //         height: '88%',
 //         overflow: 'visible !important'
 //     };
-//     // const data = props.MapCoordinates.length > 0 props.MapCoordinates[0].replace("° N", "").replace("° E", "");
+
 //     // console.log(props.MapCoordinates, "MapCoordinates")
 
 
