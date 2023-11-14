@@ -18,6 +18,11 @@ const userSchema = mongoose.Schema({
     ref: 'Assets',
     default: null,
   },
+  autho_userid: {
+    type: String,
+    trim: true,
+    default: null,
+  },
   profile_url: {
     type: String,
     trim: true,
@@ -73,7 +78,7 @@ const userSchema = mongoose.Schema({
   },
   provider: {
     type: String,
-    enum: [userProviders.NUMBER,userProviders.EMAIL, userProviders.GOOGLE, userProviders.FACEBOOK],
+    enum: [userProviders.NUMBER, userProviders.EMAIL, userProviders.GOOGLE, userProviders.FACEBOOK, userProviders.AUTH0],
     default: userProviders.AUTH0
   },
   user_status: {

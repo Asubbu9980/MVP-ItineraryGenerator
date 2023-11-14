@@ -12,7 +12,10 @@ import {
 import { createUserApi } from "../../helpers/users_helper.js"
 import { TextField, Button, Container, Grid } from '@mui/material';
 const SignUpPage = () => {
-
+    // var webAuth = new auth0.WebAuth({
+    //     domain: '{yourDomain}',
+    //     clientID: '{yourClientId}'
+    // });
     const [checked, setChecked] = useState(false);
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
     const [errors, setErrors] = useState({});
@@ -161,7 +164,7 @@ const SignUpPage = () => {
                                     </LoginSocialFacebook>
                                 </div> */}
                                 <div className='google'>
-                                    <LoginSocialGoogle
+                                    {/* <LoginSocialGoogle
                                         scope=' https://www.googleapis.com/auth/userinfo.email'
                                         client_id={process.env.REACT_APP_GG_APP_ID || ''}
                                         // onLoginStart={onLoginStart}
@@ -188,7 +191,7 @@ const SignUpPage = () => {
                                         }}
                                     >
                                         <GoogleLoginButton />
-                                    </LoginSocialGoogle>
+                                    </LoginSocialGoogle> */}
                                 </div>
                             </div>
                         </form>
