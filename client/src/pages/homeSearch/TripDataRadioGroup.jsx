@@ -43,7 +43,7 @@ const TripDataRadioGroup = ({ fieldName = '', data = [] }) => {
                             className='radioSheet'
                             sx={{
                                 p: 1,
-                                 borderRadius: '8px',
+                                borderRadius: '8px',
                                 // height: '140px',
                                 border: '1px solid #D3D3D3',
                             }}
@@ -67,7 +67,7 @@ const TripDataRadioGroup = ({ fieldName = '', data = [] }) => {
                                         className: 'radioButton',
                                         sx: (theme) => ({
                                             ...(checked && {
-                                                '--variant-borderWidth': '2px',
+                                                '--variant-borderWidth': '5px',
                                                 '&&': {
                                                     // className: '',
                                                     // && to increase the specificity to win the base :hover styles
