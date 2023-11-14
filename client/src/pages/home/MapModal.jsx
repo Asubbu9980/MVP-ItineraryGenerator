@@ -1,18 +1,18 @@
 
-import {React,useMemo,useState,useCallback} from 'react';
-import Button from '@mui/joy/Button';
+import {React,useState,useCallback} from 'react';
+// import Button from '@mui/joy/Button';
 import { GoogleMap, Marker, useJsApiLoader,InfoWindow } from "@react-google-maps/api";
 import Modal from '@mui/joy/Modal';
 import { Box } from '@mui/material';
 // import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
-import GoogleMapReact from 'google-map-react';
-import btn_directions from "../../assets/btn-directions.png"
+// import GoogleMapReact from 'google-map-react';
+// import btn_directions from "../../assets/btn-directions.png"
 
 import '../home/home.css'
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-const LoadingContainer = (props) => (
-    <div>Map Loactions are loading...</div>
-)
+// const AnyReactComponent = ({ text }) => <div>{text}</div>;
+// const LoadingContainer = (props) => (
+//     <div>Map Loactions are loading...</div>
+// )
 
 const MapModal = (props) => {
     const containerStyle = {
@@ -28,7 +28,7 @@ const MapModal = (props) => {
       })
       
 
-      const [map, setMap] = useState(null)
+      // const [map, setMap] = useState(null)
       const onLoad = useCallback(function callback(map) {
         // This is just an example of getting and using the map instance!!! don't just blindly copy!
         const bounds = new window.google.maps.LatLngBounds();
@@ -37,11 +37,11 @@ const MapModal = (props) => {
              console.log("Here");
         }
         map.fitBounds(bounds);
-        setMap(map)
+        // setMap(map)
       }, [props])
     
       const onUnmount =useCallback(function callback(map) {
-        setMap(null)
+        // setMap(null)
       }, [props])
 
       const handleMarkerClick = (id, lat, lng, address) => {
@@ -54,41 +54,41 @@ const MapModal = (props) => {
     const [mapRef, setMapRef] = useState();
     const [isOpen, setIsOpen] = useState(false);
     const [infoWindowData, setInfoWindowData] = useState();
-    const mapStyles = {
-        width: '96%',
-        height: '88%',
-        overflow: 'visible !important'
-    };
+    // const mapStyles = {
+    //     width: '96%',
+    //     height: '88%',
+    //     overflow: 'visible !important'
+    // };
 
     console.log(props.MapCoordinates, "MapCoordinates")
 
 
-    const onMarkerClick = (event) => {
-        console.log(event)
-    }
+    // const onMarkerClick = (event) => {
+    //     console.log(event)
+    // }
 
 
 
-    const onInfoWindowClose = () => {
+    // const onInfoWindowClose = () => {
 
-    }
-    const getMapBounds = (map, maps, places) => {
-        const bounds = new maps.LatLngBounds();
+    // }
+    // const getMapBounds = (map, maps, places) => {
+    //     const bounds = new maps.LatLngBounds();
       
-        places.forEach((place) => {
-          bounds.extend(new maps.LatLng(
-            place.geometry.location.lat,
-            place.geometry.location.lng,
-          ));
-        });
-        return bounds;
-      };
-    const handleApiLoaded = (map, maps, places) => {
-        // use map and maps objects
-         // Get bounds by our places
-         console.log("aa",places);
-        // const bounds = getMapBounds(map, maps, places);
-      };
+    //     places.forEach((place) => {
+    //       bounds.extend(new maps.LatLng(
+    //         place.geometry.location.lat,
+    //         place.geometry.location.lng,
+    //       ));
+    //     });
+    //     return bounds;
+    //   };
+    // const handleApiLoaded = (map, maps, places) => {
+    //     // use map and maps objects
+    //      // Get bounds by our places
+    //      console.log("aa",places);
+    //     // const bounds = getMapBounds(map, maps, places);
+    //   };
     return (
         <div>
             <Modal

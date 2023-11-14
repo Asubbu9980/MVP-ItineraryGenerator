@@ -1,4 +1,4 @@
-import IndexPage from "../pages/home";
+// import IndexPage from "../pages/home";
 import LoginPage from "../pages/login";
 import SignupPage from "../pages/signUp";
 import HomePage from "../pages/home";

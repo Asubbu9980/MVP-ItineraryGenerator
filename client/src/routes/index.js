@@ -4,12 +4,12 @@ import { Switch, Route } from "react-router-dom";
 //Layouts
 import UserLayout from "../layouts/index";
 //routes
-import { authProtectedRoutes, publicRoutes } from "./allRoutes";
-import { AuthProtected, AccessRoute } from './authProtected';
+import { publicRoutes } from "./allRoutes";
+// import { AuthProtected, AccessRoute } from './authProtected';
 
 const Index = () => {
     const availablePublicRoutesPaths = publicRoutes.map((r) => r.path);
-    const availableAuthRoutesPath = authProtectedRoutes.map((r) => r.path);
+    // const availableAuthRoutesPath = authProtectedRoutes.map((r) => r.path);
     return (
         <React.Fragment>
             <Switch>

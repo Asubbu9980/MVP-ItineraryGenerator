@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 import {
     LoginSocialGoogle,
-    LoginSocialFacebook,
+
 } from 'reactjs-social-login'
 import {
-    FacebookLoginButton,
+
     GoogleLoginButton,
 } from 'react-social-login-buttons'
 
@@ -13,15 +13,15 @@ import { createUserApi } from "../../helpers/users_helper.js"
 import { TextField, Button, Container, Grid } from '@mui/material';
 const SignUpPage = () => {
 
-    const [checked, setChecked] = useState(false);
+    // const [checked, setChecked] = useState(false);
     const [formData, setFormData] = useState({ name: '', email: '', password: '' });
     const [errors, setErrors] = useState({});
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     }
-    const onLoginStart = useCallback(() => {
-        // alert('login start')
-    }, [])
+    // const onLoginStart = useCallback(() => {
+    //     // alert('login start')
+    // }, [])
     const handleSubmit = (e) => {
         e.preventDefault();
         const newErrors = {};
@@ -44,7 +44,7 @@ const SignUpPage = () => {
                 password: formData.password,
                 provider: 'email',
             }).then((res) => {
-                if (res?.status == true) {
+                if (res?.status === true) {
                     toast.success("Registered Successfully", { autoClose: 3000 });
                     setFormData({ name: '', email: '', password: '' });
                     setErrors({});
@@ -174,7 +174,7 @@ const SignUpPage = () => {
                                                 provider: 'google',
                                                 isEmailVerified: data.email_verified
                                             }).then((res) => {
-                                                if (res?.status == true) {
+                                                if (res?.status === true) {
                                                     toast.success("Registered Successfully", { autoClose: 3000 });
                                                 } else {
                                                     toast.warning(res?.message, { autoClose: 3000 });

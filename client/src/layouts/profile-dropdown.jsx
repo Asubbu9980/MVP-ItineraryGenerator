@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Container, Grid, Box } from '@mui/material';
+import { Box } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import avatarIcon from "../assets/avatar.png";
 import lableDownLine from "../assets/lable_down-line.svg";
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const ProfileDropdown = () => {
     const [user, setUser] = useState(null)
