@@ -30,10 +30,10 @@ const ProfileDropdown = () => {
         }
     }, [window.localStorage.getItem("authUser")]);
     return (
-        <Box>
-             <Link to={location.pathname === "/" ? "/homesearch" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
-                        <p >{location.pathname === "/" ? 'New Home Search' : 'Old Home Search'}</p>
-                    </Link>
+        <Box style={{ display: 'flex', alignItems: 'center', }} >
+            <Link to={window.location.pathname === "/" ? "/homesearch" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
+                <p >{window.location.pathname === "/" ? 'New Home' : 'Old Home'}</p>
+            </Link>
 
             <div style={{ cursor: 'pointer' }}>
                 {
