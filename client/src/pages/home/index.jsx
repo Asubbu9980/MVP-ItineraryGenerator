@@ -26,7 +26,6 @@ import TransportModes from './TransportModes';
 
 const famousTouristCitiesInIndia = [
     "Agra",
-    "Jaipur",
     "Varanasi",
     "Kochi (Cochin)",
     "Goa",

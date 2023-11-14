@@ -1,0 +1,305 @@
+.slideContainer {
+	position: relative;
+	text-align: center;
+}
+
+.cb-slideshow,
+.cb-slideshow:after {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	z-index: 0;
+}
+
+.banner {
+	height: 380px;
+	overflow: hidden;
+	position: relative;
+}
+
+.cb-slideshow {
+	list-style: none !important;
+	position: relative;
+}
+
+.cb-slideshow li span {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	color: transparent;
+	background-size: cover;
+	background-position: 50% 50%;
+	background-repeat: none;
+	opacity: 0;
+	z-index: 0;
+	-webkit-backface-visibility: hidden;
+	-webkit-animation: imageAnimation 36s linear infinite 0s;
+	-moz-animation: imageAnimation 36s linear infinite 0s;
+	-o-animation: imageAnimation 36s linear infinite 0s;
+	-ms-animation: imageAnimation 36s linear infinite 0s;
+	animation: imageAnimation 36s linear infinite 0s;
+}
+
+
+.cb-slideshow li:nth-child(1) span {
+	/* background-image: url(../../assets/banners/6.jpg) */
+}
+
+.cb-slideshow li:nth-child(2) span {
+	-webkit-animation-delay: 6s;
+	-moz-animation-delay: 6s;
+	-o-animation-delay: 6s;
+	-ms-animation-delay: 6s;
+	animation-delay: 6s;
+}
+
+.cb-slideshow li:nth-child(3) span {
+	-webkit-animation-delay: 12s;
+	-moz-animation-delay: 12s;
+	-o-animation-delay: 12s;
+	-ms-animation-delay: 12s;
+	animation-delay: 12s;
+}
+
+.cb-slideshow li:nth-child(4) span {
+	-webkit-animation-delay: 18s;
+	-moz-animation-delay: 18s;
+	-o-animation-delay: 18s;
+	-ms-animation-delay: 18s;
+	animation-delay: 18s;
+}
+
+.cb-slideshow li:nth-child(5) span {
+	-webkit-animation-delay: 24s;
+	-moz-animation-delay: 24s;
+	-o-animation-delay: 24s;
+	-ms-animation-delay: 24s;
+	animation-delay: 24s;
+}
+
+
+
+@keyframes imageAnimation {
+	0% {
+		opacity: 1;
+		animation-timing-function: ease-in;
+	}
+
+	8% {
+		opacity: 1;
+		transform: scale(1.05);
+		animation-timing-function: ease-out;
+	}
+
+	17% {
+		opacity: 1;
+		/* transform: scale(1.1) rotate(3deg); */
+		transform: scale(1.1);
+
+	}
+
+	25% {
+		opacity: 1;
+		/* transform: scale(1.1) rotate(3deg); */
+		transform: scale(1.1);
+
+	}
+
+	100% {
+		opacity: 1;
+		transform: scale(1.4);
+	}
+}
+
+.sliderSection {
+	background: #fff;
+	border-radius: 25px;
+	background: transparent;
+	color: #fff;
+}
+
+.sliderBox {
+	padding-bottom: 0;
+}
+
+.sliderBox h3 {
+	margin-top: 10px;
+	margin-bottom: 15px;
+	text-align: center;
+	text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.16);
+	font-weight: 600;
+	letter-spacing: 0.2px;
+	color: #FFF;
+	line-height: 48.5px;
+
+}
+
+.sliderBox .dataBgColor {
+	border-radius: 8px;
+	background: rgba(20, 20, 20, 0.23);
+	box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
+	backdrop-filter: blur(2.5px);
+}
+
+
+.sliderBox .dataBgColor {
+	min-height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 3px;
+}
+
+.slickArrows {
+	margin-bottom: 26px;
+	text-align: center;
+	margin-top: 5px;
+}
+
+.slickArrows .button {
+	box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.26);
+	color: #FFF;
+	text-align: center;
+	font-size: 16px;
+	text-transform: capitalize;
+	border: 0;
+	border-radius: 4px;
+	background: #18A0FB;
+	/* min-width: 140px; */
+	padding: 8px 32px
+}
+
+.slickArrows .pre-button {
+	background: transparent;
+	color: #fff;
+	border: 1px #fff solid;
+}
+
+
+.sliderBox .radioSheet {
+	background-size: cover;
+	height: 100%;
+	/* width: 88%; */
+	display: flex;
+	justify-content: left;
+	align-items: end;
+	border-radius: 8px;
+
+
+}
+
+.sliderBox .radioLabel {
+	color: #FFF;
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 24px;
+	letter-spacing: 0.3px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+
+}
+
+
+
+/*sliderBoxOne*/
+
+.sliderBoxOne .citySearch {
+	width: 300px;
+	margin: 0 auto 25px;
+}
+
+.sliderBox .box {
+	width: 267px;
+	height: 120px;
+}
+
+.sliderBoxOne .box label {
+	/* color: #FFF;
+	text-shadow: 2px 2px 2px black; */
+
+}
+
+.sliderBox .radioButton:hover,
+.sliderBox .radioButton:hover {
+	background-color: rgba(0, 0, 0, 0.26) !important;
+	/* background: transparent ; */
+}
+.sliderBox .radioButton:hover {
+	/* background: transparent; */
+}
+
+.sliderBoxTwo .radioSheet {
+	background: #fff;
+}
+
+.sliderBoxTwo .box {
+	width: 230px;
+}
+
+.sliderBoxTwo .box .MuiSheet-root {
+	display: block;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.sliderBoxTwo .radioLabel {
+	color: #000;
+	margin-top: 10px;
+	font-size: 20px;
+	font-weight: 500;
+	letter-spacing: 0.3px;
+
+}
+
+.sliderBoxTwo .img {
+	display: block;
+	background: #000;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	color: #fff;
+	margin: 0 auto;
+	margin-top: 5px
+}
+
+.sliderBoxTwo .img img {
+	width: 32px;
+	display: inline-block !important;
+	margin-top: 11px;
+	margin-right: 0 !important;
+}
+
+.sliderBoxThree .MuiChip-colorNonSelect {
+	background: transparent;
+}
+
+.sliderBoxThree .MuiChip-colorSelect,
+.sliderBoxThree .MuiCheckbox-action:hover {
+	background: #18A0FB;
+}
+
+.sliderBoxFive .box {
+	width: 200px;
+}
+
+.sliderBoxSix .MuiPaper-root,
+.sliderBoxSix .MuiFormControl-root {
+	background-color: transparent;
+	width: 100%;
+	color: #fff;
+}
+
+
+.sliderBoxSix fieldset,
+.sliderBoxSix fieldset:hover {
+	border-color: #fff !important;
+}
+
+.sliderSection .trip-errors {
+	font-size: 13px;
+}

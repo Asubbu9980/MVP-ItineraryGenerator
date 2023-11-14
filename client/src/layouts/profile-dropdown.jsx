@@ -5,6 +5,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import avatarIcon from "../assets/avatar.png";
 import lableDownLine from "../assets/lable_down-line.svg";
+import { Link, useLocation } from 'react-router-dom'
+
 const ProfileDropdown = () => {
     const [user, setUser] = useState(null)
 
@@ -29,6 +31,10 @@ const ProfileDropdown = () => {
     }, [window.localStorage.getItem("authUser")]);
     return (
         <Box>
+             <Link to={location.pathname === "/" ? "/homesearch" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
+                        <p >{location.pathname === "/" ? 'New Home Search' : 'Old Home Search'}</p>
+                    </Link>
+
             <div style={{ cursor: 'pointer' }}>
                 {
                     user == null ? <a className='link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover' href='/login'> {"Login"}</a> : <><div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

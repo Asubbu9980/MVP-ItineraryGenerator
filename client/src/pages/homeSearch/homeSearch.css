@@ -1,0 +1,18 @@
+.button:disabled {
+    opacity: 0.5 !important;
+}
+.trip-errors{
+    background-color: #fff !important;
+    padding: 3px !important;
+    margin-top: 2px;
+    border-radius: 3px;
+    border-style: solid !important;
+    border: 5px;
+    font-size: 17px;
+    border-right: 0px;
+    border-top: 0px;
+    border-bottom: 0px;
+    border-color: red !important; 
+    width: 40%;
+    /* text-align: center !important; */
+}
