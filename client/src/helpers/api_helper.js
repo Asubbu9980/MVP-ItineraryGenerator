@@ -18,6 +18,7 @@ axios.interceptors.response.use(
     return response.data ? response.data : response;
   },
   function (error) {
+    console.log("error", error);
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     let message;
     switch (error.status) {
@@ -31,7 +32,7 @@ axios.interceptors.response.use(
         message = "Sorry! the data you are looking for could not be found";
         break;
       default:
-        message = error.message || error;
+        message = error.response.data.message || error;
     }
     return Promise.reject(message);
   }

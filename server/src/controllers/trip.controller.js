@@ -131,11 +131,13 @@ class tripController {
             // console.log("response", response.data.choices[0].text);
             // console.log("lines", lines);
             const reData = JSON.parse(response.data.choices[0].text);
-            await SearchHistoryModel.create({
-                user: req?.userId,
-                input: JSON.stringify({ source, destination, start_date, end_date }),
-                output: response.data.choices[0].text
-            })
+            if (req?.userId != undefined && req.userId != "") {
+                await SearchHistoryModel.create({
+                    user: req?.userId,
+                    input: JSON.stringify({ source, destination, start_date, end_date }),
+                    output: response.data.choices[0].text
+                })
+            }
             // const reData = JSON.stringify(response.data.choices[0].text);
             // const stringWithoutNewlines = reData.replace(/[\n\r!@#$%^&*()]/g, '');
             // obj.forEach(.removeNewlines);
