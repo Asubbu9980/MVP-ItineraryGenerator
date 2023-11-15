@@ -22,7 +22,7 @@ import { getTripDetailsApi } from '../../helpers/trip_helper';
 // import circum_share from "../../assets/circum_share.svg";
 import searchIocn from "../../assets/search-icon.svg";
 // import { Button, Container } from '@mui/material';
-import MapModal from '../home/MapModal';
+import MapModal from '../../common/ItineraryMapModal';
 import TripDataRadioGroup from './TripDataRadioGroup';
 import TripDatePicker from './TripDatePicker';
 import { cityNames, tripCity, comingWith, spendTime, food, tripTheme } from './TripDataFile';
@@ -654,7 +654,7 @@ const IndexPage = () => {
                             //     </div>
                             // </div>
                             <TripDailyPlanningData tripData={tripData} onChangeModalState={onChangeModalState} />
-
+ 
                             : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && <div>
                                 {/* <div className='search_info'>
 

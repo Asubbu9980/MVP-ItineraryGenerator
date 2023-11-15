@@ -7,14 +7,13 @@ import { Box } from '@mui/material';
 // import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 // import GoogleMapReact from 'google-map-react';
 // import btn_directions from "../../assets/btn-directions.png"
-
-import '../home/home.css'
+import './Itinerary.css'
 // const AnyReactComponent = ({ text }) => <div>{text}</div>;
 // const LoadingContainer = (props) => (
 //     <div>Map Loactions are loading...</div>
 // )
 
-const MapModal = (props) => {
+const ItineraryMapModal = (props) => {
     const containerStyle = {
         width: '100%',
         height: '400px'
@@ -34,15 +33,14 @@ const MapModal = (props) => {
         const bounds = new window.google.maps.LatLngBounds();
         if(props.MapCoordinates && props.MapCoordinates.length >0 && props.open){
              props.MapCoordinates?.forEach(({ lat, lng }) => bounds.extend({ lat, lng }));
-             console.log("Here");
         }
         map.fitBounds(bounds);
-        // setMap(map)
-      }, [props])
+        setMapRef(map)
+      }, [props.MapCoordinates])
     
       const onUnmount =useCallback(function callback(map) {
-        // setMap(null)
-      }, [props])
+        setMapRef(null)
+      }, [props.MapCoordinates])
 
       const handleMarkerClick = (id, lat, lng, address) => {
         mapRef?.panTo({ lat, lng });
@@ -107,11 +105,11 @@ const MapModal = (props) => {
                             onLoad={onLoad}
                             onUnmount={onUnmount}
                         >
-                             {props.open && props.MapCoordinates.length && props.MapCoordinates.map(({ lat, lng,title },index) => {
-                              return <Marker key={index} position={{lat:lat, lng:lng}} onClick={() => {
+                             {props.open && props.MapCoordinates.length > 0 && props.MapCoordinates.map(({ lat, lng,title },index) => {
+                              return <Marker key={index} position={{lat:lat, lng:lng}} onClick={(e) => {
                                 handleMarkerClick(index, lat, lng, title);
                               }}>
-                                {isOpen && infoWindowData?.id === index && (
+                                {props.MapCoordinates.length > 0 && isOpen && infoWindowData?.id === index && (
                 <InfoWindow
                   onCloseClick={() => {
                     setIsOpen(false);
@@ -131,14 +129,14 @@ const MapModal = (props) => {
     )
 }
 
-export default MapModal
+export default ItineraryMapModal
 
 // export default GoogleApiWrapper({
 //     apiKey: 'AIzaSyDomfxcX--OMcX9GeVxW91L9cFmPY3r2Tw', // Replace Your API Key
 //     LoadingContainer: LoadingContainer
-// })(MapModal);
+// })(ItineraryMapModal);
 
-// const MapModal = (props) => {
+// const ItineraryMapModal = (props) => {
 //     console.log("props", props);
 //     const mapStyles = {
 //         width: '96%',
@@ -214,9 +212,9 @@ export default MapModal
 //     )
 // }
 
-// // export default MapModal
+// // export default ItineraryMapModal
 
 // export default GoogleApiWrapper({
 //     apiKey: 'AIzaSyDomfxcX--OMcX9GeVxW91L9cFmPY3r2Tw', // Replace Your API Key
 //     LoadingContainer: LoadingContainer
-// })(MapModal);
+// })(ItineraryMapModal);
