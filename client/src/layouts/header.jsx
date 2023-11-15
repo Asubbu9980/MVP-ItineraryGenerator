@@ -15,7 +15,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 const HeaderComponent = () => {
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const { user, isAuthenticated, logout, loginWithRedirect, getIdTokenClaims } = useAuth0();
+    const { user, isAuthenticated, logout, loginWithPopup, getIdTokenClaims } = useAuth0();
 
     const location = useLocation();
 
@@ -54,7 +54,7 @@ const HeaderComponent = () => {
                     <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
                         <p >{location.pathname === "/" ? 'Preferential Search' : 'Home'}</p>
                     </Link>
-                    {!isAuthenticated ? <Button onClick={() => loginWithRedirect()} variant='contained' size='small'>Login</Button> : null}
+                    {!isAuthenticated ? <Button onClick={() => loginWithPopup()} variant='contained' size='small'>Login</Button> : null}
                     {isAuthenticated && <div style={{ cursor: 'pointer' }}>
                         <div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Avatar
