@@ -19,6 +19,7 @@ import calendarIcon from "../assets/calendar_icon.svg";
 import accommodationIcon from "../assets/accommodation_icon.svg";
 import locationIcon from "../assets/location_icon.svg";
 import transportation_icon from "../assets/transportation_icon.svg";
+import PlaceIcon from '@mui/icons-material/Place';
 
 
 const Itinerary = ({ tripData }) => {
@@ -60,6 +61,26 @@ const Itinerary = ({ tripData }) => {
                 setModelState(true)
             }
         }
+    }
+
+
+    const onChangeRecommendedModalState = (data) => {
+        const locationData = [];
+        if (data.length > 0) {
+            data?.forEach(element => {
+                locationData.push({
+                    "title": element.coordinates.title,
+                    "lat": parseFloat(element.coordinates.lat),
+                    "lng": parseFloat(element.coordinates.lng)
+                })
+            });
+        }
+
+        if (locationData.length > 0) {
+            setCoordinates(locationData)
+            setModelState(true)
+        }
+
     }
 
     const onCloseModal = () => {
@@ -143,7 +164,7 @@ const Itinerary = ({ tripData }) => {
                                             </div>
                                             <div className='mb-4'>
                                                 {m.accommodation && m.accommodation.length > 0 ? <>
-                                                    <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={accommodationIcon} style={{ marginRight: '8px' }} alt='accommodationIcon' /> Accommodations </h6>
+                                                    <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={accommodationIcon} style={{ marginRight: '8px' }} alt='accommodationIcon' /> Accommodations <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.accommodation)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button></h6>
                                                     <ul className="d-flex flex-wrap p-0 gap-2">
                                                         {m.accommodation.map((sm, si) => {
                                                             return (
@@ -167,7 +188,7 @@ const Itinerary = ({ tripData }) => {
                                             </div>
                                             <div className='mb-4'>
                                                 {m.food_choices && m.food_choices.length > 0 ? <>
-                                                    <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={foodIcon} style={{ marginRight: '8px' }} alt='foodIcon' />  Must try Food</h6>
+                                                    <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={foodIcon} style={{ marginRight: '8px' }} alt='foodIcon' />  Must try Food <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.food_choices)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button></h6>
                                                     <ul className="d-flex flex-wrap p-0 gap-2">
                                                         {m.food_choices.map((sm, si) => {
                                                             return <Card key={sm} className='shadow-sm' sx={{ maxWidth: 345, borderRadius: '4px', boxShadow: 'none', border: '1px solid #ccc', backgroundColor: 'rgb(225 223 223 / 10%)' }}>
