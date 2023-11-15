@@ -6,8 +6,6 @@ import './index.css';
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { configureStore } from "./store";
-import { authConfig } from './auth0-config';
-import { Auth0Provider } from '@auth0/auth0-react';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -15,13 +13,7 @@ root.render(
   <Provider store={configureStore({})}>
     <React.Fragment>
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Auth0Provider
-          domain={authConfig.domain}
-          clientId={authConfig.clientId}
-          redirectUri={authConfig.redirectUri}
-        >
-          <App />
-        </Auth0Provider>
+        <App />
       </BrowserRouter>
     </React.Fragment>
   </Provider>

@@ -51,8 +51,8 @@ const HeaderComponent = () => {
                 </Box>
                 {/* <ProfileDropdown /> */}
                 <Box className='d-flex align-items-center'>
-                    <Link to={location.pathname === "/" ? "/homesearch" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
-                        <p >{location.pathname === "/" ? 'Home 2' : 'Home 1'}</p>
+                    <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark fw-semibold mx-3 pt-3 home-search-link'>
+                        <p >{location.pathname === "/" ? 'Preferential Search' : 'Home'}</p>
                     </Link>
                     {!isAuthenticated ? <Button onClick={() => loginWithRedirect()} variant='contained' size='small'>Login</Button> : null}
                     {isAuthenticated && <div style={{ cursor: 'pointer' }}>

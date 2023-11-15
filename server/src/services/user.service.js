@@ -7,6 +7,7 @@ const { generateVerifyEmailToken, generateAuthTokens } = require('./common/token
 const auth0 = require('auth0-js');
 const bcrypt = require('bcryptjs');
 const axios = require('axios');
+const { userProviders } = require('../../config/user-config');
 class userService {
     createUser = async (userBody) => {
         try {
@@ -70,6 +71,56 @@ class userService {
             return { status: false, data: error.message }
         }
     }
+    createUserFromWebhook = async (userBody) => {
+        try {
+            console.log("userBody", userBody);
+            const userExist = await UserModel.isEmailTaken(userBody.email)
+            if (!userExist) {
+                const splitEmailArray = userBody
+                    .email
+                    .split("@");
+                let formatedSlug = slugify((splitEmailArray[0]).toLowerCase());
+                const count = await UserModel
+                    .find({
+                        'slug': {
+                            $regex: `^${formatedSlug}`,
+                            $options: 'i'
+                        }
+                    })
+                    .count();
+
+                if (count > 0) {
+                    userBody.slug = formatedSlug + '-' + count;
+                } else {
+                    userBody.slug = formatedSlug;
+                }
+                const payload = {
+                    "autho_userid": userBody.user_id,
+                    "name": userBody.name,
+                    "slug": userBody.slug,
+                    "email": userBody.email,
+                    "provider": userProviders.AUTH0,
+                    "profile_url": userBody
+                        ?.picture && userBody.picture != ''
+                        ? userBody.picture
+                        : '',
+                    "is_email_verified": userBody
+                        ?.email_verified && userBody.email_verified != ''
+                        ? userBody.email_verified
+                        : false,
+                }
+                const user = new UserModel(payload)
+                const createdUser = await user.save();
+                console.log(createdUser._id);
+                return { status: true, data: createdUser }
+            } else {
+                return { status: false, data: "User Already Register" }
+            }
+        } catch (error) {
+            console.log("Error", error);
+            return { status: false, data: error.message }
+        }
+    }
     createUserOnAuthO = async (userBody) => {
         try {
             let paydata = JSON.stringify({
@@ -85,7 +136,7 @@ class userService {
                 paydata.connection = "Username-Password-Authentication"
             }
             if (userBody.provider == 'google') {
-                paydata.connection = "google-oauth2"
+                paydata.connection = "email"
             }
             let config = {
                 method: 'post',

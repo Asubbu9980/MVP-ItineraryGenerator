@@ -15,7 +15,7 @@ const publicRoutes = [
     // Authentication Page
     { path: "/login", component: LoginPage },
     { path: "/sign-up", component: SignupPage },
-    { path: "/homesearch", component: HomeSearch },
+    { path: "/preferential-search", component: HomeSearch },
     { path: "", component: HomePage },
 
 

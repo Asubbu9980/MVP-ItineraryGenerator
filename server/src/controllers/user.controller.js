@@ -35,6 +35,37 @@ class userController {
             })
         }
     }
+    createUserFromWebhook = async (req, res, next) => {
+        try {
+            const { status, data } = await userService.createUserFromWebhook(req.body.data);
+            if (status) {
+                return commonResponse({
+                    req,
+                    res,
+                    status: true,
+                    message: "User Created Successfully",
+                    data: data,
+                    statusCode: 201,
+                })
+            } else {
+                return commonResponse({
+                    req,
+                    res,
+                    status: status,
+                    message: data,
+                    statusCode: 422,
+                })
+            }
+        } catch (error) {
+            return commonResponse({
+                req,
+                res,
+                status: false,
+                error: error.message,
+                statusCode: 500,
+            })
+        }
+    }
     authUser = async (req, res, next) => {
         try {
             const { status, data, message, error } = await userService.authUser(req);

@@ -2,7 +2,8 @@ const userProviders = {
   NUMBER: 'number',
   GOOGLE: 'google',
   FACEBOOK: 'facebook',
-  EMAIL: 'email'
+  EMAIL: 'email',
+  AUTH0: "autho",
 };
 
 const userRoles = [
