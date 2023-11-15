@@ -99,7 +99,7 @@ const Itinerary = ({ tripData }) => {
 
                                         </div>
 
-                                        <h5>Day {i + 1}  {" - " + m.name} </h5>
+                                        <h5>{m.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5>
 
                                         <h6>{m.date}</h6>
                                         <p className='mt-2 mb-0 pb-0'>
