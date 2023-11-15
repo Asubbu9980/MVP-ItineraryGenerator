@@ -144,20 +144,23 @@
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.0.3);
 
 }
+
 .radio_sheets .radio_btn:hover {
-color:#018AD3 ;
-border: 1px solid #018AD3;
-background: rgba(1, 138, 211, 0.10);
+    color: #018AD3;
+    border: 1px solid #018AD3;
+    background: rgba(1, 138, 211, 0.10);
 }
 
 .radio_sheets .radio_btn:hover label {
-color:#018AD3 ;
+    color: #018AD3;
 
 }
-.radio_sheets .Mui-checked{
-background: rgba(1, 138, 211, 0.10);
+
+.radio_sheets .Mui-checked {
+    background: rgba(1, 138, 211, 0.10);
 
 }
+
 .radio_sheets .radio-icon {
     display: inline-block;
     width: 24px;
@@ -168,7 +171,7 @@ background: rgba(1, 138, 211, 0.10);
 
 .radio_sheets .flight-icon {
     background: url('../../assets/flight-icon.svg');
-   
+
 }
 
 .radio_sheets .car-icon {
@@ -188,7 +191,7 @@ background: rgba(1, 138, 211, 0.10);
 
 .tripDetails-grid .tripDetails-item {
     list-style: none;
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     border-left: solid 1px #018AD3;
     padding-left: 30px;
     position: relative;
@@ -253,12 +256,18 @@ background: rgba(1, 138, 211, 0.10);
 }
 
 .tripDetails-grid .tripDetails-item h6 {
-    color: #3A3A3A;
-    font-size: 14px;
-    font-weight: 400;
-    margin: 4px 0 8px 0;
+margin: 4px 0 8px 0;
+color: #018AD3;
+font-size: 14px;
+font-style: normal;
+font-weight: 400;
+line-height: 22px;
+font-size: 18px;
+display: flex;
+align-items: center;
 
 }
+
 
 .tripDetails-grid .tripDetails-item .trip-points {
     /* padding-left: 15px; */
@@ -271,6 +280,7 @@ background: rgba(1, 138, 211, 0.10);
     line-height: normal;
     list-style-type: disc;
     line-height: 32px;
+    margin-right: 30px;
 }
 
 .errors {
@@ -342,24 +352,54 @@ background: rgba(1, 138, 211, 0.10);
     width: 80px;
 }
 
-.trip-recommended-hotel{
+.trip-recommended-hotel {
     font-size: 17px !important;
     font-weight: 500 !important;
     /* text-decoration: underline; */
 }
-.trip-hotel-address{
+
+.trip-hotel-address {
     font-size: 14px;
     font-weight: 500;
 }
-.trip-hotel-price{
+
+.trip-hotel-price {
     font-size: 14px;
     font-weight: 500;
 }
-.trip-hotel-title{
-    font-size: 16px !important;
-    font-weight: 500 !important;
+
+.trip-hotel-title {
+    /* font-size: 16px !important;
+    font-weight: 500 !important; */
 }
-.trip-hotel-details-span{
+
+.trip-hotel-details-span {
     font-size: 14px;
     font-weight: 400;
 }
+
+.moreInfo h6 {
+    color: #018AD3;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.moreInfoHeading{
+    color: #243253;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 36px; 
+}
+
+/* .moreInfo ul {
+    list-style: none;
+}
+
+.moreInfo ul li {
+    color: #3A3A3A;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 20px;
+} */

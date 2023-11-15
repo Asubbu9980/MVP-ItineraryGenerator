@@ -21,6 +21,24 @@ import circum_share from "../../assets/circum_share.svg";
 import searchIocn from "../../assets/search-icon.svg";
 import TransportModes from './TransportModes';
 import { startDateInitialValue, endDateInitialValue } from '../../context/TripDataContext';
+import Chip from '@mui/material/Chip';
+
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+
+
+
+import foodIcon from "../../assets/food_icon.svg";
+import activitiesIcon from "../../assets/activities_icon.svg";
+import activityIcon from "../../assets/activity_icon.svg";
+import calendarIcon from "../../assets/calendar_icon.svg";
+import accommodationIcon from "../../assets/accommodation_icon.svg";
+import locationIcon from "../../assets/location_icon.svg";
+import transportation_icon from "../../assets/transportation_icon.svg";
+
+
+
+
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -473,83 +491,101 @@ const IndexPage = () => {
                                                                 {m.description}
 
                                                             </p>
-                                                            {
-                                                                m.activity && m.activity.length > 0 ? <>
-                                                                    <h6 className='my-2 trip-hotel-title'>
-                                                                        Activities :
-                                                                    </h6>
-                                                                    <ul className="trip-points">
-                                                                        {
-                                                                            m.activity?.map((sm, si) => {
-                                                                                return <li key={si}>{sm}</li>
-                                                                            })
-                                                                        }
-                                                                    </ul>
-                                                                </> : null
-                                                            }
+                                                            <div className=''>
+                                                                <h3 className='moreInfoHeading mt-4 mb-3'>More information</h3>
+                                                                <div className='mb-4'>
+                                                                    {
+                                                                        m.activity && m.activity.length > 0 ? <>
+                                                                            <h6 className='my-2 mb-4 trip-hotel-title'>
+                                                                            <img src={activitiesIcon} style={{ marginRight: '8px' }} alt='activitiesIcon' /> Activities
+                                                                            </h6>
+                                                                            <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                                {
+                                                                                    m.activity?.map((sm, si) => {
+                                                                                        return <Chip key={si} label={sm} />
+                                                                                    })
+                                                                                }
+                                                                            </ul>
+                                                                        </> : null
+                                                                    }
+                                                                </div>
+                                                                <div className='mb-4'>
 
-                                                            {
-                                                                m.popular_places && m.popular_places.length > 0 ? <>
-                                                                    <h6 className='my-2 trip-hotel-title'>
-                                                                        Popular Places :
-                                                                    </h6>
-                                                                    <ol >
-                                                                        {
-                                                                            m.popular_places?.map((sm, si) => {
-                                                                                return <li key={si}>{sm}</li>
-                                                                            })
-                                                                        }
-                                                                    </ol>
-                                                                </> : null
-                                                            }
-
-                                                            {m.accommodation && m.accommodation.length > 0 ? <>
-                                                                <h6 className='trip-recommended-hotel mt-3'>Recommended Stay :</h6>
-                                                                <ol className='mb-3'>
-                                                                    {m.accommodation.map((sm, si) => {
-                                                                        return <li key={sm} className='trip-hotel-title my-2'>{sm.name}
-                                                                            <br />
-                                                                            <p className='trip-hotel-address my-1 py-0'>Address :{" "}<span className='trip-hotel-details-span'>{sm.address}.</span></p>
-                                                                            <p className='trip-hotel-price my-0 py-0'>Price Per Night :{" "}<span className='trip-hotel-details-span'>{sm.price_per_night}.</span></p>
-                                                                        </li>
-                                                                    })}
-                                                                </ol>
-                                                            </> : null}
-
-                                                            {m.food_choices && m.food_choices.length > 0 ? <>
-                                                                <h6 className='trip-recommended-hotel'>Must Try Food :</h6>
-                                                                <ol >
-                                                                    {m.food_choices.map((sm, si) => {
-                                                                        return <li key={sm} className='trip-hotel-title my-2'>{sm.name}
-                                                                            <br />
-                                                                            <p className='trip-hotel-address my-1 py-0'>Address :{" "}<span className='trip-hotel-details-span'>{sm.address}.</span></p>
-                                                                            <p className='trip-hotel-price my-0 py-0'>Price :{" "}<span className='trip-hotel-details-span'>{sm.price}.</span></p>
-                                                                        </li>
-                                                                    })}
-                                                                </ol>
-                                                            </> : null}
-                                                            {m.transportation && (Object.keys(m.transportation.flight).length > 0 || Object.keys(m.transportation.train).length > 0 || Object.keys(m.transportation.bus).length > 0) ? <>
-                                                                <h6 className='trip-recommended-hotel'>Transportation :</h6>
-                                                                <ol >
-
-                                                                    {Object.keys(m.transportation.flight).length > 0 && <li className='trip-hotel-title my-2'>
-
-                                                                        <p className='trip-hotel-address my-1 py-0'>Flight :{" "}<span className='trip-hotel-details-span'>{m.transportation.flight['price']}.</span></p>
-
-
-                                                                    </li>}
-                                                                    {Object.keys(m.transportation.train).length > 0 && <li className='trip-hotel-title my-2'>
-
-                                                                        <p className='trip-hotel-address my-1 py-0'>Train :{" "}<span className='trip-hotel-details-span'>{m.transportation.train['price']}.</span></p>
-                                                                    </li>}
-
-                                                                    {Object.keys(m.transportation.bus).length > 0 && <li className='trip-hotel-title my-2'>
-                                                                        <p className='trip-hotel-address my-1 py-0'>Bus :{" "}<span className='trip-hotel-details-span'>{m.transportation.bus['price']}.</span></p>
-                                                                    </li>}
-
-                                                                </ol>
-                                                            </> : null}
-
+                                                                    {
+                                                                        m.popular_places && m.popular_places.length > 0 ? <>
+                                                                            <h6 className='my-2 mb-4 trip-hotel-title'>
+                                                                            <img src={locationIcon} style={{ marginRight: '8px' }} alt='locationIcon' />  Popular Places
+                                                                            </h6>
+                                                                            <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                                {
+                                                                                    m.popular_places?.map((sm, si) => {
+                                                                                        return <Chip key={si} label={sm} />
+                                                                                    })
+                                                                                }
+                                                                            </ul>
+                                                                        </> : null
+                                                                    }
+                                                                </div>
+                                                                <div className='mb-4'>
+                                                                    {m.accommodation && m.accommodation.length > 0 ? <>
+                                                                        <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={accommodationIcon} style={{ marginRight: '8px' }} alt='accommodationIcon' /> Accommodations </h6>
+                                                                        <ul className="d-flex flex-wrap p-0 gap-2">
+                                                                            {m.accommodation.map((sm, si) => {
+                                                                                return (
+                                                                                    <Card key={si} className='shadow-sm' sx={{ maxWidth: 345, borderRadius: '4px', border: '1px solid #ccc', backgroundColor:'rgb(225 223 223 / 10%)' }}>
+                                                                                        <CardContent className='p-2'>
+                                                                                            <Typography variant="h6"  component="h6" className='mb-1 fw-bold' style={{color:'#000', fontSize:'15px'}}>
+                                                                                                {sm.name}
+                                                                                            </Typography>
+                                                                                            <Typography variant="body2" color="text.secondary" style={{fontSize:'12px', marginBottom:'5px'}}>
+                                                                                                <span className='fw-bold'>Address:</span> {sm.address}
+                                                                                            </Typography>
+                                                                                            <Typography variant="body2" color="text.secondary" style={{fontSize:'12px', marginBottom:'5px'}}>
+                                                                                            <span className='fw-bold'>Price Per Night:</span> {sm.price_per_night}
+                                                                                            </Typography>
+                                                                                        </CardContent>
+                                                                                    </Card>
+                                                                                )
+                                                                            })}
+                                                                        </ul>
+                                                                    </> : null}
+                                                                </div>
+                                                                <div className='mb-4'>
+                                                                    {m.food_choices && m.food_choices.length > 0 ? <>
+                                                                        <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={foodIcon} style={{ marginRight: '8px' }} alt='foodIcon' />  Must try Food</h6>
+                                                                        <ul className="d-flex flex-wrap p-0 gap-2">
+                                                                            {m.food_choices.map((sm, si) => {
+                                                                                return <Card key={sm} className='shadow-sm' sx={{ maxWidth: 345, borderRadius: '4px', boxShadow: 'none', border: '1px solid #ccc', backgroundColor:'rgb(225 223 223 / 10%)' }}>
+                                                                                    <CardContent className='p-2'>
+                                                                                    <Typography variant="h6"  component="h6" className='mb-1 fw-bold' style={{color:'#000', fontSize:'15px'}}>
+                                                                                            {sm.name}
+                                                                                        </Typography>
+                                                                                        <Typography variant="body2" color="text.secondary" style={{fontSize:'12px', marginBottom:'5px'}}>
+                                                                                        <span className='fw-bold'>Address: </span>{sm.address}
+                                                                                        </Typography>
+                                                                                        <Typography variant="body2" color="text.secondary" style={{fontSize:'12px', marginBottom:'5px'}}>
+                                                                                        <span className='fw-bold'>Price: </span>{sm.price}
+                                                                                        </Typography>
+                                                                                    </CardContent>
+                                                                                </Card>
+                                                                            })}
+                                                                        </ul>
+                                                                    </> : null}
+                                                                </div>
+                                                                <div className='mb-4'>
+                                                                    {m.transportation && (Object.keys(m.transportation.flight).length > 0 || Object.keys(m.transportation.train).length > 0 || Object.keys(m.transportation.bus).length > 0) ? <>
+                                                                        <h6 className='my-2 mb-4 trip-hotel-title'> <img src={transportation_icon} style={{ marginRight: '8px' }} alt='transportation_icon' />  Transportation</h6>
+                                                                        <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                            {Object.keys(m.transportation.flight).length > 0 &&
+                                                                                <Chip label={`Flight: ${m.transportation.flight['price']}`} />}
+                                                                            {Object.keys(m.transportation.train).length > 0 &&
+                                                                                <Chip label={`Train: ${m.transportation.train['price']}`} />}
+                                                                            {Object.keys(m.transportation.bus).length > 0 &&
+                                                                                <Chip label={`Bus: ${m.transportation.bus['price']}`} />}
+                                                                        </ul>
+                                                                    </> : null}
+                                                                </div>
+                                                            </div>
                                                         </li>
 
                                                     })

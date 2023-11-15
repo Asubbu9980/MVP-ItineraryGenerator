@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap');
+
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap'); */
+
+
 body {
   margin: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,9 +10,16 @@ body {
     sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: 'Zen Kaku Gothic Antique';
-}
+  font-family: 'IBM Plex Sans', sans-serif !important;
+  /* font-family: 'Zen Kaku Gothic Antique'; */
+  /* font-family: 'Poppins', sans-serif !important; */
 
+}
+*{
+  font-family: 'IBM Plex Sans', sans-serif !important;
+  /* font-family: 'Poppins', sans-serif !important; */
+
+}
 
 .login-sing-container {
   margin: 15px 0;
