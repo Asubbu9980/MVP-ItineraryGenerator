@@ -101,7 +101,8 @@ const PreferentialSearch = () => {
             // console.log(next, 'next')
 
 
-        }
+        },
+
     };
     const totalSlides = slider.current ? slider.current.props.children.length : 0;
 
@@ -299,18 +300,19 @@ const PreferentialSearch = () => {
                                             <div className='sliderBox sliderBoxSix'>
                                                 <h3> Select Your Trip Dates</h3>
                                                 {/* <div style={{ height: '70px' }}>  </div> */}
-                                                <div className='dataBgColor d-flex align-items-center justify-content-center'>
+                                                <div className='container dataBgColor'>
                                                     {/* Start Date */}
-                                                    <div className="col col-5 d-flex flex-column p-2">
-                                                        <label style={{ marginBottom: '8px' }}>Start Date</label>
-                                                        <TripDatePicker fieldName="start_date" />
+                                                    <div className='row'>
+                                                        <div className="col-12 col-sm-12 col-lg-6 p -2">
+                                                            <label style={{ marginBottom: '8px' }}>Start Date</label>
+                                                            <TripDatePicker fieldName="start_date" />
+                                                        </div>
+                                                        {/* End Date */}
+                                                        <div className="col-12 col-sm-12 col-lg-6 p-2">
+                                                            <label style={{ marginBottom: '8px' }}>End Date</label>
+                                                            <TripDatePicker fieldName="end_date" />
+                                                        </div>
                                                     </div>
-                                                    {/* End Date */}
-                                                    <div className="col col-5 d-flex flex-column p-2">
-                                                        <label style={{ marginBottom: '8px' }}>End Date</label>
-                                                        <TripDatePicker fieldName="end_date" />
-                                                    </div>
-
 
                                                 </div>
                                                 {errors.date && (!tripPayloadState.start_date || !tripPayloadState.end_date) ? <p className='errors trip-errors mx-auto'>{errors.date}</p> : null}

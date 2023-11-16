@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 // import Header from './Header'
-import '../home/home.css'
+// import '../home/home.css'
 import { TextField, Button, Container, Grid, Box } from '@mui/material';
 // import Radio from '@mui/material/Radio';
 // import RadioGroup from '@mui/material/RadioGroup';
@@ -18,6 +18,7 @@ import searchIocn from "../../assets/search-icon.svg";
 import TransportModes from './TransportModes';
 import { startDateInitialValue, endDateInitialValue } from '../../context/TripDataContext';
 import Itinerary from '../../common/Itinerary'
+import Searchhistory from '../../common/Searchhistory';
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -175,9 +176,9 @@ const IndexPage = () => {
 
                             <form autoComplete='off' className="search-form" onSubmit={formik.handleSubmit}>
                                 <div className="container">
-                                    <div className="row">
+                                    <div className="row ">
                                         {/* Location */}
-                                        <div className="col col-3">
+                                        <div className="col col-sm-12 col-md-6 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>Origin</label>
                                             <Autocomplete
                                                 disablePortal
@@ -190,7 +191,7 @@ const IndexPage = () => {
                                             {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
                                         </div>
                                         {/* Destination */}
-                                        <div className="col col-3">
+                                        <div className="col col-sm-12 col-md-3 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>Destination </label>
                                             <Autocomplete
                                                 disablePortal
@@ -202,9 +203,6 @@ const IndexPage = () => {
                                             />
                                             {formik.errors.destination ? <p className='errors'>{formik.errors.destination}</p> : null}
                                         </div>
-
-
-
                                         {/* Budget */}
                                         {/* <Grid item xs={2}>
                                         <label style={{ marginBottom: '8px' }}>Budget</label>
@@ -218,10 +216,8 @@ const IndexPage = () => {
                                         />
                                         {formik.errors.budget ? <p className='errors'>{formik.errors.budget}</p> : null}
                                     </Grid> */}
-
-
                                         {/* Start Date */}
-                                        <div className="col col-3">
+                                        <div className="col col-sm-12 col-md-3 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>Start Date</label>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DatePicker
@@ -235,7 +231,7 @@ const IndexPage = () => {
                                         </div>
 
                                         {/* End Date */}
-                                        <div className="col col-3">
+                                        <div className="col col-sm-12 col-md-3 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>End Date</label>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DatePicker
@@ -273,7 +269,6 @@ const IndexPage = () => {
                                 <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', color: '#000' }}>
                                     <TransportModes></TransportModes>
                                 </div>
-
                                 <Grid item xs={12} style={{ display: 'flex', height: '0' }}>
                                     <Button type='submit' className='btn-submit' style={{ margin: '20px auto', position: "relative", top: '-5px' }}>
                                         Start Planning
@@ -282,7 +277,13 @@ const IndexPage = () => {
                             </form>
 
                         </Box>
+
                     </Container>
+                    <div className='' style={{ paddingBottom: '16px' }} >
+                        <Searchhistory />
+                    </div>
+
+
                 </div>
                 <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
                     {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}

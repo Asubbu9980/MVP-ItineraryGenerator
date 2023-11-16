@@ -3,7 +3,7 @@ import { Button, Container } from '@mui/material';
 import Card from '@mui/material/Card';
 import circum_share from "../../assets/circum_share.svg";
 import '../homeSearch/homeSearch.css'
-import '../homeSearch/sliderbanner.css'
+// import '../homeSearch/sliderbanner.css'
 
 const TripDailyPlanningData = ({ tripData = {}, onChangeModalState }) => {
     return (

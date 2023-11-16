@@ -1,7 +1,7 @@
 import React from 'react'
 import searchIocn from "../../assets/search-icon.svg";
 import '../homeSearch/homeSearch.css'
-import '../homeSearch/sliderbanner.css'
+// import '../homeSearch/sliderbanner.css'
 
 const NoTripDataAvailable = () => {
     return (

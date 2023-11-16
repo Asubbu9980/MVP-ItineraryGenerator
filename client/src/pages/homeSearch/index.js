@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import '../homeSearch/homeSearch.css'
-import '../homeSearch/sliderbanner.css'
+// import '../homeSearch/sliderbanner.css'
 import Slider from "react-slick";
 import Box from '@mui/joy/Box';
 // import CheckIcon from '@mui/icons-material/Check';

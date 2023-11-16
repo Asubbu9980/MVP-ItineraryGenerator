@@ -173,7 +173,7 @@
 }
 
 .sliderBox h3 {
-    margin-top: 10px;
+    margin-top: 30px;
     margin-bottom: 15px;
     text-align: center;
     text-shadow: 0px 2px 3px rgba(0, 0, 0, 0.16);
@@ -189,15 +189,12 @@
     background: rgba(20, 20, 20, 0.23);
     box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
     backdrop-filter: blur(2.5px);
-}
+    /* min-height: 200px; */
+    padding: 30px 30px;
 
-
-.sliderBox .dataBgColor {
-    min-height: 200px;
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 3px;
+    justify-content: center; */
 }
 
 .slickArrows {
@@ -260,8 +257,9 @@
 }
 
 .sliderBox .box {
-    width: 267px;
     height: 120px;
+    width: 230px;
+
 }
 
 .sliderBoxOne .box label {
@@ -283,11 +281,6 @@
 .sliderBoxTwo .radioSheet {
     background: #fff;
 }
-
-.sliderBoxTwo .box {
-    width: 230px;
-}
-
 .sliderBoxTwo .box .MuiSheet-root {
     display: block;
     text-align: center;
