@@ -134,7 +134,7 @@ const IndexPage = () => {
                 console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
                 // setTripData(r.data.hasOwnProperty('trip') ? r.data.trip : r.data)
-                const p = r.data.hasOwnProperty('trip') ? r.data.trip : r.data;
+                const p = r?.data.hasOwnProperty('trip') ? r?.data.trip : r?.data;
                 const fR = {}
                 // const lastKey = Object.keys(p).pop();
                 Object.keys(p).forEach(function (key) {
@@ -155,7 +155,6 @@ const IndexPage = () => {
                 console.log(JSON.stringify(fR));
                 setTripData(fR)
             }).then((e) => {
-
             })
 
         } catch (error) {

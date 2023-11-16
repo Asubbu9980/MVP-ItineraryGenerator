@@ -114,9 +114,9 @@ const Itinerary = ({ tripData }) => {
 
 
                                         <div className='viewmap_btn'>
-                                            <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
+                                            {/* <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
 
-                                            </Button>
+                                            </Button> */}
 
                                         </div>
 

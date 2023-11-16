@@ -1,5 +1,6 @@
 import React from 'react';
-
+import { Provider } from "react-redux";
+import { configureStore } from "./store";
 //imoprt Route
 import Route from './routes';
 import { auth0 } from "./config";
@@ -13,18 +14,20 @@ import "slick-carousel/slick/slick-theme.css";
 function App() {
   return (
     <React.Fragment>
-      <Auth0Provider
-        domain={auth0.domain}
-        clientId={auth0.clientId}
-        redirectUri={auth0.redirectUri}
-      >
-        <LoaderProvider>
-          <TripPayloadContextProvider>
-            <Route />
-          </TripPayloadContextProvider>
+      <Provider store={configureStore({})}>
+        <Auth0Provider
+          domain={auth0.domain}
+          clientId={auth0.clientId}
+          redirectUri={window.location.origin}
+        >
+          <LoaderProvider>
+            <TripPayloadContextProvider>
+              <Route />
+            </TripPayloadContextProvider>
 
-        </LoaderProvider>
-      </Auth0Provider>
+          </LoaderProvider>
+        </Auth0Provider>
+      </Provider>
     </React.Fragment>
   );
 }
