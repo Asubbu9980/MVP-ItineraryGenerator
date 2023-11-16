@@ -30,7 +30,7 @@ const TripDataRadioGroup = ({ fieldName = '', data = [] }) => {
                 aria-labelledby={fieldName}
                 // defaultValue="Goa"
                 size="lg"
-                sx={{ gap: 1.5 }}
+                sx={{ gap: 1.5, flexWrap: 'wrap' }}
                 value={tripPayloadState[fieldName]}
                 name={fieldName}
                 onChange={handleChangeTripPayloadState}

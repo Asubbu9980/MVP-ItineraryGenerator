@@ -38,6 +38,7 @@ function TransportModes() {
                 name="platform"
                 sx={{
                     flexDirection: 'row',
+                    flexWrap: 'wrap',
                     gap: 2,
                     [`& .${radioClasses.checked}`]: {
                         [`& .${radioClasses.action}`]: {
