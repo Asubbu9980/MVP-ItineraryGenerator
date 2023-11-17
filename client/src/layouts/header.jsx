@@ -11,6 +11,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useAuth0 } from '@auth0/auth0-react';
 // import ProfileDropdown from './profile-dropdown';
 import Tooltip from '@mui/joy/Tooltip';
+import CircularProgress from '@mui/joy/CircularProgress';
 
 
 const HeaderComponent = () => {
@@ -63,29 +64,32 @@ const HeaderComponent = () => {
                     <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark mx-3 pt-3 home-search-link'>
                         <p >{location.pathname === "/" ? 'Preferential Search' : 'Home'}</p>
                     </Link>
-                    {!isAuthenticated ? <Button onClick={() => loginWithPopup()} variant='contained' size='small'>Login</Button> : null}
-                    {isAuthenticated && <div style={{ cursor: 'pointer' }}>
-                        <div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Avatar
-                                alt="John Doe"
-                                src={avatarIcon}
-                            />
-                            <div style={{ marginLeft: "8px", }} className='d-flex align-items-center'><Tooltip title={user?.nickname} variant="solid" className='text-capitalize'><h6 className='user-name me-2'>{user?.nickname}</h6></Tooltip>  <img src={lableDownLine} alt='lableDownLine' /></div>
+                    {!isLoading ?
+                        <>
+                            {!isAuthenticated ? <Button onClick={() => loginWithPopup()} variant='contained' size='small'>Login</Button> : null}
+                            {isAuthenticated && <div style={{ cursor: 'pointer' }}>
+                                <div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                    <Avatar
+                                        alt="John Doe"
+                                        src={avatarIcon}
+                                    />
+                                    <div style={{ marginLeft: "8px", }} className='d-flex align-items-center'><Tooltip title={user?.nickname} variant="solid" className='text-capitalize'><h6 className='user-name me-2'>{user?.nickname}</h6></Tooltip>  <img src={lableDownLine} alt='lableDownLine' /></div>
 
-                        </div>
-                        <Menu
-                            anchorEl={anchorEl}
-                            open={Boolean(anchorEl)}
-                            onClose={avatarClose}
-                        >
-                            <MenuItem className='user-profile-links' onClick={avatarClose}>Profile</MenuItem>
-                            <MenuItem onClick={avatarClose}><Link to='/recent-searches' className='text-decoration-none text-dark user-profile-links'>Recent Searches</Link></MenuItem>
-                            {/* <MenuItem>Settings</MenuItem> */}
-                            <MenuItem>
-                                <Button onClick={() => logout()} variant='contained' size='small'>Logout</Button>
-                            </MenuItem>
-                        </Menu>
-                    </div>}
+                                </div>
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={avatarClose}
+                                >
+                                    <MenuItem className='user-profile-links' onClick={avatarClose}>Profile</MenuItem>
+                                    <MenuItem onClick={avatarClose}><Link to='/recent-searches' className='text-decoration-none text-dark user-profile-links'>Recent Searches</Link></MenuItem>
+                                    {/* <MenuItem>Settings</MenuItem> */}
+                                    <MenuItem>
+                                        <Button onClick={() => logout()} variant='contained' size='small'>Logout</Button>
+                                    </MenuItem>
+                                </Menu>
+                            </div>}
+                        </> : <CircularProgress variant="solid" />}
                 </Box>
             </Container>
 

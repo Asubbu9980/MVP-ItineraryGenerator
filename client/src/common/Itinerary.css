@@ -444,3 +444,7 @@ align-items: center;
   .moveing:hover {
     animation-play-state: paused;
   }
+  .recent-trip-created-date{
+    font-size: 12px !important;
+    
+}
