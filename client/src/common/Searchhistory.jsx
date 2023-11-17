@@ -3,7 +3,6 @@ import Chip from '@mui/material/Chip';
 // import { TextField, Button, Container, Grid, Box } from '@mui/material';
 import { Box } from '@mui/material';
 
-
 function Searchhistory() {
     return (
         <div className='container p-0'>
@@ -15,6 +14,8 @@ function Searchhistory() {
                     <Chip label="Banglore to Delhi" variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} />
                 </div>
             </Box>
+
+        
         </div>
     )
 }
