@@ -19,6 +19,7 @@ import TransportModes from './TransportModes';
 import { startDateInitialValue, endDateInitialValue } from '../../context/TripDataContext';
 import Itinerary from '../../common/Itinerary'
 import Searchhistory from '../../common/Searchhistory';
+import AccordionData from '../../common/AccordionData';
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -286,6 +287,7 @@ const IndexPage = () => {
 
                 </div>
                 <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
+                    <AccordionData/>
                     {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
                     {
                         tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
