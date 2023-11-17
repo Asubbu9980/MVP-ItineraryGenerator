@@ -5,4 +5,16 @@
 .home-search-link:hover{
     color: blue !important;
     text-decoration: underline !important;
-    }
+}
+.user-name{
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.user-profile-links:hover{
+    color: blue !important;
+
+}

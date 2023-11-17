@@ -1,21 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 // import Header from './Header'
 import './Itinerary.css'
-import { TextField, Button, Container, Grid, Box } from '@mui/material';
+import { Button, Container } from '@mui/material';
 
 import Card from '@mui/material/Card';
 
-import dayjs from 'dayjs';
+// import dayjs from 'dayjs';
 import ItineraryMapModal from './ItineraryMapModal';
-import circum_share from "../assets/circum_share.svg";
+// import circum_share from "../assets/circum_share.svg";
 import Chip from '@mui/material/Chip';
 
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import foodIcon from "../assets/food_icon.svg";
 import activitiesIcon from "../assets/activities_icon.svg";
-import activityIcon from "../assets/activity_icon.svg";
-import calendarIcon from "../assets/calendar_icon.svg";
+// import activityIcon from "../assets/activity_icon.svg";
+// import calendarIcon from "../assets/calendar_icon.svg";
 import accommodationIcon from "../assets/accommodation_icon.svg";
 import locationIcon from "../assets/location_icon.svg";
 import transportation_icon from "../assets/transportation_icon.svg";
@@ -25,43 +25,44 @@ import PlaceIcon from '@mui/icons-material/Place';
 const Itinerary = ({ tripData }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
-    const onChangeModalState = (data) => {
-        if (data != null) {
-            const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
-            const mainCoordinateLng = data.coordinates.lng.replace("° E", "");
-            // console.log("mainCoordinate", mainCoordinateLat);
-            const locationData = [];
-            locationData.push(
-                {
-                    "title": data.coordinates.title,
-                    "lat": parseFloat(mainCoordinateLat),
-                    "lng": parseFloat(mainCoordinateLng)
-                },
-            )
-            if (data?.accommodation && data?.accommodation.length > 0) {
-                data?.accommodation.forEach(element => {
-                    locationData.push({
-                        "title": element.coordinates.title,
-                        "lat": parseFloat(element.coordinates.lat),
-                        "lng": parseFloat(element.coordinates.lng)
-                    })
-                });
-            }
-            if (data?.food_choices && data?.food_choices.length > 0) {
-                data?.food_choices.forEach(element => {
-                    locationData.push({
-                        "title": element.coordinates.title,
-                        "lat": parseFloat(element.coordinates.lat),
-                        "lng": parseFloat(element.coordinates.lng)
-                    })
-                });
-            }
-            if (locationData.length > 0) {
-                setCoordinates(locationData)
-                setModelState(true)
-            }
-        }
-    }
+
+    // const onChangeModalState = (data) => {
+    //     if (data != null) {
+    //         const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
+    //         const mainCoordinateLng = data.coordinates.lng.replace("° E", "");
+    //         // console.log("mainCoordinate", mainCoordinateLat);
+    //         const locationData = [];
+    //         locationData.push(
+    //             {
+    //                 "title": data.coordinates.title,
+    //                 "lat": parseFloat(mainCoordinateLat),
+    //                 "lng": parseFloat(mainCoordinateLng)
+    //             },
+    //         )
+    //         if (data?.accommodation && data?.accommodation.length > 0) {
+    //             data?.accommodation.forEach(element => {
+    //                 locationData.push({
+    //                     "title": element.coordinates.title,
+    //                     "lat": parseFloat(element.coordinates.lat),
+    //                     "lng": parseFloat(element.coordinates.lng)
+    //                 })
+    //             });
+    //         }
+    //         if (data?.food_choices && data?.food_choices.length > 0) {
+    //             data?.food_choices.forEach(element => {
+    //                 locationData.push({
+    //                     "title": element.coordinates.title,
+    //                     "lat": parseFloat(element.coordinates.lat),
+    //                     "lng": parseFloat(element.coordinates.lng)
+    //                 })
+    //             });
+    //         }
+    //         if (locationData.length > 0) {
+    //             setCoordinates(locationData)
+    //             setModelState(true)
+    //         }
+    //     }
+    // }
 
 
     const onChangeRecommendedModalState = (data) => {
@@ -85,6 +86,54 @@ const Itinerary = ({ tripData }) => {
 
     const onCloseModal = () => {
         setModelState(false)
+    }
+
+    const getEachTransportType = (data, transport_type) => {
+        const TrnsportTypeDataKeys = Object.keys(data[transport_type]);
+
+        let isFromAvailable = false;
+        let FromKey = 'from';
+        let ToKey = 'to'
+
+        TrnsportTypeDataKeys.forEach((eachKey) => {
+            if (eachKey.toLocaleLowerCase().includes('from')) {
+                isFromAvailable = true;
+                FromKey = eachKey;
+
+            } else {
+                if (eachKey.toLocaleLowerCase().includes('to')) {
+                    ToKey = eachKey
+                }
+            }
+        })
+
+        const TrnsportTypeDataKeysLength = TrnsportTypeDataKeys.length
+        // console.log(TrnsportTypeDataKeys, 'TrnsportTypeDataKeys', transport_type, TrnsportTypeDataKeysLength)
+        return <>
+            {TrnsportTypeDataKeysLength > 0 && !isFromAvailable &&
+                <Chip key={transport_type} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ${TrnsportTypeDataKeysLength === 1 ? data[transport_type][TrnsportTypeDataKeys[0]] : data[transport_type]['price']}`} />
+            }
+
+            {TrnsportTypeDataKeysLength > 0 && isFromAvailable &&
+                <Card key={transport_type} className='shadow-sm me-1' sx={{ maxWidth: 345, borderRadius: '4px', boxShadow: 'none', border: '1px solid #ccc', backgroundColor: 'rgb(225 223 223 / 10%)' }}>
+                    <CardContent className='p-2'>
+                        <Typography variant="h6" component="h6" className='mb-1 fw-bold' style={{ color: '#000', fontSize: '15px' }}>
+                            {`${transport_type[0].toUpperCase() + transport_type.slice(1)}`}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                            <span className='fw-bold'>From: </span>{data[transport_type][FromKey]}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                            <span className='fw-bold'>To: </span>{data[transport_type][ToKey]}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                            <span className='fw-bold'>Price: </span>{data[transport_type]['price']}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            }
+
+        </>
     }
 
     return (
@@ -113,10 +162,12 @@ const Itinerary = ({ tripData }) => {
                                         </div>
 
 
-                                        <div className='viewmap_btn'>
+                                        <div className='recommended-stay'>
                                             {/* <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
 
                                             </Button> */}
+                                            {m.recommended_stay ? <Chip color="success" variant='outlined' label={`Recommended Stay: ${m.recommended_stay}`} /> : null}
+
 
                                         </div>
 
@@ -209,15 +260,21 @@ const Itinerary = ({ tripData }) => {
                                                 </> : null}
                                             </div>
                                             <div className='mb-4'>
-                                                {m.transportation && (Object.keys(m.transportation.flight).length > 0 || Object.keys(m.transportation.train).length > 0 || Object.keys(m.transportation.bus).length > 0) ? <>
+                                                {m.transportation && (Object.keys(m.transportation).length > 0) && (Object.keys(m.transportation.flight).length > 0 || Object.keys(m.transportation.train).length > 0 || Object.keys(m.transportation.bus).length > 0) ? <>
                                                     <h6 className='my-2 mb-4 trip-hotel-title'> <img src={transportation_icon} style={{ marginRight: '8px' }} alt='transportation_icon' />  Transportation</h6>
                                                     <ul className="d-flex flex-wrap p-0 gap-1">
-                                                        {Object.keys(m.transportation.flight).length > 0 &&
+                                                        {
+                                                            Object.keys(m.transportation).map((transport_type) => {
+                                                                return getEachTransportType(m.transportation, transport_type)
+                                                            })
+                                                        }
+                                                        {/* {Object.keys(m.transportation.flight).length > 0 &&
                                                             <Chip label={`Flight: ${m.transportation.flight['price']}`} />}
                                                         {Object.keys(m.transportation.train).length > 0 &&
                                                             <Chip label={`Train: ${m.transportation.train['price']}`} />}
                                                         {Object.keys(m.transportation.bus).length > 0 &&
-                                                            <Chip label={`Bus: ${m.transportation.bus['price']}`} />}
+                                                            <Chip label={`Bus: ${m.transportation.bus['price']}`} />} */}
+
                                                     </ul>
                                                 </> : null}
                                             </div>
