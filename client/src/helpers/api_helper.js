@@ -7,10 +7,15 @@ axios.defaults.baseURL = api.API_URL;
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 // content type
-const token = JSON.parse(window.localStorage.getItem("authUser")) ? JSON.parse(window.localStorage.getItem("authUser")).tokens?.refresh?.token : null;
+const token = window.localStorage.getItem("token") ? window.localStorage.getItem("token") : null;
+const userId = window.localStorage.getItem("userId") ? window.localStorage.getItem("userId") : null;
+
 if (token)
   console.log("token", token);
 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+axios.defaults.headers.common["user-id"] = userId;
+// axios.defaults.headers.common["x-user-id"] = userId
+
 
 // intercepting to capture errors
 axios.interceptors.response.use(

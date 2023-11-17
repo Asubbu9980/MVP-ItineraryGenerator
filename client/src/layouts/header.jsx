@@ -15,18 +15,26 @@ import { useAuth0 } from '@auth0/auth0-react';
 const HeaderComponent = () => {
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const { user, isAuthenticated, logout, loginWithPopup, getIdTokenClaims } = useAuth0();
+    // getAccessTokenSilently,
+    // getAccessTokenWithPopup,
+    const { isLoading, user, isAuthenticated, logout, loginWithPopup, getAccessTokenSilently, getIdTokenClaims } = useAuth0();
 
     const location = useLocation();
 
 
     useEffect(() => {
         if (isAuthenticated) {
+            getAccessTokenSilently().then(r => {
+                window.localStorage.setItem("token", r)
+                if (!isLoading) {
+                    window.localStorage.setItem("userId", user.sub)
+                }
+            })
             getIdTokenClaims().then((claims) => {
                 // const idToken = claims.__raw;
                 const idToken = claims
-                console.log(idToken)
-                console.log(user, 'user')
+                // console.log(idToken)
+                // console.log(user, 'user')
                 // setAuthorization(idToken);
 
             });
