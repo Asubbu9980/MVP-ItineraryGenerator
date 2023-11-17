@@ -21,7 +21,7 @@ import { getTripDetailsApi } from '../../helpers/trip_helper';
 // import circum_share from "../../assets/circum_share.svg";
 import searchIocn from "../../assets/search-icon.svg";
 // import { Button, Container } from '@mui/material';
-import MapModal from '../../common/ItineraryMapModal';
+// import MapModal from '../../common/ItineraryMapModal';
 import TripDataRadioGroup from '../homeSearch/TripDataRadioGroup';
 import TripDatePicker from '../homeSearch/TripDatePicker';
 import { cityNames, tripCity, comingWith, spendTime, food, tripTheme } from '../homeSearch/TripDataFile';
@@ -38,8 +38,8 @@ const PreferentialSearch = () => {
     const loaderContext = useContext(LoaderContext);
     const { tripPayloadState, setTripPayloadState } = useContext(TripPayloadContext);
     const [tripData, setTripData] = useState(null);
-    const [modelState, setModelState] = useState(false);
-    const [coordinatesData, setCoordinates] = useState([])
+    // const [modelState, setModelState] = useState(false);
+    // const [coordinatesData, setCoordinates] = useState([])
     const [errors, setErrors] = useState({
         destination: null,
         date: null,
@@ -140,45 +140,45 @@ const PreferentialSearch = () => {
     }
 
 
-    const onChangeModalState = (data) => {
-        console.log("m", data);
-        const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
-        const mainCoordinateLng = data.coordinates.lng.replace("° E", "");
-        // console.log("mainCoordinate", mainCoordinateLat);
-        const locationData = [];
-        locationData.push(
-            {
-                "title": data.coordinates.title,
-                "lat": parseFloat(mainCoordinateLat),
-                "lng": parseFloat(mainCoordinateLng)
-            },
-        )
-        if (data?.accommodation && data?.accommodation.length > 0) {
-            data?.accommodation.forEach(element => {
-                locationData.push({
-                    "title": element.coordinates.title,
-                    "lat": parseFloat(element.coordinates.lat),
-                    "lng": parseFloat(element.coordinates.lng)
-                })
-            });
-        }
-        if (data?.food_choices && data?.food_choices.length > 0) {
-            data?.food_choices.forEach(element => {
-                locationData.push({
-                    "title": element.coordinates.title,
-                    "lat": parseFloat(element.coordinates.lat),
-                    "lng": parseFloat(element.coordinates.lng)
-                })
-            });
-        }
+    // const onChangeModalState = (data) => {
+    //     console.log("m", data);
+    //     const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
+    //     const mainCoordinateLng = data.coordinates.lng.replace("° E", "");
+    //     // console.log("mainCoordinate", mainCoordinateLat);
+    //     const locationData = [];
+    //     locationData.push(
+    //         {
+    //             "title": data.coordinates.title,
+    //             "lat": parseFloat(mainCoordinateLat),
+    //             "lng": parseFloat(mainCoordinateLng)
+    //         },
+    //     )
+    //     if (data?.accommodation && data?.accommodation.length > 0) {
+    //         data?.accommodation.forEach(element => {
+    //             locationData.push({
+    //                 "title": element.coordinates.title,
+    //                 "lat": parseFloat(element.coordinates.lat),
+    //                 "lng": parseFloat(element.coordinates.lng)
+    //             })
+    //         });
+    //     }
+    //     if (data?.food_choices && data?.food_choices.length > 0) {
+    //         data?.food_choices.forEach(element => {
+    //             locationData.push({
+    //                 "title": element.coordinates.title,
+    //                 "lat": parseFloat(element.coordinates.lat),
+    //                 "lng": parseFloat(element.coordinates.lng)
+    //             })
+    //         });
+    //     }
 
-        setCoordinates(locationData)
-        setModelState(true)
-    }
+    //     setCoordinates(locationData)
+    //     setModelState(true)
+    // }
 
-    const onCloseModal = () => {
-        setModelState(false)
-    }
+    // const onCloseModal = () => {
+    //     setModelState(false)
+    // }
 
 
     const handleSubmit = () => {

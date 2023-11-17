@@ -16,15 +16,16 @@
     width: 100%;
 }
 
-.viewmap_btn button {
+.recommended-stay{
     padding: 6px 11px;
-    border-radius: 8px;
-    border: 1px solid #018AD3;
-    color: #018AD3;
-    font-size: 11px;
+    /* border-radius: 8px;
+    border: 1px solid #018AD3; */
+    
+    font-size: 16px;
+    font-weight: 600;
     float: right;
     position: relative;
-    top: -4px;
+    top: -11px;
     align-items: center;
 }
 
@@ -406,7 +407,8 @@ align-items: center;
 .trip-map-view-btns{
     text-transform: none !important;
     font-size: 13px !important;
-    margin-left: 8px !important;
+    margin-left: 18px !important;
+    font-weight: 500 !important;
    }
 
 .searchHistory{
