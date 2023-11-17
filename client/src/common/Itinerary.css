@@ -419,4 +419,28 @@ align-items: center;
     backdrop-filter: blur(2.5px);
     padding:25px 20px;
     margin-top: 30px;
+    overflow: hidden;
 }
+
+.moveing{
+
+}
+@keyframes scroll {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+.moveing {
+    display: flex;
+    overflow: hidden;
+    gap: 10px;
+    animation: scroll 50s linear infinite;
+  }
+  
+  .moveing:hover {
+    animation-play-state: paused;
+  }
