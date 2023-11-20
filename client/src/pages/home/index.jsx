@@ -20,6 +20,8 @@ import { startDateInitialValue, endDateInitialValue } from '../../context/TripDa
 import Itinerary from '../../common/Itinerary'
 import Searchhistory from '../../common/Searchhistory';
 // import AccordionData from '../../common/AccordionData';
+import { useAuth0 } from '@auth0/auth0-react';
+
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -52,6 +54,7 @@ const IndexPage = () => {
     // const [modelState, setModelState] = useState(false);
     const loaderContext = useContext(LoaderContext);
     // const [coordinatesData, setCoordinates] = useState([])
+    const { isAuthenticated } = useAuth0();
 
 
     // console.log(tripPayloadState)
@@ -281,7 +284,7 @@ const IndexPage = () => {
 
                     </Container>
                     <div className='' style={{ paddingBottom: '16px' }} >
-                        <Searchhistory />
+                        {isAuthenticated ? <Searchhistory setTripData={setTripData} /> : null}
                     </div>
 
 

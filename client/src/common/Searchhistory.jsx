@@ -10,7 +10,7 @@ import { Button } from '@mui/material';
 
 
 
-function Searchhistory() {
+function Searchhistory({ setTripData }) {
   const [recentSearchesTripData, setrecentSearchesTripData] = useState([]);
 
   // const chipData = [
@@ -74,20 +74,25 @@ function Searchhistory() {
     }
 
   }
-  console.log(recentSearchesTripData, "recentChip")
+  //console.log(recentSearchesTripData, "recentChip")
+  const onChangeTheSelectedTripData = (data) => {
+
+    setTripData(data)
+    // console.log(data, "asdfghjkdfghjk")
+  }
   return (
     <div className='container p-0'>
       <Box className='searchHistory' >
         <h6 style={{ color: '#fff', fontWeight: 'bold' }}>Recent Searches</h6>
         {recentSearchesTripData.length > 0 ? <div className='moveing' >
           {recentSearchesTripData.map(item => (
-            <Chip key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} />
+            <Chip onClick={() => onChangeTheSelectedTripData(item.output)} key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} />
           ))}
 
         </div> : <div className='text-center pt-2'><CircularProgress variant="solid" /></div>}
         {recentSearchesTripData.length > 0 ? <div className='text-center pt-2'>
           <Link to='/recent-searches' className='text-decoration-none ' >
-            <Button variant='contained'>View All</Button>
+            <Button variant='contained' size='small'>View All</Button>
           </Link>
         </div> : null}
 
