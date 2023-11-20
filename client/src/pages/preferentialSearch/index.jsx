@@ -28,6 +28,8 @@ import { cityNames, tripCity, comingWith, spendTime, food, tripTheme } from '../
 import dayjs from 'dayjs';
 import { startDateInitialValue, endDateInitialValue } from '../../context/TripDataContext';
 import Itinerary from '../../common/Itinerary'
+import { useAuth0 } from '@auth0/auth0-react';
+import Searchhistory from '../../common/Searchhistory';
 
 // import TripDailyPlanningData from '../../TripDailyPlanningData';
 // import NoTripDataAvailable from './NoTripDataAvailable';
@@ -38,6 +40,7 @@ const PreferentialSearch = () => {
     const loaderContext = useContext(LoaderContext);
     const { tripPayloadState, setTripPayloadState } = useContext(TripPayloadContext);
     const [tripData, setTripData] = useState(null);
+    const [bannerHeight, setBannerHeight] = useState('380px');
     // const [modelState, setModelState] = useState(false);
     // const [coordinatesData, setCoordinates] = useState([])
     const [errors, setErrors] = useState({
@@ -47,7 +50,10 @@ const PreferentialSearch = () => {
         trip_theme_type: null
     })
 
-    console.log(tripPayloadState, "tripPayloadData")
+    // console.log(tripPayloadState, "tripPayloadData")
+
+    const { isAuthenticated } = useAuth0();
+
 
     const next = () => {
         if (currentSlide === 0) {
@@ -262,7 +268,7 @@ const PreferentialSearch = () => {
     return (
         <div className='homeSearch'>
             <div className='position-relative'>
-                <div className='banner'>
+                <div className='banner' style={{ height: bannerHeight }}>
                     <ul className="cb-slideshow">
                         {sliderImages.map((each, index) => (
                             <li key={index}><span style={{ backgroundImage: `url(${each})` }}></span><div><h3></h3></div></li>
@@ -393,7 +399,7 @@ const PreferentialSearch = () => {
                                             </div>
 
                                         </Slider>
-                                        <div className='slickArrows' >
+                                        <div className='slickArrows mt-3' >
                                             {currentSlide !== 0 && <button className="button pre-button mx-2" onClick={previous} >
                                                 Previous
                                             </button>}
@@ -404,13 +410,19 @@ const PreferentialSearch = () => {
                                                 Submit
                                             </button>}
                                         </div>
+                                        <div className='pt-0 '  >
+                                            {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} searchHistoryClassName='preferential-search-history' containerType='container-fluid' setBannerHeight={setBannerHeight} /> : null}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
+
             </div>
+
             <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
                 {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
                 {
