@@ -1,50 +1,43 @@
 import React from 'react'
-
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
- 
+// import AddIcon from '@mui/icons-material/Add';
+import Itinerary from './Itinerary';
+import dayjs from 'dayjs';
 
-const accordionData = [
-    {
-      id: "panel1",
-      header: "Hyderabad to Vizag",
-      details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
-    },
-    {
-      id: "panel2",
-      header: "Hyderabad to Goa",
-      details: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget."
-    }
-    // Add more data as needed
-  ];
+import './Itinerary.css';
 
 
-function AccordionData() {
+
+function AccordionData({ recentTripData = {} }) {
   return (
-    <div className='container'>
-          <div >
-                {accordionData.map((item) => (
-                    <Accordion key={item.id} sx={{
-                        '&:hover': { backgroundColor: '#018AD3', color: '#FFF' }
-                    }}>
-                        <AccordionSummary
-                            expandIcon={<ExpandMoreIcon />}
-                            aria-controls={`${item.id}-content`}
-                            id={`${item.id}-header`}
-                        >
-                            <Typography>{item.header}</Typography>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <Typography>
-                                {item.details}
-                            </Typography>
-                        </AccordionDetails>
-                    </Accordion>
-                ))}
+    <div className='container' key={recentTripData.createdAt}>
+      <div >
+        <Accordion
+          // sx={{
+          //   '&:hover': { backgroundColor: '#018AD3', color: '#FFF' }
+          // }}
+          className='my-2'
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls={`${recentTripData.input.createdAt}-content`}
+            id={`${recentTripData.input.createdAt}-header`}
+          >
+            <Typography className='fw-semibold'>{`${recentTripData.input.source}  to  ${recentTripData.input.destination}  from  ${recentTripData.input.start_date}  to  ${recentTripData.input.end_date},`} <span className='fw-normal mx-1 recent-trip-created-date'>{dayjs(recentTripData.createdAt).format('DD/MM/YYYY h:mm:ss A')}</span></Typography>
+          </AccordionSummary>
+          <AccordionDetails >
+            <div className='pb-3'>
+              <Itinerary tripData={recentTripData?.output} cardBackGroundColor='#F3F4F6' />
             </div>
+
+          </AccordionDetails>
+        </Accordion>
+
+      </div>
     </div>
   )
 }
