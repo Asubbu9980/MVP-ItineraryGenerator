@@ -21,7 +21,8 @@ import Itinerary from '../../common/Itinerary'
 import Searchhistory from '../../common/Searchhistory';
 // import AccordionData from '../../common/AccordionData';
 import { useAuth0 } from '@auth0/auth0-react';
-
+import Skeleton from '@mui/material/Skeleton';
+import ItinerarySkeleton from '../../common/ItinerarySkeleton';
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -174,6 +175,8 @@ const IndexPage = () => {
         <div>
             <div>
                 {/* <Header /> */}
+                {/* {`${loaderContext.loading}`} */}
+                
                 <div className='searchBanner'>
                     <Container className='banner-container'>
                         <Box style={{ borderRadius: '8px', paddingTop: "40px", background: '#fff', padding: '25px', paddingBottom: '35px' }}>
@@ -289,22 +292,24 @@ const IndexPage = () => {
 
 
                 </div>
+                <>{!loaderContext.loading ? 
+                
                 <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
                     {/* <AccordionData /> */}
                     {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
                     {
                         tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
 
-                            <Itinerary tripData={tripData} />
-                            : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && <div>
+                          <Itinerary tripData={tripData} />   
+                            : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && 
+                            <div>
+
+                        
+
                                 <div className='search_info'>
-
                                     <img src={searchIocn} alt='logo' />
-
                                     <h5>No Trip Data available <br />
-
                                         Please check for other popular locations.</h5>
-
                                 </div>
 
                             </div>
@@ -314,10 +319,9 @@ const IndexPage = () => {
                         tripData === null &&
 
                         <div>
+
                             <div className='search_info'>
-
                                 <img src={searchIocn} alt='logo' />
-
                                 <h5>Click the Top Button start your <br />
 
                                     vacation planning.</h5>
@@ -327,6 +331,7 @@ const IndexPage = () => {
                         </div>
                     }
                 </div>
+                : <ItinerarySkeleton/>}</>
             </div>
         </div >
     );

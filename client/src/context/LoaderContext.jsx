@@ -14,9 +14,9 @@ export const LoaderProvider = ({ children }) => {
 
     return (
         <LoaderContext.Provider value={{ loading, startLoading }} >
-            <Backdrop sx={LoaderBackdrop} open={loading}>
+            {/* <Backdrop sx={LoaderBackdrop} open={loading}>
                 <CircularProgress size={50} color="inherit" />
-            </Backdrop>
+            </Backdrop> */}
             {children}
         </LoaderContext.Provider>
     )
