@@ -12,7 +12,7 @@ import { Button } from '@mui/material';
 
 function Searchhistory({ setTripData }) {
   const [recentSearchesTripData, setrecentSearchesTripData] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(true);
   // const chipData = [
   //   {
   //     "id": 1,
@@ -40,7 +40,7 @@ function Searchhistory({ setTripData }) {
   //   }
   // ];
   useEffect(() => {
-
+    // setIsLoading(true)
     getResult()
   }, [])
 
@@ -64,9 +64,10 @@ function Searchhistory({ setTripData }) {
         })
         // console.log(JSON.parse(res[0].input), "response 2")
         // console.log(updatedResData, "updatedResData")
-
+        setIsLoading(false)
         setrecentSearchesTripData(updatedResData)
       }).then((e) => {
+        setIsLoading(false)
       })
 
     } catch (error) {
@@ -82,22 +83,27 @@ function Searchhistory({ setTripData }) {
   }
   return (
     <div className='container p-0'>
-      <Box className='searchHistory' >
-        <h6 style={{ color: '#fff', fontWeight: 'bold' }}>Recent Searches</h6>
-        {recentSearchesTripData.length > 0 ? <div className='moveing' >
-          {recentSearchesTripData.map(item => (
-            <Chip onClick={() => onChangeTheSelectedTripData(item.output)} key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} />
-          ))}
+      {!isLoading ? <>
+        {recentSearchesTripData.length > 0 ?
+          <Box className='searchHistory' >
+            <h6 style={{ color: '#fff', fontWeight: 'bold' }}>Recent Searches</h6>
+            {/* {recentSearchesTripData.length > 0 ? */}
+            <div className='moveing' >
+              {recentSearchesTripData.map(item => (
+                <Chip onClick={() => onChangeTheSelectedTripData(item.output)} key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} />
+              ))}
 
-        </div> : <div className='text-center pt-2'><CircularProgress variant="solid" /></div>}
-        {recentSearchesTripData.length > 0 ? <div className='text-center pt-2'>
-          <Link to='/recent-searches' className='text-decoration-none ' >
-            <Button variant='contained' size='small'>View All</Button>
-          </Link>
-        </div> : null}
+            </div>
+            {/* : null} */}
+            <div className='text-center pt-2'>
+              <Link to='/recent-searches' className='text-decoration-none ' >
+                <Button variant='contained' size='small'>View All</Button>
+              </Link>
+            </div>
 
 
-      </Box>
+          </Box> : null}
+      </> : <div className='text-center mt-5'><CircularProgress variant="solid" /></div>}
 
 
     </div>
