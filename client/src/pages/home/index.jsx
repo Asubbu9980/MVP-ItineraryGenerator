@@ -284,11 +284,12 @@ const IndexPage = () => {
                             </form>
 
                         </Box>
+                        <div className='py-3' >
+                            {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} /> : null}
+                        </div>
 
                     </Container>
-                    <div className='' style={{ paddingBottom: '16px' }} >
-                        {isAuthenticated ? <Searchhistory setTripData={setTripData} /> : null}
-                    </div>
+
 
 
                 </div>
