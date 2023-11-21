@@ -6,7 +6,7 @@ import { getRecentTripDetailsApi } from '../helpers/trip_helper';
 import { Box } from '@mui/material';
 import CircularProgress from '@mui/joy/CircularProgress';
 import { Link } from 'react-router-dom'
-import { Button } from '@mui/material';
+// import { Button } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 
@@ -68,11 +68,18 @@ function Searchhistory({ setTripData, tripData, searchHistoryClassName = 'search
         // console.log(updatedResData, "updatedResData")
         setIsLoading(false)
         if (updatedResData.length > 0) {
-          setBannerHeight('550px')
+          setBannerHeight('530px')
         } else {
           setBannerHeight('380px')
         }
-        setrecentSearchesTripData(updatedResData)
+        const sortedDesc = updatedResData.sort((objA, objB) => {
+          const date1 = new Date(objA.createdAt);
+          const date2 = new Date(objB.createdAt);
+          return (Number(date2) - Number(date1))
+
+        });
+        //console.log(sortedDesc, 'sortedDesc')
+        setrecentSearchesTripData(sortedDesc.slice(0, 6))
 
       }).then((e) => {
         setIsLoading(false)
@@ -83,7 +90,7 @@ function Searchhistory({ setTripData, tripData, searchHistoryClassName = 'search
     }
 
   }
-  //console.log(recentSearchesTripData, "recentChip")
+  // console.log(recentSearchesTripData, "recentChip")
   const onChangeTheSelectedTripData = (data) => {
 
     setTripData(data)
@@ -95,20 +102,25 @@ function Searchhistory({ setTripData, tripData, searchHistoryClassName = 'search
         {recentSearchesTripData.length > 0 ?
           <Box className={`${searchHistoryClassName}`} >
             <div className={`${containerType !== 'container' ? 'container overflow-hidden px-3' : ''}`}>
-              <h6 style={{ color: '#fff', fontWeight: 'bold' }}>Recent Searches</h6>
+              <div className='d-flex justify-content-between align-items-center'>
+                <h6 style={{ color: '#fff', fontWeight: 'bold' }}>Recent Searches</h6>
+
+                <Link to='/recent-searches' className=' search-view-all-btn' >
+                  {/* <Button variant='outlined' size='small' className='search-view-all-btn'> */}
+                  View All<ArrowRightAltIcon />
+                  {/* </Button> */}
+                </Link>
+              </div>
               {/* {recentSearchesTripData.length > 0 ? */}
-              <div className='moveing' >
+              <div className='row moveing' >
                 {recentSearchesTripData.map(item => (
-                  <Chip className='mx-2' onClick={() => onChangeTheSelectedTripData(item.output)} key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} />
+                  <div className='col-12 col-lg-6 col-xl-4'><Chip className='mx-1 my-2' onClick={() => onChangeTheSelectedTripData(item.output)} key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} /></div>
+
                 ))}
 
               </div>
               {/* : null} */}
-              <div className='text-center pt-3'>
-                <Link to='/recent-searches' className='text-decoration-none ' >
-                  <Button variant='contained' size='small' className='search-view-all-btn'>View All<ArrowRightAltIcon /></Button>
-                </Link>
-              </div>
+
 
             </div>
           </Box> : null}

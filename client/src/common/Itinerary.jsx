@@ -268,7 +268,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
                                                 </> : null}
                                             </div>
                                             <div className='mb-4'>
-                                                {m?.transportation && (Object.keys(m.transportation).length > 0) && (Object.keys(m.transportation.flight).length > 0 || Object.keys(m.transportation.train).length > 0 || Object.keys(m.transportation.bus).length > 0) ? <>
+                                                {m?.transportation && (Object.keys(m?.transportation).length > 0) && ((m?.transportation?.flight && Object.keys(m.transportation?.flight).length > 0) || (m?.transportation?.train && Object.keys(m.transportation?.train).length > 0) || (m?.transportation?.bus && Object.keys(m.transportation?.bus).length > 0)) ? <>
                                                     <h6 className='my-2 mb-4 trip-hotel-title'> <img src={transportation_icon} style={{ marginRight: '8px' }} alt='transportation_icon' />  Transportation</h6>
                                                     <ul className="d-flex flex-wrap p-0 gap-1">
                                                         {

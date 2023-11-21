@@ -1,13 +1,13 @@
-import { Backdrop, CircularProgress } from '@mui/material';
+// import { Backdrop, CircularProgress } from '@mui/material';
 import React, { createContext, useContext, useState } from 'react';
 
 const LoaderContext = createContext({ loading: false });
 export const useAppLoaderContext = () => useContext(LoaderContext);
 
-const LoaderBackdrop = {
-    color: '#fff',
-    zIndex: 1350
-}
+// const LoaderBackdrop = {
+//     color: '#fff',
+//     zIndex: 1350
+// }
 
 export const LoaderProvider = ({ children }) => {
     const [loading, startLoading] = useState(false);
