@@ -188,12 +188,14 @@ const IndexPage = () => {
                                         <div className="col col-sm-12 col-md-6 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>Origin</label>
                                             <Autocomplete
+                                            className='originField'
                                                 disablePortal
                                                 id="combo-box-location"
                                                 options={famousTouristCitiesInIndia}
                                                 value={formik.values.source}
                                                 onChange={(e, value) => formik.setFieldValue('source', value)}
                                                 renderInput={(params) => <TextField {...params} />}
+
                                             />
                                             {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
                                         </div>
@@ -201,6 +203,7 @@ const IndexPage = () => {
                                         <div className="col col-sm-12 col-md-3 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>Destination </label>
                                             <Autocomplete
+                                               className='destinationField'
                                                 disablePortal
                                                 id="combo-box-destination"
                                                 options={famousTouristCitiesInIndia}
@@ -232,6 +235,8 @@ const IndexPage = () => {
                                                     onChange={(date) => formik.setFieldValue('start_date', date)}
                                                     maxDate=''
                                                     minDate={dayjs(new Date())}
+                                                    className="startDate"
+
                                                 />
                                             </LocalizationProvider>
                                             {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null}
@@ -242,7 +247,7 @@ const IndexPage = () => {
                                             <label style={{ marginBottom: '8px' }}>End Date</label>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DatePicker
-                                                    className="end-date"
+                                                    className="endDate"
                                                     value={dayjs(formik.values.start_date).add(2, 'day')}
                                                     onChange={(date) => formik.setFieldValue('end_date', date)}
                                                     maxDate={dayjs(formik.values.start_date).add(6, 'day')}
