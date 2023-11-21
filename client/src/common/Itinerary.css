@@ -461,3 +461,15 @@ align-items: center;
     background-color: #018AD3 !important;
 }
 
+.tripDetails-grid .ItinerarySkeleton {
+    border-left-color:rgba(0, 0, 0, 0.11);
+}
+
+.tripDetails-grid .ItinerarySkeleton .dot .center{
+    background:rgba(0, 0, 0, 0.11) ;
+}
+
+.tripDetails-grid .ItinerarySkeleton .dot .ring{
+    border-color:rgba(0, 0, 0, 0.11) ;
+   
+}
