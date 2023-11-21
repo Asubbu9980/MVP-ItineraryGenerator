@@ -30,6 +30,7 @@ import { startDateInitialValue, endDateInitialValue } from '../../context/TripDa
 import Itinerary from '../../common/Itinerary'
 import { useAuth0 } from '@auth0/auth0-react';
 import Searchhistory from '../../common/Searchhistory';
+import ItinerarySkeleton from '../../common/ItinerarySkeleton';
 
 // import TripDailyPlanningData from '../../TripDailyPlanningData';
 // import NoTripDataAvailable from './NoTripDataAvailable';
@@ -422,44 +423,44 @@ const PreferentialSearch = () => {
                 </div>
 
             </div>
+            <>{!loaderContext.loading ?
+                <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
+                    {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
+                    {
+                        tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
 
-            <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
-                {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
-                {
-                    tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
+                            <Itinerary tripData={tripData} />
+                            : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && <div>
+                                <div className='search_info'>
 
-                        <Itinerary tripData={tripData} />
-                        : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && <div>
+                                    <img src={searchIocn} alt='logo' />
+
+                                    <h5>No Trip Data available <br />
+
+                                        Please check for other popular locations.</h5>
+
+                                </div>
+
+                            </div>
+
+                    }
+                    {
+                        tripData === null &&
+
+                        <div>
                             <div className='search_info'>
 
                                 <img src={searchIocn} alt='logo' />
 
-                                <h5>No Trip Data available <br />
+                                <h5>Click the Top Button start your <br />
 
-                                    Please check for other popular locations.</h5>
+                                    vacation planning.</h5>
 
                             </div>
 
                         </div>
-
-                }
-                {
-                    tripData === null &&
-
-                    <div>
-                        <div className='search_info'>
-
-                            <img src={searchIocn} alt='logo' />
-
-                            <h5>Click the Top Button start your <br />
-
-                                vacation planning.</h5>
-
-                        </div>
-
-                    </div>
-                }
-            </div>
+                    }
+                </div> : <ItinerarySkeleton />}</>
         </div >
     );
 };
