@@ -238,11 +238,8 @@
 .tripDetails-grid .tripDetails-item h6 {
     margin: 4px 0 8px 0;
     color: #018AD3;
-    font-size: 14px;
     font-style: normal;
-    font-weight: 400;
     line-height: 22px;
-    font-size: 18px;
     display: flex;
     align-items: center;
 }
@@ -435,3 +432,18 @@
     border-color: rgba(0, 0, 0, 0.11);
   }
  
+
+.loopCard{
+    list-style: none;
+    width: 250px;
+}
+  .loopCard .card{
+    /* color: rgba(0, 0, 0, 0.87);
+    border-radius: 4px;
+    overflow: hidden;
+    border-radius: 4px;*/
+    border: 1px solid #ccc;
+    background-color: rgb(225 223 223 / 10%); 
+    width: 100%;
+    
+  }

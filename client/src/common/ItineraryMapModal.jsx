@@ -1,5 +1,5 @@
 
-import {React,useState,useCallback} from 'react';
+import {React,useState,useCallback,useEffect} from 'react';
 // import Button from '@mui/joy/Button';
 import { GoogleMap, Marker, useJsApiLoader,InfoWindow } from "@react-google-maps/api";
 import Modal from '@mui/joy/Modal';
@@ -14,9 +14,14 @@ import './Itinerary.css'
 // )
 
 const ItineraryMapModal = (props) => {
+  const [coordinatesData, setCoordinates] = useState([])
+
     const containerStyle = {
         width: '100%',
-        height: '400px'
+        height: '500px',
+      position: 'absolute',
+      overflow: 'hidden',
+      borderRadius: '10px',
       };
       
 
@@ -25,22 +30,66 @@ const ItineraryMapModal = (props) => {
         googleMapsApiKey: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
 
       })
+
+      useEffect(() => {
+        if(props.data)
+        onChangeModalState(props.data)
+      },[])
+
+      const onChangeModalState = (data) => {
+        if (data != null) {
+            const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
+            const mainCoordinateLng = data.coordinates.lng.replace("° E", "");
+            // console.log("mainCoordinate", mainCoordinateLat);
+            const locationData = [];
+            locationData.push(
+                {
+                    "title": data.coordinates.title,
+                    "lat": parseFloat(mainCoordinateLat),
+                    "lng": parseFloat(mainCoordinateLng)
+                },
+            )
+            if (data?.accommodation && data?.accommodation.length > 0) {
+                data?.accommodation.forEach(element => {
+                    locationData.push({
+                        "title": element.coordinates.title,
+                        "lat": parseFloat(element.coordinates.lat),
+                        "lng": parseFloat(element.coordinates.lng)
+                    })
+                });
+            }
+            if (data?.food_choices && data?.food_choices.length > 0) {
+                data?.food_choices.forEach(element => {
+                    locationData.push({
+                        "title": element.coordinates.title,
+                        "lat": parseFloat(element.coordinates.lat),
+                        "lng": parseFloat(element.coordinates.lng)
+                    })
+                });
+            }
+            if (locationData.length > 0) {
+                setCoordinates(locationData)
+                // setModelState(true)
+            }
+        }
+    }
+
       
 
       // const [map, setMap] = useState(null)
       const onLoad = useCallback(function callback(map) {
         // This is just an example of getting and using the map instance!!! don't just blindly copy!
         const bounds = new window.google.maps.LatLngBounds();
-        if(props.MapCoordinates && props.MapCoordinates.length >0 && props.open){
-             props.MapCoordinates?.forEach(({ lat, lng }) => bounds.extend({ lat, lng }));
+        if(coordinatesData && coordinatesData.length >0 ){
+             coordinatesData?.forEach(({ lat, lng }) => bounds.extend({ lat, lng }));
         }
         map.fitBounds(bounds);
         setMapRef(map)
-      }, [props.MapCoordinates])
+      }, [coordinatesData])
     
       const onUnmount =useCallback(function callback(map) {
         setMapRef(null)
-      }, [props.MapCoordinates])
+      }, [coordinatesData])
 
       const handleMarkerClick = (id, lat, lng, address) => {
         mapRef?.panTo({ lat, lng });
@@ -58,7 +107,7 @@ const ItineraryMapModal = (props) => {
     //     overflow: 'visible !important'
     // };
 
-    console.log(props.MapCoordinates, "MapCoordinates")
+    console.log(coordinatesData, "MapCoordinates 1")
 
 
     // const onMarkerClick = (event) => {
@@ -89,27 +138,27 @@ const ItineraryMapModal = (props) => {
     //   };
     return (
         <div>
-            <Modal
+            {/* <Modal
                 open={props.open}
                 onClose={props.onCloseModal}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
                 className='custom-map-modal'
-            >
+            > */}
                 <Box className="map-modal">
                 { isLoaded ? (
-                        <GoogleMap
+                        coordinatesData.length >0?<GoogleMap
                             mapContainerStyle={containerStyle}
                             // center={center}
                             zoom={7}
                             onLoad={onLoad}
                             onUnmount={onUnmount}
                         >
-                             {props.open && props.MapCoordinates.length > 0 && props.MapCoordinates.map(({ lat, lng,title },index) => {
+                             {coordinatesData.length > 0 && coordinatesData.map(({ lat, lng,title },index) => {
                               return <Marker key={index} position={{lat:lat, lng:lng}} onClick={(e) => {
                                 handleMarkerClick(index, lat, lng, title);
                               }}>
-                                {props.MapCoordinates.length > 0 && isOpen && infoWindowData?.id === index && (
+                                {coordinatesData.length > 0  && infoWindowData?.id === index && (
                 <InfoWindow
                   onCloseClick={() => {
                     setIsOpen(false);
@@ -121,10 +170,10 @@ const ItineraryMapModal = (props) => {
             </Marker>
                              })}
           
-                        </GoogleMap>
+                        </GoogleMap>:null
   ) : <></>}
                 </Box>
-            </Modal>
+            {/* </Modal> */}
         </div>
     )
 }
@@ -144,7 +193,7 @@ export default ItineraryMapModal
 //         overflow: 'visible !important'
 //     };
 
-//     // console.log(props.MapCoordinates, "MapCoordinates")
+//     // console.log(coordinatesData, "MapCoordinates")
 
 
 //     const onMarkerClick = (event) => {
@@ -167,7 +216,7 @@ export default ItineraryMapModal
 //             >
 //                 <Box className="map-modal">
 //                     <Map google={props.google} zoom={14}>
-//                         {props.MapCoordinates.length > 0 ? props.MapCoordinates.map((point, index) => {
+//                         {coordinatesData.length > 0 ? coordinatesData.map((point, index) => {
 //                             console.log("point", point);
 //                             return <Marker
 //                                 key={index}
