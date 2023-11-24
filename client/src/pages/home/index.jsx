@@ -111,6 +111,7 @@ const IndexPage = () => {
             // Now you can send the `formattedValues` to the server
             console.log(formattedValues);
             loaderContext.startLoading(true)
+            requestAnimationFrame(() => {  window.scrollTo(0, 220);  });
 
             getResult(formattedValues)
 
