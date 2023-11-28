@@ -18,6 +18,7 @@ import locationIcon from "../assets/location_icon.svg";
 import transportation_icon from "../assets/transportation_icon.svg";
 import PlaceIcon from '@mui/icons-material/Place';
 import { green, red } from '@mui/material/colors';
+import ProductSlider from './ProductSlider';
 const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
@@ -160,16 +161,19 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
                                                                     <h6 className='my-2 mb-4 trip-hotel-title'>
                                                                         <img src={activitiesIcon} className='me-2' alt='activitiesIcon' /> Activities
                                                                     </h6>
-                                                                    <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                     <ul className="d-flex flex-wrap p-0 gap-1">
                                                                         {
                                                                             m?.activity?.map((sm, si) => {
                                                                                 return <Chip key={si} label={sm} />
                                                                             })
                                                                         }
                                                                     </ul>
-                                                                </> : null
+                                                                </> : null 
+                                                                
                                                             }
+                                                            <ProductSlider/>
                                                         </div>
+
                                                         <div className='mb-4'>
                                                             {
                                                                 m?.popular_places && m?.popular_places.length > 0 ? <>
