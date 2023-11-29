@@ -91,7 +91,7 @@ const TripDailyPlanningData = ({ tripData = {}, onChangeModalState }) => {
                                         </> : null}
 
                                         {m.food_choices && m.food_choices.length > 0 ? <>
-                                            <h6 className='trip-recommended-hotel'>Must Try Food :</h6>
+                                            <h6 className='trip-recommended-hotel'>Must Try Food Items:</h6>
                                             <ol >
                                                 {m.food_choices.map((sm, si) => {
                                                     return <li key={sm} className='trip-hotel-title my-2'>{sm.name}

@@ -56,6 +56,7 @@ const IndexPage = () => {
     const loaderContext = useContext(LoaderContext);
     // const [coordinatesData, setCoordinates] = useState([])
     const { isAuthenticated } = useAuth0();
+    const [tripTitle, setTripTitle] = useState(null)
 
 
     // console.log(tripPayloadState)
@@ -111,7 +112,7 @@ const IndexPage = () => {
             // Now you can send the `formattedValues` to the server
             console.log(formattedValues);
             loaderContext.startLoading(true)
-            requestAnimationFrame(() => {  window.scrollTo(0, 220);  });
+            requestAnimationFrame(() => { window.scrollTo(0, 220); });
 
             getResult(formattedValues)
 
@@ -189,7 +190,7 @@ const IndexPage = () => {
                                         <div className="col col-sm-12 col-md-6 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>Origin</label>
                                             <Autocomplete
-                                            className='originField'
+                                                className='originField'
                                                 disablePortal
                                                 id="combo-box-location"
                                                 options={famousTouristCitiesInIndia}
@@ -204,7 +205,7 @@ const IndexPage = () => {
                                         <div className="col col-sm-12 col-md-3 col-lg-3">
                                             <label style={{ marginBottom: '8px' }}>Destination </label>
                                             <Autocomplete
-                                               className='destinationField'
+                                                className='destinationField'
                                                 disablePortal
                                                 id="combo-box-destination"
                                                 options={famousTouristCitiesInIndia}
@@ -291,7 +292,7 @@ const IndexPage = () => {
 
                         </Box>
                         <div className='py-3' >
-                            {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} /> : null}
+                            {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} setTripTitle={setTripTitle} /> : null}
                         </div>
 
                     </Container>
@@ -306,7 +307,7 @@ const IndexPage = () => {
                         {
                             tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
 
-                                <Itinerary tripData={tripData} />
+                                <Itinerary tripData={tripData} tripTitle={tripTitle} />
                                 : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 &&
                                 <div>
 

@@ -447,3 +447,69 @@
     width: 100%;
     
   }
+
+/* Product Slider Styles */
+
+.place-name-link{
+ /* color: #000 !important; */
+ font-weight: bold;
+ /* text-decoration: none !important; */
+}
+/* .place-name-link:hover{
+    color: rgb(68, 125, 233) !important;
+    text-decoration: underline !important;
+   } */
+
+   .product-slider-card.css-1t2dhc8-JoyCard-root{
+    --Card-padding: 0px !important;
+   }
+   .text-over-flow-class{
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    /* padding-left: 11px;
+    padding-right: 11px; */
+    white-space: nowrap !important;
+    max-width: 350px !important;
+    min-width: 100px !important;
+   }
+
+
+/* Images Slick Slider Classes */
+  .images-slick-slider button.slick-next{
+    right: 2px !important;
+    top: 48% !important;
+    color: #000  !important;
+opacity: 1 !important;
+z-index: 521 !important;
+  }
+  .images-slick-slider button.slick-next:before{
+    color: #000  !important;
+
+  }
+  .images-slick-slider button.slick-next:before:hover{
+    color: #000  !important;
+  }
+  .images-slick-slider button.slick-prev{
+    left: 2px !important;
+    top: 48% !important;
+    color: #000  !important;
+    opacity: 1 !important;
+z-index: 521 !important;
+
+
+  }
+  .images-slick-slider button.slick-prev:before{
+    color: #000  !important;
+  }
+  .images-slick-slider button.slick-prev:before:hover{
+    color: #000  !important;
+  }
+  .slick-dots{
+    display: none !important;
+  }
+  .card-image-container>div.css-6e7lq1-JoyAspectRatio-content{
+background-color: transparent !important;
+  }
+  .slider-images{
+    object-fit: cover !important;
+  }

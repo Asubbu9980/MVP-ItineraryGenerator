@@ -34,7 +34,7 @@ const ItineraryMapModal = (props) => {
       useEffect(() => {
         if(props.data)
         onChangeModalState(props.data)
-      },[])
+      },[props.data])
 
       const onChangeModalState = (data) => {
         if (data != null) {
@@ -172,6 +172,7 @@ const ItineraryMapModal = (props) => {
           
                         </GoogleMap>:null
   ) : <></>}
+  <h1>{`Map Coordinates ${coordinatesData}`} </h1>
                 </Box>
             {/* </Modal> */}
         </div>

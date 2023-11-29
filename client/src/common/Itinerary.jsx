@@ -16,10 +16,20 @@ import activitiesIcon from "../assets/activities_icon.svg";
 import accommodationIcon from "../assets/accommodation_icon.svg";
 import locationIcon from "../assets/location_icon.svg";
 import transportation_icon from "../assets/transportation_icon.svg";
-import PlaceIcon from '@mui/icons-material/Place';
-import { green, red } from '@mui/material/colors';
+// import PlaceIcon from '@mui/icons-material/Place';
+// import { green, red } from '@mui/material/colors';
 import ProductSlider from './ProductSlider';
-const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
+
+
+// const cityNames = [
+
+//     "Goa",
+//     'Hyderabad',
+//     'Delhi',
+
+// ]
+
+const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
     console.log("tripData==>", tripData)
@@ -124,7 +134,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
         <>
             <div>
                 <Container>
-                    <h2 className='mb-3 fs-4'>Your Plan Details</h2>
+                    <h2 className='mb-3 fs-4'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''}</h2>
 
                 </Container>
             </div>
@@ -161,17 +171,17 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
                                                                     <h6 className='my-2 mb-4 trip-hotel-title'>
                                                                         <img src={activitiesIcon} className='me-2' alt='activitiesIcon' /> Activities
                                                                     </h6>
-                                                                     <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                    <ul className="d-flex flex-wrap p-0 gap-1">
                                                                         {
                                                                             m?.activity?.map((sm, si) => {
                                                                                 return <Chip key={si} label={sm} />
                                                                             })
                                                                         }
                                                                     </ul>
-                                                                </> : null 
-                                                                
+                                                                </> : null
+
                                                             }
-                                                            <ProductSlider/>
+                                                            {/* {cityNames.length > 0 && cityNames.map((eachPlace) => <ProductSlider placedata={eachPlace} />)} */}
                                                         </div>
 
                                                         <div className='mb-4'>
@@ -180,7 +190,8 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
                                                                     <h6 className='my-2 mb-4 trip-hotel-title'>
                                                                         <img src={locationIcon} className='me-2' alt='locationIcon' />  Popular Places
                                                                     </h6>
-                                                                    <ul className="d-flex flex-wrap p-0 gap-1">
+
+                                                                    {/* <ul className="d-flex flex-wrap p-0 gap-1">
                                                                         {
                                                                             m?.popular_places?.map((ppl, si) => {
                                                                                 if (typeof (ppl) === 'object') {
@@ -191,61 +202,73 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
                                                                                 return <Chip key={si} label={`${ppl}`} />
                                                                             })
                                                                         }
-                                                                    </ul>
+                                                                    </ul> */}
+                                                                    {m?.popular_places?.map((eachPlace) => {
+                                                                        if (typeof (eachPlace) === 'object') {
+                                                                            // console.log(typeof (eachPlace), "types")
+                                                                            return <ProductSlider placedata={eachPlace.name} popularPlace={eachPlace.name} />
+                                                                        }
+                                                                        return <ProductSlider placedata={eachPlace} popularPlace={eachPlace} />
+
+                                                                    })}
+
                                                                 </> : null
                                                             }
                                                         </div>
                                                         <div className='mb-4'>
                                                             {m?.accommodation && m?.accommodation.length > 0 ? <>
-                                                                <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={accommodationIcon}  className='me-2' alt='accommodationIcon' /> Accommodations
+                                                                <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={accommodationIcon} className='me-2' alt='accommodationIcon' /> Accommodations
                                                                     {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeModalState(m)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button>*/}
-                                                                    </h6> 
+                                                                </h6>
+                                                                {m?.accommodation?.map((eachPlace) => <ProductSlider placedata={eachPlace.name} pricePerNight={eachPlace.price_per_night} accommodationDetails={eachPlace} />)}
+
                                                                 <div>
                                                                 </div>
-                                                                <ul className="d-flex flex-wrap p-0 gap-2">
+                                                                {/* <ul className="d-flex flex-wrap p-0 gap-2">
                                                                     {m?.accommodation.map((sm, si) => {
                                                                         return (
                                                                             <li className='loopCard '>
-                                                                            <Card key={si} className='card shadow-sm'>
-                                                                                <CardContent className='p-2'>
-                                                                                    <Typography variant="h6" component="h6" className='mb-1 fw-bold fs-6 text-dark'>
-                                                                                        {sm.name}
-                                                                                    </Typography>
-                                                                                    <Typography variant="div" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                        <span className='fw-bold'>Address:</span> {sm.address}
-                                                                                    </Typography>
-                                                                                    <Typography variant="p" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                        <span className='fw-bold'>Price Per Night:</span> {sm.price_per_night}
-                                                                                    </Typography>
-                                                                                </CardContent>
-                                                                            </Card>
+                                                                                <Card key={si} className='card shadow-sm'>
+                                                                                    <CardContent className='p-2'>
+                                                                                        <Typography variant="h6" component="h6" className='mb-1 fw-bold fs-6 text-dark'>
+                                                                                            {sm.name}
+                                                                                        </Typography>
+                                                                                        <Typography variant="div" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                                                                                            <span className='fw-bold'>Address:</span> {sm.address}
+                                                                                        </Typography>
+                                                                                        <br />
+                                                                                        <Typography variant="p" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                                                                                            <span className='fw-bold'>Price Per Night:</span> {sm.price_per_night}
+                                                                                        </Typography>
+                                                                                    </CardContent>
+                                                                                </Card>
                                                                             </li>
                                                                         )
                                                                     })}
-                                                                </ul>
+                                                                </ul> */}
                                                             </> : null}
                                                         </div>
                                                         <div className='mb-4'>
                                                             {m?.food_choices && m?.food_choices.length > 0 ? <>
-                                                                <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2'  alt='foodIcon' />  Must try Food
-                                                                 {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.food_choices)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button> */}
-                                                                 </h6>
+                                                                <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2' alt='foodIcon' />  Must try Food Items
+                                                                    {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.food_choices)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button> */}
+                                                                </h6>
                                                                 <ul className="d-flex flex-wrap p-0 gap-2">
                                                                     {m.food_choices.map((sm, si) => {
-                                                                        return    <li className='loopCard '>
-                                                                             <Card key={sm} className='card shadow-sm'>
-                                                                            <CardContent className='p-2'>
-                                                                                <Typography variant="h6" component="h6" className='mb-1 fw-bold' style={{ color: '#000', fontSize: '15px' }}>
-                                                                                    {sm.name}
-                                                                                </Typography>
-                                                                                <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                    <span className='fw-bold'>Address: </span>{sm.address}
-                                                                                </Typography>
-                                                                                <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                    <span className='fw-bold'>Price: </span>{sm.price}
-                                                                                </Typography>
-                                                                            </CardContent>
-                                                                        </Card></li>
+                                                                        return <li className='loopCard '>
+                                                                            <Card key={sm} className='card shadow-sm'>
+                                                                                <CardContent className='p-2'>
+                                                                                    <Typography variant="h6" component="h6" className='mb-1 fw-bold' style={{ color: '#000', fontSize: '15px' }}>
+                                                                                        {sm.name}
+                                                                                    </Typography>
+                                                                                    <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                                                                                        <span className='fw-bold'>Address: </span>{sm.address}
+                                                                                    </Typography>
+                                                                                    <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                                                                                        <span className='fw-bold'>Price: </span>{sm.price}
+                                                                                    </Typography>
+                                                                                </CardContent>
+                                                                            </Card></li>
                                                                     })}
                                                                 </ul>
                                                             </> : null}
