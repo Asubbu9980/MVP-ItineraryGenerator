@@ -1,6 +1,7 @@
 const {
     commonResponse
 } = require('../utils/Response.utils');
+const axios = require('axios')
 const { openai } = require('../openai.js');
 const SearchHistoryModel = require('../models/search.history.model.js');
 class tripController {
@@ -66,7 +67,18 @@ class tripController {
                  },
                  "recommended_stay": "",
                  "activity":[],
-                 "popular_places":[],
+                 "popular_places":[{
+                    "name": "",
+                    "type": "",
+                    "fee":"",
+                    "coordinates":  {
+                        "title":"",
+                        "lat":"",
+                        "lng":"",
+                        "place_id":"",
+                        
+                     },
+                 }],
                  "accommodation": [{
                    "address":"",
                    "name": "",
@@ -139,10 +151,89 @@ class tripController {
                     output: response.data.choices[0].text
                 })
             }
-            // const reData = JSON.stringify(response.data.choices[0].text);
-            // const stringWithoutNewlines = reData.replace(/[\n\r!@#$%^&*()]/g, '');
-            // obj.forEach(.removeNewlines);
-            // console.log(JSON.stringify(obj, null, 2));
+            await Promise.all(reData.activities.map(async (element, index) => {
+                const popularPlaces = element['popular_places'];
+                await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                    const response = await axios.get(
+                        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                    );
+                    popularPlaces[placeindex]['place_info'] = response.data.results;
+                    await Promise.all(response.data.results.map(async (placeRef, placeRefindex) => {
+                        if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                            await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                                // console.log("placephotos", placephotos);
+                                const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                                    params: {
+                                        photoreference: placephotos.photo_reference,
+                                        key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                        maxwidth: 400, // adjust maxwidth as needed
+                                        maxheight: 400, // adjust maxheight as needed
+                                    },
+                                });
+                                console.log("responsePhoto", responsePhoto.request.res.responseUrl);
+                                // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                            }))
+                        }
+                    }))
+                }))
+            }))
+            //    accommodation
+            await Promise.all(reData.activities.map(async (element, index) => {
+                const popularPlaces = element['accommodation'];
+                await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                    // console.log("place", JSON.stringify(place));
+                    const response = await axios.get(
+                        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                    );
+                    popularPlaces[placeindex]['place_info'] = response.data.results;
+                    await Promise.all(response.data.results.map(async (placeRef, placeRefindex) => {
+                        // console.log("placeRefindex", JSON.stringify(placeRef.photos));
+                        if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                            await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                                // console.log("placephotos", placephotos);
+                                const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                                    params: {
+                                        photoreference: placephotos.photo_reference,
+                                        key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                        maxwidth: 400, // adjust maxwidth as needed
+                                        maxheight: 400, // adjust maxheight as needed
+                                    },
+                                });
+                                // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                            }))
+                        }
+                    }))
+                }))
+            }))
+            // food choices
+            await Promise.all(reData.activities.map(async (element, index) => {
+                const popularPlaces = element['food_choices'];
+                await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                    const response = await axios.get(
+                        `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                    );
+                    popularPlaces[placeindex]['place_info'] = response.data.results;
+                    await Promise.all(response.data.results.map(async (placeRef, placeRefindex) => {
+                        if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                            await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                                const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                                    params: {
+                                        photoreference: placephotos.photo_reference,
+                                        key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                        maxwidth: 400, // adjust maxwidth as needed
+                                        maxheight: 400, // adjust maxheight as needed
+                                    },
+                                });
+                                // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                            }))
+                        }
+                    }))
+                }))
+            }))
+
             return commonResponse({
                 req,
                 res,
