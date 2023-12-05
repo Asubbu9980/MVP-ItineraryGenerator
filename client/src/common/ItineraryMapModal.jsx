@@ -2,7 +2,7 @@
 import {React,useState,useCallback,useEffect} from 'react';
 // import Button from '@mui/joy/Button';
 import { GoogleMap, Marker, useJsApiLoader,InfoWindow } from "@react-google-maps/api";
-import Modal from '@mui/joy/Modal';
+// import Modal from '@mui/joy/Modal';
 import { Box } from '@mui/material';
 // import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 // import GoogleMapReact from 'google-map-react';
@@ -34,7 +34,7 @@ const ItineraryMapModal = (props) => {
       useEffect(() => {
         if(props.data)
         onChangeModalState(props.data)
-      },[])
+      },[props.data])
 
       const onChangeModalState = (data) => {
         if (data != null) {
@@ -150,6 +150,7 @@ const ItineraryMapModal = (props) => {
                         coordinatesData.length >0?<GoogleMap
                             mapContainerStyle={containerStyle}
                             // center={center}
+                            center={{ lat: coordinatesData[0]['lat'], lng: coordinatesData[0]['lng'] }}
                             zoom={7}
                             onLoad={onLoad}
                             onUnmount={onUnmount}
