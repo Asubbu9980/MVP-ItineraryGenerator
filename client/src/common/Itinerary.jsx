@@ -19,7 +19,7 @@ import transportation_icon from "../assets/transportation_icon.svg";
 import ItineraryInformationCard from './ItineraryInformationCard';
 
 
-const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
+const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
     console.log("tripData==>", tripData)
@@ -72,7 +72,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff' }) => {
         <>
             <div>
                 <Container>
-                    <h2 className='mb-3 fs-4'>Your Plan Details</h2>
+                    <h2 className='mb-3 fs-4'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''}</h2>
 
                 </Container>
             </div>

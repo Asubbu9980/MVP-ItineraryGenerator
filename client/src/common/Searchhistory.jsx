@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 
-function Searchhistory({ setTripData, tripData, searchHistoryClassName = 'searchHistory', containerType = 'container', setBannerHeight = () => { } }) {
+function Searchhistory({ setTripData, setTripTitle, tripData, searchHistoryClassName = 'searchHistory', containerType = 'container', setBannerHeight = () => { } }) {
   const [recentSearchesTripData, setrecentSearchesTripData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   // const chipData = [
@@ -91,9 +91,11 @@ function Searchhistory({ setTripData, tripData, searchHistoryClassName = 'search
 
   }
   // console.log(recentSearchesTripData, "recentChip")
-  const onChangeTheSelectedTripData = (data) => {
+  const onChangeTheSelectedTripData = (data, title) => {
 
     setTripData(data)
+    setTripTitle(title)
+
     // console.log(data, "asdfghjkdfghjk")
   }
   return (
@@ -114,8 +116,7 @@ function Searchhistory({ setTripData, tripData, searchHistoryClassName = 'search
               {/* {recentSearchesTripData.length > 0 ? */}
               <div className='row moveing' >
                 {recentSearchesTripData.map(item => (
-                  <div className='col-12 col-lg-6 col-xl-4'><Chip className='mx-1 my-2' onClick={() => onChangeTheSelectedTripData(item.output)} key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} /></div>
-
+                  <div className='col-12 col-lg-6 col-xl-4'><Chip className='mx-1 my-2' onClick={() => onChangeTheSelectedTripData(item.output, `${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date}`)} key={item.createdAt} label={`${item.input.source}  to  ${item.input.destination}  from  ${item.input.start_date}  to  ${item.input.end_date},`} variant="outlined" sx={{ borderColor: '#FFF', color: '#FFF', height: '25px', fontSize: '12px' }} /></div>
                 ))}
 
               </div>

@@ -41,6 +41,7 @@ const PreferentialSearch = () => {
     const loaderContext = useContext(LoaderContext);
     const { tripPayloadState, setTripPayloadState } = useContext(TripPayloadContext);
     const [tripData, setTripData] = useState(null);
+    const [tripTitle, setTripTitle] = useState(null)
     const [bannerHeight, setBannerHeight] = useState('380px');
     // const [modelState, setModelState] = useState(false);
     // const [coordinatesData, setCoordinates] = useState([])
@@ -254,6 +255,8 @@ const PreferentialSearch = () => {
                     // fR[key] = value
                     //     }
                 });
+                setTripTitle(`${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`)
+
                 setTripData(fR)
                 setCurrentSlide(0)
                 slider.current.slickGoTo(0)
@@ -310,7 +313,7 @@ const PreferentialSearch = () => {
                                                 <div className='container dataBgColor'>
                                                     {/* Start Date */}
                                                     <div className='row'>
-                                                        <div className="col-12 col-sm-12 col-lg-6 p -2">
+                                                        <div className="col-12 col-sm-12 col-lg-6 p-2">
                                                             <label style={{ marginBottom: '8px' }}>Start Date</label>
                                                             <TripDatePicker fieldName="start_date" />
                                                         </div>
@@ -412,7 +415,7 @@ const PreferentialSearch = () => {
                                             </button>}
                                         </div>
                                         <div className='pt-0 '  >
-                                            {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} searchHistoryClassName='preferential-search-history' containerType='container-fluid' setBannerHeight={setBannerHeight} /> : null}
+                                            {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} setTripTitle={setTripTitle} searchHistoryClassName='preferential-search-history' containerType='container-fluid' setBannerHeight={setBannerHeight} /> : null}
                                         </div>
                                     </div>
                                 </div>
@@ -429,7 +432,7 @@ const PreferentialSearch = () => {
                     {
                         tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?
 
-                            <Itinerary tripData={tripData} />
+                            <Itinerary tripData={tripData} tripTitle={tripTitle} />
                             : tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && <div>
                                 <div className='search_info'>
 
