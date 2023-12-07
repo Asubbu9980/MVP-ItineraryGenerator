@@ -49,6 +49,16 @@ const ItineraryMapModal = (props) => {
                     "lng": parseFloat(mainCoordinateLng)
                 },
             )
+
+            if (data?.popular_places && data?.popular_places?.length > 0) {
+              data?.popular_places?.forEach(element => {
+                  locationData.push({
+                      "title": element?.coordinates?.title,
+                      "lat": parseFloat(element?.coordinates?.lat),
+                      "lng": parseFloat(element?.coordinates?.lng)
+                  })
+              });
+          }
             if (data?.accommodation && data?.accommodation.length > 0) {
                 data?.accommodation.forEach(element => {
                     locationData.push({
