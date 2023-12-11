@@ -532,3 +532,16 @@
     object-fit: cover !important;
     border-radius: 5px !important;
 }
+
+
+.weather-condition-status {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-transform: capitalize;
+    /* color: orange; */
+}
+
+.weather-place-title {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+}

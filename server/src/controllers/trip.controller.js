@@ -66,6 +66,7 @@ class tripController {
              "activities": [
                {
                  "name": "",
+                 "date": "",
                  "description": "",
                  "coordinates": {
                     "title":"",
