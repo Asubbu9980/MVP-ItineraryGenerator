@@ -15,7 +15,9 @@ const routesv1 = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middleware/error');
 const ApiError = require('./utils/ApiError');
 const { checkUserAuthStatus } = require('./middleware/auth.middleware');
-
+const RedisCache = require('./services/common/cacheHandler')
+const isRedisRequired = process.env.ENABLE_REDIS == 'true' ? true : false;
+global.isCacheEnabled = isRedisRequired;
 const app = express();
 
 global.__basedir = __dirname + "/..";
@@ -126,6 +128,10 @@ app.use(errorHandler);
 app.get(["/", "/api/health"], (req, res) => {
   res.send({ message: "OK", uptime: process.uptime() });
 });
+
+if (global.isCacheEnabled) {
+  RedisCache.initializeRedis();
+}
 
 module.exports = app;
 
