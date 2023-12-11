@@ -17,6 +17,7 @@ import transportation_icon from "../assets/transportation_icon.svg";
 // import PlaceIcon from '@mui/icons-material/Place';
 // import { green, red } from '@mui/material/colors';
 import ItineraryInformationCard from './ItineraryInformationCard';
+import WeatherReport from './WeatherReport';
 
 
 const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
@@ -93,7 +94,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
 </Button> */}
                                             {m?.recommended_stay ? <Chip color="success" variant='outlined' label={`Recommended Stay: ${m.recommended_stay}`} /> : null}
                                         </div>
-                                        <h5>{m?.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5>
+                                        <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div>
                                         <h6>{m?.date}</h6>
                                         <p className='mt-2 mb-0 pb-0'>
                                             {m?.description}
@@ -112,7 +113,11 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                     <ul className="d-flex flex-wrap p-0 gap-1">
                                                                         {
                                                                             m?.activity?.map((sm, si) => {
-                                                                                return <Chip key={si} label={sm} />
+                                                                                if (typeof (sm) === 'object') {
+                                                                                    return <Chip key={si} label={sm.name} />
+                                                                                } else {
+                                                                                    return <Chip key={si} label={sm} />
+                                                                                }
                                                                             })
                                                                         }
                                                                     </ul>
@@ -192,7 +197,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                 </h6>
                                                                 <ul className="d-flex flex-wrap p-0 gap-2">
                                                                     {m.food_choices.map((sm, si) => {
-                                                                        return <li className='loopCard '>
+                                                                        return <li className='loopCard' key={`${sm}-${si}`}>
                                                                             <Card key={sm} className='card shadow-sm'>
                                                                                 <CardContent className='p-2'>
                                                                                     <Typography variant="h6" component="h6" className='mb-1 fw-bold' style={{ color: '#000', fontSize: '15px' }}>
