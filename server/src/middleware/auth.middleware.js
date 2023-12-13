@@ -72,17 +72,17 @@ const catchError = (err, res) => {
 module.exports.authenticate = (req, res, next) => {
     const accessToken = req.headers['authorization'];
     const refreshToken = req.cookies['refreshToken'];
-    if (!accessToken && !refreshToken) {
-        return res.status(401).send('Access Denied. No token provided.');
-    }
+    // if (!accessToken && !refreshToken) {
+    //     return res.status(401).send('Access Denied. No token provided.');
+    // }
     console.log("accessToken", accessToken);
 
     try {
         // const decoded = jwt.verify(accessToken.replace(/^Bearer\s/, ''), config.jwt.secret);
         // console.log("decoded", decoded);
-        console.log("req.headers", req.headers);
+        // console.log("req.headers", req.headers);
         req.userId = req.headers['user-id'];
-        console.log("userId", req.userId);
+        // console.log("userId", req.userId);
         next();
     } catch (error) {
         console.log("error", error);

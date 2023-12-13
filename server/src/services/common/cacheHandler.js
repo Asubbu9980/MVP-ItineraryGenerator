@@ -1,7 +1,7 @@
 const redis = require('redis');
 let cluster;
-const redisPort = 6397;
-const redisHost = '127.0.0.1';
+const redisPort = process.env.REDIS_PORT;
+const redisHost = process.env.REDIS_HOST;
 exports.initializeRedis = async () => {
     const LOCAL_REDIS = process.env.NODE_ENV == 'production' ? false : true;
     cluster = redis.createClient(redisPort, redisHost);
