@@ -50,7 +50,7 @@
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.4.13",
     "nodemailer-smtp-transport": "^2.4.2",
-    "openai": "^3.2.1",
+    "openai": "^4.20.1",
     "readline-sync": "^1.4.10",
     "redis": "^4.6.11",
     "rootpath": "^0.1.2",
