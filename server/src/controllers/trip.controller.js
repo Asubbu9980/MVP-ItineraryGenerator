@@ -5,6 +5,7 @@ const axios = require('axios')
 const RedisCache = require('../services/common/cacheHandler');
 const { openai } = require('../openai.js');
 const SearchHistoryModel = require('../models/search.history.model.js');
+const moment = require('moment')
 class tripController {
     removeNewlines = (obj) => {
         for (const key in obj) {
@@ -61,59 +62,13 @@ class tripController {
                     statusCode: 200,
                 })
             } else {
-                const q = `Create ${destination} Trip Itinerary from ${start_date} to ${end_date} with activities with detailed places with accommodation,co-ordinates with transportation prices in rupees in valid JSON format
-            {
-             "activities": [
-               {
-                 "name": "",
-                 "date": "",
-                 "description": "",
-                 "coordinates": {
-                    "title":"",
-                    "lat":"",
-                    "lng":"",
-                 },
-                 "recommended_stay": "",
-                 "activity":[],
-                 "popular_places":[{
-                    "name": "",
-                    "type": "",
-                    "fee":"",
-                    "coordinates":  {
-                        "title":"",
-                        "lat":"",
-                        "lng":"",
-                     },
-                 }],
-                 "accommodation": [{
-                   "address":"",
-                   "name": "",
-                   "type": "",
-                   "coordinates":  {
-                    "title":"",
-                    "lat":"",
-                    "lng":"",
-                 },
-                   "price_per_night": ""
-                 }],
-                 "transportation": {
-                    "bus":{},
-                    "train":{},
-                    "flight":{},
-                 },
-                 "food_choices": [{
-                   "name":"",
-                   "price":"",
-                   "address":"",
-                   "coordinates":  {
-                    "title":"",
-                    "lat":"",
-                    "lng":"",
-                 },
-                 }]
-               },
-             ]
-            }`;
+                var date1 = moment(start_date);
+                console.log("date1", date1);
+                var date2 = moment(end_date);
+                console.log("date2", date2);
+                var days = date2.diff(date1, 'days')
+                console.log("days", days);
+                const q = `Create ${destination} Trip Itinerary for ${days} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
                 //testg const q = `create Itinerary to ${ destination } from ${ source } in between ${ start_date } to ${ end_date } with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in valid JSON format`;
                 // const q = `create Itinerary to Kochi(Cochin) from Goa in between 31 October, 2023 to 04 November, 2023 with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in below valid JSON format
                 // "itinerary": [
@@ -128,122 +83,136 @@ class tripController {
                 // ]
                 // `
                 console.log("q", q);
-                const response = await openai.createCompletion({
-                    model: 'gpt-3.5-turbo-instruct',
-                    // prompt: `Goa Trip Itinerary in json array of objects format without newlines\n\n[ `,
-                    // prompt: `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} JSON format `,
-                    prompt: q,
+                // const response = await openai.createCompletion({
+                //     model: 'gpt-3.5-turbo-instruct',
+                //     // prompt: `Goa Trip Itinerary in json array of objects format without newlines\n\n[ `,
+                //     // prompt: `${source} to ${destination} Trip Itinerary from ${start_date} to ${end_date} JSON format `,
+                //     prompt: q,
+                //     max_tokens: 3050,
+                //     temperature: 0,
+                //     // "model": "gpt-3.5-turbo",
+                //     // "messages": [
+                //     //     {
+                //     //         "role": "user",
+                //     //         "content": "Goa Trip Itinerary in json format"
+                //     //     }
+                //     // ],
+                //     // format: "json",
+                //     // "reasoning": true,
+                //     // "final_answer": true
+                // });
+                const response = await openai.chat.completions.create({
+                    messages: [
+                        { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format Create Varanasi Trip Itinerary for 4 days starting from 16/12/2023 to 20/12/2023 with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":""}]}]}` },
+                        { "role": "user", "content": q },
+                    ],
+                    // model: 'gpt-3.5-turbo-instruct',
+                    model: 'gpt-4',
                     max_tokens: 3050,
                     temperature: 0,
-                    // "model": "gpt-3.5-turbo",
-                    // "messages": [
-                    //     {
-                    //         "role": "user",
-                    //         "content": "Goa Trip Itinerary in json format"
-                    //     }
-                    // ],
-                    // format: "json",
-                    // "reasoning": true,
-                    // "final_answer": true
                 });
                 // const lines = response.data.choices[0].text.toString().split('\n').filter(line => line.trim() !== '');
                 // console.log("response", response.data.choices[0].text);
                 // console.log("lines", lines);
-                const reData = JSON.parse(response.data.choices[0].text);
+                const reData = JSON.parse(response.choices[0].message.content);
                 if (req?.userId != undefined && req.userId != "") {
                     await SearchHistoryModel.create({
                         user: req?.userId,
                         input: JSON.stringify({ source, destination, start_date, end_date }),
-                        output: response.data.choices[0].text
+                        output: response.choices[0].message.content
                     })
                 }
                 await Promise.all(reData.activities.map(async (element, index) => {
                     const popularPlaces = element['popular_places'];
-                    await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                        const popularCacheKey = `_test_ml_mvp_itinerary_map_places_new_${place.coordinates.title}`;
-                        let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
-                        if (cres != null) {
-                            popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
-                        } else {
-                            const response = await axios.get(
-                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
-                            );
-                            const placesInforesult = response.data.results;
-                            // popularPlaces[placeindex]['place_info'] = response.data.results;
-                            await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
-                                if (placeRef.photos != undefined && placeRef.photos.length > 0) {
-                                    await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
-                                        // console.log("placephotos", placephotos);
-                                        const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
-                                            params: {
-                                                photoreference: placephotos.photo_reference,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
-                                                maxwidth: 400, // adjust maxwidth as needed
-                                                maxheight: 400, // adjust maxheight as needed
-                                            },
-                                        });
-                                        console.log("responsePhoto", responsePhoto.request.res.responseUrl);
-                                        placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                        // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                        // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                    }))
+                    if (popularPlaces != null) {
+                        await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                            const popularCacheKey = `_test_ml_mvp_itinerary_map_places_new_${place.title}`;
+                            let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
+                            if (cres != null) {
+                                popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
+                            } else {
+                                const response = await axios.get(
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                );
+                                const placesInforesult = response.data.results;
+                                // popularPlaces[placeindex]['place_info'] = response.data.results;
+                                await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                    if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                                        await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                                            // console.log("placephotos", placephotos);
+                                            const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                                                params: {
+                                                    photoreference: placephotos.photo_reference,
+                                                    key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                    maxwidth: 400, // adjust maxwidth as needed
+                                                    maxheight: 400, // adjust maxheight as needed
+                                                },
+                                            });
+                                            console.log("responsePhoto", responsePhoto.request.res.responseUrl);
+                                            placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                            // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                            // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                        }))
+                                    }
+                                }))
+                                console.log(JSON.stringify(placesInforesult));
+                                if (global.isCacheEnabled) {
+                                    await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                                 }
-                            }))
-                            console.log(JSON.stringify(placesInforesult));
-                            if (global.isCacheEnabled) {
-                                await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
+                                popularPlaces[placeindex]['place_info'] = placesInforesult;
                             }
-                            popularPlaces[placeindex]['place_info'] = placesInforesult;
-                        }
-                    }))
+                        }))
+                    }
                 }))
-                //    accommodation
+                // //    accommodation
                 await Promise.all(reData.activities.map(async (element, index) => {
                     const popularPlaces = element['accommodation'];
-                    await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                        const popularCacheKey = `_test_ml_mvp_itinerary_map_accommodation_new_${place.coordinates.title}`;
-                        let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
-                        if (cres != null) {
-                            popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
-                        } else {
-                            const response = await axios.get(
-                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
-                            );
-                            const placesInforesult = response.data.results;
-                            // popularPlaces[placeindex]['place_info'] = response.data.results;
-                            await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
-                                if (placeRef.photos != undefined && placeRef.photos.length > 0) {
-                                    await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
-                                        // console.log("placephotos", placephotos);
-                                        const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
-                                            params: {
-                                                photoreference: placephotos.photo_reference,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
-                                                maxwidth: 400, // adjust maxwidth as needed
-                                                maxheight: 400, // adjust maxheight as needed
-                                            },
-                                        });
-                                        console.log("responsePhoto", responsePhoto.request.res.responseUrl);
-                                        placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                        // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                        // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                    }))
+                    if (popularPlaces != null) {
+                        await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                            const popularCacheKey = `_test_ml_mvp_itinerary_map_accommodation_new_${place.title}`;
+                            let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
+                            if (cres != null) {
+                                popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
+                            } else {
+                                const response = await axios.get(
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                );
+                                const placesInforesult = response.data.results;
+                                // popularPlaces[placeindex]['place_info'] = response.data.results;
+                                await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                    if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                                        await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                                            // console.log("placephotos", placephotos);
+                                            const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                                                params: {
+                                                    photoreference: placephotos.photo_reference,
+                                                    key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                    maxwidth: 400, // adjust maxwidth as needed
+                                                    maxheight: 400, // adjust maxheight as needed
+                                                },
+                                            });
+                                            console.log("responsePhoto", responsePhoto.request.res.responseUrl);
+                                            placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                            // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                            // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                        }))
+                                    }
+                                }))
+                                console.log(JSON.stringify(placesInforesult));
+                                if (global.isCacheEnabled) {
+                                    await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                                 }
-                            }))
-                            console.log(JSON.stringify(placesInforesult));
-                            if (global.isCacheEnabled) {
-                                await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
+                                popularPlaces[placeindex]['place_info'] = placesInforesult;
                             }
-                            popularPlaces[placeindex]['place_info'] = placesInforesult;
-                        }
-                    }))
+                        }))
+                    }
                 }))
                 // await Promise.all(reData.activities.map(async (element, index) => {
                 //     const popularPlaces = element['accommodation'];
                 //     await Promise.all(popularPlaces.map(async (place, placeindex) => {
                 //         // console.log("place", JSON.stringify(place));
                 //         const response = await axios.get(
-                //             `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                //             `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                 //         );
                 //         popularPlaces[placeindex]['place_info'] = response.data.results;
                 //         await Promise.all(response.data.results.map(async (placeRef, placeRefindex) => {
@@ -267,51 +236,51 @@ class tripController {
                 //     }))
                 // }))
                 // food choices
-                await Promise.all(reData.activities.map(async (element, index) => {
-                    const popularPlaces = element['food_choices'];
-                    await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                        const popularCacheKey = `_test_ml_mvp_itinerary_map_food_choices_new_${place.coordinates.title}`;
-                        let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
-                        if (cres != null) {
-                            popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
-                        } else {
-                            const response = await axios.get(
-                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
-                            );
-                            const placesInforesult = response.data.results;
-                            // popularPlaces[placeindex]['place_info'] = response.data.results;
-                            await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
-                                if (placeRef.photos != undefined && placeRef.photos.length > 0) {
-                                    await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
-                                        // console.log("placephotos", placephotos);
-                                        const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
-                                            params: {
-                                                photoreference: placephotos.photo_reference,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
-                                                maxwidth: 400, // adjust maxwidth as needed
-                                                maxheight: 400, // adjust maxheight as needed
-                                            },
-                                        });
-                                        console.log("responsePhoto", responsePhoto.request.res.responseUrl);
-                                        placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                        // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                        // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
-                                    }))
-                                }
-                            }))
-                            console.log(JSON.stringify(placesInforesult));
-                            if (global.isCacheEnabled) {
-                                await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
-                            }
-                            popularPlaces[placeindex]['place_info'] = placesInforesult;
-                        }
-                    }))
-                }))
+                // await Promise.all(reData.activities.map(async (element, index) => {
+                //     const popularPlaces = element['food_choices'];
+                //     await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                //         const popularCacheKey = `_test_ml_mvp_itinerary_map_food_choices_new_${place.title}`;
+                //         let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
+                //         if (cres != null) {
+                //             popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
+                //         } else {
+                //             const response = await axios.get(
+                //                 `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                //             );
+                //             const placesInforesult = response.data.results;
+                //             // popularPlaces[placeindex]['place_info'] = response.data.results;
+                //             await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                //                 if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                //                     await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                //                         // console.log("placephotos", placephotos);
+                //                         const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                //                             params: {
+                //                                 photoreference: placephotos.photo_reference,
+                //                                 key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                //                                 maxwidth: 400, // adjust maxwidth as needed
+                //                                 maxheight: 400, // adjust maxheight as needed
+                //                             },
+                //                         });
+                //                         console.log("responsePhoto", responsePhoto.request.res.responseUrl);
+                //                         placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                //                         // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                //                         // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                //                     }))
+                //                 }
+                //             }))
+                //             console.log(JSON.stringify(placesInforesult));
+                //             if (global.isCacheEnabled) {
+                //                 await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
+                //             }
+                //             popularPlaces[placeindex]['place_info'] = placesInforesult;
+                //         }
+                //     }))
+                // }))
                 // await Promise.all(reData.activities.map(async (element, index) => {
                 //     const popularPlaces = element['food_choices'];
                 //     await Promise.all(popularPlaces.map(async (place, placeindex) => {
                 //         const response = await axios.get(
-                //             `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.coordinates.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                //             `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                 //         );
                 //         popularPlaces[placeindex]['place_info'] = response.data.results;
                 //         await Promise.all(response.data.results.map(async (placeRef, placeRefindex) => {
@@ -332,9 +301,9 @@ class tripController {
                 //         }))
                 //     }))
                 // }))
-                if (global.isCacheEnabled) {
-                    await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
-                }
+                // if (global.isCacheEnabled) {
+                //     await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
+                // }
                 return commonResponse({
                     req,
                     res,
