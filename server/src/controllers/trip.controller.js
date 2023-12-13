@@ -51,7 +51,7 @@ class tripController {
     generate = async (req, res, next) => {
         try {
             const { source, destination, start_date, end_date } = req.body;
-            const finalCacheKey = `_test_ml_mvp_itinerary_details_${source}_${destination}_${start_date}_${end_date}_`;
+            const finalCacheKey = `_ml_smvp_itinerary_details_${source}_${destination}_${start_date}_${end_date}_`;
             const cc = global.isCacheEnabled ? await RedisCache.getCache(finalCacheKey) : null;
             if (cc != null) {
                 return commonResponse({
@@ -68,7 +68,7 @@ class tripController {
                 console.log("date2", date2);
                 var days = date2.diff(date1, 'days')
                 console.log("days", days);
-                const q = `Create ${destination} Trip Itinerary for ${days} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
+                const q = `Create ${destination} Trip Itinerary for ${days} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
                 //testg const q = `create Itinerary to ${ destination } from ${ source } in between ${ start_date } to ${ end_date } with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in valid JSON format`;
                 // const q = `create Itinerary to Kochi(Cochin) from Goa in between 31 October, 2023 to 04 November, 2023 with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in below valid JSON format
                 // "itinerary": [
@@ -106,8 +106,8 @@ class tripController {
                         { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format Create Varanasi Trip Itinerary for 4 days starting from 16/12/2023 to 20/12/2023 with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":""}]}]}` },
                         { "role": "user", "content": q },
                     ],
-                    // model: 'gpt-3.5-turbo-instruct',
-                    model: 'gpt-4',
+                    model: 'gpt-3.5-turbo',
+                    // model: 'gpt-4',
                     max_tokens: 3050,
                     temperature: 0,
                 });
@@ -199,9 +199,9 @@ class tripController {
                                     }
                                 }))
                                 console.log(JSON.stringify(placesInforesult));
-                                if (global.isCacheEnabled) {
-                                    await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
-                                }
+                                // if (global.isCacheEnabled) {
+                                //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
+                                // }
                                 popularPlaces[placeindex]['place_info'] = placesInforesult;
                             }
                         }))
