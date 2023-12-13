@@ -55,13 +55,13 @@ const HeaderComponent = () => {
             <Container style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <Box style={{ display: 'flex', alignItems: 'center', height: '75px' }} >
                     <Link to='/' className='text-decoration-none'>
-                        <img src={Logo} alt='logo' style={{ cursor: 'pointer' }} />
+                        <img src={Logo} alt='logo' style={{ cursor: 'pointer' }} className='itinerary-logo' />
                     </Link>
 
                 </Box>
                 {/* <ProfileDropdown /> */}
                 <Box className='d-flex align-items-center'>
-                    <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark mx-3 pt-3 home-search-link'>
+                    <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark pt-3 home-search-link'>
                         <p >{location.pathname === "/" ? 'Preferential Search' : 'Home'}</p>
                     </Link>
                     {!isLoading ?
@@ -72,8 +72,9 @@ const HeaderComponent = () => {
                                     <Avatar
                                         alt="John Doe"
                                         src={avatarIcon}
+                                        className='header-profile-avatar-icon'
                                     />
-                                    <div style={{ marginLeft: "8px", }} className='d-flex align-items-center'><Tooltip title={user?.nickname} variant="solid" className='text-capitalize'><h6 className='user-name me-2'>{user?.nickname}</h6></Tooltip>  <img src={lableDownLine} alt='lableDownLine' /></div>
+                                    <div style={{ marginLeft: "8px", }} className='d-flex align-items-center profile-title-container'><Tooltip title={user?.nickname} variant="solid" className='text-capitalize'><h6 className='user-name me-2'>{user?.nickname}</h6></Tooltip>  <img src={lableDownLine} alt='lableDownLine' className='profile-show-icon' /></div>
 
                                 </div>
                                 <Menu

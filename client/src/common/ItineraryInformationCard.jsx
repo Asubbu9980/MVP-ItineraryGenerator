@@ -19,8 +19,8 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
         dots: true,
         speed: 500,
         slidesToShow: 1,
-        autoplay: true,
-        autoplaySpeed: 1000,
+        // autoplay: true,
+        // autoplaySpeed: 1000,
     };
     let imgUrls = []
 
@@ -42,7 +42,7 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
             return (
                 <>
                     {imgUrls.length > 0 && <CardOverflow>
-                        <AspectRatio ratio="1" sx={{ width: 200, height: 100 }} className="card-image-container">
+                        <AspectRatio ratio="1" sx={{ width: "200px !important", height: "100px !important" }} className="card-image-container">
                             <Slider {...settings} className='images-slick-slider'>
                                 {imgUrls?.map((eachPhoto, index) =>
                                     <img
@@ -57,14 +57,14 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
                         </AspectRatio>
                     </CardOverflow>}
 
-                    {placesInfo && placesInfo?.length > 0 && (<CardContent sx={{ padding: imgUrls.length > 0 ? '' : '4px 10px' }}>
+                    {placesInfo && placesInfo?.length > 0 && (<CardContent sx={{ padding: imgUrls.length > 0 ? '' : '4px 8px', width: '100%' }} className="itinerary-card-content">
 
-                        <div style={{ width: '100% !important' }} className='text-over-flow-class pt-2'>
+                        <div style={{ width: '100%' }} className='text-over-flow-class pt-1 pt-md-2'>
                             {placesInfo[0]?.name && (
                                 <Tooltip title={placesInfo[0]?.name} variant="solid">
                                     {placesInfo[0]?.url ? <a href={placesInfo[0]?.url} target="_blank" className='place-name-link'>
                                         {placesInfo[0]?.name}
-                                    </a> : <Typography variant="h6" component="h6" className='my-0 fw-bold fs-6 text-dark'>
+                                    </a> : <Typography variant="h6" component="h6" className='my-0 fw-bold fs-6 text-dark itinerary-trip-card-title'>
                                         {placesInfo[0]?.name}
                                     </Typography>}
                                 </Tooltip>
@@ -85,7 +85,7 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
                         </div>
 
 
-                        <div className='d-flex justify-content-between align-items-center'>
+                        <div className='d-flex justify-content-between align-items-center flex-wrap pb-1'>
                             {placesInfo[0]?.rating && <Typography variant="div" color="text.secondary" style={{ fontSize: '13px', marginBottom: '5px' }} className='d-flex align-items-center'>
                                 <span><StarIcon sx={{ fontSize: '14px' }} className='my-0' /> {placesInfo[0]?.rating}</span>
                             </Typography>}
@@ -117,7 +117,7 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
         <div key={`${placedata}`}>
 
             {placedata && placedata?.place_info ?
-                <Card orientation="horizontal" variant="outlined" sx={{ width: '100%' }} className='my-2 product-slider-card'>
+                <Card orientation="horizontal" variant="outlined" sx={{ width: '100%' }} className='my-2 product-slider-card p-0'>
                     {placedata?.place_info && placedata?.place_info?.length > 0 && <>
                         {getCardData(placedata?.place_info, placedata?.name, placedata[`${priceKey}`])}
 

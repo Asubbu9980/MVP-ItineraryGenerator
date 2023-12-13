@@ -217,7 +217,7 @@ const IndexPage = () => {
                                 <div className="container">
                                     <div className="row ">
                                         {/* Location */}
-                                        <div className="col col-sm-12 col-md-6 col-lg-3">
+                                        <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
                                             <label style={{ marginBottom: '8px' }}>Origin</label>
                                             <Autocomplete
                                                 className='originField'
@@ -232,7 +232,7 @@ const IndexPage = () => {
                                             {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
                                         </div>
                                         {/* Destination */}
-                                        <div className="col col-sm-12 col-md-3 col-lg-3">
+                                        <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
                                             <label style={{ marginBottom: '8px' }}>Destination </label>
                                             <Autocomplete
                                                 className='destinationField'
@@ -259,7 +259,7 @@ const IndexPage = () => {
                                         {formik.errors.budget ? <p className='errors'>{formik.errors.budget}</p> : null}
                                     </Grid> */}
                                         {/* Start Date */}
-                                        <div className="col col-sm-12 col-md-3 col-lg-3">
+                                        <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
                                             <label style={{ marginBottom: '8px' }}>Start Date</label>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DatePicker
@@ -275,7 +275,7 @@ const IndexPage = () => {
                                         </div>
 
                                         {/* End Date */}
-                                        <div className="col col-sm-12 col-md-3 col-lg-3">
+                                        <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
                                             <label style={{ marginBottom: '8px' }}>End Date</label>
                                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DatePicker
@@ -310,7 +310,7 @@ const IndexPage = () => {
                                     {formik.errors.transport ? <p className='errors'>{formik.errors.transport}</p> : null}
                                 </Grid> */}
 
-                                <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', color: '#000' }}>
+                                <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', color: '#000' }} className='home-transport-modes-container'>
                                     <TransportModes></TransportModes>
                                 </div>
                                 <Grid item xs={12} style={{ display: 'flex', height: '0' }}>

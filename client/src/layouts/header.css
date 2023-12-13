@@ -1,20 +1,59 @@
-.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper{
+.css-3dzjca-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
     /* width: 170px;
     top: 70px !important; */
 }
-.home-search-link:hover{
+
+.home-search-link {
+    margin-right: 10px !important;
+}
+
+.home-search-link:hover {
     color: blue !important;
     text-decoration: underline !important;
+
 }
-.user-name{
-  width: 100px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-weight: 600;
-  text-transform: capitalize;
+
+.user-name {
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+    text-transform: capitalize;
 }
-.user-profile-links:hover{
+
+.user-profile-links:hover {
     color: blue !important;
+
+}
+
+@media screen and (max-width: 650px) {
+    .itinerary-logo {
+        width: 120px;
+    }
+
+    .user-name {
+        width: 80px;
+        font-size: 1rem !important;
+        font-weight: 600;
+    }
+
+    .header-profile-avatar-icon>img {
+        width: 60% !important;
+        height: 60% !important;
+    }
+
+    .profile-title-container {
+        margin-left: 1px !important;
+    }
+
+    .profile-show-icon {
+        width: 20px !important;
+    }
+
+    .home-search-link {
+        font-size: 0.8rem !important;
+        margin-right: 3px !important;
+    }
 
 }

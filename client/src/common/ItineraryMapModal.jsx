@@ -38,43 +38,54 @@ const ItineraryMapModal = (props) => {
 
       const onChangeModalState = (data) => {
         if (data != null) {
-            const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
-            const mainCoordinateLng = data.coordinates.lng.replace("° E", "");
+            // const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
+            // const mainCoordinateLng = data.coordinates.lng.replace("° E", "");
             // console.log("mainCoordinate", mainCoordinateLat);
             const locationData = [];
-            locationData.push(
-                {
-                    "title": data.coordinates.title,
-                    "lat": parseFloat(mainCoordinateLat),
-                    "lng": parseFloat(mainCoordinateLng)
-                },
-            )
+            // locationData.push(
+            //     {
+            //         "title": data.coordinates.title,
+            //         "lat": parseFloat(mainCoordinateLat),
+            //         "lng": parseFloat(mainCoordinateLng)
+            //     },
+            // )
 
             if (data?.popular_places && data?.popular_places?.length > 0) {
               data?.popular_places?.forEach(element => {
+                if(element?.place_info?.length>0){
                   locationData.push({
-                      "title": element?.coordinates?.title,
-                      "lat": parseFloat(element?.coordinates?.lat),
-                      "lng": parseFloat(element?.coordinates?.lng)
+                      "title": element?.place_info[0]?.name,
+                      "lat": parseFloat(element?.place_info[0]?.geometry?.location?.lat),
+                      "lng": parseFloat(element?.place_info[0]?.geometry?.location?.lng)
                   })
+                }
               });
           }
             if (data?.accommodation && data?.accommodation.length > 0) {
                 data?.accommodation.forEach(element => {
+                  if(element?.place_info?.length>0){
                     locationData.push({
-                        "title": element.coordinates.title,
-                        "lat": parseFloat(element.coordinates.lat),
-                        "lng": parseFloat(element.coordinates.lng)
+                        "title": element?.place_info[0]?.name,
+                        "lat": parseFloat(element?.place_info[0]?.geometry?.location?.lat),
+                        "lng": parseFloat(element?.place_info[0]?.geometry?.location?.lng)
                     })
+                  }
                 });
             }
             if (data?.food_choices && data?.food_choices.length > 0) {
                 data?.food_choices.forEach(element => {
-                    locationData.push({
-                        "title": element.coordinates.title,
-                        "lat": parseFloat(element.coordinates.lat),
-                        "lng": parseFloat(element.coordinates.lng)
-                    })
+                    // locationData.push({
+                    //     "title": element.coordinates.title,
+                    //     "lat": parseFloat(element.coordinates.lat),
+                    //     "lng": parseFloat(element.coordinates.lng)
+                    // })
+                    if(element?.place_info?.length>0){
+                      locationData.push({
+                          "title": element?.place_info[0]?.name,
+                          "lat": parseFloat(element?.place_info[0]?.geometry?.location?.lat),
+                          "lng": parseFloat(element?.place_info[0]?.geometry?.location?.lng)
+                      })
+                    }
                 });
             }
             if (locationData.length > 0) {
@@ -107,7 +118,7 @@ const ItineraryMapModal = (props) => {
         setInfoWindowData({ id, address });
         setIsOpen(true);
       };
-    console.log("props", props);
+    // console.log("props", props);
     const [mapRef, setMapRef] = useState();
     const [isOpen, setIsOpen] = useState(false);
     const [infoWindowData, setInfoWindowData] = useState();

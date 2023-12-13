@@ -19,6 +19,11 @@
     align-items: center;
 }
 
+.mobile-recommended-stay {
+    display: none !important;
+}
+
+
 .search-form .startDate input,
 .search-form .endDate input {
     padding-top: 38px !important;
@@ -170,11 +175,6 @@
     background: url('../assets/train-hover-icon.svg');
 }
 
-
-
-
-
-
 .tripDetails-grid .tripDetails-item {
     list-style: none;
     margin-bottom: 40px;
@@ -282,6 +282,7 @@
     margin-top: 15px;
 }
 
+
 .custom-map-modal .map-modal {
     position: absolute;
     top: 50%;
@@ -295,6 +296,40 @@
     border-radius: 8px;
     border: 1px solid #E8E8E8;
     background: #FFF;
+}
+
+.map-modal>div {
+    position: relative !important;
+
+}
+
+.search-form .startDate,
+.search-form .endDate {
+    width: 100% !important;
+}
+
+@media screen and (max-width: 767px) {
+    .recommended-stay {
+        display: none;
+    }
+
+    .mobile-recommended-stay {
+        display: inline-block !important;
+    }
+
+}
+
+@media screen and (max-width:1199px) {
+    .map-modal>div {
+        position: relative !important;
+        height: 350px !important;
+
+    }
+
+    .itinerary-map-main-container {
+        padding-left: 0px !important;
+    }
+
 }
 
 .custom-map-modal .map_btns {
@@ -468,9 +503,13 @@
        color: rgb(68, 125, 233) !important;
        text-decoration: underline !important;
      } */
+.product-slider-card {
+    padding: 0px !important;
+}
 
 .product-slider-card.css-1t2dhc8-JoyCard-root {
     --Card-padding: 0px !important;
+    padding: 0px !important;
 }
 
 .text-over-flow-class {
@@ -483,9 +522,44 @@
     min-width: 100px !important;
 }
 
+.itinerary-trip-card-title {
+    width: 350px;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-transform: capitalize;
+    display: inherit !important;
+}
+
+@media screen and (max-width: 767px) {
+    .text-over-flow-class {
+        max-width: 200px !important;
+    }
+
+    .radio_sheets {
+        display: none !important;
+    }
+
+    .itinerary-trip-card-title {
+        width: 200px !important;
+    }
+
+}
+
+@media screen and (min-width:768px) and (max-width: 992px) {
+    .text-over-flow-class {
+        max-width: 300px !important;
+    }
+
+    .itinerary-trip-card-title {
+        width: 300px !important;
+    }
+
+}
+
 
 /* Images Slick Slider Classes */
-.images-slick-slider button.slick-next {
+.images-slick-slider>button.slick-next {
     right: 2px !important;
     top: 48% !important;
     color: #000 !important;
@@ -493,18 +567,20 @@
     z-index: 521 !important;
 }
 
-.images-slick-slider button.slick-next:before {
+.images-slick-slider>button.slick-next:before {
     color: #000 !important;
+    opacity: 1 !important;
 
 }
 
-.images-slick-slider button.slick-next:before:hover {
+.images-slick-slider>button.slick-next:before:hover {
     color: #000 !important;
+    opacity: 1 !important;
 }
 
-.images-slick-slider button.slick-prev {
+.images-slick-slider>button.slick-prev {
     left: 2px !important;
-    top: 48% !important;
+    top: 50% !important;
     color: #000 !important;
     opacity: 1 !important;
     z-index: 521 !important;
@@ -512,19 +588,32 @@
 
 }
 
-.images-slick-slider button.slick-prev:before {
+.images-slick-slider>button.slick-prev:before {
     color: #000 !important;
+    opacity: 1 !important;
 }
 
-.images-slick-slider button.slick-prev:before:hover {
+.images-slick-slider>button.slick-prev:before:hover {
     color: #000 !important;
+    opacity: 1 !important;
 }
 
 .slick-dots {
     display: none !important;
 }
 
+.slick-next:before,
+.slick-prev:before {
+    color: #000 !important;
+    opacity: 1 !important;
+    font-size: 17px !important;
+}
+
 .card-image-container>div.css-6e7lq1-JoyAspectRatio-content {
+    background-color: transparent !important;
+}
+
+.card-image-container>div.css-dj7kfh {
     background-color: transparent !important;
 }
 
@@ -535,7 +624,7 @@
 
 
 .weather-condition-status {
-    font-size: 13px !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
     text-transform: capitalize;
     /* color: orange; */
@@ -544,4 +633,74 @@
 .weather-place-title {
     font-size: 16px !important;
     font-weight: 600 !important;
+}
+
+.weather-condition-list-item-text>span {
+    font-size: 13px !important;
+}
+
+.itinery-trip-title-class {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+}
+
+@media screen and (max-width: 566px) {
+    .product-slider-card {
+        flex-direction: column !important;
+    }
+
+    .card-image-container.css-1g9e44o-JoyAspectRatio-root {
+        width: 100% !important;
+        height: 140px !important;
+
+    }
+
+    .card-image-container.css-zwzvs1 {
+        width: 100% !important;
+        height: 130px !important;
+
+    }
+
+    .slider-images {
+        height: 130px !important;
+
+    }
+
+    .itinerary-card-content {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+
+    }
+
+    .text-over-flow-class {
+        max-width: 85% !important;
+    }
+
+    .itinerary-trip-card-title {
+        width: 85% !important;
+    }
+
+    .tripDetails-grid>ul {
+        padding-left: 0.5rem !important;
+    }
+
+}
+
+@media screen and (min-width:850px) and (max-width: 992px) {
+    .product-slider-card {
+        width: 80% !important;
+    }
+
+
+}
+
+@media screen and (min-width:993px) and (max-width: 1199px) {
+    .product-slider-card {
+        width: 70% !important;
+    }
+
+
 }
