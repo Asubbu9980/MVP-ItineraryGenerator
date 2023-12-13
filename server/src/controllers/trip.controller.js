@@ -301,9 +301,9 @@ class tripController {
                 //         }))
                 //     }))
                 // }))
-                // if (global.isCacheEnabled) {
-                //     await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
-                // }
+                if (global.isCacheEnabled) {
+                    await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
+                }
                 return commonResponse({
                     req,
                     res,
