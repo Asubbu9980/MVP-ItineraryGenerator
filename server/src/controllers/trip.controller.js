@@ -66,9 +66,9 @@ class tripController {
                 console.log("date1", date1);
                 var date2 = moment(end_date);
                 console.log("date2", date2);
-                var days = date2.diff(date1, 'days') 
+                var days = date2.diff(date1, 'days')
                 console.log("days", days);
-                const q = `Create ${destination} Trip Itinerary for ${days} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
+                const q = `Create ${destination} Trip Itinerary for ${days + 1} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
                 //testg const q = `create Itinerary to ${ destination } from ${ source } in between ${ start_date } to ${ end_date } with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in valid JSON format`;
                 // const q = `create Itinerary to Kochi(Cochin) from Goa in between 31 October, 2023 to 04 November, 2023 with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in below valid JSON format
                 // "itinerary": [
@@ -115,13 +115,7 @@ class tripController {
                 // console.log("response", response.data.choices[0].text);
                 // console.log("lines", lines);
                 const reData = JSON.parse(response.choices[0].message.content);
-                if (req?.userId != undefined && req.userId != "") {
-                    await SearchHistoryModel.create({
-                        user: req?.userId,
-                        input: JSON.stringify({ source, destination, start_date, end_date }),
-                        output: response.choices[0].message.content
-                    })
-                }
+
                 await Promise.all(reData.activities.map(async (element, index) => {
                     const popularPlaces = element['popular_places'];
                     if (popularPlaces != null) {
@@ -303,6 +297,13 @@ class tripController {
                 // }))
                 if (global.isCacheEnabled) {
                     await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
+                }
+                if (req?.userId != undefined && req.userId != "") {
+                    await SearchHistoryModel.create({
+                        user: req?.userId,
+                        input: JSON.stringify({ source, destination, start_date, end_date }),
+                        output: reData
+                    })
                 }
                 return commonResponse({
                     req,
