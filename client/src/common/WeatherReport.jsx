@@ -16,13 +16,19 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
     useEffect(() => {
 
         const getDestinationPlaceWeatherDetails = async () => {
+            // console.log('date', date)
+            const parts = date.split('/');
+            const myDate = new Date(parts[2], parts[1] - 1, parts[0]);
+            let unixTimestamp = Math.floor(myDate.getTime() / 1000);
+            console.log('myDate', myDate)
+            if (!unixTimestamp) {
+                const todaysDate = new Date();
+                unixTimestamp = Math.floor(todaysDate.getTime() / 1000);
+            }
 
-            const myDate = new Date(date);
-            // Get the Unix timestamp in seconds
-            const unixTimestamp = Math.floor(myDate.getTime() / 1000);
 
             try {
-                const weatherResponse = await fetch(`/data/2.5/weather?lat=${placeCoordinates?.lat?.slice(0, -3)}&lon=${placeCoordinates?.lng?.slice(0, -3)}&dt=${unixTimestamp}&units=metric&appid=258730fe6c89445030503ee5885791ef`)
+                const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${placeCoordinates?.lat?.slice(0, -3)}&lon=${placeCoordinates?.lng?.slice(0, -3)}&dt=${unixTimestamp}&units=metric&appid=258730fe6c89445030503ee5885791ef`)
                 if (weatherResponse?.ok) {
                     const contentType = weatherResponse?.headers?.get('content-type');
 
@@ -88,30 +94,30 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
                     </Typography>
                     <List className='p-2 px-4'>
                         <ListItem className='py-0'>
-                            <ListItemText >Condition: <span className='weather-condition-status ps-1'>{weatherData?.weather[0]?.description}</span>
+                            <ListItemText className='weather-condition-list-item-text'>Condition: <span className='weather-condition-status ps-1'>{weatherData?.weather[0]?.description}</span>
                                 <img src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`} alt="Weather Icon" width="30" height="30" />
                             </ListItemText>
                         </ListItem>
                         <ListItem className='py-0'>
-                            <ListItemText >Temperature: <span className='weather-condition-status ps-1'>{weatherData?.main?.temp} °C</span></ListItemText>
+                            <ListItemText className='weather-condition-list-item-text'>Temperature: <span className='weather-condition-status ps-1'>{weatherData?.main?.temp} °C</span></ListItemText>
                         </ListItem>
                         <ListItem className='py-0'>
-                            <ListItemText >Clouds: <span className='weather-condition-status ps-1'>{weatherData?.clouds?.all}%</span></ListItemText>
+                            <ListItemText className='weather-condition-list-item-text'>Clouds: <span className='weather-condition-status ps-1'>{weatherData?.clouds?.all}%</span></ListItemText>
                         </ListItem>
                         <ListItem className='py-0'>
-                            <ListItemText >Humidity: <span className='weather-condition-status ps-1'>{weatherData?.main?.humidity}%</span></ListItemText>
+                            <ListItemText className='weather-condition-list-item-text'>Humidity: <span className='weather-condition-status ps-1'>{weatherData?.main?.humidity}%</span></ListItemText>
                         </ListItem>
                         <ListItem className='py-0'>
-                            <ListItemText >Wind Direction: <span className='weather-condition-status ps-1'>{weatherData?.wind?.deg}°</span></ListItemText>
+                            <ListItemText className='weather-condition-list-item-text'>Wind Direction: <span className='weather-condition-status ps-1'>{weatherData?.wind?.deg}°</span></ListItemText>
 
                         </ListItem>
                         <ListItem className='py-0'>
                             {/* <ListItemText primary={`Wind Speed:  ${weatherData?.wind?.speed}m/s`} /> */}
-                            <ListItemText >Wind Speed: <span className='weather-condition-status ps-1'>{weatherData?.wind?.speed}m/s</span></ListItemText>
+                            <ListItemText className='weather-condition-list-item-text'>Wind Speed: <span className='weather-condition-status ps-1'>{weatherData?.wind?.speed}m/s</span></ListItemText>
 
                         </ListItem>
                         <ListItem className='py-0'>
-                            <ListItemText >Pressure: <span className='weather-condition-status ps-1'>{weatherData?.main?.pressure}hpa</span></ListItemText>
+                            <ListItemText className='weather-condition-list-item-text'>Pressure: <span className='weather-condition-status ps-1'>{weatherData?.main?.pressure}hpa</span></ListItemText>
 
                         </ListItem>
                     </List>

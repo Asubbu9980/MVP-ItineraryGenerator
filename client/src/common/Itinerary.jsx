@@ -73,7 +73,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         <>
             <div>
                 <Container>
-                    <h2 className='mb-3 fs-4'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''}</h2>
+                    <h2 className='mb-3 fs-4 itinery-trip-title-class'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''}</h2>
 
                 </Container>
             </div>
@@ -96,38 +96,39 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                         </div>
                                         <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div>
                                         <h6>{m?.date}</h6>
+                                        {m?.recommended_stay ? <Chip color="success" variant='outlined' size="small" label={`Recommended Stay: ${m?.recommended_stay}`} className='mobile-recommended-stay' /> : null}
                                         <p className='mt-2 mb-0 pb-0'>
                                             {m?.description}
                                         </p>
-                                        <div className='container'>
+                                        <h3 className='moreInfoHeading my-3'>More information</h3>
+                                        <div className='container ms-0'>
                                             <div className='row'>
                                                 <div className='col-12 col-xl-7 ps-0'  >
                                                     <div className=''>
-                                                        <h3 className='moreInfoHeading mt-4 mb-3'>More information</h3>
-                                                        <div className='mb-4'>
-                                                            {
-                                                                m?.activity && m?.activity.length > 0 ? <>
-                                                                    <h6 className='my-2 mb-4 trip-hotel-title'>
-                                                                        <img src={activitiesIcon} className='me-2' alt='activitiesIcon' /> Activities
-                                                                    </h6>
-                                                                    <ul className="d-flex flex-wrap p-0 gap-1">
-                                                                        {
-                                                                            m?.activity?.map((sm, si) => {
-                                                                                if (typeof (sm) === 'object') {
-                                                                                    return <Chip key={si} label={sm.name} />
-                                                                                } else {
-                                                                                    return <Chip key={si} label={sm} />
-                                                                                }
-                                                                            })
-                                                                        }
-                                                                    </ul>
-                                                                </> : null
-                                                            }
-                                                        </div>
+
+                                                        {
+                                                            m?.activity && m?.activity.length > 0 ? <div className='mb-4'>
+                                                                <h6 className='my-1 mb-4 trip-hotel-title'>
+                                                                    <img src={activitiesIcon} className='me-2' alt='activitiesIcon' /> Activities
+                                                                </h6>
+                                                                <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                    {
+                                                                        m?.activity?.map((sm, si) => {
+                                                                            if (typeof (sm) === 'object') {
+                                                                                return <Chip key={si} label={sm.name} />
+                                                                            } else {
+                                                                                return <Chip key={si} label={sm} />
+                                                                            }
+                                                                        })
+                                                                    }
+                                                                </ul>
+                                                            </div> : null
+                                                        }
+
                                                         <div className='mb-4'>
                                                             {
                                                                 m?.popular_places && m?.popular_places.length > 0 ? <>
-                                                                    <h6 className='my-2 mb-4 trip-hotel-title'>
+                                                                    <h6 className='my-1 mb-4 trip-hotel-title'>
                                                                         <img src={locationIcon} className='me-2' alt='locationIcon' />  Popular Places
                                                                     </h6>
                                                                     {/* <ul className="d-flex flex-wrap p-0 gap-1">
@@ -160,7 +161,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                         </div>
                                                         <div className='mb-4'>
                                                             {m?.accommodation && m?.accommodation.length > 0 ? <>
-                                                                <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={accommodationIcon} className='me-2' alt='accommodationIcon' /> Accommodations
+                                                                <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={accommodationIcon} className='me-2' alt='accommodationIcon' /> Accommodations
                                                                     {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeModalState(m)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button>*/}
                                                                 </h6>
                                                                 <div>
@@ -192,7 +193,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                         </div>
                                                         <div className='mb-4'>
                                                             {m?.food_choices && m?.food_choices.length > 0 ? <>
-                                                                <h6 className='my-2 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2' alt='foodIcon' />  Must try Food
+                                                                <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2' alt='foodIcon' />  Must try Food
                                                                     {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.food_choices)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button> */}
                                                                 </h6>
                                                                 <ul className="d-flex flex-wrap p-0 gap-2">
@@ -217,7 +218,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                         </div>
                                                         <div className='mb-4'>
                                                             {m?.transportation && (Object.keys(m?.transportation).length > 0) && ((m?.transportation?.flight && Object.keys(m.transportation?.flight).length > 0) || (m?.transportation?.train && Object.keys(m.transportation?.train).length > 0) || (m?.transportation?.bus && Object.keys(m.transportation?.bus).length > 0)) ? <>
-                                                                <h6 className='my-2 mb-4 trip-hotel-title'> <img src={transportation_icon} className='me-2' alt='transportation_icon' />  Transportation</h6>
+                                                                <h6 className='my-1 mb-4 trip-hotel-title'> <img src={transportation_icon} className='me-2' alt='transportation_icon' />  Transportation</h6>
                                                                 <ul className="d-flex flex-wrap p-0 gap-1">
                                                                     {
                                                                         Object.keys(m?.transportation).map((transport_type) => {
@@ -230,7 +231,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className='col-12 col-xl-5 position-relative'>
+                                                <div className='col-12 col-xl-5 itinerary-map-main-container position-relative'>
                                                     <ItineraryMapModal data={m} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />
                                                 </div>
                                             </div>
