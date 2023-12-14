@@ -302,7 +302,7 @@ class tripController {
                     await SearchHistoryModel.create({
                         user: req?.userId,
                         input: JSON.stringify({ source, destination, start_date, end_date }),
-                        output: reData
+                        output: JSON.stringify(reData)
                     })
                 }
                 return commonResponse({
