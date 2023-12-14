@@ -16,10 +16,16 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
     useEffect(() => {
 
         const getDestinationPlaceWeatherDetails = async () => {
+            // console.log('date', date)
+            const parts = date.split('/');
+            const myDate = new Date(parts[2], parts[1] - 1, parts[0]);
+            let unixTimestamp = Math.floor(myDate.getTime() / 1000);
+            console.log('myDate', myDate)
+            if (!unixTimestamp) {
+                const todaysDate = new Date();
+                unixTimestamp = Math.floor(todaysDate.getTime() / 1000);
+            }
 
-            const myDate = new Date(date);
-            // Get the Unix timestamp in seconds
-            const unixTimestamp = Math.floor(myDate.getTime() / 1000);
 
             try {
                 const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${placeCoordinates?.lat?.slice(0, -3)}&lon=${placeCoordinates?.lng?.slice(0, -3)}&dt=${unixTimestamp}&units=metric&appid=258730fe6c89445030503ee5885791ef`)
