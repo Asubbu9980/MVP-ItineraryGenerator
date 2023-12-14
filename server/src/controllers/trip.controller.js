@@ -169,7 +169,7 @@ class tripController {
                     const popularPlaces = element['accommodation'];
                     if (popularPlaces != null) {
                         await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                            const popularCacheKey = `_test_ml_mvp_itinerary_map_accommodation_new_${place.name}`;
+                            const popularCacheKey = `_test_mls_mvp_itinerary_map_accommodation_new_${place.name}`;
                             let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
                             if (cres != null) {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
