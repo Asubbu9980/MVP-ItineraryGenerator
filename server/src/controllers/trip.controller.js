@@ -66,7 +66,7 @@ class tripController {
                 console.log("date1", date1);
                 var date2 = moment(end_date);
                 console.log("date2", date2);
-                var days = date2.diff(date1, 'days')
+                var days = date2.diff(date1, 'days') 
                 console.log("days", days);
                 const q = `Create ${destination} Trip Itinerary for ${days} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
                 //testg const q = `create Itinerary to ${ destination } from ${ source } in between ${ start_date } to ${ end_date } with activities, with accommodation, co - ordinates with transportation prices, best food choices in rupees in valid JSON format`;
@@ -126,13 +126,13 @@ class tripController {
                     const popularPlaces = element['popular_places'];
                     if (popularPlaces != null) {
                         await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                            const popularCacheKey = `_test_ml_mvp_itinerary_map_places_new_${place.title}`;
+                            const popularCacheKey = `_test_ml_mvp_itinerary_map_places_new_${place.name}`;
                             let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
                             if (cres != null) {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                                 );
                                 const placesInforesult = response.data.results;
                                 // popularPlaces[placeindex]['place_info'] = response.data.results;
@@ -169,13 +169,13 @@ class tripController {
                     const popularPlaces = element['accommodation'];
                     if (popularPlaces != null) {
                         await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                            const popularCacheKey = `_test_ml_mvp_itinerary_map_accommodation_new_${place.title}`;
+                            const popularCacheKey = `_test_ml_mvp_itinerary_map_accommodation_new_${place.name}`;
                             let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
                             if (cres != null) {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.title}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                                 );
                                 const placesInforesult = response.data.results;
                                 // popularPlaces[placeindex]['place_info'] = response.data.results;
