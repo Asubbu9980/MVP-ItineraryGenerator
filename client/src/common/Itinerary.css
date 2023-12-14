@@ -704,3 +704,8 @@
 
 
 }
+
+.MuiCard-horizontal .css-1evhnfm,
+.MuiCard-vertical .MuiCard-horizontal .css-1evhnfm {
+    --_CardOverflow-margin: 0px !important;
+}
