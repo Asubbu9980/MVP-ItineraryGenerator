@@ -120,13 +120,13 @@ class tripController {
                     const popularPlaces = element['popular_places'];
                     if (popularPlaces != null) {
                         await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                            const popularCacheKey = `_test_ml_mvp_itinerary_map_places_new_${place.name}`;
+                            const popularCacheKey = `_test_ml_mvp_itinerary_map_places_new_${destination + "_" + place.name}`;
                             let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
                             if (cres != null) {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                                 );
                                 const placesInforesult = response.data.results;
                                 // popularPlaces[placeindex]['place_info'] = response.data.results;
@@ -163,13 +163,13 @@ class tripController {
                     const popularPlaces = element['accommodation'];
                     if (popularPlaces != null) {
                         await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                            const popularCacheKey = `_test_mls_mvp_itinerary_map_accommodation_new_${place.name}`;
+                            const popularCacheKey = `_test_mls_mvp_itinerary_map_accommodation_new_${destination + "_" + place.name}`;
                             let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
                             if (cres != null) {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                                 );
                                 const placesInforesult = response.data.results;
                                 // popularPlaces[placeindex]['place_info'] = response.data.results;
