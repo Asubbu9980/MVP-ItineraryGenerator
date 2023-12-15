@@ -51,7 +51,7 @@ class tripController {
     generate = async (req, res, next) => {
         try {
             const { source, destination, start_date, end_date } = req.body;
-            const finalCacheKey = `_ml_smvp_itinerary_details_${source}_${destination}_${start_date}_${end_date}_`;
+            const finalCacheKey = `_sml_smvp_itinerary_details_${source}_${destination}_${start_date}_${end_date}_`;
             const cc = global.isCacheEnabled ? await RedisCache.getCache(finalCacheKey) : null;
             if (cc != null) {
                 return commonResponse({
@@ -120,7 +120,7 @@ class tripController {
                     const popularPlaces = element['popular_places'];
                     if (popularPlaces != null) {
                         await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                            const popularCacheKey = `_test_ml_mvp_itinerary_map_places_new_${destination + "_" + place.name}`;
+                            const popularCacheKey = `_testss_ml_mvp_itinerary_map_places_new_${destination + "_" + place.name}`;
                             let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
                             if (cres != null) {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
@@ -128,10 +128,24 @@ class tripController {
                                 const response = await axios.get(
                                     `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                                 );
-                                const placesInforesult = response.data.results;
+                                let placesInforesult = response.data.results
+                                if (response.data.results.length > 0) {
+                                    await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                        const place_id = placeRef.place_id;
+                                        const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
+                                            params: {
+                                                place_id: place_id,
+                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                            },
+                                        });
+                                        placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
+                                        placesInforesult[placeRefindex]["url"] = allPlaceData.data.result.url;
+                                    }))
+                                }
                                 // popularPlaces[placeindex]['place_info'] = response.data.results;
                                 await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
                                     if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                                        // placesInforesult[placeRefindex]["info"] = allPlaceData;
                                         await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
                                             // console.log("placephotos", placephotos);
                                             const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
@@ -142,7 +156,7 @@ class tripController {
                                                     maxheight: 400, // adjust maxheight as needed
                                                 },
                                             });
-                                            console.log("responsePhoto", responsePhoto.request.res.responseUrl);
+                                            //;
                                             placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
                                             // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
                                             // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
@@ -150,9 +164,9 @@ class tripController {
                                     }
                                 }))
                                 console.log(JSON.stringify(placesInforesult));
-                                if (global.isCacheEnabled) {
-                                    await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
-                                }
+                                // if (global.isCacheEnabled) {
+                                //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
+                                // }
                                 popularPlaces[placeindex]['place_info'] = placesInforesult;
                             }
                         }))
@@ -163,7 +177,7 @@ class tripController {
                     const popularPlaces = element['accommodation'];
                     if (popularPlaces != null) {
                         await Promise.all(popularPlaces.map(async (place, placeindex) => {
-                            const popularCacheKey = `_test_mls_mvp_itinerary_map_accommodation_new_${destination + "_" + place.name}`;
+                            const popularCacheKey = `_tests_mls_mvp_itinerary_map_accommodation_new_${destination + "_" + place.name}`;
                             let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
                             if (cres != null) {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
@@ -171,7 +185,20 @@ class tripController {
                                 const response = await axios.get(
                                     `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
                                 );
-                                const placesInforesult = response.data.results;
+                                let placesInforesult = response.data.results
+                                if (response.data.results.length > 0) {
+                                    await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                        const place_id = placeRef.place_id;
+                                        const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
+                                            params: {
+                                                place_id: place_id,
+                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                            },
+                                        });
+                                        placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
+                                        placesInforesult[placeRefindex]["url"] = allPlaceData.data.result.url;
+                                    }))
+                                }
                                 // popularPlaces[placeindex]['place_info'] = response.data.results;
                                 await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
                                     if (placeRef.photos != undefined && placeRef.photos.length > 0) {
@@ -185,7 +212,7 @@ class tripController {
                                                     maxheight: 400, // adjust maxheight as needed
                                                 },
                                             });
-                                            console.log("responsePhoto", responsePhoto.request.res.responseUrl);
+                                            ;
                                             placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
                                             // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
                                             // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
@@ -255,7 +282,7 @@ class tripController {
                 //                                 maxheight: 400, // adjust maxheight as needed
                 //                             },
                 //                         });
-                //                         console.log("responsePhoto", responsePhoto.request.res.responseUrl);
+                //                        ;
                 //                         placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
                 //                         // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
                 //                         // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
@@ -295,9 +322,9 @@ class tripController {
                 //         }))
                 //     }))
                 // }))
-                if (global.isCacheEnabled) {
-                    await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
-                }
+                // if (global.isCacheEnabled) {
+                //     await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
+                // }
                 if (req?.userId != undefined && req.userId != "") {
                     await SearchHistoryModel.create({
                         user: req?.userId,
