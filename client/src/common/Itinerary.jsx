@@ -193,7 +193,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                         </div>
                                                         <div className='mb-4'>
                                                             {m?.food_choices && m?.food_choices.length > 0 ? <>
-                                                                <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2' alt='foodIcon' />  Must try Food
+                                                                <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2' alt='foodIcon' />  Must try Food/Restaurant
                                                                     {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.food_choices)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button> */}
                                                                 </h6>
                                                                 <ul className="d-flex flex-wrap p-0 gap-2">

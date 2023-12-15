@@ -561,7 +561,7 @@
 /* Images Slick Slider Classes */
 .images-slick-slider>button.slick-next {
     right: 2px !important;
-    top: 48% !important;
+    top: 50% !important;
     color: #000 !important;
     opacity: 1 !important;
     z-index: 521 !important;
@@ -708,4 +708,10 @@
 .MuiCard-horizontal .css-1evhnfm,
 .MuiCard-vertical .MuiCard-horizontal .css-1evhnfm {
     --_CardOverflow-margin: 0px !important;
+}
+
+@media screen and (max-width: 992px) {
+    .preferential-search-history {
+        display: none !important;
+    }
 }
