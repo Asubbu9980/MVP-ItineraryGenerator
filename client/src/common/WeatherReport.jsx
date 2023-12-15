@@ -12,15 +12,11 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [weatherData, setWeatherData] = useState(null)
-
-    useEffect(() => {
-
-        const getDestinationPlaceWeatherDetails = async () => {
-            // console.log('date', date)
+    const getDestinationPlaceWeatherDetails = async () => {
+        if (date != null && date != "" && typeof(date) != "object") {
             const parts = date.split('/');
             const myDate = new Date(parts[2], parts[1] - 1, parts[0]);
             let unixTimestamp = Math.floor(myDate.getTime() / 1000);
-            console.log('myDate', myDate)
             if (!unixTimestamp) {
                 const todaysDate = new Date();
                 unixTimestamp = Math.floor(todaysDate.getTime() / 1000);
@@ -35,13 +31,13 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
                     if (contentType && contentType?.includes('application/json')) {
                         // If the content type is JSON, use .json() to parse
                         const data = await weatherResponse?.json();
-                        console.log('Weather JSON Response:', data);
+                        // console.log('Weather JSON Response:', data);
 
                         setWeatherData(data);
                     } else {
                         // If the content type is not JSON, handle it accordingly
                         const textData = await weatherResponse?.text();
-                        console.log('Weather Non-JSON Response:', textData);
+                        // console.log('Weather Non-JSON Response:', textData);
                     }
                 } else {
                     console.error('Error fetching weather data:', weatherResponse.statusText);
@@ -51,8 +47,10 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
                 console.error('Error fetching weather data:', error);
 
             }
-
         }
+
+    }
+    useEffect(() => {
         if (placeCoordinates) {
             getDestinationPlaceWeatherDetails()
         }

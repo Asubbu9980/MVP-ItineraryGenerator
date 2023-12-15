@@ -23,7 +23,7 @@ import WeatherReport from './WeatherReport';
 const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
-    console.log("tripData==>", tripData)
+    // console.log("tripData==>", tripData)
 
     const onCloseModal = () => {
         setModelState(false)
