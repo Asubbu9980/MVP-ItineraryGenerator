@@ -39,6 +39,7 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
         }
         // console.log('imgUrls', imgUrls)
         if (placesInfo && placesInfo.length > 0) {
+
             return (
                 <>
                     {imgUrls.length > 0 && <CardOverflow>
@@ -107,7 +108,7 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
                                     <span>{price}</span>
                                 ) : (
 
-                                    <span>&#8377; {parseFloat(price)}</span>
+                                    <span>&#8377; {price}</span>
                                 )}
                             </Typography>}
                         </div>
@@ -144,7 +145,14 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
                             </Typography>
                             {/* <br /> */}
                             <Typography variant="p" color="text.secondary" style={{ fontSize: '12px', marginBottom: '1px' }}>
-                                <span className='fw-bold'>Price Per Night:</span> {accommodationDetails?.price_per_night}
+                                <span className='fw-bold'>Price Per Night:</span>{' '}
+                                {isNaN(parseFloat(accommodationDetails?.price_per_night)) ? (
+
+                                    <span>{accommodationDetails?.price_per_night}</span>
+                                ) : (
+
+                                    <span>&#8377; {accommodationDetails?.price_per_night}</span>
+                                )}
                             </Typography>
                         </CardContent>
 

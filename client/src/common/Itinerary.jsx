@@ -23,8 +23,8 @@ import WeatherReport from './WeatherReport';
 const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
-    // console.log("tripData==>", tripData)
-
+    console.log("tripData==>", tripData)
+    // console.log(Number('10,000'), "parsedIntPrice")
     const onCloseModal = () => {
         setModelState(false)
     }
@@ -47,7 +47,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         // console.log(TrnsportTypeDataKeys, 'TrnsportTypeDataKeys', transport_type, TrnsportTypeDataKeysLength)
         return <>
             {TrnsportTypeDataKeysLength > 0 && !isFromAvailable &&
-                <Chip key={transport_type} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ${TrnsportTypeDataKeysLength === 1 ? data[transport_type][TrnsportTypeDataKeys[0]] : data[transport_type]['price']}`} />
+                <Chip key={transport_type} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ${TrnsportTypeDataKeysLength === 1 ? `₹${data[transport_type][TrnsportTypeDataKeys[0]]}` : `₹${data[transport_type]['price']}`}`} />
             }
             {TrnsportTypeDataKeysLength > 0 && isFromAvailable &&
                 <Card key={transport_type} className='shadow-sm me-1' sx={{ maxWidth: 345, borderRadius: '4px', boxShadow: 'none', border: '1px solid #ccc', backgroundColor: 'rgb(225 223 223 / 10%)' }}>
@@ -62,7 +62,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                             <span className='fw-bold'>To: </span>{data[transport_type][ToKey]}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                            <span className='fw-bold'>Price: </span>{data[transport_type]['price']}
+                            <span className='fw-bold'>Price: &#8377;</span>{data[transport_type]['price']}
                         </Typography>
                     </CardContent>
                 </Card>
@@ -208,7 +208,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                                         <span className='fw-bold'>Address: </span>{sm.address}
                                                                                     </Typography>
                                                                                     <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                        <span className='fw-bold'>Price: </span>{sm.price}
+                                                                                        <span className='fw-bold'>Price: &#8377;</span>{sm.price}
                                                                                     </Typography>
                                                                                 </CardContent>
                                                                             </Card></li>

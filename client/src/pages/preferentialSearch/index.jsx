@@ -198,7 +198,7 @@ const PreferentialSearch = () => {
 
             setErrors({ ...errors, trip_theme_type: '' })
             loaderContext.startLoading(true)
-
+            requestAnimationFrame(() => { window.scrollTo(0, 220); });
             getResult({
                 ...tripPayloadState, start_date: formattedStartDate, end_date: formattedEndDate, "source": "Hyderabad"
             })
