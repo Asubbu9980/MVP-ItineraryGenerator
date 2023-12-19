@@ -309,7 +309,7 @@ const IndexPage = () => {
                                                         Type <span>or dictate</span> to search
                                                     </label> */}
                                                     <input type="search" placeholder='Dictate to search' value={transcript} readOnly={true} name="search" id="search-text" autoComplete="off" />
-                                                    <button title="Dictate" onClick={() => onStartSpeechRecognition()
+                                                    <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()
                                                         // {
                                                         //     resetTranscript()
                                                         //     SpeechRecognition.startListening({
@@ -323,7 +323,7 @@ const IndexPage = () => {
                                                         <Mic />
                                                         <span className="a11y-hidden">Dictate new search</span>
                                                     </button>
-                                                    <button title="Search" onClick={() => {
+                                                    <button title="Search" type='button' onClick={() => {
                                                         SpeechRecognition.stopListening()
                                                         resetTranscript()
                                                         getTripByVoice()
