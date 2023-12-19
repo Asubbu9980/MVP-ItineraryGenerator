@@ -15,7 +15,8 @@ body {
   /* font-family: 'Poppins', sans-serif !important; */
 
 }
-*{
+
+* {
   font-family: 'IBM Plex Sans', sans-serif !important;
   /* font-family: 'Poppins', sans-serif !important; */
 
@@ -73,18 +74,20 @@ body {
   letter-spacing: -0.5px;
   margin-bottom: 20px;
 
-font-size: 30px;
-font-weight: 500;
+  font-size: 30px;
+  font-weight: 500;
 
 
 }
-.form .subtext{
+
+.form .subtext {
   color: #000;
   text-align: center;
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.9px;
 }
+
 .form .custom-input input {
   font-size: 14px;
   font-weight: 400;
@@ -156,34 +159,203 @@ font-weight: 500;
   align-items: center;
   width: 100%;
   margin-top: 10px;
-  
+
 }
+
 .forgotPassword {
   width: 100%;
   text-align: right;
 }
+
 .forgotPassword p {
   color: #616161;
   font-size: 13px;
   font-weight: 400;
 }
+
 .loginSocial {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
+
 .loginSocial .facebook button,
-.loginSocial .google button{
+.loginSocial .google button {
   font-size: 0 !important;
   border-radius: 50% !important;
-    width: 40px !important;
-    height: 40px !important;
-    padding: 0px 7px !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0px 7px !important;
 }
+
 .loginSocial .facebook button svg,
-.loginSocial .google button svg{
+.loginSocial .google button svg {
   width: 18px !important;
   height: 18px !important;
 
 }
-  
+
+.a11y-hidden {
+  position: absolute;
+  left: -1000in;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: polygon(0 0, 0 0);
+}
+
+.search {
+  /* width: 90%; */
+  /* max-width: 30rem; */
+  position: relative;
+}
+
+.search .input-bar {
+  --active: #eee;
+  align-items: center;
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4rem;
+  box-sizing: border-box;
+  box-shadow: 0 1rem 2rem -1.5rem rgba(0, 0, 0, 0.12);
+  display: inline-flex;
+  height: 3rem;
+  overflow: hidden;
+  transition: box-shadow 0.5s;
+  width: 100%;
+}
+
+.search .input-bar:focus-within {
+  background: #fffffc;
+  border: 2px solid #444;
+  box-shadow: 0 1rem 2rem -1.5rem #000;
+}
+
+.search .input-bar:hover {
+  box-shadow: 0 1rem 2rem -1.5rem #000;
+}
+
+.search .input-bar label {
+  position: absolute;
+  color: #888;
+  left: 1.625rem;
+  font-family: Lato, Arial, sans-serif;
+  font-size: 1.25rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: calc(100% - 8rem);
+  max-width: calc(100% - 8rem);
+  display: flex;
+  align-items: center;
+  z-index: 0;
+}
+
+.search .input-bar label span {
+  visibility: hidden;
+  overflow: hidden;
+  max-width: 0;
+  display: inline-block;
+  margin: 0 0.125rem;
+  transition: max-width 1s, margin 0.125s;
+  transition-delay: 1s;
+}
+
+.search .input-bar label span.show {
+  visibility: visible;
+  margin: 0 0.25rem;
+  max-width: calc(100% - 8rem);
+}
+
+.search .input-bar input {
+  background: transparent;
+  border: 0;
+  box-sizing: border-box;
+  flex: 1;
+  font-size: 1.25rem;
+  margin-left: 0.5rem;
+  min-width: 8rem;
+  outline: none;
+  padding-left: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.search .input-bar input::-ms-clear,
+.search .input-bar input::ms-reveal {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.search .input-bar input::-webkit-search-decoration,
+.search .input-bar input::-webkit-search-cancel-button,
+.search .input-bar input::-webkit-search-results-button,
+.search .input-bar input::-webkit-search-results-decoration {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.search .input-bar button {
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  color: #444;
+  font-size: 1.25rem;
+  margin: 0;
+  outline: none;
+  width: 3rem;
+  min-width: 3rem;
+  transition: background-color, color;
+  transition-duration: 0.25s;
+  box-shadow: 0 0 2rem #000 0;
+}
+
+.search .input-bar button:hover {
+  background: #eee;
+}
+
+.search .input-bar button:focus {
+  background: #444;
+  color: #fff;
+}
+
+.search .input-bar button:active,
+.search .input-bar button.active {
+  background: #000;
+}
+
+.search .input-bar button#dictate {
+  transform: scale(0);
+  transition: transform 0.5s;
+  transition-delay: 1s;
+  /* visibility: hidden; */
+}
+
+.search .input-bar button#dictate svg {
+  margin: auto auto;
+}
+
+.search .input-bar button#dictate.show {
+  visibility: visible;
+  transform: scale(1);
+}
+
+.search .input-bar button#dictate.active i {
+}
+
+.search .input-bar button#dictate.active svg {
+  display: block;
+}
+
+.search .input-bar button:last-child {
+  margin-right: 0.5rem;
+}
+
+@media (prefers-reduced-motion) {
+  * {
+    transition: none !important;
+    transition-delay: 0s !important;
+  }
+}

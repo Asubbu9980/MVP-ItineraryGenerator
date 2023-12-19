@@ -39,6 +39,7 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
         }
         // console.log('imgUrls', imgUrls)
         if (placesInfo && placesInfo.length > 0) {
+
             return (
                 <>
                     {imgUrls.length > 0 && <CardOverflow>
@@ -62,9 +63,9 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
                         <div style={{ width: '100%' }} className='text-over-flow-class pt-1 pt-md-2'>
                             {placesInfo[0]?.name && (
                                 <Tooltip title={placesInfo[0]?.name} variant="solid">
-                                    {placesInfo[0]?.url ? <a href={placesInfo[0]?.url} target="_blank" className='place-name-link'>
+                                    {placesInfo[0]?.url ? <> <a href={placesInfo[0]?.url} target="_blank" className='place-name-link itinerary-trip-card-title' style={{ display: 'block !important' }}>
                                         {placesInfo[0]?.name}
-                                    </a> : <Typography variant="h6" component="h6" className='my-0 fw-bold fs-6 text-dark itinerary-trip-card-title'>
+                                    </a> </> : <Typography variant="h6" component="h6" className='my-0 fw-bold fs-6 text-dark itinerary-trip-card-title'>
                                         {placesInfo[0]?.name}
                                     </Typography>}
                                 </Tooltip>
@@ -86,13 +87,14 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
 
 
                         <div className='d-flex justify-content-between align-items-center flex-wrap pb-1'>
-                            {placesInfo[0]?.rating && <Typography variant="div" color="text.secondary" style={{ fontSize: '13px', marginBottom: '5px' }} className='d-flex align-items-center'>
-                                <span><StarIcon sx={{ fontSize: '14px' }} className='my-0' /> {placesInfo[0]?.rating}</span>
-                            </Typography>}
+
+                            {placesInfo[0]?.rating ? <Typography variant="div" color="text.secondary" style={{ fontSize: '13px', marginBottom: '2px' }} className='d-flex align-items-center'>
+                                <span><StarIcon sx={{ fontSize: '14px', color: '#ED8A19 !important' }} className='my-0 mb-1' /> {placesInfo[0]?.rating}</span>
+                            </Typography> : null}
                             {placesInfo[0]?.opening_hours && (<>
 
                                 <Typography variant="div" color="text.secondary" style={{ fontSize: '12px', }} className='d-flex align-items-center'>
-                                    <span className='fw-bold me-1'>Status:</span> {placesInfo[0]?.opening_hours?.open_now ? <span className='text-success mx-2'>Opened</span> : <span className='text-danger me-2'>Closed</span>}
+                                    <span className='fw-bold me-1'>Status:</span> {placesInfo[0]?.opening_hours?.open_now ? <span className='text-success mx-2'>Opened now</span> : <span className='text-danger me-2'>Closed now</span>}
                                 </Typography>
                             </>
 
@@ -100,7 +102,14 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
 
 
                             {price && <Typography variant="p" color="text.secondary" style={{ fontSize: '12px' }} className='me-2'>
-                                <span className='fw-bold me-1'>{priceKey === 'price_per_night' ? 'Price Per Night:' : priceKey === 'fee' ? 'Entry Fee:' : 'Price'}</span> {price}
+                                <span className='fw-bold me-1'>{priceKey === 'price_per_night' ? 'Price Per Night:' : priceKey === 'fee' ? 'Entry Fee:' : 'Price'}</span>
+                                {isNaN(parseFloat(price)) ? (
+
+                                    <span>{price}</span>
+                                ) : (
+
+                                    <span>&#8377; {price}</span>
+                                )}
                             </Typography>}
                         </div>
                     </CardContent>)}
@@ -136,7 +145,14 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
                             </Typography>
                             {/* <br /> */}
                             <Typography variant="p" color="text.secondary" style={{ fontSize: '12px', marginBottom: '1px' }}>
-                                <span className='fw-bold'>Price Per Night:</span> {accommodationDetails?.price_per_night}
+                                <span className='fw-bold'>Price Per Night:</span>{' '}
+                                {isNaN(parseFloat(accommodationDetails?.price_per_night)) ? (
+
+                                    <span>{accommodationDetails?.price_per_night}</span>
+                                ) : (
+
+                                    <span>&#8377; {accommodationDetails?.price_per_night}</span>
+                                )}
                             </Typography>
                         </CardContent>
 

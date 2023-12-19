@@ -561,7 +561,7 @@
 /* Images Slick Slider Classes */
 .images-slick-slider>button.slick-next {
     right: 2px !important;
-    top: 48% !important;
+    top: 50% !important;
     color: #000 !important;
     opacity: 1 !important;
     z-index: 521 !important;
@@ -708,4 +708,71 @@
 .MuiCard-horizontal .css-1evhnfm,
 .MuiCard-vertical .MuiCard-horizontal .css-1evhnfm {
     --_CardOverflow-margin: 0px !important;
+}
+
+@media screen and (max-width: 992px) {
+    .preferential-search-history {
+        display: none !important;
+    }
+}
+
+.voice-icon {
+    /* animation: pulse 2s infinite */
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%; */
+}
+
+.mice-button {
+    background-color: transparent !important;
+    border: 5px solid #a2a0a0 !important;
+    border-radius: 100% !important;
+    animation: pulse 0.7s infinite;
+    width: 63px;
+    height: 63px;
+    position: absolute;
+    left: -2px;
+    top: -2px;
+}
+
+@keyframes pulse {
+    0% {
+        left: -3px;
+        top: -3px;
+        width: 66px;
+        height: 66px;
+        animation: 1s ease;
+    }
+
+    25% {
+        left: -5px;
+        top: -5px;
+        width: 70px;
+        height: 70px;
+        animation: 1s ease-in-out;
+    }
+
+    50% {
+        left: -8px;
+        top: -8px;
+        width: 75px;
+        height: 75px;
+        animation: 1s ease-in;
+    }
+
+    75% {
+        left: -12px;
+        top: -12px;
+        width: 85px;
+        height: 85px;
+        animation: 1s ease-in-out;
+    }
+
+    100% {
+        left: -14px;
+        top: -14px;
+        width: 90px;
+        height: 90px;
+        animation: 1s ease-in-out;
+    }
 }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Box } from '@mui/material';
-import Logo from '../assets/logo.jpg';
+import Logo from '../assets/logo.svg';
 import './header.css'
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';

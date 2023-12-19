@@ -128,7 +128,7 @@ const ItineraryMapModal = (props) => {
     //     overflow: 'visible !important'
     // };
 
-    console.log(coordinatesData, "MapCoordinates 1")
+    // console.log(coordinatesData, "MapCoordinates 1")
 
 
     // const onMarkerClick = (event) => {

@@ -198,7 +198,7 @@ const PreferentialSearch = () => {
 
             setErrors({ ...errors, trip_theme_type: '' })
             loaderContext.startLoading(true)
-
+            requestAnimationFrame(() => { window.scrollTo(0, 220); });
             getResult({
                 ...tripPayloadState, start_date: formattedStartDate, end_date: formattedEndDate, "source": "Hyderabad"
             })
@@ -313,12 +313,12 @@ const PreferentialSearch = () => {
                                                 <div className='container dataBgColor'>
                                                     {/* Start Date */}
                                                     <div className='row'>
-                                                        <div className="col-12 col-sm-12 col-lg-6 p-2">
+                                                        <div className="col-12 col-sm-12 col-md-6 p-2">
                                                             <label style={{ marginBottom: '8px' }}>Start Date</label>
                                                             <TripDatePicker fieldName="start_date" />
                                                         </div>
                                                         {/* End Date */}
-                                                        <div className="col-12 col-sm-12 col-lg-6 p-2">
+                                                        <div className="col-12 col-sm-12 col-md-6 p-2">
                                                             <label style={{ marginBottom: '8px' }}>End Date</label>
                                                             <TripDatePicker fieldName="end_date" />
                                                         </div>
@@ -403,7 +403,7 @@ const PreferentialSearch = () => {
                                             </div>
 
                                         </Slider>
-                                        <div className='slickArrows mt-3' >
+                                        <div className='slickArrows mobile-slick-arrows mt-md-3' >
                                             {currentSlide !== 0 && <button className="button pre-button mx-2" onClick={previous} >
                                                 Previous
                                             </button>}

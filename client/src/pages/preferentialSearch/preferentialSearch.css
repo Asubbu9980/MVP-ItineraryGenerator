@@ -235,6 +235,8 @@
 
 }
 
+
+
 .sliderBox .radioLabel {
     color: #FFF;
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -281,6 +283,7 @@
 .sliderBoxTwo .radioSheet {
     background: #fff;
 }
+
 .sliderBoxTwo .box .MuiSheet-root {
     display: block;
     text-align: center;
@@ -342,4 +345,219 @@
 
 .sliderSection .trip-errors {
     font-size: 13px;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .sliderBox .radioSheet {
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: left;
+        align-items: end;
+        border-radius: 8px;
+    }
+
+    .sliderBox h3 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        line-height: 40px;
+    }
+
+    .sliderBoxOne .citySearch {
+        width: 300px;
+        margin: 0 auto 15px !important;
+
+    }
+
+    .sliderBox .box {
+        height: 90px !important;
+        width: 190px !important;
+    }
+
+    .sliderBox .radioLabel {
+        font-size: 14px !important;
+        padding-bottom: 0px !important;
+    }
+
+    .sliderBoxTwo .img {
+        width: 36px;
+        height: 36px
+    }
+
+    .sliderBoxTwo .img img {
+        width: 22px;
+        margin-top: 7px;
+    }
+
+    .sliderBox .dataBgColor {
+        padding: 12px 20px !important;
+    }
+
+    .sliderSection>div>div>div.slick-track {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+}
+
+@media screen and (max-width: 991px) {
+    .sliderBox .radioSheet {
+        background-size: cover !important;
+        height: 100% !important;
+        width: 100% !important;
+        display: flex !important;
+        justify-content: left !important;
+        align-items: end !important;
+        border-radius: 8px !important;
+    }
+
+    .sliderBox h3 {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+        line-height: 40px !important;
+    }
+
+    .sliderBoxOne .citySearch {
+        width: 50% !important;
+        margin: 0 auto 15px !important;
+
+    }
+
+    .sliderBox .box {
+        height: 70px !important;
+        width: 160px !important;
+    }
+
+    .sliderBox .radioLabel {
+        font-size: 14px !important;
+        padding-bottom: 0px !important;
+        margin-top: 2px !important;
+    }
+
+    .sliderBoxTwo .img {
+        width: 30px !important;
+        height: 30px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+    }
+
+    .sliderBoxTwo .img img {
+        width: 17px !important;
+        margin-top: 3px !important;
+    }
+
+    .sliderSection>div>div>div.slick-track {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .sliderBoxTwo>div.dataBgColor {
+        padding: 20px 10px !important;
+    }
+
+    .trip-errors {
+        width: 50% !important;
+    }
+
+    .sliderBoxTwo .radioSheet {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+}
+
+@media screen and (min-width:425px) and (max-width:768px) {
+    .banner {
+        height: 470px !important;
+    }
+
+    .trip-errors {
+        width: 60% !important;
+    }
+
+    .sliderBoxOne .citySearch {
+        width: 60% !important;
+        margin: 0 auto 15px !important;
+
+    }
+
+    .sliderBoxOne {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .sliderBox h3 {
+        font-size: 18px !important;
+    }
+
+}
+
+@media screen and (max-width:424px) {
+    /* .sliderSection>div>div>div.slick-track {
+        display: flex !important;
+        align-items: flex-start !important;
+    } */
+
+    .banner {
+        height: 450px !important;
+    }
+
+    .sliderBoxTwo .radioSheet {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .mobile-slick-arrows {
+        /* position: absolute;
+        top: 100%;
+        bottom: 20px !important; */
+    }
+
+    .sliderBoxThree .dataBgColor {
+        padding: 15px 6px !important;
+    }
+
+    .sliderBoxFour .dataBgColor {
+        padding: 15px 6px !important;
+    }
+
+    .sliderBoxFive .dataBgColor {
+        padding: 15px 6px !important;
+    }
+
+    .sliderBoxSix .dataBgColor {
+        padding: 10px 15px !important;
+    }
+
+    .sliderBox h3 {
+        font-size: 18px !important;
+    }
+
+    .trip-errors {
+        width: 90% !important;
+        margin-top: 8px !important;
+    }
+
+    .sliderBox .box {
+        height: 70px !important;
+        width: 120px !important;
+    }
+
+    .sliderBox .radioLabel {
+        font-size: 12px !important;
+    }
+
+    .ccccheckbox {
+        padding: 0px !important;
+    }
+
+    .sliderBoxOne .citySearch {
+        width: 60% !important;
+        margin: 0 auto 15px !important;
+    }
 }

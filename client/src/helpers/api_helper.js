@@ -11,7 +11,7 @@ const token = window.localStorage.getItem("token") ? window.localStorage.getItem
 const userId = window.localStorage.getItem("userId") ? window.localStorage.getItem("userId") : null;
 
 if (token)
-  console.log("token", token);
+  // console.log("token", token);
 axios.defaults.headers.common["Authorization"] = "Bearer " + token;
 axios.defaults.headers.common["user-id"] = userId;
 // axios.defaults.headers.common["x-user-id"] = userId

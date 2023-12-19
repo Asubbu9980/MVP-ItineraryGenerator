@@ -44,7 +44,7 @@ function Searchhistory({ setTripData, setTripTitle, tripData, searchHistoryClass
     getResult()
   }, [tripData])
 
-  console.log(tripData, 'tripDatafghjkl;')
+  // console.log(tripData, 'tripDatafghjkl;')
 
   const getResult = () => {
 
