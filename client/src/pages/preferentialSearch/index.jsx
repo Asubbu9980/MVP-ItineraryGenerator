@@ -31,7 +31,7 @@ import Itinerary from '../../common/Itinerary'
 import { useAuth0 } from '@auth0/auth0-react';
 import Searchhistory from '../../common/Searchhistory';
 import ItinerarySkeleton from '../../common/ItinerarySkeleton';
-
+import TextField from '@mui/material/TextField';
 // import TripDailyPlanningData from '../../TripDailyPlanningData';
 // import NoTripDataAvailable from './NoTripDataAvailable';
 
@@ -138,7 +138,7 @@ const PreferentialSearch = () => {
     }
 
     const handleChangeTripDestination = (name, value) => {
-        //console.log(name, value)
+        console.log(name, value)
         setTripPayloadState((prevState) => ({ ...prevState, [name]: value }));
     }
 
@@ -289,7 +289,7 @@ const PreferentialSearch = () => {
                                                 <h3>Where do you want to go?</h3>
                                                 <div className='citySearch'>
                                                     <Stack spacing={2}>
-                                                        <Autocomplete
+                                                        {/* <Autocomplete
                                                             startDecorator={<SearchIcon />}
                                                             placeholder="Search for a city"
                                                             value={tripPayloadState.destination}
@@ -298,6 +298,30 @@ const PreferentialSearch = () => {
                                                             onChange={(e, value) => handleChangeTripDestination('destination', value)}
                                                             options={cityNames}
                                                             style={{ height: '35px' }}
+                                                        /> */}
+                                                        <Autocomplete
+                                                            freeSolo
+                                                            startDecorator={<SearchIcon />}
+                                                            options={cityNames}
+                                                            placeholder="Search for a city"
+                                                            value={tripPayloadState.destination}
+                                                            // onChange={(event, newValue) => {
+                                                            //     handleChangeTripDestination('destination', newValue);
+                                                            // }}
+                                                            onInputChange={(event, newInputValue) => {
+                                                                handleChangeTripDestination('destination', newInputValue);
+                                                            }}
+                                                            renderInput={(params) => (
+                                                                <TextField
+                                                                    {...params}
+                                                                    InputProps={{
+                                                                        ...params.InputProps,
+                                                                        type: 'search',
+                                                                    }}
+                                                                    style={{ height: '35px' }}
+                                                                />
+                                                            )}
+
                                                         />
                                                     </Stack>
                                                 </div>

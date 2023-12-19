@@ -37,7 +37,7 @@ const TripDataRadioGroup = ({ fieldName = '', data = [] }) => {
                 style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}
             >
                 {data.map((info) => (
-                    <div className='box'>
+                    <div className='box' key={`${info.item}-${info.id}`}>
                         <Sheet
                             key={info.id}
                             className='radioSheet'
