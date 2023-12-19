@@ -6,5 +6,6 @@ const api = new APIClient();
 
 
 export const getTripDetailsApi = (trip) => api.create(url.TRIP, trip);
+export const getTripDetailsByVoiceApi = (trip) => api.create(url.TRIP + '/voice', trip);
 
 export const getRecentTripDetailsApi = (trip) => api.get(url.TRIP);

@@ -34,6 +34,8 @@
     "express-session": "^1.17.1",
     "express-useragent": "^1.0.15",
     "express-validator": "^6.3.1",
+    "extract-date": "^2.8.2",
+    "extract-date-js": "^1.0.2",
     "fast-csv": "^4.3.6",
     "google-auth-library": "^9.1.0",
     "helmet": "^4.6.0",
