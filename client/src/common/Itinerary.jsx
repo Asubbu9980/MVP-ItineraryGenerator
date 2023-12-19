@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 // import Header from './Header'
 import './Itinerary.css'
 import { Button, Container } from '@mui/material';
@@ -23,6 +23,14 @@ import WeatherReport from './WeatherReport';
 const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
+    const [mapData, setMapdata] = useState(null)
+
+
+    useEffect(() => {
+        if (tripData && tripData?.places_visited && tripData.places_visited.length > 0) {
+            setMapdata(tripData?.places_visited[0])
+        }
+    }, [tripData])
     console.log("tripData==>", tripData)
     // console.log(Number('10,000'), "parsedIntPrice")
     const onCloseModal = () => {
@@ -69,6 +77,11 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
             }
         </>
     }
+
+
+    const onChangeMapData = (data) => {
+        setMapdata(data)
+    }
     return (
         <>
             <div>
@@ -80,58 +93,61 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
             <div>
                 <Container>
                     <Card className='tripDetails-grid' sx={{ padding: '20px', borderRadius: '25px', backgroundColor: `${cardBackGroundColor} !important` }}>
-                        <ul>
-                            {
-                                tripData && tripData?.places_visited && tripData.places_visited.length &&
-                                tripData?.places_visited.map((m, i) => {
-                                    return <li className='tripDetails-item' key={i}>
-                                        <div className="dot">
-                                            <div className="center"></div>
-                                            <div className="ring"></div>
-                                        </div>
-                                        <div className='recommended-stay'>
-                                            {/* <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
-</Button> */}
-                                            {m?.recommended_stay ? <Chip color="success" variant='outlined' label={`Recommended Stay: ${m.recommended_stay}`} /> : null}
-                                        </div>
-                                        <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div>
-                                        <h6>{m?.date}</h6>
-                                        {m?.recommended_stay ? <Chip color="success" variant='outlined' size="small" label={`Recommended Stay: ${m?.recommended_stay}`} className='mobile-recommended-stay' /> : null}
-                                        <p className='mt-2 mb-0 pb-0'>
-                                            {m?.description}
-                                        </p>
-                                        <h3 className='moreInfoHeading my-3'>More information</h3>
-                                        <div className='container ms-0'>
-                                            <div className='row'>
-                                                <div className='col-12 col-xl-7 ps-0'  >
-                                                    <div className=''>
+                        <div className="row itinerary-row-class">
+                            <div className="col-12 col-xl-7 px-0">
+                                <ul>
+                                    {
+                                        tripData && tripData?.places_visited && tripData.places_visited.length &&
+                                        tripData?.places_visited.map((m, i) => {
+                                            return <li className='tripDetails-item' key={i} onMouseOver={() => onChangeMapData(m)}>
+                                                <div className="dot">
+                                                    <div className="center"></div>
+                                                    <div className="ring"></div>
+                                                </div>
 
-                                                        {
-                                                            m?.activity && m?.activity.length > 0 ? <div className='mb-4'>
-                                                                <h6 className='my-1 mb-4 trip-hotel-title'>
-                                                                    <img src={activitiesIcon} className='me-2' alt='activitiesIcon' /> Activities
-                                                                </h6>
-                                                                <ul className="d-flex flex-wrap p-0 gap-1">
-                                                                    {
-                                                                        m?.activity?.map((sm, si) => {
-                                                                            if (typeof (sm) === 'object') {
-                                                                                return <Chip key={si} label={sm.name} />
-                                                                            } else {
-                                                                                return <Chip key={si} label={sm} />
+                                                <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div>
+
+                                                <div className='recommended-stay'>
+                                                    {/* <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
+</Button> */}<h6>{m?.date}</h6>
+                                                    {m?.recommended_stay ? <Chip color="success" variant='outlined' size='small' label={`Recommended Stay: ${m.recommended_stay}`} /> : null}
+                                                </div>
+                                                {m?.recommended_stay ? <Chip color="success" variant='outlined' size="small" label={`Recommended Stay: ${m?.recommended_stay}`} className='mobile-recommended-stay' /> : null}
+                                                <p className='mt-0 mb-0 pb-0'>
+                                                    {m?.description}
+                                                </p>
+                                                <h3 className='moreInfoHeading my-3'>More information</h3>
+                                                <div className='container ms-0'>
+                                                    <div className='row'>
+                                                        <div className='col-12 col-xl-12 ps-0'  >
+                                                            <div className=''>
+
+                                                                {
+                                                                    m?.activity && m?.activity.length > 0 ? <div className='mb-4'>
+                                                                        <h6 className='my-1 mb-4 trip-hotel-title'>
+                                                                            <img src={activitiesIcon} className='me-2' alt='activitiesIcon' /> Activities
+                                                                        </h6>
+                                                                        <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                            {
+                                                                                m?.activity?.map((sm, si) => {
+                                                                                    if (typeof (sm) === 'object') {
+                                                                                        return <Chip key={si} label={sm.name} />
+                                                                                    } else {
+                                                                                        return <Chip key={si} label={sm} />
+                                                                                    }
+                                                                                })
                                                                             }
-                                                                        })
-                                                                    }
-                                                                </ul>
-                                                            </div> : null
-                                                        }
+                                                                        </ul>
+                                                                    </div> : null
+                                                                }
 
-                                                        <div className='mb-4'>
-                                                            {
-                                                                m?.popular_places && m?.popular_places.length > 0 ? <>
-                                                                    <h6 className='my-1 mb-4 trip-hotel-title'>
-                                                                        <img src={locationIcon} className='me-2' alt='locationIcon' />  Popular Places
-                                                                    </h6>
-                                                                    {/* <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                <div className='mb-4'>
+                                                                    {
+                                                                        m?.popular_places && m?.popular_places.length > 0 ? <>
+                                                                            <h6 className='my-1 mb-4 trip-hotel-title'>
+                                                                                <img src={locationIcon} className='me-2' alt='locationIcon' />  Popular Places
+                                                                            </h6>
+                                                                            {/* <ul className="d-flex flex-wrap p-0 gap-1">
                                                                         {
                                                                             m?.popular_places?.map((ppl, si) => {
                                                                                 if (typeof (ppl) === 'object') {
@@ -143,32 +159,32 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                             })
                                                                         }
                                                                     </ul> */}
-                                                                    {/* {
+                                                                            {/* {
                                                                         m?.popular_places?.map((ppl, si) => <ProductSlider placedata={ppl} />)
                                                                     } */}
 
-                                                                    {m?.popular_places?.map((eachPlace) => {
-                                                                        if (typeof (eachPlace) === 'object') {
-                                                                            // console.log(typeof (eachPlace), "types")
-                                                                            return <ItineraryInformationCard placedata={eachPlace} popularPlace={eachPlace?.name} priceKey="fee" />
-                                                                        }
-                                                                        return <ItineraryInformationCard placedata={eachPlace} popularPlace={eachPlace} />
+                                                                            {m?.popular_places?.map((eachPlace) => {
+                                                                                if (typeof (eachPlace) === 'object') {
+                                                                                    // console.log(typeof (eachPlace), "types")
+                                                                                    return <ItineraryInformationCard placedata={eachPlace} popularPlace={eachPlace?.name} priceKey="fee" />
+                                                                                }
+                                                                                return <ItineraryInformationCard placedata={eachPlace} popularPlace={eachPlace} />
 
-                                                                    })}
+                                                                            })}
 
-                                                                </> : null
-                                                            }
-                                                        </div>
-                                                        <div className='mb-4'>
-                                                            {m?.accommodation && m?.accommodation.length > 0 ? <>
-                                                                <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={accommodationIcon} className='me-2' alt='accommodationIcon' /> Accommodations
-                                                                    {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeModalState(m)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button>*/}
-                                                                </h6>
-                                                                <div>
+                                                                        </> : null
+                                                                    }
                                                                 </div>
-                                                                {m?.accommodation?.map((eachHotel) => <ItineraryInformationCard placedata={eachHotel} pricePerNight={eachHotel?.price_per_night} accommodationDetails={eachHotel} priceKey="price_per_night" />)}
+                                                                <div className='mb-4'>
+                                                                    {m?.accommodation && m?.accommodation.length > 0 ? <>
+                                                                        <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={accommodationIcon} className='me-2' alt='accommodationIcon' /> Accommodations
+                                                                            {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeModalState(m)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button>*/}
+                                                                        </h6>
+                                                                        <div>
+                                                                        </div>
+                                                                        {m?.accommodation?.map((eachHotel) => <ItineraryInformationCard placedata={eachHotel} pricePerNight={eachHotel?.price_per_night} accommodationDetails={eachHotel} priceKey="price_per_night" />)}
 
-                                                                {/* <ul className="d-flex flex-wrap p-0 gap-2">
+                                                                        {/* <ul className="d-flex flex-wrap p-0 gap-2">
                                                                     {m?.accommodation.map((sm, si) => {
                                                                         return (
                                                                             <li className='loopCard '>
@@ -189,57 +205,62 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                         )
                                                                     })}
                                                                 </ul> */}
-                                                            </> : null}
-                                                        </div>
-                                                        <div className='mb-4'>
-                                                            {m?.food_choices && m?.food_choices.length > 0 ? <>
-                                                                <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2' alt='foodIcon' />  Must try Food/Restaurant
-                                                                    {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.food_choices)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button> */}
-                                                                </h6>
-                                                                <ul className="d-flex flex-wrap p-0 gap-2">
-                                                                    {m.food_choices.map((sm, si) => {
-                                                                        return <li className='loopCard' key={`${sm}-${si}`}>
-                                                                            <Card key={sm} className='card shadow-sm'>
-                                                                                <CardContent className='p-2'>
-                                                                                    <Typography variant="h6" component="h6" className='mb-1 fw-bold' style={{ color: '#000', fontSize: '15px' }}>
-                                                                                        {sm.name}
-                                                                                    </Typography>
-                                                                                    <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                        <span className='fw-bold'>Address: </span>{sm.address}
-                                                                                    </Typography>
-                                                                                    <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                        <span className='fw-bold'>Price: &#8377;</span>{sm.price}
-                                                                                    </Typography>
-                                                                                </CardContent>
-                                                                            </Card></li>
-                                                                    })}
-                                                                </ul>
-                                                            </> : null}
-                                                        </div>
-                                                        <div className='mb-4'>
-                                                            {m?.transportation && (Object.keys(m?.transportation).length > 0) && ((m?.transportation?.flight && Object.keys(m.transportation?.flight).length > 0) || (m?.transportation?.train && Object.keys(m.transportation?.train).length > 0) || (m?.transportation?.bus && Object.keys(m.transportation?.bus).length > 0)) ? <>
-                                                                <h6 className='my-1 mb-4 trip-hotel-title'> <img src={transportation_icon} className='me-2' alt='transportation_icon' />  Transportation</h6>
-                                                                <ul className="d-flex flex-wrap p-0 gap-1">
-                                                                    {
-                                                                        Object.keys(m?.transportation).map((transport_type) => {
-                                                                            return getEachTransportType(m.transportation, transport_type)
-                                                                        })
-                                                                    }
+                                                                    </> : null}
+                                                                </div>
+                                                                <div className='mb-4'>
+                                                                    {m?.food_choices && m?.food_choices.length > 0 ? <>
+                                                                        <h6 className='my-1 mb-4 trip-hotel-title'>  <img src={foodIcon} className='me-2' alt='foodIcon' />  Must try Food/Restaurant
+                                                                            {/* <Button className='trip-map-view-btns' variant='outlined' size='small' onClick={(e) => onChangeRecommendedModalState(m.food_choices)}>View In Map{" "}<PlaceIcon sx={{ fontSize: '15px' }} /></Button> */}
+                                                                        </h6>
+                                                                        <ul className="d-flex flex-wrap p-0 gap-2">
+                                                                            {m.food_choices.map((sm, si) => {
+                                                                                return <li className='loopCard' key={`${sm}-${si}`}>
+                                                                                    <Card key={sm} className='card shadow-sm'>
+                                                                                        <CardContent className='p-2'>
+                                                                                            <Typography variant="h6" component="h6" className='mb-1 fw-bold' style={{ color: '#000', fontSize: '15px' }}>
+                                                                                                {sm.name}
+                                                                                            </Typography>
+                                                                                            <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                                                                                                <span className='fw-bold'>Address: </span>{sm.address}
+                                                                                            </Typography>
+                                                                                            <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
+                                                                                                <span className='fw-bold'>Price: &#8377;</span>{sm.price}
+                                                                                            </Typography>
+                                                                                        </CardContent>
+                                                                                    </Card></li>
+                                                                            })}
+                                                                        </ul>
+                                                                    </> : null}
+                                                                </div>
+                                                                <div className='mb-4'>
+                                                                    {m?.transportation && (Object.keys(m?.transportation).length > 0) && ((m?.transportation?.flight && Object.keys(m.transportation?.flight).length > 0) || (m?.transportation?.train && Object.keys(m.transportation?.train).length > 0) || (m?.transportation?.bus && Object.keys(m.transportation?.bus).length > 0)) ? <>
+                                                                        <h6 className='my-1 mb-4 trip-hotel-title'> <img src={transportation_icon} className='me-2' alt='transportation_icon' />  Transportation</h6>
+                                                                        <ul className="d-flex flex-wrap p-0 gap-1">
+                                                                            {
+                                                                                Object.keys(m?.transportation).map((transport_type) => {
+                                                                                    return getEachTransportType(m.transportation, transport_type)
+                                                                                })
+                                                                            }
 
-                                                                </ul>
-                                                            </> : null}
+                                                                        </ul>
+                                                                    </> : null}
+                                                                </div>
+                                                            </div>
                                                         </div>
+                                                        {/* <div className='col-12 col-xl-5 itinerary-map-main-container position-relative'>
+                                                    <ItineraryMapModal data={m} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />
+                                                </div> */}
                                                     </div>
                                                 </div>
-                                                <div className='col-12 col-xl-5 itinerary-map-main-container position-relative'>
-                                                    <ItineraryMapModal data={m} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                })
-                            }
-                        </ul>
+                                            </li>
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                            {tripData && tripData?.places_visited && tripData.places_visited.length && <div className='col-12 col-xl-5 itinerary-map-main-container position-sticky' style={{ height: '100vh' }}>
+                                <ItineraryMapModal data={mapData} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />
+                            </div>}
+                        </div>
                     </Card>
                 </Container>
             </div>

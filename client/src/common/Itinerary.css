@@ -10,12 +10,15 @@
 }
 
 .recommended-stay {
-    padding: 6px 11px;
+    /* padding: 6px 6px; */
+    padding-top: 15px;
     font-size: 16px;
     font-weight: 600;
-    float: right;
+    /* float: right;
     position: relative;
-    top: -11px;
+    top: -6px; */
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -714,4 +717,42 @@
     .preferential-search-history {
         display: none !important;
     }
+}
+
+.itinerary-map-main-container {
+    /* padding-left: 30px !important; */
+    position: -webkit-sticky !important;
+    top: 150px !important;
+    right: 0 !important;
+
+}
+
+.itinerary-row-class {
+    height: 100vh !important;
+    overflow-y: scroll !important;
+    position: relative !important;
+}
+
+.itinerary-row-class::-webkit-scrollbar {
+    width: 3px !important;
+}
+
+.itinerary-row-class::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 18px rgba(0, 0, 0.5, 0.3);
+
+    -webkit-border-radius: 5px;
+    border-radius: 2px;
+}
+
+.itinerary-row-class::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    /* background: rgb(117, 125, 133); */
+    background-color: #757d85 !important;
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5); */
+    width: 6px !important;
+}
+
+.itinerary-row-class::-webkit-scrollbar-thumb:hover {
+    background: #757d85;
 }

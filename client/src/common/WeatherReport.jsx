@@ -13,40 +13,66 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [weatherData, setWeatherData] = useState(null)
     const getDestinationPlaceWeatherDetails = async () => {
-        if (date != null && date != "" && typeof(date) != "object") {
-            const parts = date.split('/');
-            const myDate = new Date(parts[2], parts[1] - 1, parts[0]);
-            let unixTimestamp = Math.floor(myDate.getTime() / 1000);
-            if (!unixTimestamp) {
-                const todaysDate = new Date();
-                unixTimestamp = Math.floor(todaysDate.getTime() / 1000);
-            }
+        // if (date != null && date != "" && typeof(date) != "object") {
+        //     const parts = date.split('/');
+        //     const myDate = new Date(parts[2], parts[1] - 1, parts[0]);
+        //     let unixTimestamp = Math.floor(myDate.getTime() / 1000);
+        //     if (!unixTimestamp) {
+        //         const todaysDate = new Date();
+        //         unixTimestamp = Math.floor(todaysDate.getTime() / 1000);
+        //     }
 
 
-            try {
-                const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${placeCoordinates?.lat?.slice(0, -3)}&lon=${placeCoordinates?.lng?.slice(0, -3)}&dt=${unixTimestamp}&units=metric&appid=258730fe6c89445030503ee5885791ef`)
+        //     try {
+        //         const weatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${placeCoordinates?.lat?.slice(0, -3)}&lon=${placeCoordinates?.lng?.slice(0, -3)}&dt=${unixTimestamp}&units=metric&appid=258730fe6c89445030503ee5885791ef`)
+        //         if (weatherResponse?.ok) {
+        //             const contentType = weatherResponse?.headers?.get('content-type');
+
+        //             if (contentType && contentType?.includes('application/json')) {
+        //                 // If the content type is JSON, use .json() to parse
+        //                 const data = await weatherResponse?.json();
+        //                 // console.log('Weather JSON Response:', data);
+
+        //                 setWeatherData(data);
+        //             } else {
+        //                 // If the content type is not JSON, handle it accordingly
+        //                 const textData = await weatherResponse?.text();
+        //                 // console.log('Weather Non-JSON Response:', textData);
+        //             }
+        //         } else {
+        //             console.error('Error fetching weather data:', weatherResponse.statusText);
+        //         }
+
+        //     } catch (error) {
+        //         console.error('Error fetching weather data:', error);
+
+        //     }
+        // }
+        try {
+            const locationResponse = await fetch(
+                `http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=6kFNTUaaFZmejDqhIy0KnYGCg2xTFPRf&q=${placeCoordinates?.lat?.slice(0, -3)},${placeCoordinates?.lng?.slice(0, -3)}`
+            );
+
+            if (locationResponse.ok) {
+                const locationData = await locationResponse.json();
+                const locationKey = locationData.Key;
+
+                const weatherResponse = await fetch(
+                    `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}?apikey=6kFNTUaaFZmejDqhIy0KnYGCg2xTFPRf`
+                );
+
                 if (weatherResponse?.ok) {
-                    const contentType = weatherResponse?.headers?.get('content-type');
-
-                    if (contentType && contentType?.includes('application/json')) {
-                        // If the content type is JSON, use .json() to parse
-                        const data = await weatherResponse?.json();
-                        // console.log('Weather JSON Response:', data);
-
-                        setWeatherData(data);
-                    } else {
-                        // If the content type is not JSON, handle it accordingly
-                        const textData = await weatherResponse?.text();
-                        // console.log('Weather Non-JSON Response:', textData);
-                    }
+                    const data = await weatherResponse?.json();
+                    console.log('Weather JSON Response:', data);
+                    // setWeatherData(data[0]); // Assuming the response is an array, update accordingly
                 } else {
-                    console.error('Error fetching weather data:', weatherResponse.statusText);
+                    console.error('Error fetching weather data:', weatherResponse?.statusText);
                 }
-
-            } catch (error) {
-                console.error('Error fetching weather data:', error);
-
+            } else {
+                console.error('Error fetching location key:', locationResponse?.statusText);
             }
+        } catch (error) {
+            console.error('Error fetching data:', error);
         }
 
     }
