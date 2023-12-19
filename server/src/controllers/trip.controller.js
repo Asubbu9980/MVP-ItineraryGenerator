@@ -6,6 +6,60 @@ const RedisCache = require('../services/common/cacheHandler');
 const { openai } = require('../openai.js');
 const SearchHistoryModel = require('../models/search.history.model.js');
 const moment = require('moment')
+const extractDate = require('extract-date').default;
+// const extractDate = require('extract-date-js');
+const famousTouristCitiesInIndia = [
+    "Agra",
+    "Varanasi",
+    "Kerala",
+    "Goa",
+    'Hyderabad',
+    'Delhi',
+    "Chennai",
+    "Hampi",
+    "Rishikesh",
+    "Khajuraho",
+    "Mysore",
+    "Srinagar",
+    "Aurangabad",
+    "Udaipur",
+    "Darjeeling",
+    "Bhuj",
+    "Mumbai",
+    "Leh",
+    "Kolkata",
+    "Jaipur",
+    "Bangalore",
+    "Pondicherry",
+    "Himalayas",
+    "Amritsar",
+    "Jaisalmer",
+    "Gangtok",
+    "Shimla",
+    "Manali",
+    "Kochi",
+    "Jodhpur",
+    "Madurai",
+    "Pushkar",
+    "Pune",
+    "Gokarna",
+    "Rajasthan",
+    "Gujarat",
+    "Maharashtra",
+    "Tamil Nadu",
+    "Karnataka",
+    "Telangana",
+    "Andhra Pradesh",
+    "Kashmir",
+    "Haryana",
+    "Uttarakhand",
+    "Himachal Pradesh",
+    "West Bengal",
+    "Punjab",
+    "Sikkim",
+    "Uttar Pradesh",
+    "Madhya Pradesh",
+]
 class tripController {
     removeNewlines = (obj) => {
         for (const key in obj) {
@@ -103,7 +157,7 @@ class tripController {
                 // });
                 const response = await openai.chat.completions.create({
                     messages: [
-                        { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format Create Varanasi Trip Itinerary for 4 days starting from 16/12/2023 to 20/12/2023 with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":""}]}]}` },
+                        { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format ` },
                         { "role": "user", "content": q },
                     ],
                     model: 'gpt-3.5-turbo',
@@ -115,7 +169,6 @@ class tripController {
                 // console.log("response", response.data.choices[0].text);
                 // console.log("lines", lines);
                 const reData = JSON.parse(response.choices[0].message.content);
-
                 await Promise.all(reData.activities.map(async (element, index) => {
                     const popularPlaces = element['popular_places'];
                     if (popularPlaces != null) {
@@ -340,6 +393,88 @@ class tripController {
                     statusCode: 200,
                 })
             }
+        } catch (error) {
+            console.log("Error", error);
+            return commonResponse({
+                req,
+                res,
+                status: false,
+                data: error,
+                statusCode: 500,
+            })
+        }
+    }
+    generateusingVoice = async (req, res, next) => {
+        try {
+            const { text } = req.body;
+            const splitedText = text.split(" ");
+            const dates = extractDate(text, { direction: 'DMY', locale: 'en', timezone: 'Asia/Kolkata' });
+            console.log("daytes", dates);
+            let source, destination, start_date, end_date = null
+            for (var i = 0; i < splitedText.length; i++) {
+                const v = splitedText[i];
+                const indexed = famousTouristCitiesInIndia.map(m => m.toLowerCase()).indexOf(v.toLowerCase());
+                if (indexed > 0) {
+                    destination = v
+                }
+            }
+            if (dates.length > 0) {
+                const fDates = dates.map(m => m.date);
+                console.log("f", fDates);
+                const min = fDates.reduce((acc, date) => { return acc && new Date(acc) < new Date(date) ? acc : date }, '')
+                const max = fDates.reduce((acc, date) => { return acc && new Date(acc) > new Date(date) ? acc : date }, '')
+                console.log("min", min);
+                console.log("max", max);
+                if (max != null && max != undefined && max != "" && min != max) {
+                    start_date = min;
+                    end_date = max;
+                } else {
+                    start_date = min;
+                    end_date = moment(new Date(start_date), "DD/MM/YYYY").add(3, 'days')
+                }
+
+            } else {
+                start_date = moment(new Date(), "DD/MM/YYYY").add(1, 'days')
+                end_date = moment(new Date(), "DD/MM/YYYY").add(3, 'days')
+            }
+            var date1 = moment(start_date);
+            var date2 = moment(end_date);
+            var days = date2.diff(date1, 'days')
+            const q = `Create ${destination} Trip Itinerary for ${days + 1} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
+            console.log("q", q);
+            const response = await openai.chat.completions.create({
+                messages: [
+                    { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format` },
+                    { "role": "user", "content": q },
+                ],
+                model: 'gpt-3.5-turbo',
+                // model: 'gpt-4',
+                max_tokens: 3050,
+                temperature: 0,
+            });
+            const reData = JSON.parse(response.choices[0].message.content);
+            return commonResponse({
+                req,
+                res,
+                status: true,
+                data: reData,
+                statusCode: 200,
+            })
+            // const finalCacheKey = `_sml_smvp_itinerary_details_${source}_${destination}_${start_date}_${end_date}_`;
+            // const cc = global.isCacheEnabled ? await RedisCache.getCache(finalCacheKey) : null;
+            // if (cc != null) {
+            //     return commonResponse({
+            //         req,
+            //         res,
+            //         status: true,
+            //         data: JSON.parse(cc),
+            //         statusCode: 200,
+            //     })
+            // } else {
+
+
+
+            // }
         } catch (error) {
             console.log("Error", error);
             return commonResponse({
