@@ -211,7 +211,8 @@ const IndexPage = () => {
 
         try {
             getTripDetailsByVoiceApi({
-                text: transcript
+                text: transcript,
+                source: initialValues.source
             }).then((r) => {
                 console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
