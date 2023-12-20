@@ -66,12 +66,12 @@ const SpeechRecognitionModal = ({ onStartSpeechRecognition, isOpen = false, onCl
     };
 
     return (
-        <StyledModal open={isOpen} onClose={onClose} className='mx-auto mt-4 p-3'>
+        <StyledModal open={isOpen} onClose={onClose} className='mx-auto mt-4 p-3 speech-recognition-modal-container'>
             <div style={VoiceContainer} >
                 {speechText ? !isValidDestination ? <h5 className='text-white text-center'>{speechText}</h5> : <div> <h6 className='text-danger text-center'>Currently We Don't have any trip plan for this destination...</h6> <p className='text-center text-white mt-3'>Please Try another destination </p></div> : <h4 className='text-white text-center'>Listening...</h4>}
 
                 <CloseButton onClick={onClose} />
-                <div className='d-flex'>
+                <div className='d-flex align-items-center'>
                     {/* <Mic sx={VoiceIcon} onClick={handleVoiceIconClick} /> */}
                     <div className='position-relative'>
                         <Mic

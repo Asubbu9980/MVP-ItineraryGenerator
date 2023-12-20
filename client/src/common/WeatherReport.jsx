@@ -13,7 +13,7 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const [weatherData, setWeatherData] = useState(null)
     const getDestinationPlaceWeatherDetails = async () => {
-        if (date != null && date != "" && typeof(date) != "object") {
+        if (date != null && date != "" && typeof (date) != "object") {
             const parts = date.split('/');
             const myDate = new Date(parts[2], parts[1] - 1, parts[0]);
             let unixTimestamp = Math.floor(myDate.getTime() / 1000);
@@ -93,7 +93,7 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
                     <List className='p-2 px-4'>
                         <ListItem className='py-0'>
                             <ListItemText className='weather-condition-list-item-text'>Condition: <span className='weather-condition-status ps-1'>{weatherData?.weather[0]?.description}</span>
-                                <img src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`} alt="Weather Icon" width="30" height="30" />
+                                <img src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`} alt="Weather Icon" width="30" height="30" className='weather-condition-icon-class' />
                             </ListItemText>
                         </ListItem>
                         <ListItem className='py-0'>

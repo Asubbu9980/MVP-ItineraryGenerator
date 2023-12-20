@@ -630,6 +630,12 @@
     /* color: orange; */
 }
 
+.weather-condition-icon-class {
+    background-color: #cacaca !important;
+    border-radius: 18px !important;
+    margin-left: 10px !important;
+}
+
 .weather-place-title {
     font-size: 16px !important;
     font-weight: 600 !important;
@@ -685,6 +691,10 @@
 
     .tripDetails-grid>ul {
         padding-left: 0.5rem !important;
+    }
+
+    .speech-recognition-modal-container {
+        width: 85% !important;
     }
 
 }
