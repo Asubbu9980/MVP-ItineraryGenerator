@@ -154,7 +154,7 @@ const IndexPage = () => {
             // Now you can send the `formattedValues` to the server
             console.log(formattedValues);
             loaderContext.startLoading(true)
-            requestAnimationFrame(() => { window.scrollTo(0, 220); });
+            requestAnimationFrame(() => { window.scrollTo(0, 420); });
 
             getResult(formattedValues)
 
@@ -258,7 +258,7 @@ const IndexPage = () => {
             setModelState(false)
             setIsValidDestination(false)
             loaderContext.startLoading(true)
-            requestAnimationFrame(() => { window.scrollTo(0, 220); });
+            requestAnimationFrame(() => { window.scrollTo(0, 420); });
             getTripByVoice()
         } else {
             setIsValidDestination(true)
@@ -326,7 +326,10 @@ const IndexPage = () => {
                                                     <button title="Search" type='button' onClick={() => {
                                                         SpeechRecognition.stopListening()
                                                         resetTranscript()
-                                                        getTripByVoice()
+                                                        if (transcript !== "" && transcript !== null) {
+                                                            getTripByVoice()
+                                                        }
+
                                                     }}>
                                                         <Search />
                                                         <span className="a11y-hidden">Search</span>
@@ -489,7 +492,7 @@ const IndexPage = () => {
                 </div>
                 <>{!loaderContext.loading ?
 
-                    <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
+                    <div style={{ background: '#F3F4F6', paddingBottom: `${(tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0) ? '8px' : '32px'}`, paddingTop: '20px' }}>
                         {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
                         {
                             tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?

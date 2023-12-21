@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import './preferentialSearch.css'
 import Slider from "react-slick";
 import Box from '@mui/joy/Box';
@@ -17,7 +17,7 @@ import SearchIcon from '@mui/icons-material/Search';
 // import Card from '@mui/material/Card';
 import { TripPayloadContext } from '../../context/TripDataContext';
 import LoaderContext from '../../context/LoaderContext';
-import { getTripDetailsApi } from '../../helpers/trip_helper';
+import { getTripDetailsApi, getTripDetailsByVoiceApi } from '../../helpers/trip_helper';
 // import circum_share from "../../assets/circum_share.svg";
 import searchIocn from "../../assets/search-icon.svg";
 // import { Button, Container } from '@mui/material';
@@ -31,6 +31,10 @@ import Itinerary from '../../common/Itinerary'
 import { useAuth0 } from '@auth0/auth0-react';
 import Searchhistory from '../../common/Searchhistory';
 import ItinerarySkeleton from '../../common/ItinerarySkeleton';
+import TextField from '@mui/material/TextField';
+import { Mic } from '@mui/icons-material';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import SpeechRecognitionModal from '../../common/SpeechRecognitionModal';
 
 // import TripDailyPlanningData from '../../TripDailyPlanningData';
 // import NoTripDataAvailable from './NoTripDataAvailable';
@@ -43,8 +47,21 @@ const PreferentialSearch = () => {
     const [tripData, setTripData] = useState(null);
     const [tripTitle, setTripTitle] = useState(null)
     const [bannerHeight, setBannerHeight] = useState('380px');
-    // const [modelState, setModelState] = useState(false);
-    // const [coordinatesData, setCoordinates] = useState([])
+    const [isValidDestination, setIsValidDestination] = useState(false)
+    const [modelState, setModelState] = useState(false);
+
+
+    const {
+        transcript,
+        resetTranscript,
+    } = useSpeechRecognition();
+
+    useEffect(() => {
+        if (transcript) {
+            setTripPayloadState((prevState) => ({ ...prevState, destination: transcript }));
+        }
+    }, [transcript]);
+
     const [errors, setErrors] = useState({
         destination: null,
         date: null,
@@ -269,6 +286,79 @@ const PreferentialSearch = () => {
         }
 
     }
+
+
+    const onStartSpeechRecognition = (e) => {
+        resetTranscript()
+        SpeechRecognition.startListening({
+            continuous: true,
+        })
+        setIsValidDestination(false)
+        setModelState(true)
+    }
+
+    const onClose = (e) => {
+        setModelState(false)
+        SpeechRecognition.stopListening()
+        resetTranscript()
+        setIsValidDestination(false)
+    }
+
+    const getTripByVoice = () => {
+
+        try {
+            getTripDetailsByVoiceApi({
+                text: transcript,
+                source: 'Hyderabad'
+            }).then((r) => {
+                console.log("ChatGPT Resp", r);
+                loaderContext.startLoading(false)
+                const p = r?.data.hasOwnProperty('trip') ? r?.data.trip : r?.data;
+                const fR = {}
+                Object.keys(p).forEach(function (key) {
+                    var value = p[key];
+                    if (key === 'activities' || key === "places") {
+                        fR['places_visited'] = value
+                    } else {
+                        fR[key] = value
+                    }
+
+                });
+                console.log(JSON.stringify(fR));
+                // setTripTitle(`${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`)
+                setTripData(fR)
+            }).then((e) => {
+            })
+
+        } catch (error) {
+            loaderContext.startLoading(false)
+        }
+    }
+
+    const onVoiceSearchTripPlan = () => {
+
+        const splitedText = transcript.split(" ");
+        let destination = null
+        for (var i = 0; i < splitedText.length; i++) {
+            const v = splitedText[i];
+            const indexed = cityNames.map(m => m.toLowerCase()).indexOf(v.toLowerCase());
+            if (indexed > 0) {
+                destination = v
+            }
+        }
+        if (destination) {
+            SpeechRecognition.stopListening()
+            resetTranscript()
+            setModelState(false)
+            setIsValidDestination(false)
+            loaderContext.startLoading(true)
+            requestAnimationFrame(() => { window.scrollTo(0, 220); });
+            getTripByVoice()
+        } else {
+            setIsValidDestination(true)
+        }
+
+    }
     return (
         <div className='homeSearch'>
             <div className='position-relative'>
@@ -287,9 +377,9 @@ const PreferentialSearch = () => {
                                         <Slider ref={slider} {...settings} currentSlide={currentSlide}>
                                             <div className='sliderBox sliderBoxOne'>
                                                 <h3>Where do you want to go?</h3>
-                                                <div className='citySearch'>
+                                                <div className='citySearch d-flex justify-content-center'>
                                                     <Stack spacing={2}>
-                                                        <Autocomplete
+                                                        {/* <Autocomplete
                                                             startDecorator={<SearchIcon />}
                                                             placeholder="Search for a city"
                                                             value={tripPayloadState.destination}
@@ -298,8 +388,35 @@ const PreferentialSearch = () => {
                                                             onChange={(e, value) => handleChangeTripDestination('destination', value)}
                                                             options={cityNames}
                                                             style={{ height: '35px' }}
+                                                        /> */}
+                                                        <Autocomplete
+                                                            freeSolo
+                                                            startDecorator={<SearchIcon />}
+                                                            options={cityNames}
+                                                            placeholder="Search for a city"
+                                                            value={tripPayloadState.destination}
+                                                            // onChange={(event, newValue) => {
+                                                            //     handleChangeTripDestination('destination', newValue);
+                                                            // }}
+                                                            onInputChange={(event, newInputValue) => {
+                                                                handleChangeTripDestination('destination', newInputValue);
+                                                            }}
+                                                            renderInput={(params) => (
+                                                                <TextField
+                                                                    {...params}
+                                                                    InputProps={{
+                                                                        ...params.InputProps,
+                                                                        type: 'search',
+                                                                    }}
+                                                                    style={{ height: '35px' }}
+                                                                />
+                                                            )}
+
                                                         />
                                                     </Stack>
+                                                    <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()} className='ms-1 preferential-speech-btn'>
+                                                        <Mic />
+                                                    </button>
                                                 </div>
                                                 <div className='RadioGroupBox'>
                                                     <TripDataRadioGroup fieldName='destination' data={tripCity} />
@@ -417,6 +534,8 @@ const PreferentialSearch = () => {
                                         <div className='pt-0 '  >
                                             {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} setTripTitle={setTripTitle} searchHistoryClassName='preferential-search-history' containerType='container-fluid' setBannerHeight={setBannerHeight} /> : null}
                                         </div>
+                                        {<SpeechRecognitionModal isOpen={modelState} speechText={transcript} onClose={onClose} onVoiceSearchTripPlan={onVoiceSearchTripPlan} isValidDestination={isValidDestination} onStartSpeechRecognition={onStartSpeechRecognition} />}
+
                                     </div>
                                 </div>
                             </div>
