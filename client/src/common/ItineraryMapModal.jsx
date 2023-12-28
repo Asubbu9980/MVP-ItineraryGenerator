@@ -36,6 +36,21 @@ const ItineraryMapModal = (props) => {
         onChangeModalState(props.data)
       },[props.data])
 
+      useEffect(() => { 
+        if(props.mapInfoWindow){
+          const { lat, lng, title } = props.mapInfoWindow;
+          if(lat!=='' && lng !=='' && title !==''){ 
+        mapRef?.panTo({ lat, lng });
+        //console.log("address",title);
+        setInfoWindowData({lat, lng, address:title });
+          setIsOpen(true)
+          }else{
+            setInfoWindowData(null)
+            setIsOpen(false)
+          }
+        }
+        },[props.mapInfoWindow])
+
       const onChangeModalState = (data) => {
         if (data != null) {
             // const mainCoordinateLat = data.coordinates.lat.replace("° N", "");
@@ -115,7 +130,7 @@ const ItineraryMapModal = (props) => {
       const handleMarkerClick = (id, lat, lng, address) => {
         mapRef?.panTo({ lat, lng });
         console.log("address",address);
-        setInfoWindowData({ id, address });
+        setInfoWindowData({ id,lat, lng, address });
         setIsOpen(true);
       };
     // console.log("props", props);
@@ -180,13 +195,14 @@ const ItineraryMapModal = (props) => {
                               return <Marker key={index} position={{lat:lat, lng:lng}} onClick={(e) => {
                                 handleMarkerClick(index, lat, lng, title);
                               }}>
-                                {coordinatesData.length > 0  && infoWindowData?.id === index && (
+                                {coordinatesData?.length > 0 &&infoWindowData  && infoWindowData?.lat === lat && infoWindowData?.lng === lng && (
                 <InfoWindow
+                position={{ lat: infoWindowData?.lat, lng: infoWindowData?.lng }}
                   onCloseClick={() => {
                     setIsOpen(false);
                   }}
                 >
-                  <h3>{infoWindowData.address}</h3>
+                  <h4>{infoWindowData?.address}</h4>
                 </InfoWindow>
               )}
             </Marker>

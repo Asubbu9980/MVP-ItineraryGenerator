@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 // import Header from './Header'
 import './Itinerary.css'
 // import { Button, Container } from '@mui/material';
@@ -24,23 +24,43 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 // import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { usePDF } from 'react-to-pdf';
-import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
-import generatePDF from 'react-to-pdf';
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+// import DownloadForOfflineIcon from '@mui/icons-material/DownloadForOffline';
+// import html2pdf from 'html2pdf.js';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 
 const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     const [modelState, setModelState] = useState(false);
     const [coordinatesData, setCoordinates] = useState([])
     const [mapData, setMapdata] = useState(null)
+    const componentRef = useRef();
+    const [expanded, setExpanded] = useState('panel-0');
+    const [timeoutId, setTimeoutId] = useState(null);
+
+    const handleChange = (panel) => (event, newExpanded) => {
+        setExpanded(newExpanded ? panel : false);
+    };
 
     console.log("tripData==>", tripData)
-    // console.log(Number('10,000'), "parsedIntPrice")
+
+    const [mapInfoWindow, setMapInfoWindow] = useState(null)
 
     useEffect(() => {
         if (tripData && tripData?.places_visited && tripData.places_visited.length > 0) {
             setMapdata(tripData?.places_visited[0])
         }
     }, [tripData])
+
+
+    useEffect(() => {
+        // Clear the timeout if the component unmounts or if the effect is re-executed
+        return () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+        };
+    }, [timeoutId]);
     const onCloseModal = () => {
         setModelState(false)
     }
@@ -61,12 +81,28 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         })
         const TrnsportTypeDataKeysLength = TrnsportTypeDataKeys.length
         // console.log(TrnsportTypeDataKeys, 'TrnsportTypeDataKeys', transport_type, TrnsportTypeDataKeysLength)
+        const randomKey = Math.random() * 1000;
         return <>
             {TrnsportTypeDataKeysLength > 0 && !isFromAvailable &&
-                <Chip key={transport_type} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ${TrnsportTypeDataKeysLength === 1 ? `₹${data[transport_type][TrnsportTypeDataKeys[0]]}` : `₹${data[transport_type]['price']}`}`} />
+                <>
+                    {TrnsportTypeDataKeysLength === 1 ? isNaN(parseFloat(data[transport_type][TrnsportTypeDataKeys[0]])) ? (
+
+                        <Chip key={`${transport_type}-${randomKey}`} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ${data[transport_type][TrnsportTypeDataKeys[0]]}`} />
+
+                    ) : (
+                        <Chip key={`${transport_type}-${randomKey}`} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ₹${data[transport_type][TrnsportTypeDataKeys[0]]}`} />
+
+                    ) : isNaN(parseFloat(data[transport_type]['price'])) ? (
+                        <Chip key={`${transport_type}-${randomKey}`} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ${data[transport_type]['price']}`} />
+                    ) : (
+                        <Chip key={`${transport_type}-${randomKey}`} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ₹${data[transport_type]['price']}`} />
+                    )}
+                    {/* <Chip key={transport_type} label={`${transport_type[0].toUpperCase() + transport_type.slice(1)}: ${TrnsportTypeDataKeysLength === 1 ? `₹${data[transport_type][TrnsportTypeDataKeys[0]]}` : `₹${data[transport_type]['price']}`}`} /> */}
+
+                </>
             }
             {TrnsportTypeDataKeysLength > 0 && isFromAvailable &&
-                <Card key={transport_type} className='shadow-sm me-1' sx={{ maxWidth: 345, borderRadius: '4px', boxShadow: 'none', border: '1px solid #ccc', backgroundColor: 'rgb(225 223 223 / 10%)' }}>
+                <Card key={`${transport_type}-${randomKey}`} className='shadow-sm me-1' sx={{ maxWidth: 345, borderRadius: '4px', boxShadow: 'none', border: '1px solid #ccc', backgroundColor: 'rgb(225 223 223 / 10%)' }}>
                     <CardContent className='p-2'>
                         <Typography variant="h6" component="h6" className='mb-1 fw-bold' style={{ color: '#000', fontSize: '15px' }}>
                             {`${transport_type[0].toUpperCase() + transport_type.slice(1)}`}
@@ -78,7 +114,15 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                             <span className='fw-bold'>To: </span>{data[transport_type][ToKey]}
                         </Typography>
                         <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                            <span className='fw-bold'>Price: &#8377;</span>{data[transport_type]['price']}
+                            <span className='fw-bold'>Price: </span>
+                            {' '}
+                            {isNaN(parseFloat(data[transport_type]['price'])) ? (
+
+                                <span>{data[transport_type]['price']}</span>
+                            ) : (
+
+                                <span>&#8377; {data[transport_type]['price']}</span>
+                            )}
                         </Typography>
                     </CardContent>
                 </Card>
@@ -89,22 +133,58 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     const onChangeMapData = (data) => {
         setMapdata(data)
     }
-    // const { toPDF, targetRef } = usePDF({ filename: 'page.pdf' });
-    const targetRef = useRef();
-    return (
-        <>
-            <div className='container-fluid px-3 d-flex align-items-center'>
-                {/* <Container> */}
-                <button className='downlaod-btn mb-2 fs-4' onClick={() => generatePDF(targetRef, { filename: 'page678.pdf' })}><DownloadForOfflineIcon sx={{ fontSize: "40px" }} /></button><h2 className='mb-3 fs-4 itinery-trip-title-class'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''} </h2>
+    const onChangeMapInfoWindow = (coordinates = { lat: '', lng: '' }, title = '') => {
+        setMapInfoWindow({ ...coordinates, title })
+    }
 
+    const handleDownloadPdf = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: "Trip-Plan",
+        onAfterPrint: () => setExpanded('panel-0'),
+    });
+
+    const handlePrint = () => {
+        setExpanded('');
+
+        // Clear any existing timeout
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        // Set a new timeout
+        const newTimeoutId = setTimeout(() => {
+            handleDownloadPdf();
+        }, 1000);
+
+        // Store the new timeout ID
+        setTimeoutId(newTimeoutId);
+    };
+
+    // const handleDownloadPDF = () => {
+    //     const element = document.getElementById('pdf-content');
+
+
+    //     element.classList.add('pdf-content-class');
+    //     html2pdf(element);
+    //     setTimeout(() => {
+    //         // console.log(element, "element")
+    //         element.classList.remove('pdf-content-class');
+    //     }, 1000);
+    // };
+    return (
+        <div >
+            <div className='container-fluid px-3 d-flex align-items-center' >
+                {/* <Container> */}
+                <button className='btn btn-outline-primary downlaod-btn mb-2 me-1 py-0 px-1 px-md-2' onClick={() => handlePrint()}><FileDownloadOutlinedIcon />{" "}Download</button>
+                <h3 className='mb-3 itinery-trip-title-class'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''} </h3>
                 {/* </Container> */}
             </div>
             <div className='container-fluid ps-3'>
                 {/* <Container> */}
                 <div className='row g-0'>
-                    <div className='col-12 col-xl-7' ref={targetRef}>
-
-                        <Card className='tripDetails-grid itinerary-Card-class' sx={{ padding: '20px', borderRadius: '25px', backgroundColor: `${cardBackGroundColor} !important` }} id="pdf-content">
+                    <div className='col-12 col-xl-7' ref={componentRef}>
+                        <h3 className='mb-2 itinery-trip-title-print-class'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''} </h3>
+                        <Card id='pdf-content' className='tripDetails-grid itinerary-Card-class' sx={{ padding: '20px', borderRadius: '25px', backgroundColor: `${cardBackGroundColor} !important` }}>
                             <ul>
                                 {
                                     tripData && tripData?.places_visited && tripData.places_visited.length &&
@@ -120,9 +200,8 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                 // // }}
                                                 className='tripDetails-day-accordion'
                                                 onMouseOver={() => onChangeMapData(m)}
-                                                // expanded={mapData?.date === m?.date}
-                                                defaultExpanded={true}
-
+                                                expanded={expanded !== '' ? expanded === `panel-${i}` : true} onChange={handleChange(`panel-${i}`)}
+                                            // defaultExpanded={true}
                                             >
                                                 <AccordionSummary
                                                     expandIcon={<ExpandMoreIcon />}
@@ -138,11 +217,11 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                     <div className='recommended-stay'>
                                                         {/* <Button className='' onClick={(e) => onChangeModalState(m)}>View Map   <img src={circum_share} style={{ marginLeft: '8px' }} alt='logo' />
 </Button> */}
-                                                        {m?.recommended_stay ? <Chip color="success" variant='outlined' label={`Recommended Stay: ${m.recommended_stay}`} /> : null}
+                                                        {m?.recommended_stay ? <Chip color="success" className='text-center' variant='outlined' label={`Recommended Stay: ${m.recommended_stay}`} /> : null}
                                                     </div>
                                                     {/* <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div> */}
                                                     <h6>{m?.date}</h6>
-                                                    {m?.recommended_stay ? <Chip color="success" variant='outlined' size="small" label={`Recommended Stay: ${m?.recommended_stay}`} className='mobile-recommended-stay' /> : null}
+                                                    {m?.recommended_stay ? <Chip color="success" variant='outlined' size="small" label={`Recommended Stay: ${m?.recommended_stay}`} className='mobile-recommended-stay text-center' /> : null}
                                                     <p className='mt-2 mb-0 pb-0'>
                                                         {m?.description}
                                                     </p>
@@ -196,7 +275,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                                 {m?.popular_places?.map((eachPlace) => {
                                                                                     if (typeof (eachPlace) === 'object') {
                                                                                         // console.log(typeof (eachPlace), "types")
-                                                                                        return <ItineraryInformationCard placedata={eachPlace} popularPlace={eachPlace?.name} priceKey="fee" />
+                                                                                        return <ItineraryInformationCard placedata={eachPlace} popularPlace={eachPlace?.name} priceKey="fee" onChangeMapInfoWindow={onChangeMapInfoWindow} />
                                                                                     }
                                                                                     return <ItineraryInformationCard placedata={eachPlace} popularPlace={eachPlace} />
 
@@ -212,7 +291,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                             </h6>
                                                                             <div>
                                                                             </div>
-                                                                            {m?.accommodation?.map((eachHotel) => <ItineraryInformationCard placedata={eachHotel} pricePerNight={eachHotel?.price_per_night} accommodationDetails={eachHotel} priceKey="price_per_night" />)}
+                                                                            {m?.accommodation?.map((eachHotel) => <ItineraryInformationCard placedata={eachHotel} pricePerNight={eachHotel?.price_per_night} accommodationDetails={eachHotel} priceKey="price_per_night" onChangeMapInfoWindow={onChangeMapInfoWindow} />)}
 
                                                                             {/* <ul className="d-flex flex-wrap p-0 gap-2">
                                                                     {m?.accommodation.map((sm, si) => {
@@ -254,7 +333,14 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                                                     <span className='fw-bold'>Address: </span>{sm.address}
                                                                                                 </Typography>
                                                                                                 <Typography variant="body2" color="text.secondary" style={{ fontSize: '12px', marginBottom: '5px' }}>
-                                                                                                    <span className='fw-bold'>Price: &#8377;</span>{sm.price}
+                                                                                                    <span className='fw-bold'>Price:</span>{' '}
+                                                                                                    {isNaN(parseFloat(sm?.price)) ? (
+
+                                                                                                        <span>{sm?.price}</span>
+                                                                                                    ) : (
+
+                                                                                                        <span>&#8377; {sm?.price}</span>
+                                                                                                    )}
                                                                                                 </Typography>
                                                                                             </CardContent>
                                                                                         </Card></li>
@@ -277,9 +363,9 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            {/* <div className='col-12 col-xl-5 itinerary-map-main-container position-relative'>
-                                                                    <ItineraryMapModal data={m} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />
-                                                                </div> */}
+                                                            <div className='col-12 itinerary-map-mobile-main-container position-relative '>
+                                                                <ItineraryMapModal data={m} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />
+                                                            </div>
 
                                                         </div>
                                                     </div>
@@ -294,13 +380,13 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                     </div>
                     <div className='col-12 col-xl-5 itinerary-map-main-container position-sticky'>
                         {tripData && tripData?.places_visited && tripData.places_visited.length &&
-                            <ItineraryMapModal data={mapData} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} />
+                            <ItineraryMapModal data={mapData} open={modelState} MapCoordinates={coordinatesData} onCloseModal={onCloseModal} mapInfoWindow={mapInfoWindow} />
                         }
                     </div>
                 </div>
                 {/* </Container> */}
             </div>
-        </>
+        </div>
     );
 };
 export default Itinerary;

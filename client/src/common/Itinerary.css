@@ -15,8 +15,10 @@
     font-weight: 600;
     float: right;
     position: relative;
+    width: 70%;
     top: -11px;
-    align-items: center;
+    /* right: 0 !important; */
+    text-align: end
 }
 
 .mobile-recommended-stay {
@@ -304,7 +306,7 @@
     border-bottom-left-radius: 0px !important;
     border-top-right-radius: 10px !important;
     border-bottom-right-radius: 10px !important;
-    height: 400px !important;
+    height: 620px !important;
 
 }
 
@@ -313,14 +315,31 @@
     width: 100% !important;
 }
 
-@media screen and (max-width: 767px) {
+.itinerary-map-mobile-main-container {
+    display: none !important;
+}
+
+@media screen and (max-width: 768px) {
     .recommended-stay {
         display: none;
     }
 
     .mobile-recommended-stay {
         display: inline-block !important;
+        max-width: 80% !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        text-transform: capitalize;
+        text-align: center !important;
     }
+
+    .map-modal>div {
+        border-radius: 10px !important;
+        height: 250px !important;
+    }
+
+
 
 }
 
@@ -328,11 +347,20 @@
     .map-modal>div {
         position: relative !important;
         /* min-height: 100% !important; */
-
+        border-radius: 10px !important;
+        height: 300px !important;
     }
 
     .itinerary-map-main-container {
         padding-left: 0px !important;
+    }
+
+    .itinerary-map-mobile-main-container {
+        display: block !important;
+    }
+
+    .itinerary-map-main-container {
+        display: none !important;
     }
 
 }
@@ -651,11 +679,13 @@
 }
 
 .itinery-trip-title-class {
-    width: 100%;
+    width: 80%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
+    font-size: 24px;
+    font-weight: semi-bold;
 }
 
 @media screen and (max-width: 566px) {
@@ -700,6 +730,10 @@
 
     .speech-recognition-modal-container {
         width: 85% !important;
+    }
+
+    .itinery-trip-title-class {
+        width: 70%;
     }
 
 }
@@ -812,6 +846,17 @@
     min-height: 50px !important;
 }
 
+@media screen and (max-width: 767px) {
+    .tripDetails-day-accordion .Mui-expanded {
+        min-height: 25px !important;
+    }
+
+    .tripDetails-day-accordion-summary {
+        padding-left: 0px !important;
+    }
+
+}
+
 .tripDetails-day-accordion-summary>div {
     margin: 3px 0 !important;
 }
@@ -826,7 +871,7 @@
 }
 
 .itinerary-Card-class {
-    height: 400px !important;
+    height: 620px !important;
     overflow-y: scroll !important;
     /* border-radius: 8px !important; */
     border-top-left-radius: 10px !important;
@@ -841,7 +886,6 @@
 
 .itinerary-Card-class::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 18px rgba(250, 250, 251, 0.3);
-
     -webkit-border-radius: 5px;
     border-radius: 2px;
 }
@@ -860,6 +904,79 @@
 }
 
 .downlaod-btn {
-    background-color: transparent !important;
-    border: 0px !important;
+    /* width: 60px; */
+    height: 32px !important;
+    font-size: 0.8125rem !important;
+    border-radius: 16px !important;
+    font-weight: 600 !important;
+    display: flex !important;
+    align-items: center;
+    /* justify-content: center; */
+    border-color: #018AD3 !important;
+    color: #018AD3 !important;
+}
+
+.downlaod-btn:hover {
+    background: #018AD3 !important;
+    color: #fff !important;
+}
+
+.itinery-trip-title-print-class {
+    display: none !important;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
+    font-size: 24px;
+    font-weight: semi-bold;
+
+}
+
+@media print {
+    .itinerary-Card-class {
+        height: inherit !important;
+        /* display: none !important; */
+        width: 100% !important;
+    }
+
+    .itinerary-map-mobile-main-container {
+        display: none !important;
+    }
+
+    .itinerary-map-main-container {
+        display: none !important;
+    }
+
+    .itinery-trip-title-print-class {
+        display: block !important;
+
+    }
+}
+
+.pdf-content-class {
+    height: inherit !important;
+    /* display: none !important; */
+    width: 100% !important;
+}
+
+.recent-searches-accordian-itinerary .itinerary-Card-class {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+@media screen and (min-width:1200px) and (max-width: 1400px) {
+    .recent-searches-accordian-itinerary .itinerary-Card-class {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .text-over-flow-class {
+        max-width: 285px !important;
+    }
+
+    .itinerary-trip-card-title {
+        max-width: 285px !important;
+    }
+
 }

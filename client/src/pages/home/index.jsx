@@ -92,7 +92,7 @@ const IndexPage = () => {
 
     const [tripTitle, setTripTitle] = useState(null)
     const [isValidDestination, setIsValidDestination] = useState(false)
-
+    const [searchText, setSearchText] = useState('')
 
     const {
         transcript,
@@ -166,12 +166,11 @@ const IndexPage = () => {
         return array.some(obj => obj.hasOwnProperty(key));
     }
 
-    // useEffect(() => {
-    //     if (transcript != "" && transcript != null) {
-    //         const dates = extractDate('extracts dates using locales May 1, 2017', { locale: 'en' });
-    //         console.log("JSON.",dates);
-    //     }
-    // }, [transcript])
+    useEffect(() => {
+        if (transcript !== "" && transcript !== null) {
+            setSearchText(transcript)
+        }
+    }, [transcript])
 
     const getResult = (payload = {
 
@@ -210,11 +209,11 @@ const IndexPage = () => {
             loaderContext.startLoading(false)
         }
     }
-    const getTripByVoice = () => {
+    const getTripByVoice = (payload) => {
 
         try {
             getTripDetailsByVoiceApi({
-                text: transcript,
+                text: payload,
                 source: initialValues.source
             }).then((r) => {
                 console.log("ChatGPT Resp", r);
@@ -241,9 +240,9 @@ const IndexPage = () => {
         }
     }
 
-    const onVoiceSearchTripPlan = () => {
-
-        const splitedText = transcript.split(" ");
+    const onVoiceSearchTripPlan = (text) => {
+        console.log("text", text);
+        const splitedText = text.split(" ");
         let destination = null
         for (var i = 0; i < splitedText.length; i++) {
             const v = splitedText[i];
@@ -259,8 +258,9 @@ const IndexPage = () => {
             setIsValidDestination(false)
             loaderContext.startLoading(true)
             requestAnimationFrame(() => { window.scrollTo(0, 420); });
-            getTripByVoice()
+            getTripByVoice(text)
         } else {
+            console.log("No destination found");
             setIsValidDestination(true)
         }
 
@@ -271,8 +271,13 @@ const IndexPage = () => {
         SpeechRecognition.startListening({
             continuous: true,
         })
+        setSearchText('');
         setIsValidDestination(false)
         setModelState(true)
+    }
+
+    const onChangeSearchText = (e) => {
+        setSearchText(e.target.value)
     }
 
 
@@ -308,7 +313,7 @@ const IndexPage = () => {
                                                     {/* <label htmlFor="search-text" id="search-label">
                                                         Type <span>or dictate</span> to search
                                                     </label> */}
-                                                    <input type="search" placeholder='Dictate to search' value={transcript} readOnly={true} name="search" id="search-text" autoComplete="off" />
+                                                    <input type="search" placeholder='Dictate to search' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
                                                     <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()
                                                         // {
                                                         //     resetTranscript()
@@ -326,8 +331,8 @@ const IndexPage = () => {
                                                     <button title="Search" type='button' onClick={() => {
                                                         SpeechRecognition.stopListening()
                                                         resetTranscript()
-                                                        if (transcript !== "" && transcript !== null) {
-                                                            getTripByVoice()
+                                                        if (searchText !== "" && searchText !== null) {
+                                                            onVoiceSearchTripPlan(searchText)
                                                         }
 
                                                     }}>

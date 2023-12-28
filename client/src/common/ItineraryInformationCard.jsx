@@ -10,7 +10,7 @@ import Chip from '@mui/material/Chip';
 import StarIcon from '@mui/icons-material/Star';
 
 
-const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDetails = null, popularPlace = null }) => {
+const ItineraryInformationCard = ({ onChangeMapInfoWindow, placedata, priceKey = null, accommodationDetails = null, popularPlace = null }) => {
 
     // Slick settings
     const settings = {
@@ -126,7 +126,7 @@ const ItineraryInformationCard = ({ placedata, priceKey = null, accommodationDet
         <div key={`${placedata}`}>
 
             {placedata && placedata?.place_info ?
-                <Card orientation="horizontal" variant="outlined" sx={{ width: '100%' }} className='my-2 product-slider-card p-0'>
+                <Card onMouseOver={() => onChangeMapInfoWindow(placedata?.place_info[0]?.geometry?.location, placedata?.place_info[0]?.name)} onMouseLeave={() => onChangeMapInfoWindow()} orientation="horizontal" variant="outlined" sx={{ width: '100%' }} className='my-2 product-slider-card p-0'>
                     {placedata?.place_info && placedata?.place_info?.length > 0 && <>
                         {getCardData(placedata?.place_info, placedata?.name, placedata[`${priceKey}`])}
 
