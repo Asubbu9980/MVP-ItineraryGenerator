@@ -313,7 +313,7 @@ const IndexPage = () => {
                                                     {/* <label htmlFor="search-text" id="search-label">
                                                         Type <span>or dictate</span> to search
                                                     </label> */}
-                                                    <input type="search" placeholder='Dictate to search' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
+                                                    <input type="search" placeholder='Speak/Search for your vacation trip' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
                                                     <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()
                                                         // {
                                                         //     resetTranscript()

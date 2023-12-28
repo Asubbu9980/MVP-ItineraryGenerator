@@ -306,7 +306,7 @@
     border-bottom-left-radius: 0px !important;
     border-top-right-radius: 10px !important;
     border-bottom-right-radius: 10px !important;
-    height: 620px !important;
+    height: 665px !important;
 
 }
 
@@ -871,7 +871,7 @@
 }
 
 .itinerary-Card-class {
-    height: 620px !important;
+    height: 665px !important;
     overflow-y: scroll !important;
     /* border-radius: 8px !important; */
     border-top-left-radius: 10px !important;
