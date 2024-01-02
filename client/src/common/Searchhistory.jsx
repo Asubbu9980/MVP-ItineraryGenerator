@@ -95,6 +95,7 @@ function Searchhistory({ setTripData, setTripTitle, tripData, searchHistoryClass
 
     setTripData(data)
     setTripTitle(title)
+    requestAnimationFrame(() => { window.scrollTo(0, 420); });
 
     // console.log(data, "asdfghjkdfghjk")
   }

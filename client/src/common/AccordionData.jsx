@@ -14,7 +14,7 @@ import './Itinerary.css';
 
 function AccordionData({ recentTripData = {} }) {
   return (
-    <div className='container' key={recentTripData.createdAt}>
+    <div className='container-xl' key={recentTripData?.createdAt}>
       <div >
         <Accordion
           // sx={{
@@ -24,13 +24,13 @@ function AccordionData({ recentTripData = {} }) {
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls={`${recentTripData.input.createdAt}-content`}
-            id={`${recentTripData.input.createdAt}-header`}
+            aria-controls={`${recentTripData?.input?.createdAt}-content`}
+            id={`${recentTripData?.input?.createdAt}-header`}
           >
-            <Typography className='fw-semibold'>{`${recentTripData.input.source}  to  ${recentTripData.input.destination}  from  ${recentTripData.input.start_date}  to  ${recentTripData.input.end_date},`} <span className='fw-normal mx-1 recent-trip-created-date'>{dayjs(recentTripData.createdAt).format('DD/MM/YYYY h:mm:ss A')}</span></Typography>
+            <Typography className='fw-semibold'>{`${recentTripData?.input?.source}  to  ${recentTripData?.input?.destination}  from  ${recentTripData?.input?.start_date}  to  ${recentTripData?.input?.end_date},`} <span className='fw-normal mx-1 recent-trip-created-date'>{dayjs(recentTripData?.createdAt).format('DD/MM/YYYY h:mm:ss A')}</span></Typography>
           </AccordionSummary>
           <AccordionDetails >
-            <div className='pb-3'>
+            <div className='pb-3 recent-searches-accordian-itinerary'>
               <Itinerary tripData={recentTripData?.output} cardBackGroundColor='#F3F4F6' />
             </div>
 

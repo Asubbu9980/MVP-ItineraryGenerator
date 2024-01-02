@@ -467,6 +467,10 @@
         align-items: center !important;
     }
 
+    .banner {
+        height: 380px !important;
+    }
+
 }
 
 @media screen and (min-width:425px) and (max-width:768px) {
@@ -560,4 +564,10 @@
         width: 60% !important;
         margin: 0 auto 15px !important;
     }
+}
+
+.preferential-speech-btn {
+    background-color: #fff !important;
+    border: 0px !important;
+    border-radius: 6px !important;
 }

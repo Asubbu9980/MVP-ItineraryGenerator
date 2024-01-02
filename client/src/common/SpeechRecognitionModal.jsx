@@ -85,7 +85,7 @@ const SpeechRecognitionModal = ({ onStartSpeechRecognition, isOpen = false, onCl
                     </div>
 
                     {(speechText && !isValidDestination) ? <button title="Search" onClick={() => {
-                        onVoiceSearchTripPlan()
+                        onVoiceSearchTripPlan(speechText)
                     }} style={searchButton} className='p-2 ms-4'>
                         <Search />
                         <span className="a11y-hidden">Search</span>
