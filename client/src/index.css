@@ -298,7 +298,7 @@ body {
 }
 
 .search .input-bar button {
-  background: transparent;
+  background: transparent !important;
   border: 0;
   border-radius: 50%;
   color: #444;
@@ -309,21 +309,23 @@ body {
   /* min-width: 3rem; */
   transition: background-color, color;
   transition-duration: 0.25s;
-  box-shadow: 0 0 2rem #000 0;
+  /* box-shadow: 0 0 2rem #000 0; */
 }
 
 .search .input-bar button:hover {
-  background: #eee;
+  background: #eee !important;
+  color: #000 !important;
+
 }
 
 .search .input-bar button:focus {
-  background: #444;
-  color: #fff;
+  background: #fff !important;
+  color: #000 !important;
 }
 
 .search .input-bar button:active,
 .search .input-bar button.active {
-  background: #000;
+  background: #fff;
 }
 
 .search .input-bar button#dictate {
@@ -342,8 +344,7 @@ body {
   transform: scale(1);
 }
 
-.search .input-bar button#dictate.active i {
-}
+.search .input-bar button#dictate.active i {}
 
 .search .input-bar button#dictate.active svg {
   display: block;

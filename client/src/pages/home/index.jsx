@@ -92,7 +92,7 @@ const IndexPage = () => {
 
     const [tripTitle, setTripTitle] = useState(null)
     const [isValidDestination, setIsValidDestination] = useState(false)
-
+    const [searchText, setSearchText] = useState('')
 
     const {
         transcript,
@@ -154,7 +154,7 @@ const IndexPage = () => {
             // Now you can send the `formattedValues` to the server
             console.log(formattedValues);
             loaderContext.startLoading(true)
-            requestAnimationFrame(() => { window.scrollTo(0, 220); });
+            requestAnimationFrame(() => { window.scrollTo(0, 420); });
 
             getResult(formattedValues)
 
@@ -166,12 +166,11 @@ const IndexPage = () => {
         return array.some(obj => obj.hasOwnProperty(key));
     }
 
-    // useEffect(() => {
-    //     if (transcript != "" && transcript != null) {
-    //         const dates = extractDate('extracts dates using locales May 1, 2017', { locale: 'en' });
-    //         console.log("JSON.",dates);
-    //     }
-    // }, [transcript])
+    useEffect(() => {
+        if (transcript !== "" && transcript !== null) {
+            setSearchText(transcript)
+        }
+    }, [transcript])
 
     const getResult = (payload = {
 
@@ -210,11 +209,11 @@ const IndexPage = () => {
             loaderContext.startLoading(false)
         }
     }
-    const getTripByVoice = () => {
+    const getTripByVoice = (payload) => {
 
         try {
             getTripDetailsByVoiceApi({
-                text: transcript,
+                text: payload,
                 source: initialValues.source
             }).then((r) => {
                 console.log("ChatGPT Resp", r);
@@ -241,9 +240,9 @@ const IndexPage = () => {
         }
     }
 
-    const onVoiceSearchTripPlan = () => {
-
-        const splitedText = transcript.split(" ");
+    const onVoiceSearchTripPlan = (text) => {
+        console.log("text", text);
+        const splitedText = text.split(" ");
         let destination = null
         for (var i = 0; i < splitedText.length; i++) {
             const v = splitedText[i];
@@ -258,9 +257,10 @@ const IndexPage = () => {
             setModelState(false)
             setIsValidDestination(false)
             loaderContext.startLoading(true)
-            requestAnimationFrame(() => { window.scrollTo(0, 220); });
-            getTripByVoice()
+            requestAnimationFrame(() => { window.scrollTo(0, 420); });
+            getTripByVoice(text)
         } else {
+            console.log("No destination found");
             setIsValidDestination(true)
         }
 
@@ -271,8 +271,13 @@ const IndexPage = () => {
         SpeechRecognition.startListening({
             continuous: true,
         })
+        setSearchText('');
         setIsValidDestination(false)
         setModelState(true)
+    }
+
+    const onChangeSearchText = (e) => {
+        setSearchText(e.target.value)
     }
 
 
@@ -308,7 +313,7 @@ const IndexPage = () => {
                                                     {/* <label htmlFor="search-text" id="search-label">
                                                         Type <span>or dictate</span> to search
                                                     </label> */}
-                                                    <input type="search" placeholder='Dictate to search' value={transcript} readOnly={true} name="search" id="search-text" autoComplete="off" />
+                                                    <input type="search" placeholder='Speak/Search for your vacation trip' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
                                                     <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()
                                                         // {
                                                         //     resetTranscript()
@@ -326,7 +331,10 @@ const IndexPage = () => {
                                                     <button title="Search" type='button' onClick={() => {
                                                         SpeechRecognition.stopListening()
                                                         resetTranscript()
-                                                        getTripByVoice()
+                                                        if (searchText !== "" && searchText !== null) {
+                                                            onVoiceSearchTripPlan(searchText)
+                                                        }
+
                                                     }}>
                                                         <Search />
                                                         <span className="a11y-hidden">Search</span>
@@ -489,7 +497,7 @@ const IndexPage = () => {
                 </div>
                 <>{!loaderContext.loading ?
 
-                    <div style={{ background: '#F3F4F6', paddingBottom: '32px', paddingTop: '20px' }}>
+                    <div style={{ background: '#F3F4F6', paddingBottom: `${(tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0) ? '8px' : '32px'}`, paddingTop: '20px' }}>
                         {/* && (isKeyInArray(tripData.places, 'description') || isKeyInArray(tripData.places_visited, 'activity')) */}
                         {
                             tripData != null && tripData?.places_visited && tripData?.places_visited.length > 0 && (isKeyInArray(tripData?.places_visited, 'description')) ?

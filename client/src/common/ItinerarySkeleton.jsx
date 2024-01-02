@@ -20,7 +20,7 @@ const ItinerarySkeleton = () => {
                                 <div className="center"></div>
                                 <div className="ring"></div>
                             </div>
-                            <div className='recommended-stay'>
+                            <div className='recommended-stay1'>
                                 <Skeleton variant="rectangular" width={150} height={32} style={{ borderRadius: '10px' }} />
                             </div>
                             <h5>
@@ -171,7 +171,7 @@ const ItinerarySkeleton = () => {
                                     </div>
                                     <div div className='col-12 col-xl-5 position-relative'>
                                         <div className='d-flex mt-3 '>
-                                            <Skeleton variant="rounded" width={'100%'} height={500}  />
+                                            <Skeleton variant="rounded" width={'100%'} height={500} />
                                         </div>
                                     </div>
 
