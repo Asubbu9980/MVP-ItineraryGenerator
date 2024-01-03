@@ -63,6 +63,10 @@ const HeaderComponent = () => {
                 <Box className='d-flex align-items-center'>
                     <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark pt-3 home-search-link'>
                         <p >{location.pathname === "/" ? 'Preferential Search' : 'Home'}</p>
+
+                    </Link>
+                    <Link to={location.pathname === "/chatbot" ? "/chatbot" : "/chatbot"} className='text-decoration-none text-dark pt-3 home-search-link'>
+                        <p>Chatbot</p>
                     </Link>
                     {!isLoading ?
                         <>

@@ -160,6 +160,41 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         setTimeoutId(newTimeoutId);
     };
 
+    const getTheDayTitle = (title, day, description, isDayIncludes) => {
+        // let dayTitle = title.split('-')[1];
+        if (isDayIncludes) {
+            const replaced_day_text = title.replace(day, '');
+            console.log(replaced_day_text, 'replaced_day_text')
+            if (replaced_day_text.length > 1) {
+                return title
+            } else {
+                const dotIndex = description.indexOf('.');
+                if (dotIndex !== -1) {
+                    return `${day} - ${description.slice(0, dotIndex + 1)}`
+                } else {
+                    return `${day} - ${description}`
+
+                }
+            }
+            // return dayTitle.trim();
+        } else {
+            if (title.length > 1) {
+                return title
+            }
+            else {
+                const dotIndex = description.indexOf('.');
+                if (dotIndex !== -1) {
+                    return description.slice(0, dotIndex + 1)
+                } else {
+                    return description
+
+                }
+            }
+        }
+        // return title;
+
+    }
+
     // const handleDownloadPDF = () => {
     //     const element = document.getElementById('pdf-content');
 
@@ -210,7 +245,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                     className='tripDetails-day-accordion-summary'
                                                     defaultExpanded={true}
                                                 >
-                                                    <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? m.name : `Day ${i + 1} -  ${m.name}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div>
+                                                    <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? getTheDayTitle(m.name, `Day ${i + 1}`, m?.description, true) : `Day ${i + 1} -  ${getTheDayTitle(m.name, `Day ${i + 1}`, m?.description, false)}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div>
 
                                                 </AccordionSummary>
                                                 <AccordionDetails >
