@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import 'react-chatbot-kit/build/main.css'
+
 import './chatbot.css';
+import Chatbot from 'react-chatbot-kit'
 // import { Container } from '@mui/material';
 // import Button from '@mui/material/Button';
 import { Button, Container, Box } from '@mui/material';
@@ -29,6 +32,9 @@ import bulbIcon from "../../assets/bulb-icon.png";
 import userIocn from "../../assets/userIocn.png";
 import chatBoatIcon from "../../assets/chatBoatIcon.png";
 
+import config from './config.js';
+import MessageParser from './MessageParser.jsx';
+import ActionProvider from './ActionProvider.jsx';
 
 
 
@@ -109,8 +115,7 @@ function IndexPage() {
                     <div className="col-sm-12 col-md-8 col-lg-9 px-2 px-sm-0">
                         <div className='ms-2' style={{ height: "100%" }}>
                             <div className="messages-container mb-3 p-2">
-
-                                <Box className='aiChatbot'>
+                                {/* <Box className='aiChatbot'>
                                     <Box >
                                         <h1>Hi, Iam a Ai Chatbot</h1>
                                         <ul className='chatbotList'>
@@ -135,38 +140,37 @@ function IndexPage() {
                                     </Box>
 
 
-                                </Box>
+                                </Box> */}
 
 
                                 <Box className='chatConversation'>
-                                    <Box className="chatContainer">
+                                    {/* <Box className="chatContainer">
                                         <img src={userIocn} alt="Avatar" />
-                                        
+
                                         <p>Hello. How are you today?</p>
                                         <span className="time-right">11:00</span>
                                     </Box>
                                     <Box className="chatContainer darker">
-                                    <img src={chatBoatIcon} alt="Avatar" />
+                                        <img src={chatBoatIcon} alt="Avatar" />
 
                                         <p>Hey! I'm fine. Thanks for asking!</p>
                                         <span className="time-left">11:01</span>
                                     </Box>
+*/}
+                                    <Chatbot
+                                        config={config}
+                                        messageParser={MessageParser}
+                                        actionProvider={ActionProvider}
+                                        runInitialMessagesWithHistory
 
+                                    />                                </Box>
 
-
-
-
-
-
-
-                                </Box>
-
-                                {messages.map((message, index) => (
+                                {/* {messages.map((message, index) => (
                                     <div key={index} className="message">{message}</div>
-                                ))}
+                                ))} */}
                             </div>
                             {error && <div className="error">{error}</div>}
-                            <div className="input-container">
+                            {/* <div className="input-container">
                                 <input
                                     type="text"
                                     value={inputValue}
@@ -176,7 +180,7 @@ function IndexPage() {
 
                                 />
                                 <button onClick={sendMessage} className="send-button">Send</button>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
