@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import 'react-chatbot-kit/build/main.css'
 
 import './chatbot.css';
+import './chatbotKit.css';
+
 import Chatbot from 'react-chatbot-kit'
 // import { Container } from '@mui/material';
 // import Button from '@mui/material/Button';
@@ -20,7 +22,7 @@ import Cloud from '@mui/icons-material/Cloud';
 import paperPlaneTilt from "../../assets/paper-plane-tilt.png";
 import microphone from "../../assets/microphone.png";
 // import chatBoatIcon from "../../assets/chatBoatIcon.png";
-import addIcon from "../../assets/addIcon.png";
+import addIcon from "../../assets/new-add.png";
 import filmStrip from "../../assets/film-strip.png";
 import lightbulbFilament from "../../assets/lightbulb-filament.png";
 import comments from "../../assets/comments.png";
@@ -35,16 +37,6 @@ import chatBoatIcon from "../../assets/chatBoatIcon.png";
 import config from './config.js';
 import MessageParser from './MessageParser.jsx';
 import ActionProvider from './ActionProvider.jsx';
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -68,12 +60,14 @@ function IndexPage() {
     };
     return (
         <div className="chatbot-container mt-3">
-            <Container>
-                <div className='row' style={{ height: "100vh" }}>
-                    <div className="col-sm-12  col-md-4 col-lg-3 px-2 px-sm-0 sideBar">
+            <div className='container-fluid'>
+                <div className='row'>
+                {/* <div className='row' style={{ height: "100vh" }}> */}
+                    <div className="col-sm-12  col-md-4 col-lg-2 px-2 px-sm-0 sideBar">
                         <div className=' p-3'>
                             <h2 className='my-3'> Ai Chatbot</h2>
-                            <Button variant="text" className="buttonTrip mx-2">New Trip </Button>
+                            <Button variant="text" className="buttonTrip mx-2"> 
+                            <img src={addIcon} alt='addIcon'/> New Trip </Button>
                             <Box className="leftMenu mt-5">
                                 <h6>Today</h6>
                                 <MenuList>
@@ -112,7 +106,9 @@ function IndexPage() {
                             </Box>
                         </div>
                     </div>
-                    <div className="col-sm-12 col-md-8 col-lg-9 px-2 px-sm-0">
+                    <div className="col-sm-12 col-md-8 col-lg-10 px-2 px-sm-0">
+                    {/* <div className='ms-2'> */}
+                        {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
                         <div className='ms-2' style={{ height: "100%" }}>
                             <div className="messages-container mb-3 p-2">
                                 <Box className='chatConversation'>
@@ -129,7 +125,7 @@ function IndexPage() {
                         </div>
                     </div>
                 </div>
-            </Container>
+            </div>
         </div>
     )
 }

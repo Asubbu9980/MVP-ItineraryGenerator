@@ -6,22 +6,24 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 const DatePickerWidget = (props) => {
     return (
-        <div className='row' style={{ marginBottom: '20px', marginLeft: "80px" }}>
-            <label style={{ marginBottom: '8px' }}>Start Date</label>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                    value={props.start_Date}
-                    onChange={(date) => {
-                        if (date != null && date != "") {
-                            return props.actionProvider.handleStartDateChange(date)
-                        }
-                    }}
-                    maxDate=''
-                    minDate={dayjs(new Date())}
-                    className="startDate"
+        <div className='startDate' style={{ marginBottom: '20px' }}>
+            {/* <div> <label style={{ marginBottom: '8px' }}>Start Date</label></div> */}
+            <div>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                        value={props.start_Date}
+                        onChange={(date) => {
+                            if (date != null && date != "") {
+                                return props.actionProvider.handleStartDateChange(date)
+                            }
+                        }}
+                        maxDate=''
+                        minDate={dayjs(new Date())}
+                        className="startDate"
 
-                />
-            </LocalizationProvider>
+                    />
+                </LocalizationProvider>
+            </div>
         </div>
     );
 };

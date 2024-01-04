@@ -11,7 +11,7 @@ const WelcomeWidget = (props) => {
     return (
         <Box className='aiChatbot'>
             <Box >
-                <h1>Choose </h1>
+                <h1>Hi, Iam a Ai Chatbot </h1>
                 <ul className='chatbotList'>
                     <li className='mb-2 p-2'>
                         <span className='icon'> <img src={questionMark} alt='questionMark' /> </span>
