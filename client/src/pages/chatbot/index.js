@@ -115,47 +115,17 @@ function IndexPage() {
                     <div className="col-sm-12 col-md-8 col-lg-9 px-2 px-sm-0">
                         <div className='ms-2' style={{ height: "100%" }}>
                             <div className="messages-container mb-3 p-2">
-                         
-
-
                                 <Box className='chatConversation'>
-                                    {/* <Box className="chatContainer">
-                                        <img src={userIocn} alt="Avatar" />
-
-                                        <p>Hello. How are you today?</p>
-                                        <span className="time-right">11:00</span>
-                                    </Box>
-                                    <Box className="chatContainer darker">
-                                        <img src={chatBoatIcon} alt="Avatar" />
-
-                                        <p>Hey! I'm fine. Thanks for asking!</p>
-                                        <span className="time-left">11:01</span>
-                                    </Box>
-*/}
                                     <Chatbot
                                         config={config}
                                         messageParser={MessageParser}
                                         actionProvider={ActionProvider}
                                         runInitialMessagesWithHistory
 
-                                    />                                </Box>
-
-                                {/* {messages.map((message, index) => (
-                                    <div key={index} className="message">{message}</div>
-                                ))} */}
+                                    />
+                                </Box>
                             </div>
                             {error && <div className="error">{error}</div>}
-                            {/* <div className="input-container">
-                                <input
-                                    type="text"
-                                    value={inputValue}
-                                    onChange={handleInputChange}
-                                    placeholder='I want to go to goa trip next week'
-                                    className="message-input border-0"
-
-                                />
-                                <button onClick={sendMessage} className="send-button">Send</button>
-                            </div> */}
                         </div>
                     </div>
                 </div>
