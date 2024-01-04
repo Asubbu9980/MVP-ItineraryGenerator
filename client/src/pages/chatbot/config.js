@@ -5,6 +5,7 @@ import DatePickerWidget from './widgets/DatePicker';
 import Itinerary from '../../common/Itinerary';
 import dayjs from 'dayjs';
 import ItineraryWidget from './widgets/Itinerary';
+import WelcomeWidget from './widgets/welcome';
 
 
 
@@ -17,24 +18,27 @@ const botName = 'Ai Chatbot';
 const config = {
     initialMessages: [
         createChatBotMessage(
-            `Hi I'm ${botName}. I’m here to help you explain how I work.`
+            `Hi I'm ${botName}. I’m here to help you explain how I work.`, {
+            delay: 500,
+            widget: 'welcome',
+        }
         ),
-        createChatBotMessage(
-            "Here's a quick overview over what I need to function. ask me about the different parts to dive deeper.",
-            {
-                withAvatar: false,
-                delay: 500,
-                widget: 'overview',
-            }
-        ),
-        createChatBotMessage(
-            "First things first, where you want to go?",
-            {
-                withAvatar: false,
-                widget: "locations",
-                delay: 1000,
-            }
-        ),
+        // createChatBotMessage(
+        //     "Here's a quick overview over what I need to function. ask me about the different parts to dive deeper.",
+        //     {
+        //         withAvatar: false,
+        //         delay: 500,
+        //         widget: 'overview',
+        //     }
+        // ),
+        // createChatBotMessage(
+        //     "First things first, where you want to go?",
+        //     {
+        //         withAvatar: false,
+        //         widget: "locations",
+        //         delay: 1000,
+        //     }
+        // ),
     ],
     state: {
         name: '',
@@ -48,6 +52,11 @@ const config = {
         tripTitle: null
     },
     widgets: [
+        {
+            widgetName: "welcome",
+            widgetFunc: (props) => <WelcomeWidget {...props} />,
+            mapStateToProps: ["messages", "destination"]
+        },
         {
             widgetName: "locations",
             widgetFunc: (props) => <LocationWidget {...props} />,

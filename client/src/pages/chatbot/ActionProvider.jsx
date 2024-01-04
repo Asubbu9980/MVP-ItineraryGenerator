@@ -28,18 +28,34 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
         //         messages: [...prev.messages, botMessage],
         // }));
     };
-    const handleDestination = (destination) => {
-        const clientMessage = createClientMessage(`${destination}`);
-        const botMessage = createChatBotMessage(`Where you are planning to go to ${destination}`, {
-            widget: "start_date",
+    const showDestinationList = () => {
+        const botMessage = createChatBotMessage(`best places in india`, {
             delay: 500,
+            widget: "locations",
+            loading: true,
+            terminateLoading: true,
         });
         setState((prev) => ({
             ...prev,
-            destination: destination,
-            messages: [...prev.messages, clientMessage, botMessage],
+            messages: [...prev.messages, botMessage],
         }));
-
+    }
+    const handleDestination = (destination, enterClinetMessage = true, message = null) => {
+        const clientMessage = createClientMessage(message == null ? `${destination}` : message);
+        const m = [...state.messages]
+        if (enterClinetMessage) {
+            m.push(clientMessage)
+        }
+        const botMessage = createChatBotMessage(`When you are planning for ${destination}`, {
+            widget: "start_date",
+            delay: 500,
+        });
+        m.push(botMessage)
+        setState((prev) => ({
+            ...prev,
+            destination: destination,
+            messages: m
+        }));
     }
     const handleStartDateChange = (start_date) => {
         const clientMessage = createClientMessage(`${start_date}`);
@@ -76,7 +92,6 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         fR[key] = value
                     }
                 });
-                console.log(JSON.stringify(fR));
                 const botMessage = createChatBotMessage(`Here Is the plan`, {
                     delay: 500,
                     widget: "Itinerary",
@@ -118,6 +133,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         handleConfirmName,
                         handleDestination,
                         handleStartDateChange,
+                        showDestinationList,
                     },
                 });
             })}

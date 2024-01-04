@@ -115,32 +115,7 @@ function IndexPage() {
                     <div className="col-sm-12 col-md-8 col-lg-9 px-2 px-sm-0">
                         <div className='ms-2' style={{ height: "100%" }}>
                             <div className="messages-container mb-3 p-2">
-                                {/* <Box className='aiChatbot'>
-                                    <Box >
-                                        <h1>Hi, Iam a Ai Chatbot</h1>
-                                        <ul className='chatbotList'>
-                                            <li className='mb-2 p-2'>
-                                                <span className='icon'> <img src={questionMark} alt='questionMark' /> </span>
-                                                <p className='m-0'>Where are you planning your vacation ?</p>
-                                            </li>
-                                            <li className='mb-2 p-2'>
-                                                <span className='icon'><img src={codeIcon} alt='codeIcon' /> </span>
-                                                <p className='m-0'>Are you going solo for your trip ? </p></li>
-                                            <li className='mb-2 p-2'>
-                                                <span className='icon'><img src={bulbIcon} alt='bulbIcon' /> </span>
-                                                <p className='m-0'>Show best places in india </p></li>
-                                            <li className='mb-2 p-2'>
-                                                <span className='icon'><img src={pinIocn} alt='pinIocn' /> </span>
-                                                <p className='m-0'>Trip planning suggestions </p></li>
-                                            <li className='mb-2 p-2'>
-                                                <span className='icon'><img src={bulbIcon} alt='bulbIcon' /> </span>
-                                                <p className='m-0'>Top vacation places for family trip </p></li>
-
-                                        </ul>
-                                    </Box>
-
-
-                                </Box> */}
+                         
 
 
                                 <Box className='chatConversation'>

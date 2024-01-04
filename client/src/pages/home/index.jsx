@@ -8,7 +8,7 @@ import { TextField, Button, Container, Grid, Box, InputAdornment } from '@mui/ma
 import { useFormik } from 'formik';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'; 
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import Tripdata from './Tripdata.json';
 import dayjs from 'dayjs';
@@ -241,13 +241,12 @@ const IndexPage = () => {
     }
 
     const onVoiceSearchTripPlan = (text) => {
-        console.log("text", text);
         const splitedText = text.split(" ");
         let destination = null
         for (var i = 0; i < splitedText.length; i++) {
             const v = splitedText[i];
             const indexed = famousTouristCitiesInIndia.map(m => m.toLowerCase()).indexOf(v.toLowerCase());
-            if (indexed > 0) {
+            if (indexed >= 0) {
                 destination = v
             }
         }
@@ -437,7 +436,7 @@ const IndexPage = () => {
                                                 />
                                             </LocalizationProvider>
                                             {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null}
-                                        </div>
+                                        </div> 
 
                                         {/* End Date */}
                                         <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
