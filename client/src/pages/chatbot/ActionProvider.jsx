@@ -19,6 +19,26 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             messages: [...prev.messages, botMessage],
         }));
     };
+    const handleMessageChages = (m) => {
+        // console.log("name", state);
+        const lowerCaseMessage = m.toLowerCase();
+        if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
+            handleHello();
+            return;
+            // break
+        }
+        if (lowerCaseMessage.includes('my name') || lowerCaseMessage.includes('name')) {
+            handleConfirmName();
+            return;
+            // break;
+        }
+        // let message = 
+        const botMessage = createChatBotMessage(`Hi I'm AI Chatbot. I’m here to help you on Itinerary. Please ask related to trip or locations`);
+        setState((prev) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+    };
     const handleConfirmName = () => {
         console.log("state", state);
         const botMessage = createChatBotMessage(`Hello ${state.name} Where you want to go`);
@@ -134,6 +154,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         handleDestination,
                         handleStartDateChange,
                         showDestinationList,
+                        handleMessageChages,
                     },
                 });
             })}

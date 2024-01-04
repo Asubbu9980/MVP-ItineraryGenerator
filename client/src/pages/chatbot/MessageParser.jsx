@@ -69,13 +69,8 @@ const MessageParser = (props) => {
         if (destination) {
             actions.handleDestination(destination, true, message);
         } else {
-            const lowerCaseMessage = message.toLowerCase();
-            if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
-                actions.handleHello();
-            }
-            if (lowerCaseMessage.includes('my name') || lowerCaseMessage.includes('name')) {
-                actions.handleConfirmName()
-            }
+            actions.handleMessageChages(message)
+
         }
     };
 
