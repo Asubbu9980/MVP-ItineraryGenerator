@@ -42,7 +42,6 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         setExpanded(newExpanded ? panel : false);
     };
 
-    console.log("tripData==>", tripData)
 
     const [mapInfoWindow, setMapInfoWindow] = useState(null)
 
@@ -164,7 +163,6 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         // let dayTitle = title.split('-')[1];
         if (isDayIncludes) {
             const replaced_day_text = title.replace(day, '');
-            console.log(replaced_day_text, 'replaced_day_text')
             if (replaced_day_text.length > 1) {
                 return title
             } else {

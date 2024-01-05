@@ -52,6 +52,7 @@ function IndexPage() {
     };
 
     const loadMessages = () => {
+        console.log(";loas");
         const messages = JSON.parse(localStorage.getItem('chat_messages'));
         return messages;
     };
