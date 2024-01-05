@@ -65,7 +65,7 @@ const LocationWidget = (props) => {
             id: i + 1
         })
     })
-    return <Options options={options} title="Hide Prompt" {...props} />;
+    return <Options options={options} title="Popular Locations" {...props} />;
 };
 
 export default LocationWidget;

@@ -99,7 +99,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                 destination: state.destination,
                 "source": "Hyderabad",
                 "start_date": dayjs(state.start_date).format('DD MMMM, YYYY'),
-                "end_date": dayjs(dayjs(state.start_date).format('DD MMMM, YYYY')).add(3, 'day').format('DD MMMM, YYYY'),
+                "end_date": dayjs(dayjs(state.start_date).format('DD MMMM, YYYY')).add(2, 'day').format('DD MMMM, YYYY'),
             }
             getTripDetailsApi(payload).then((r) => {
                 const p = r?.data.hasOwnProperty('trip') ? r?.data.trip : r?.data;

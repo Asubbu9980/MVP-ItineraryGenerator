@@ -6,8 +6,7 @@ import Itinerary from '../../common/Itinerary';
 import dayjs from 'dayjs';
 import ItineraryWidget from './widgets/Itinerary';
 import WelcomeWidget from './widgets/welcome';
-
-
+import ChatBoxIcon from './icons/chatBoxIcon';
 
 const currentDate = new Date();
 
@@ -50,6 +49,9 @@ const config = {
         transport: 'car',
         tripData: null,
         tripTitle: null
+    },
+    customComponents: {
+        botAvatar: (props) => <ChatBoxIcon {...props} />,
     },
     widgets: [
         {

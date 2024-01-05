@@ -42,9 +42,20 @@ import ActionProvider from './ActionProvider.jsx';
 
 
 function IndexPage() {
+    const [showBot, toggleBot] = useState(false);
     const [inputValue, setInputValue] = useState('');
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
+    const saveMessages = (messages, HTMLString) => {
+        console.log("Save");
+        localStorage.setItem('chat_messages', JSON.stringify(messages));
+    };
+
+    const loadMessages = () => {
+        const messages = JSON.parse(localStorage.getItem('chat_messages'));
+        return messages;
+    };
+
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
         setError(null); // Clear error when user starts typing
@@ -62,12 +73,12 @@ function IndexPage() {
         <div className="chatbot-container mt-3">
             <div className='container-fluid'>
                 <div className='row'>
-                {/* <div className='row' style={{ height: "100vh" }}> */}
+                    {/* <div className='row' style={{ height: "100vh" }}> */}
                     <div className="col-sm-12  col-md-4 col-lg-2 px-2 px-sm-0 sideBar">
                         <div className=' p-3'>
                             <h2 className='my-3'> Ai Chatbot</h2>
-                            <Button variant="text" className="buttonTrip mx-2"> 
-                            <img src={addIcon} alt='addIcon'/> New Trip </Button>
+                            <Button variant="text" className="buttonTrip mx-2">
+                                <img src={addIcon} alt='addIcon' /> New Trip </Button>
                             <Box className="leftMenu mt-5">
                                 <h6>Today</h6>
                                 <MenuList>
@@ -107,7 +118,7 @@ function IndexPage() {
                         </div>
                     </div>
                     <div className="col-sm-12 col-md-8 col-lg-10 px-2 px-sm-0">
-                    {/* <div className='ms-2'> */}
+                        {/* <div className='ms-2'> */}
                         {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
                         <div className='ms-2' style={{ height: "100%" }}>
                             <div className="messages-container mb-3 p-2">
@@ -117,7 +128,9 @@ function IndexPage() {
                                         messageParser={MessageParser}
                                         actionProvider={ActionProvider}
                                         runInitialMessagesWithHistory
-
+                                        messageHistory={loadMessages()}
+                                        saveMessages={saveMessages}
+                                    // validator={validateInput}
                                     />
                                 </Box>
                             </div>
