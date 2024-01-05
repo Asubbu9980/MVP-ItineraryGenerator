@@ -684,7 +684,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: capitalize;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: semi-bold;
 }
 
@@ -979,4 +979,11 @@
         max-width: 285px !important;
     }
 
+}
+.trp-title{
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 29px;
+    color: #3A3A3A;
+    margin-bottom: 0px;
 }

@@ -1,104 +1,92 @@
 .react-chatbot-kit-chat-container {
   width: 100%;
+  height: calc(100vh - 185px);
 }
-
 .react-chatbot-kit-chat-bot-message {
   width: 90%;
   color: #171A1F;
   margin-left: 0;
   border-radius: 0px 18px 18px 18px;
   border: 1px solid #E7E7E7;
-}
+  margin-left: 55px;
+  /* max-width: 50%;
+  width: fit-content; */
 
+}
+.react-chatbot-kit-chat-bot-avatar~.react-chatbot-kit-chat-bot-message {
+  margin-left: 0;
+}
 .react-chatbot-kit-chat-message-container {
   height: 100%;
 }
-
 .react-chatbot-kit-chat-inner-container {
   height: 100%;
   background-color: transparent;
 }
-
 .react-chatbot-kit-chat-header {
   background-color: transparent;
   display: none;
 }
-
-.react-chatbot-kit-chat-input-container {}
-
-/* .send-button {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-} */
-
-
-
-/* .react-chatbot-kit-chat-input-container {
-  background-color: #e6e6e6;
-  padding: 8px 12px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-  max-width: 80%;
-  word-wrap: break-word;
-} */
-
+.react-chatbot-kit-chat-input-container {
+  position: fixed;
+  width: calc(100% - 20%);
+  bottom: 5px;
+}
 .react-chatbot-kit-chat-input {
   padding: 10px;
   border-radius: 12px;
   border: 1px solid #0971D2;
   background: #FFF;
 }
-
 .react-chatbot-kit-chat-input:focus-visible {
   outline: none;
 }
-
-.message-input {
-  /* border: 1px solid #dcdcdc;
-  border-radius: 4px;
-  padding: 8px;
-  width: calc(100% - 90px);
-  margin-right: 10px; */
-}
-
 .react-chatbot-kit-chat-input-form {
   position: relative;
 }
-
 .react-chatbot-kit-chat-btn-send {
   position: absolute;
   right: 0;
   top: 7px;
   background: transparent !important;
 }
-
 .react-chatbot-kit-chat-btn-send-icon {
   fill: #0971D2;
 }
-
 .react-chatbot-kit-user-chat-message {
   border-radius: 18px 18px 0px 18px;
   border: 1px solid #BEBFD3;
   background: #DEEBFF;
-}
+  max-width: 50%;
+  width: -moz-fit-content;
+  width: fit-content;
 
+}
 .react-chatbot-kit-user-chat-message-arrow,
 .react-chatbot-kit-chat-bot-message-arrow {
   display: none;
 }
-
-
-.startDate{
-  color: white;
+.rightBar .startDate{
+  color: #fff;
   background-color: #ECF3FF;
-  margin: 35px auto 0;
+  /* margin: 35px auto 0; */
   border-radius: 50px;
   width: fit-content;
+  display: inline-block;
 }
-.startDate fieldset {
+.rightBar .startDate fieldset {
   border: 0;
+}
+.react-chatbot-kit-chat-message-container{
+  padding: inherit;
+  overflow: unset;
+  height: auto;
+}
+
+.react-chatbot-kit-chat-bot-message-container{
+  max-width: 50%;
+  width: fit-content;
+}
+.react-chatbot-kit-user-chat-message-container{
+
 }

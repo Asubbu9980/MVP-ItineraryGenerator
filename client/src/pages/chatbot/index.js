@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect  } from 'react';
 import 'react-chatbot-kit/build/main.css'
 
-import './chatbot.css';
+import { useLocation } from 'react-router-dom'; // Assuming you are using React Router
+
+import './chatbot.scss';
 import './chatbotKit.css';
 
 import Chatbot from 'react-chatbot-kit'
@@ -42,7 +44,19 @@ import ActionProvider from './ActionProvider.jsx';
 
 
 function IndexPage() {
-    const [showBot, toggleBot] = useState(false);
+    // Added the class to HTML body element
+    const location = useLocation();
+    useEffect(() => {
+        const { pathname } = location;
+        const className = pathname.substring(1).replace('/', '-');
+        document.body.className = className + " chatbotPage ";
+        return () => {
+          document.body.className = '';
+        };
+      }, [location]);
+
+
+
     const [inputValue, setInputValue] = useState('');
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
@@ -72,10 +86,9 @@ function IndexPage() {
     };
     return (
         <div className="chatbot-container mt-3">
-            <div className='container-fluid'>
-                <div className='row'>
-                    {/* <div className='row' style={{ height: "100vh" }}> */}
-                    <div className="col-sm-12  col-md-4 col-lg-2 px-2 px-sm-0 sideBar">
+        
+                {/* <div className='row' style={{ height: "100vh" }}> */}
+                    <div className="px-2 px-sm-0 sideBar">
                         <div className=' p-3'>
                             <h2 className='my-3'> Ai Chatbot</h2>
                             <Button variant="text" className="buttonTrip mx-2">
@@ -118,11 +131,11 @@ function IndexPage() {
                             </Box>
                         </div>
                     </div>
-                    <div className="col-sm-12 col-md-8 col-lg-10 px-2 px-sm-0">
-                        {/* <div className='ms-2'> */}
+                    <div className="px-2 px-sm-0 rightBar">
+                    {/* <div className='ms-2'> */}
                         {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
-                        <div className='ms-2' style={{ height: "100%" }}>
-                            <div className="messages-container mb-3 p-2">
+                        <div className='ms-2'>
+                            <div className="messages-container mb-3">
                                 <Box className='chatConversation'>
                                     <Chatbot
                                         config={config}
@@ -138,8 +151,8 @@ function IndexPage() {
                             {error && <div className="error">{error}</div>}
                         </div>
                     </div>
-                </div>
-            </div>
+                
+           
         </div>
     )
 }
