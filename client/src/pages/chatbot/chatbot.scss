@@ -268,11 +268,13 @@
   overflow-y: scroll !important;
 }
 
-.custom-scroll::-webkit-scrollbar {
+.custom-scroll::-webkit-scrollbar,
+.react-chatbot-kit-chat-message-container::-webkit-scrollbar {
   width: 3px !important;
 }
 
-.custom-scroll::-webkit-scrollbar-track {
+.custom-scroll::-webkit-scrollbar-track,
+.react-chatbot-kit-chat-message-container::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 18px rgba(250, 250, 251, 0.3);
   -webkit-border-radius: 5px;
   border-radius: 2px;
@@ -281,14 +283,16 @@
 
 }
 
-.custom-scroll::-webkit-scrollbar-thumb {
+.custom-scroll::-webkit-scrollbar-thumb,
+.react-chatbot-kit-chat-message-container::-webkit-scrollbar-thumb {
   -webkit-border-radius: 5px;
   border-radius: 5px;
   background-color: #dfe2e6 !important;
   width: 6px !important;
 }
 
-.custom-scroll::-webkit-scrollbar-thumb:hover {
+.custom-scroll::-webkit-scrollbar-thumb:hover,
+.react-chatbot-kit-chat-message-container::-webkit-scrollbar-thumb:hover {
   background: #757d85;
 }
 
@@ -320,7 +324,7 @@
 }
 
 .chatbotPage .tripDetails-grid .tripDetails-item .loopCard {
-  width: 240px;
+  width: 230px;
 }
 
 

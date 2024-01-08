@@ -135,7 +135,7 @@ function IndexPage() {
                     {/* <div className='ms-2'> */}
                         {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
                         <div className='ms-2'>
-                            <div className="messages-container mb-3">
+                            <div className="messages-container">
                                 <Box className='chatConversation'>
                                     <Chatbot
                                         config={config}
