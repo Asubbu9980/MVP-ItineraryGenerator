@@ -9,6 +9,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             ...prev,
             messages: [...prev.messages, botMessage],
         }));
+        // requestAnimationFrame(() => { window.scrollTo(420); });
         handleAskName()
     };
     const handleAskName = () => {
@@ -18,6 +19,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             ...prev,
             messages: [...prev.messages, botMessage],
         }));
+        
     };
     const handleMessageChages = (m) => {
         // console.log("name", state);
