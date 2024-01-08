@@ -21,7 +21,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             ...prev,
             messages: [...prev.messages, botMessage],
         }));
-        
+
     };
     const handleMessageChages = (m) => {
         // console.log("name", state);
@@ -103,6 +103,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
 
     const getTripDetails = () => {
         try {
+            console.log("state", state);
             const payload = {
                 destination: state.destination,
                 "source": "Hyderabad",
@@ -125,6 +126,10 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                     widget: "Itinerary",
                     loading: true,
                     terminateLoading: true,
+                    payload: {
+                        tripData: fR,
+                        tripTitle: `${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`
+                    },
                 });
                 setState((prev) => ({
                     ...prev,
