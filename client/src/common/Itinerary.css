@@ -642,6 +642,11 @@
     font-size: 17px !important;
 }
 
+.card-image-container{
+    width: 200px !important;
+    height: 100px !important;
+    
+}
 .card-image-container>div.css-6e7lq1-JoyAspectRatio-content {
     background-color: transparent !important;
 }

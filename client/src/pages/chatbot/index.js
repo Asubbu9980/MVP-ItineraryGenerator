@@ -88,7 +88,7 @@ function IndexPage() {
         <div className="chatbot-container mt-3">
         
                 {/* <div className='row' style={{ height: "100vh" }}> */}
-                    <div className="px-2 px-sm-0 sideBar">
+                    <div className="px-2 px-sm-0 sideBar custom-scroll">
                         <div className=' p-3'>
                             <h2 className='my-3'> Ai Chatbot</h2>
                             <Button variant="text" className="buttonTrip mx-2">
@@ -131,7 +131,7 @@ function IndexPage() {
                             </Box>
                         </div>
                     </div>
-                    <div className="px-2 px-sm-0 rightBar">
+                    <div className="px-2 px-sm-0 rightBar custom-scroll">
                     {/* <div className='ms-2'> */}
                         {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
                         <div className='ms-2'>

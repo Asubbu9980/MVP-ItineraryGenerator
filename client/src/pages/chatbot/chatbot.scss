@@ -243,7 +243,34 @@
   overflow-y: auto;
   height: calc(100vh - 91px);
   width: 18%;
+ }
+
+ .custom-scroll{
+  overflow-y: scroll !important;
+ }
+ .custom-scroll::-webkit-scrollbar {
+  width: 3px !important;
 }
+
+.custom-scroll::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 18px rgba(250, 250, 251, 0.3);
+  -webkit-border-radius: 5px;
+  border-radius: 2px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #dfe2e6 !important;
+  width: 6px !important;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: #757d85;
+}
+
 
 .rightBar {
   // padding: 20px;
@@ -254,3 +281,18 @@
   width: 82%;
   margin-left: 16px;
 } 
+.chatbotPage .tripDetails-grid{
+  padding: 10px;
+}
+
+.chatbotPage .tripDetails-grid ul{
+  // padding-left: 20px ;
+}
+.chatbotPage .tripDetails-grid .tripDetails-item{
+  padding-left: 20px;
+}
+
+ .chatbotPage .tripDetails-grid .tripDetails-item .card-image-container{
+  width: 180px !important;
+ }
+ .chatbotPage .tripDetails-grid .tripDetails-item .loopCard {width: 240px;}
