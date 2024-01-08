@@ -1,4 +1,4 @@
-import React, { useState,useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'react-chatbot-kit/build/main.css'
 
 import { useLocation } from 'react-router-dom'; // Assuming you are using React Router
@@ -39,7 +39,7 @@ import chatBoatIcon from "../../assets/chatBoatIcon.png";
 import config from './config.js';
 import MessageParser from './MessageParser.jsx';
 import ActionProvider from './ActionProvider.jsx';
-
+import AddIcon from '@mui/icons-material/Add';
 
 
 
@@ -51,9 +51,9 @@ function IndexPage() {
         const className = pathname.substring(1).replace('/', '-');
         document.body.className = className + " chatbotPage ";
         return () => {
-          document.body.className = '';
+            document.body.className = '';
         };
-      }, [location]);
+    }, [location]);
 
 
 
@@ -86,73 +86,80 @@ function IndexPage() {
     };
     return (
         <div className="chatbot-container mt-3">
-        
-                {/* <div className='row' style={{ height: "100vh" }}> */}
-                    <div className="px-2 px-sm-0 sideBar custom-scroll">
-                        <div className=' p-3'>
-                            <h2 className='my-3'> Ai Chatbot</h2>
-                            <Button variant="text" className="buttonTrip mx-2">
-                                <img src={addIcon} alt='addIcon' /> New Trip </Button>
-                            <Box className="leftMenu mt-5">
-                                <h6>Today</h6>
-                                <MenuList>
-                                    <MenuItem>
-                                        <img src={comments} alt="lightbulbFilament" className='me-2' />
-                                        <ListItemText>Goa trip itinerary</ListItemText>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <img src={lightbulbFilament} alt="lightbulbFilament" className='me-2' />
-                                        <ListItemText>Manali trip ideas</ListItemText>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <img src={filmStrip} alt="filmStrip" className='me-2' />
-                                        <ListItemText>Delhi trip planning</ListItemText>
 
-                                    </MenuItem>
-                                </MenuList>
-                            </Box>
-                            <Box className="leftMenu mt-2">
-                                <h6>Previous 7 days</h6>
-                                <MenuList>
-                                    <MenuItem>
-                                        <img src={comments} alt="lightbulbFilament" className='me-2' />
-                                        <ListItemText>Goa trip itinerary</ListItemText>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <img src={lightbulbFilament} alt="lightbulbFilament" className='me-2' />
-                                        <ListItemText>Manali trip ideas</ListItemText>
-                                    </MenuItem>
-                                    <MenuItem>
-                                        <img src={filmStrip} alt="filmStrip" className='me-2' />
-                                        <ListItemText>Delhi trip planning</ListItemText>
+            {/* <div className='row' style={{ height: "100vh" }}> */}
+            <div className="px-2 px-sm-0 sideBar custom-scroll">
+                <div className=' p-3'>
+                    <h2 className='my-3'> Ai Chatbot</h2>
+                    <div className='text-center'>
+                    <Button variant="text" className="buttonTrip mx-2">
+                        <div className='d-flex align-items-center'>
+                            <AddIcon className='AddIcon' />
+                            <div>New Trip </div>
 
-                                    </MenuItem>
-                                </MenuList>
-                            </Box>
+                        </div>        
+                        </Button>
                         </div>
+                    <Box className="leftMenu mt-5">
+                        <h6>Today</h6>
+                        <MenuList>
+                            <MenuItem>
+                                <img src={comments} alt="lightbulbFilament" className='me-2' />
+                                <ListItemText className='menuText'>Goa trip itinerary Goa trip itinerary Goa trip itinerary</ListItemText>
+                            </MenuItem>
+                            <MenuItem>
+                                <img src={lightbulbFilament} alt="lightbulbFilament" className='me-2' />
+                                <ListItemText className='menuText'>Manali trip ideas</ListItemText>
+                            </MenuItem>
+                            <MenuItem>
+                                <img src={filmStrip} alt="filmStrip" className='me-2' />
+                                <ListItemText className='menuText'>Delhi trip planning</ListItemText>
+
+                            </MenuItem>
+                        </MenuList>
+                    </Box>
+                    <Box className="leftMenu mt-2">
+                        <h6>Previous 7 days</h6>
+                        <MenuList>
+                            <MenuItem>
+                                <img src={comments} alt="lightbulbFilament" className='me-2' />
+                                <ListItemText className='menuText'>Goa trip itinerary</ListItemText>
+                            </MenuItem>
+                            <MenuItem>
+                                <img src={lightbulbFilament} alt="lightbulbFilament" className='me-2' />
+                                <ListItemText className='menuText'>Manali trip ideas</ListItemText>
+                            </MenuItem>
+                            <MenuItem>
+                                <img src={filmStrip} alt="filmStrip" className='me-2' />
+                                <ListItemText className='menuText'>Delhi trip planning</ListItemText>
+
+                            </MenuItem>
+                        </MenuList>
+                    </Box>
+                </div>
+            </div>
+            <div className="px-2 px-sm-0 rightBar custom-scroll">
+                {/* <div className='ms-2'> */}
+                {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
+                <div className='ms-2'>
+                    <div className="messages-container">
+                        <Box className='chatConversation'>
+                            <Chatbot
+                                config={config}
+                                messageParser={MessageParser}
+                                actionProvider={ActionProvider}
+                                runInitialMessagesWithHistory
+                                messageHistory={loadMessages()}
+                                saveMessages={saveMessages}
+                            // validator={validateInput}
+                            />
+                        </Box>
                     </div>
-                    <div className="px-2 px-sm-0 rightBar custom-scroll">
-                    {/* <div className='ms-2'> */}
-                        {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
-                        <div className='ms-2'>
-                            <div className="messages-container">
-                                <Box className='chatConversation'>
-                                    <Chatbot
-                                        config={config}
-                                        messageParser={MessageParser}
-                                        actionProvider={ActionProvider}
-                                        runInitialMessagesWithHistory
-                                        messageHistory={loadMessages()}
-                                        saveMessages={saveMessages}
-                                    // validator={validateInput}
-                                    />
-                                </Box>
-                            </div>
-                            {error && <div className="error">{error}</div>}
-                        </div>
-                    </div>
-                
-           
+                    {error && <div className="error">{error}</div>}
+                </div>
+            </div>
+
+
         </div>
     )
 }

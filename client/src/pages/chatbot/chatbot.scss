@@ -120,15 +120,43 @@
 
 .sideBar .buttonTrip,
 .sideBar .buttonTrip:hover {
-  border-radius: 12px;
+  border-radius:20px;
   background: #2554AF;
   color: #FFF;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 400;
-  padding: 7px 83px 7px 80px;
-  width: 100%;
   height: 40px;
-  text-wrap: nowrap;
+  position: relative;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 12px;
+}
+
+.sideBar .buttonTrip .AddIcon{
+  font-size: 20px;
+  display: block;
+
+}
+
+.sideBar .buttonTrip div {
+  transition: transform 0.3s ease-in-out;
+  display:flex;
+
+}
+.sideBar .buttonTrip:hover div {
+  animation: pulse 1s infinite;
+}
+.buttonTrip:hover::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: wave 1s ease-out;
 }
 
 .leftMenu h6 {
@@ -144,16 +172,44 @@
   font-weight: 400;
   line-height: 22px;
   margin-bottom: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+.leftMenu ul li .menuText {
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px; /* Adjust this value as needed */
+}
+
+.leftMenu ul li .menuText::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #2554af;
+  transition: width 0.3s;
+}
+.leftMenu ul li:hover .menuText::after {
+  width: 90%;
 }
 
 .leftMenu ul li:hover {
   background-color: transparent;
   color: #2554AF;
+  transform: translateX(10px);
+  
 }
 
-.leftMenu ul li:hover .icon {
-  color: #2554AF;
-}
+// .leftMenu ul li:hover .icon {
+//   color: #2554AF;
+// }
+
+
+
 
 .chatbotList {
   min-width: 500px;
@@ -184,9 +240,6 @@
   border-radius: 9px;
   background: #E8F1FC;
   transition: transform 0.3s ease-in-out;
-
-
-
 }
 
 .aiChatbot .chatbotList li .icon img {
@@ -367,5 +420,27 @@
 
   40%, 60% {
     transform: translate3d(2px, 0, 0);
+  }
+}
+
+@keyframes wave {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
