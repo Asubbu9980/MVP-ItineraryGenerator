@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import 'react-chatbot-kit/build/main.css'
 
 import { useLocation } from 'react-router-dom'; // Assuming you are using React Router
@@ -36,35 +36,57 @@ function IndexPage() {
 
     const [todayMessageHistory, setTodayMessageHistory] = useState([])
     const [oldMessageHistory, setOldMessageHistory] = useState([])
+
     const [messageItem, setMessageItem] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [mID, setMID] = useState();
     const [messages, setMessages] = useState([]);
     const [error, setError] = useState(null);
     const saveMessages = (messages, HTMLString) => {
-        // console.log("Save,", HTMLString);
-        // JSON.stringify(messages);
-        const mid = Date.now();
-        const created_at = new Date().toLocaleDateString();
-        messages.forEach((element, elementIndex) => {
-            if (element.mId == undefined) {
-                messages[elementIndex]['mId'] = mid;
-                messages[elementIndex]['isFromLocal'] = true;
+        if (messages.length > 0) {
+            const mid = Date.now();
+            const existingMessages = localStorage.getItem('chat_messages') != null ? JSON.parse(localStorage.getItem('chat_messages')) : [];
+            console.log("existingMessages", existingMessages);
+            const created_at = new Date().toLocaleDateString();
+            messages.forEach((element, elementIndex) => {
+
+                if (element.mId == undefined) {
+                    messages[elementIndex]['mId'] = mid;
+                    messages[elementIndex]['isFromLocal'] = true;
+                }
+                // if (element.created_at == undefined) {
+                //     messages[elementIndex]['created_at'] = created_at;
+                // }
+            });
+            const indexed = messages.map((m) => m.message).indexOf("Here Is the plan");
+            if (indexed >= 0) {
+                existingMessages.push({
+                    id: mid,
+                    title: messages[indexed].payload?.tripTitle,
+                    data: messages,
+                    created_at: created_at
+                })
+            } else {
+                existingMessages.push({
+                    id: mid,
+                    title: mid,
+                    data: messages,
+                    created_at
+                })
             }
-            if (element.created_at == undefined) {
-                messages[elementIndex]['created_at'] = created_at;
-            }
-        });
-        console.log("savemessages", messages);
-        // const getExistingMessages = localStorage.getItem("chat_messages");
-        // if (getExistingMessages != null && getExistingMessages != undefined) {
-        //     const newM = [...JSON.parse(getExistingMessages), messages]
-        //     console.log("newM", newM);
-        //     localStorage.setItem('chat_messages', JSON.stringify(newM));
-        // } else {
-        localStorage.setItem('chat_messages', JSON.stringify(messages));
-        // }
-        return messages;
+            // console.log("newMessage", newMessage);
+            // console.log("savemessages", messages);
+
+            // const getExistingMessages = localStorage.getItem("chat_messages");
+            // if (getExistingMessages != null && getExistingMessages != undefined) {
+            //     const newM = [...JSON.parse(getExistingMessages), messages]
+            //     console.log("newM", newM);
+            //     localStorage.setItem('chat_messages', JSON.stringify(newM));
+            // } else {
+            localStorage.setItem('chat_messages', JSON.stringify(existingMessages));
+            // }
+            return existingMessages;
+        }
     };
     let groupBy = (array, key) => {
         return array.reduce((result, obj) => {
@@ -95,58 +117,94 @@ function IndexPage() {
 
         }, [])
     const loadMessages = () => {
-        const messages = JSON.parse(localStorage.getItem('chat_messages'));
+        // console.log("m", ActionProvider);
+        // const messages = JSON.parse(localStorage.getItem('chat_messages'));
+        // console.log("messages", messages);
+        if (messageItem.length > 0) {
+            return messageItem
+        } else {
+            return null;
+        }
         // let a = groupBy(messages, "mId");
-        return messages;
+        // console.log("messages.map((m) => m.data)", messages.map((m) => m.data));
+        // return messages.map((m) => m.data);
     };
-    // useEffect(() => {
-    //     console.log("messageItem", messageItem);
-    // }, [messageItem])
+    const handlerSavedMessages = useCallback(
+        (event) => {
+            if (messageItem.length > 0) {
+                console.log("You clicked");
+                console.log("messageItem", messageItem);
+                // setMessages( messageItem]);
+                return messageItem;
+            } else {
+                return null
+            }
+
+        },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [messageItem],
+    );
     useEffect(() => {
-        const messages = JSON.parse(localStorage.getItem('chat_messages'));
+        const messages = localStorage.getItem('chat_messages') != null ? JSON.parse(localStorage.getItem('chat_messages')) : [];
         if (messages.length > 0) {
-            let a = groupBy(messages, "mId");
-            console.log("a", a);
             const today = new Date().toLocaleDateString();
-            const todaysData = [];
-            const groupedresponse = Object.values(a)
-            // console.log("groupedresponse", groupedresponse);
-            groupedresponse.forEach((element, eIndex) => {
-                const lMID = element[0].mId;
-                console.log("lMID", lMID);
-                const created_at = element[0].created_at;
-                console.log("created_at", created_at);
-                const m = element.map(m => m.message);
-                console.log("m", m);
-                if (today == created_at) {
-                    console.log("Hete");
-                    //     // const primaryId = 
-                    const indexed = m.map(m => m).indexOf("Here Is the plan");
-                    console.log("indexed", indexed);
-                    if (indexed >= 0) {
-                        todaysData.push({
-                            id: lMID,
-                            title: element[indexed].payload?.tripTitle,
-                            data: element
-                        })
-                    } else {
-                        todaysData.push({
-                            id: lMID,
-                            title: lMID,
-                            data: element
-                        })
-                    }
-                    // if (m.includes('Here Is the plan')) {
-                    //    
-                    // } 
-                }
-            });
-            console.log("a", todaysData);
+            // const todaysData = [];
+            const todaysData = (messages.filter((f) => f.created_at == today))
+            console.log("tod", todaysData);
+            // console.log("messages",messages);
             if (todaysData.length > 0) {
                 setTodayMessageHistory(todaysData);
             }
         }
-    }, [localStorage.getItem("chat_messages")])
+    }, [])
+    // useEffect(() => {
+    //     console.log("messageItem", messageItem);
+    // }, [messageItem])
+    // useEffect(() => {
+    //     const messages = JSON.parse(localStorage.getItem('chat_messages'));
+    //     if (messages.length > 0) {
+    //         let a = groupBy(messages, "mId");
+    //         console.log("a", a);
+    //         const today = new Date().toLocaleDateString();
+    //         const todaysData = [];
+    //         const groupedresponse = Object.values(a)
+    //         // console.log("groupedresponse", groupedresponse);
+    //         groupedresponse.forEach((element, eIndex) => {
+    //             const lMID = element[0].mId;
+    //             console.log("lMID", lMID);
+    //             const created_at = element[0].created_at;
+    //             console.log("created_at", created_at);
+    //             const m = element.map(m => m.message);
+    //             console.log("m", m);
+    //             if (today == created_at) {
+    //                 console.log("Hete");
+    //                 //     // const primaryId = 
+    //                 const indexed = m.map(m => m).indexOf("Here Is the plan");
+    //                 console.log("indexed", indexed);
+    //                 if (indexed >= 0) {
+    //                     todaysData.push({
+    //                         id: lMID,
+    //                         title: element[indexed].payload?.tripTitle,
+    //                         data: element
+    //                     })
+    //                 } else {
+    //                     todaysData.push({
+    //                         id: lMID,
+    //                         title: lMID,
+    //                         data: element
+    //                     })
+    //                 }
+    //                 // if (m.includes('Here Is the plan')) {
+    //                 //    
+    //                 // } 
+    //             }
+    //         });
+    //         console.log("a", todaysData);
+    //         if (todaysData.length > 0) {
+    //             setTodayMessageHistory(todaysData);
+    //         }
+    //     }
+    // }, [localStorage.getItem("chat_messages")])
     useEffect(() => {
         // console.log("todayMessageHistory", todayMessageHistory);
 
@@ -164,6 +222,22 @@ function IndexPage() {
         setMessages([...messages, inputValue]);
         setInputValue('');
     };
+    const validator = (input) => {
+        if (input.length > 2) return true;
+        return false
+    }
+    const getChatConfig = (messages = []) => {
+        return <Chatbot
+            config={config(messages)}
+            messageParser={MessageParser}
+            actionProvider={ActionProvider}
+            runInitialMessagesWithHistory
+            messageHistory={messageItem.length > 0 ? messageItem : null}
+            // messageHistory={handlerSavedMessages()}
+            saveMessages={saveMessages}
+            validator={validator}
+        />
+    }
     return (
         <div className="chatbot-container mt-3">
             <div className="px-2 px-sm-0 sideBar custom-scroll">
@@ -178,7 +252,7 @@ function IndexPage() {
                         <MenuList>
                             {
                                 todayMessageHistory.map((tm, tmIndex) => {
-                                    return <MenuItem key={tmIndex} onClick={() => setMessageItem(tm.data)}>
+                                    return <MenuItem key={tmIndex} onClick={() => { setMessageItem(tm.data); getChatConfig(tm.data) }}>
                                         <img src={comments} alt="lightbulbFilament" className='me-2' />
                                         <ListItemText>{tm.title}</ListItemText>
                                     </MenuItem>
@@ -187,7 +261,7 @@ function IndexPage() {
                         </MenuList>
                     </Box>
                     <Box className="leftMenu mt-2">
-                        <h6>Previous 7 days</h6>
+                        <h6>Previous History</h6>
                         <MenuList>
                             <MenuItem>
                                 <img src={comments} alt="lightbulbFilament" className='me-2' />
@@ -212,31 +286,7 @@ function IndexPage() {
                 <div className='ms-2'>
                     <div className="messages-container mb-3">
                         <Box className='chatConversation'>
-                            {/* {
-                                JSON.stringify(messageItem)
-                            } */}
-                            {
-                                messageItem.length == 0 ?
-                                    <Chatbot
-                                        config={config}
-                                        messageParser={MessageParser}
-                                        actionProvider={ActionProvider}
-                                        runInitialMessagesWithHistory
-                                        messageHistory={() => {
-                                            console.log("Mess");
-                                        }}
-                                    /> : <Chatbot
-                                        config={config}
-                                        messageParser={MessageParser}
-                                        actionProvider={ActionProvider}
-                                        // runInitialMessagesWithHistory
-                                        // messageHistory={messageItem.length > 0 ? messageItem : null}
-                                        // messageHistory={messageItem}
-                                        saveMessages={saveMessages}
-                                    // validator={validateInput}
-                                    />
-                            }
-
+                            {getChatConfig()}
                         </Box>
                     </div>
                     {error && <div className="error">{error}</div>}
@@ -244,7 +294,7 @@ function IndexPage() {
             </div>
 
 
-        </div>
+        </div >
     )
 }
 export default IndexPage

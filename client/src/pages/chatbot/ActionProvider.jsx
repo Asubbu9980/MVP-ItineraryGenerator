@@ -64,6 +64,13 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             messages: [...prev.messages, botMessage],
         }));
     }
+    const setMessages = (messages) => {
+
+        setState((prev) => ({
+            ...prev,
+            messages: messages,
+        }));
+    }
     const handleDestination = (destination, enterClinetMessage = true, message = null) => {
         const clientMessage = createClientMessage(message == null ? `${destination}` : message);
         const m = [...state.messages]
@@ -84,12 +91,12 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
     const handleStartDateChange = (start_date) => {
         const clientMessage = createClientMessage(`${start_date}`);
         const botMessage = createChatBotMessage(
-        <PleaseWaitMsg message="Please wait" />,
-        {
-            delay: 500,
-            loading: true,
-            terminateLoading: true,
-        }
+            <PleaseWaitMsg message="Please wait" />,
+            {
+                delay: 500,
+                loading: true,
+                terminateLoading: true,
+            }
         );
 
 
@@ -168,6 +175,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         handleStartDateChange,
                         showDestinationList,
                         handleMessageChages,
+                        setMessages,
                     },
                 });
             })}
