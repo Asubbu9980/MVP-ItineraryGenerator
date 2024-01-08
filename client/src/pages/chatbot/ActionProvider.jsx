@@ -2,6 +2,8 @@ import React from 'react';
 import { createClientMessage } from 'react-chatbot-kit';
 import dayjs from 'dayjs';
 import { getTripDetailsApi } from '../../helpers/trip_helper';
+import PleaseWaitMsg from '../chatbot/widgets/pleaseWaitMsg';
+
 const ActionProvider = ({ createChatBotMessage, state, setState, children }) => {
     const handleHello = () => {
         const botMessage = createChatBotMessage('Hello. Nice to meet you.');
@@ -81,12 +83,16 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
     }
     const handleStartDateChange = (start_date) => {
         const clientMessage = createClientMessage(`${start_date}`);
-        const botMessage = createChatBotMessage(`Please wait`, {
+        const botMessage = createChatBotMessage(
+        <PleaseWaitMsg message="Please wait" />,
+        {
             delay: 500,
             loading: true,
             terminateLoading: true,
+        }
+        );
 
-        });
+
         setState((prev) => ({
             ...prev,
             messages: [...prev.messages, clientMessage, botMessage],
