@@ -138,9 +138,10 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         tripTitle: `${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`
                     },
                 });
+                const filteredMessages = state.messages.filter((m) => m.message.includes('Please wait') !== true);
                 setState((prev) => ({
                     ...prev,
-                    messages: [...prev.messages, botMessage],
+                    messages: [...filteredMessages, botMessage],
                     // start_date: start_date,
                     tripData: fR,
                     tripTitle: `${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`
