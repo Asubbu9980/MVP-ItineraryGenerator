@@ -42,7 +42,6 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         setExpanded(newExpanded ? panel : false);
     };
 
-    console.log("tripData==>", tripData)
 
     const [mapInfoWindow, setMapInfoWindow] = useState(null)
 
@@ -164,7 +163,6 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
         // let dayTitle = title.split('-')[1];
         if (isDayIncludes) {
             const replaced_day_text = title.replace(day, '');
-            console.log(replaced_day_text, 'replaced_day_text')
             if (replaced_day_text.length > 1) {
                 return title
             } else {
@@ -208,10 +206,12 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
     // };
     return (
         <div >
-            <div className='container-fluid px-3 d-flex align-items-center' >
+            <div className='container-fluid px-3' >
                 {/* <Container> */}
-                <button className='btn btn-outline-primary downlaod-btn mb-2 me-1 py-0 px-1 px-md-2' onClick={() => handlePrint()}><FileDownloadOutlinedIcon />{" "}Download</button>
-                <h3 className='mb-3 itinery-trip-title-class'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''} </h3>
+                <div className='trp-title d-flex align-items-center justify-content-between my-3'>
+                    <h3 className='itinery-trip-title-class'>Your Plan Details{tripTitle ? ` - ${tripTitle}` : ''} </h3>
+                    <button className='btn btn-outline-primary downlaod-btn mb-2 me-1 py-0 px-1 px-md-2' onClick={() => handlePrint()}><FileDownloadOutlinedIcon />{" "}Download</button>
+                </div>
                 {/* </Container> */}
             </div>
             <div className='container-fluid ps-3'>

@@ -43,7 +43,9 @@ const ItineraryInformationCard = ({ onChangeMapInfoWindow, placedata, priceKey =
             return (
                 <>
                     {imgUrls.length > 0 && <CardOverflow>
-                        <AspectRatio ratio="1" sx={{ width: "200px !important", height: "100px !important" }} className="card-image-container">
+                        {/* <AspectRatio ratio="1" sx={{ width: "200px !important", height: "100px !important" }} className="card-image-container"> */}
+                        <AspectRatio ratio="1" className="card-image-container">
+
                             <Slider {...settings} className='images-slick-slider'>
                                 {imgUrls?.map((eachPhoto, index) =>
                                     <img

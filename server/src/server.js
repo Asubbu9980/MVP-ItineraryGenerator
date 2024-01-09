@@ -7,6 +7,7 @@
 var app = require("./app");
 var debug = require("debug")("reqresloggingexample:server");
 var http = require("http");
+const io = require('socket.io')(http);
 const db = require('./db');
 
 
@@ -84,6 +85,13 @@ function onError(error) {
 async function onListening() {
     var addr = server.address();
     var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+    io.on('connection', (socket) => {
+        console.log('A user connected');
+        socket.on('disconnect', () => {
+            console.log('A user disconnected');
+        });
+    });
+
     console.log(
         `Server listening on http://localhost:${bind}`,
     );
