@@ -21,7 +21,7 @@ const config = (message) => {
     return {
         initialMessages: [
             createChatBotMessage(
-                `Hi I'm ${botName}. I’m here to help you explain how I work.`, {
+                `Hi I'm ${botName}. How can i help you?`, {
                 delay: 500,
                 widget: message.length > 0 ? 'reset_messages' : 'welcome',
             })

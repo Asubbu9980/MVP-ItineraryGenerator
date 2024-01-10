@@ -37,7 +37,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             // break;
         }
         // let message = 
-        const botMessage = createChatBotMessage(`Hi I'm AI Chatbot. I’m here to help you on Itinerary. Please ask related to trip or locations`);
+        const botMessage = createChatBotMessage(`Hi I'm AI Chatbot assistance. I’m here to help you on Trip Itinerary. Please ask related to any vacations or destinations`);
         setState((prev) => ({
             ...prev,
             messages: [...prev.messages, botMessage],
@@ -45,7 +45,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
     };
     const handleConfirmName = () => {
         console.log("state", state);
-        const botMessage = createChatBotMessage(`Hello ${state.name} Where you want to go`);
+        const botMessage = createChatBotMessage(`Hello ${state.name}, where you want to go?`);
         // setState((prev) => ({
         //     ...prev,
         //     name:
@@ -53,7 +53,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
         // }));
     };
     const showDestinationList = () => {
-        const botMessage = createChatBotMessage(`best places in india`, {
+        const botMessage = createChatBotMessage(`Best places in india`, {
             delay: 500,
             widget: "locations",
             loading: true,
@@ -77,7 +77,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
         if (enterClinetMessage) {
             m.push(clientMessage)
         }
-        const botMessage = createChatBotMessage(`When you are planning for ${destination}`, {
+        const botMessage = createChatBotMessage(`When are you planning for ${destination}?`, {
             widget: "start_date",
             delay: 500,
         });
@@ -91,7 +91,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
     const handleStartDateChange = (start_date) => {
         const clientMessage = createClientMessage(`${start_date}`);
         const botMessage = createChatBotMessage(
-            <PleaseWaitMsg message="Please wait" />,
+            <PleaseWaitMsg message="Please wait..." />,
             {
                 delay: 500,
                 loading: true,
@@ -128,7 +128,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         fR[key] = value
                     }
                 });
-                const botMessage = createChatBotMessage(`Here Is the plan`, {
+                const botMessage = createChatBotMessage(`Here is your trip itinerary`, {
                     delay: 500,
                     widget: "Itinerary",
                     loading: true,
