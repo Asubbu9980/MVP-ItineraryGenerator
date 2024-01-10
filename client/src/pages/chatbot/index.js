@@ -243,10 +243,13 @@ function IndexPage() {
             <div className="px-2 px-sm-0 sideBar custom-scroll">
                 <div className=' p-3'>
                     <h2 className='my-3'> Ai Chatbot</h2>
-                    <Button variant="text" className="buttonTrip mx-2" onClick={() => {
+                    <div className='text-center'>
+                        <Button variant="text" className="buttonTrip mx-2" onClick={() => {
 
-                    }}>
-                        <img src={addIcon} alt='addIcon' /> New Trip </Button>
+                        }}>
+                            <img src={addIcon} alt='addIcon' /> New Trip </Button>
+                    </div>
+
                     <Box className="leftMenu mt-5">
                         <h6>Today</h6>
                         <MenuList>
@@ -254,7 +257,7 @@ function IndexPage() {
                                 todayMessageHistory.map((tm, tmIndex) => {
                                     return <MenuItem key={tmIndex} onClick={() => { setMessageItem(tm.data); getChatConfig(tm.data) }}>
                                         <img src={comments} alt="lightbulbFilament" className='me-2' />
-                                        <ListItemText>{tm.title}</ListItemText>
+                                        <ListItemText className='menuText' >{tm.title}</ListItemText>
                                     </MenuItem>
                                 })
                             }
@@ -265,16 +268,15 @@ function IndexPage() {
                         <MenuList>
                             <MenuItem>
                                 <img src={comments} alt="lightbulbFilament" className='me-2' />
-                                <ListItemText>Goa trip itinerary</ListItemText>
+                                <ListItemText className='menuText' >Goa trip itinerary</ListItemText>
                             </MenuItem>
                             <MenuItem>
                                 <img src={lightbulbFilament} alt="lightbulbFilament" className='me-2' />
-                                <ListItemText>Manali trip ideas</ListItemText>
+                                <ListItemText className='menuText' >Manali trip ideas</ListItemText>
                             </MenuItem>
                             <MenuItem>
                                 <img src={filmStrip} alt="filmStrip" className='me-2' />
-                                <ListItemText>Delhi trip planning</ListItemText>
-
+                                <ListItemText className='menuText' >Delhi trip planning</ListItemText>
                             </MenuItem>
                         </MenuList>
                     </Box>
