@@ -1,44 +1,421 @@
 /* Chatbot.css */
-.options {
-  padding-bottom: 15px;
+.chatbotPage {
+  height: calc(100vh - 91px);
+  margin: 0;
+
+  .header-container {
+    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  }
+
+  .chatbot-container {
+    display: flex;
+    padding: 0;
+
+    .rightBar {
+      overflow-y: auto;
+      height: calc(100vh - 150px);
+      border-radius: 24px;
+      background: #F8F8F8;
+      width: 100%;
+      margin-left: 16px;
+
+      .toggleMenu {
+        // position: absolute;
+        // right: 8px;
+        // top: 34px;
+        cursor: pointer;
+
+        svg {
+          font-size: 32px;
+        }
+      }
+
+      .options {
+        padding-bottom: 15px;
+
+        .options-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+
+          .option-item {
+            display: inline-flex;
+            padding: 5px 6px 5px 8px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 9px;
+            background: #E4E4E4;
+            color: #565E6C;
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 18px;
+            margin-right: 4px;
+            margin-bottom: 5px;
+            cursor: pointer;
+            transition: transform 0.2s; // Add transition for smooth animation
+
+
+            &:hover {
+              box-shadow: inset 195px 0px 0px #2273c4;
+              color: #ffffff;
+              animation: bounce 0.5s; // Apply bounce animation on hover
+
+            }
+          }
+        }
+
+        .options-header {
+          border-radius: 9px;
+          background: #F0F1FF;
+          display: inline-flex;
+          padding: 6px 8px;
+          color: #6D7FDC;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 20px;
+        }
+      }
+
+      .aiChatbot {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h1 {
+          color: #171A1F;
+          font-size: 24px;
+          font-weight: 700;
+          line-height: 48px;
+          text-align: center;
+        }
+
+        .chatbotList {
+          min-width: 500px;
+
+          li {
+            border-radius: 12px;
+            background: #FFF;
+            align-items: center;
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            position: relative;
+            border: solid 1px #fff;
+
+            .icon {
+              display: block;
+              padding: 5px 10px;
+              justify-content: center;
+              align-items: center;
+              border-radius: 9px;
+              background: #E8F1FC;
+              transition: transform 0.3s ease-in-out;
+
+              img {
+                width: 24px;
+                margin: 0 auto;
+              }
+            }
+
+            p {
+              color: #171A1F;
+              font-size: 13px;
+              transition: transform 0.3s ease-in-out;
+            }
+
+            &:hover {
+              border: 1px solid #8775FD;
+              box-shadow: 0px 0px 1px 0px rgba(23, 26, 31, 0.07), 0px 0px 2px 0px rgba(23, 26, 31, 0.12);
+              cursor: pointer;
+
+              &:after {
+                display: block;
+                content: "";
+                background-image: url(../../assets/list-arrowright.png);
+                width: 24px;
+                height: 24px;
+                position: absolute;
+                right: 15px;
+                animation: shake 1s cubic-bezier(.36, .07, .19, .97) both;
+              }
+
+              p {
+                transform: translateX(-10px);
+              }
+
+              .icon {
+                animation: shake 1s cubic-bezier(.36, .07, .19, .97) both;
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+
+      .tripDetails-grid {
+        padding: 10px;
+
+        ul {
+          // padding-left: 20px;
+        }
+
+        .tripDetails-item {
+          padding-left: 20px;
+
+          .card-image-container {
+            width: 180px !important;
+          }
+
+          .loopCard {
+            width: 230px;
+          }
+        }
+
+        .trip-hotel-title {
+          img {
+            transition: transform 0.2s;
+
+            &:hover {
+              animation: bounce 0.5s infinite;
+            }
+          }
+
+        }
+      }
+    }
+
+    .sideBar {
+      width: 0;
+      transition: width 0.3s ease-in-out;
+      overflow: hidden;
+      border-radius: 24px;
+      background: #ECF3FF;
+
+
+
+      h2 {
+        color: #000;
+        font-size: 20px;
+        font-weight: 800;
+        line-height: 30px;
+        text-align: center;
+      }
+
+      .buttonTrip {
+        border-radius: 20px;
+        background: #2554AF;
+        color: #FFF;
+        font-size: 12px;
+        font-weight: 400;
+        height: 40px;
+        position: relative;
+        overflow: hidden;
+        padding-left: 10px;
+        padding-right: 12px;
+
+        .AddIcon {
+          font-size: 20px;
+          display: block;
+        }
+
+        &:hover {
+          background: #2554AF;
+
+          div {
+            animation: pulse 1s infinite;
+          }
+
+          &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: wave 1s ease-out;
+          }
+        }
+      }
+
+      // left menu 
+      .leftMenu {
+        h6 {
+          color: rgb(23 26 31 / 50%);
+          font-size: 12px;
+          font-weight: 500;
+          line-height: 20px;
+        }
+
+        ul {
+          li {
+            color: #565E6C;
+            font-size: 25px;
+            font-weight: 400;
+            line-height: 22px;
+            margin-bottom: 8px;
+            transition: transform 0.3s ease-in-out;
+            padding-left: 5px;
+
+            .menuText {
+              position: relative;
+              transition: transform 0.3s ease-in-out;
+
+              span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                max-width: 150px;
+                display: inline-block;
+              }
+
+              &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 1px;
+                background: #2554af;
+                transition: width 0.3s;
+              }
+            }
+
+            &:hover {
+              .menuText {
+                &::after {
+                  width: 90%;
+                }
+              }
+
+              background-color: transparent;
+              color: #2554AF;
+              transform: translateX(10px);
+            }
+          }
+        }
+      }
+    }
+
+    //custom-scroll
+    .custom-scroll {
+      overflow-y: scroll !important;
+
+      &::-webkit-scrollbar {
+        width: 3px !important;
+      }
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 18px rgba(250, 250, 251, 0.3);
+        -webkit-border-radius: 5px;
+        border-radius: 2px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #dfe2e6 !important;
+        width: 6px !important;
+
+        &:hover {
+          background: #757d85;
+        }
+      }
+    }
+
+    .react-chatbot-kit-chat-message-container {
+      &::-webkit-scrollbar {
+        width: 3px !important;
+      }
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 18px rgba(250, 250, 251, 0.3);
+        -webkit-border-radius: 5px;
+        border-radius: 2px;
+        margin-top: 16px;
+        margin-bottom: 16px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 5px;
+        border-radius: 5px;
+        background-color: #dfe2e6 !important;
+        width: 6px !important;
+
+        &:hover {
+          background: #757d85;
+        }
+      }
+    }
+  }
 }
 
-.options-header {
-  border-radius: 9px;
-  background: #F0F1FF;
-  display: inline-flex;
-  padding: 6px 8px;
-  color: #6D7FDC;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 20px;
+@keyframes shake {
+
+  10%,
+  90% {
+    transform: translate3d(-0.5px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(1px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(2px, 0, 0);
+  }
 }
 
-.options-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+@keyframes wave {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
 }
 
-.option-item {
-  display: inline-flex;
-  padding: 5px 6px 5px 8px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 9px;
-  background: #E4E4E4;
-  color: #565E6C;
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 18px;
-  margin-right: 4px;
-  margin-bottom: 5px;
-  cursor: pointer;
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
-.option-item:hover {
-  box-shadow: inset 195px 0px 0px #2273c4;
-  color: #ffffff;
+// Define bounce animation
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .stats {
@@ -52,395 +429,82 @@
   justify-content: center;
 }
 
-.column-left {
-  text-align: right;
-}
 
-.column-right {
-  text-align: left;
-  padding: 8px;
-}
-
-.url-link {
-  font-size: 0.9rem;
-  padding: 10px;
-  border-radius: 3px;
-  background-color: #2273c4;
-  display: flex;
-  align-items: center;
-  color: #fff;
-}
-
-.url-icon {
-  width: 35px;
-  margin-right: 10px;
-}
-
-.url-header {
-  font-size: 0.9rem;
-  font-weight: lighter;
-}
-
-.tel-link {
-  font-size: 0.7rem;
-  padding: 2px 5px;
-  border-radius: 30px;
-  background-color: #2273c4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  text-decoration: none;
-  fill: #fff;
-}
-
-.error {
-  color: #ff0000;
-  font-size: 0.8em;
-  padding: 5px;
-  text-align: center;
-}
-
-.sideBar {
-  width: 283px;
-  border-radius: 24px;
-  background: #ECF3FF;
-  width: 25%;
-  border-radius: 24px;
-  background: #ECF3FF;
-}
-
-.sideBar h2 {
-  color: #000;
-  font-size: 20px;
-  font-weight: 800;
-  line-height: 30px;
-  text-align: center;
-}
-
-.sideBar .buttonTrip,
-.sideBar .buttonTrip:hover {
-  border-radius:20px;
-  background: #2554AF;
-  color: #FFF;
-  font-size: 12px;
-  font-weight: 400;
-  height: 40px;
-  position: relative;
-  overflow: hidden;
-  padding-left: 10px;
-  padding-right: 12px;
-}
-
-.sideBar .buttonTrip .AddIcon{
-  font-size: 20px;
-  display: block;
+.sideBar.open {
+  transform: translateX(0) !important;
+  // transform: translateX(-100%) !important;
+  width: 280px !important;
 
 }
 
-.sideBar .buttonTrip div {
-  transition: transform 0.3s ease-in-out;
-  display:flex;
-
-}
-.sideBar .buttonTrip:hover div {
-  animation: pulse 1s infinite;
-}
-.buttonTrip:hover::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 200%;
-  height: 200%;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  animation: wave 1s ease-out;
+.rightBar.rightBarFull {
+  .react-chatbot-kit-chat-input-container {
+    width: calc(100% - 32px);
+  }
 }
 
-.leftMenu h6 {
-  color: rgb(23 26 31 / 50%);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
-}
-
-.leftMenu ul li {
-  color: #565E6C;
-  font-size: 25px;
-  font-weight: 400;
-  line-height: 22px;
-  margin-bottom: 8px;
-  transition: transform 0.3s ease-in-out;
-}
-.leftMenu ul li .menuText {
-  position: relative;
-  transition: transform 0.3s ease-in-out;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 200px; /* Adjust this value as needed */
-}
-
-.leftMenu ul li .menuText::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: #2554af;
-  transition: width 0.3s;
-}
-.leftMenu ul li:hover .menuText::after {
-  width: 90%;
-}
-
-.leftMenu ul li:hover {
-  background-color: transparent;
-  color: #2554AF;
-  transform: translateX(10px);
-  
-}
-
-// .leftMenu ul li:hover .icon {
-//   color: #2554AF;
-// }
-
-
-
-
-.chatbotList {
-  min-width: 500px;
-}
-
-.aiChatbot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.aiChatbot .chatbotList li {
-  border-radius: 12px;
-  background: #FFF;
-  align-items: center;
-  display: flex;
-  list-style: none;
-  gap: 15px;
-  position: relative;
-  border: solid 1px #fff;
-}
-
-.aiChatbot .chatbotList li .icon {
-  display: block;
-  padding: 5px 10px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 9px;
-  background: #E8F1FC;
-  transition: transform 0.3s ease-in-out;
-}
-
-.aiChatbot .chatbotList li .icon img {
-  width: 24px;
-  margin: 0 auto;
-}
-
-.aiChatbot .chatbotList li p {
-  color: #171A1F;
-  font-size: 13px;
-  transition: transform 0.3s ease-in-out;
-
-}
-
-.aiChatbot .chatbotList li:hover {
-  border: 1px solid #8775FD;
-  box-shadow: 0px 0px 1px 0px rgba(23, 26, 31, 0.07), 0px 0px 2px 0px rgba(23, 26, 31, 0.12);
-  cursor: pointer;
-}
-
-.aiChatbot .chatbotList li:hover:after {
-  display: block;
-  content: "";
-  background-image: url(../../assets/list-arrowright.png);
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  right: 15px;
-  animation: shake 1s cubic-bezier(.36,.07,.19,.97) both;
-
-}
-
-.aiChatbot .chatbotList li:hover p {
-  transform: translateX(-10px);
-}
-
-.aiChatbot .chatbotList li:hover .icon {
-  // animation: shake 0.3s cubic-bezier(.36, .07, .19, .97) both;
-  animation: shake 1s cubic-bezier(.36,.07,.19,.97) both;
-}
-
-
-
-.aiChatbot .chatbotList li:hover .icon {
-  color: #fff;
-}
-
-.aiChatbot h1 {
-  color: #171A1F;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 48px;
-  text-align: center;
-}
-
-.header-container {
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-}
 
 .chatbotPage {
-  height: calc(100vh - 91px);
-  margin: 0;
-}
-
-.chatbot-container {
-  display: flex;
-  padding: 0;
-}
-
-.sideBar {
-  background-color: #f8f9fa;
-  border-right: 1px solid #dee2e6;
-  overflow-y: auto;
-  height: calc(100vh - 91px);
-  width: 18%;
-}
-
-.custom-scroll {
   overflow-y: scroll !important;
-}
 
-.custom-scroll::-webkit-scrollbar,
-.react-chatbot-kit-chat-message-container::-webkit-scrollbar {
-  width: 3px !important;
-}
-
-.custom-scroll::-webkit-scrollbar-track,
-.react-chatbot-kit-chat-message-container::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 18px rgba(250, 250, 251, 0.3);
-  -webkit-border-radius: 5px;
-  border-radius: 2px;
-  margin-top: 16px;
-  margin-bottom: 16px;
-
-}
-
-.custom-scroll::-webkit-scrollbar-thumb,
-.react-chatbot-kit-chat-message-container::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  background-color: #dfe2e6 !important;
-  width: 6px !important;
-}
-
-.custom-scroll::-webkit-scrollbar-thumb:hover,
-.react-chatbot-kit-chat-message-container::-webkit-scrollbar-thumb:hover {
-  background: #757d85;
-}
-
-
-.rightBar {
-  // padding: 20px;
-  overflow-y: auto;
-  height: calc(100vh - 150px);
-  border-radius: 24px;
-  background: #F8F8F8;
-  width: 82%;
-  margin-left: 16px;
-}
-
-.chatbotPage .tripDetails-grid {
-  padding: 10px;
-}
-
-.chatbotPage .tripDetails-grid ul {
-  // padding-left: 20px ;
-}
-
-.chatbotPage .tripDetails-grid .tripDetails-item {
-  padding-left: 20px;
-}
-
-.chatbotPage .tripDetails-grid .tripDetails-item .card-image-container {
-  width: 180px !important;
-}
-
-.chatbotPage .tripDetails-grid .tripDetails-item .loopCard {
-  width: 230px;
-}
-
-
-// @keyframes shake {
-
-//   10%,
-//   90% {
-//     transform: translate3d(-1px, 0, 0);
-//   }
-
-//   20%,
-//   80% {
-//     transform: translate3d(2px, 0, 0);
-//   }
-
-//   30%,
-//   50%,
-//   70% {
-//     transform: translate3d(-4px, 0, 0);
-//   }
-
-//   40%,
-//   60% {
-//     transform: translate3d(4px, 0, 0);
-//   }
-// }
-
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-0.5px, 0, 0);
-  }
-  
-  20%, 80% {
-    transform: translate3d(1px, 0, 0);
+  &::-webkit-scrollbar {
+    width: 3px !important;
   }
 
-  30%, 50%, 70% {
-    transform: translate3d(-2px, 0, 0);
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 18px rgba(250, 250, 251, 0.3);
+    -webkit-border-radius: 5px;
+    border-radius: 2px;
+    margin-top: 16px;
+    margin-bottom: 16px;
   }
 
-  40%, 60% {
-    transform: translate3d(2px, 0, 0);
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #dfe2e6 !important;
+    width: 6px !important;
+
+    &:hover {
+      background: #757d85;
+    }
   }
 }
 
-@keyframes wave {
-  0% {
-    transform: translate(-50%, -50%) scale(0);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0;
-  }
+.vertical-line {
+  border-left: 3px solid black;
+  height: 25px;
+  position: relative;
+  display: inline-block;
+  width: 131px;
+  top:120px;
+  margin-left: 2px;
+  cursor: pointer;
+
 }
 
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
+.vertical-line:hover::after {
+  content: "Close Sidebar";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #1565c0;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  color: #fff;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -20px; // Adjust as needed
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
   }
 }

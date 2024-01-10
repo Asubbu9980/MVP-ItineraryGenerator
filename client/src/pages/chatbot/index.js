@@ -21,8 +21,13 @@ import comments from "../../assets/comments.png";
 import config from './config.js';
 import MessageParser from './MessageParser.jsx';
 import ActionProvider from './ActionProvider.jsx';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import MenuIcon from '@mui/icons-material/Menu';
+
 
 function IndexPage() {
+
+
     // Added the class to HTML body element
     const location = useLocation();
     useEffect(() => {
@@ -238,9 +243,17 @@ function IndexPage() {
             validator={validator}
         />
     }
+    // menu function 
+    const [isOpen, setIsOpen] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsOpen(!isOpen);
+    };
     return (
         <div className="chatbot-container mt-3">
-            <div className="px-2 px-sm-0 sideBar custom-scroll">
+            <div className={`px-2 px-sm-0 sideBar custom-scroll ${isOpen ? 'open' : ''}`}>
+               
+
                 <div className=' p-3'>
                     <h2 className='my-3'> Ai Chatbot</h2>
                     <div className='text-center'>
@@ -282,7 +295,13 @@ function IndexPage() {
                     </Box>
                 </div>
             </div>
-            <div className="px-2 px-sm-0 rightBar custom-scroll">
+            <div className={`px-2 px-sm-0 rightBar custom-scroll ${isOpen ? '' : 'rightBarFull'}`}>
+
+            
+  <div onClick={toggleSidebar} className='vertical-line'></div>
+
+
+
                 {/* <div className='ms-2'> */}
                 {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
                 <div className='ms-2'>
