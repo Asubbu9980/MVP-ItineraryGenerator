@@ -27,7 +27,7 @@
 }
 .react-chatbot-kit-chat-input-container {
   position: fixed;
-  width: calc(100% - 20%);
+  width: calc(100% - 270px);
   bottom: 5px;
 }
 .react-chatbot-kit-chat-input {
@@ -85,9 +85,7 @@
   max-width: 50%;
   width: fit-content;
 }
-.react-chatbot-kit-user-chat-message-container{
-
-}
+ 
 
 @keyframes updown {
   0%, 100% {
