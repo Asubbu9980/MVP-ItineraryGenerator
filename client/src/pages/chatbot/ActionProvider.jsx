@@ -89,7 +89,9 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
         }));
     }
     const handleStartDateChange = (start_date) => {
-        const clientMessage = createClientMessage(`${start_date}`);
+        // console.log("start_date", start_date);
+        const selectedStartDate = dayjs(start_date).add(1, 'day');
+        const clientMessage = createClientMessage(`${selectedStartDate}`);
         const botMessage = createChatBotMessage(
             <PleaseWaitMsg message="Please wait..." />,
             {
@@ -98,24 +100,28 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                 terminateLoading: true,
             }
         );
-
+        const minimumTripEndDate = dayjs(start_date).add(2, 'day')
 
         setState((prev) => ({
             ...prev,
             messages: [...prev.messages, clientMessage, botMessage],
             start_date: start_date,
+            end_date: minimumTripEndDate,
         }));
-        getTripDetails();
+        getTripDetails(start_date, minimumTripEndDate);
     }
 
-    const getTripDetails = () => {
+    const getTripDetails = (start_date, end_date) => {
         try {
-            console.log("state", state);
+            console.log('state', state);
+            const formattedStartDate = dayjs(start_date).format('DD MMMM, YYYY');
+            const formattedEndDate = dayjs(end_date).format('DD MMMM, YYYY');
+            // console.log("formattedStartDate", formattedStartDate, 'formattedEndDate', formattedEndDate);
             const payload = {
                 destination: state.destination,
                 "source": "Hyderabad",
-                "start_date": dayjs(state.start_date).format('DD MMMM, YYYY'),
-                "end_date": dayjs(dayjs(state.start_date).format('DD MMMM, YYYY')).add(2, 'day').format('DD MMMM, YYYY'),
+                "start_date": formattedStartDate,
+                "end_date": formattedEndDate,
             }
             getTripDetailsApi(payload).then((r) => {
                 const p = r?.data.hasOwnProperty('trip') ? r?.data.trip : r?.data;

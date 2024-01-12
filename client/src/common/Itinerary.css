@@ -642,11 +642,11 @@
     font-size: 17px !important;
 }
 
-.card-image-container{
+/* .card-image-container{
     width: 200px !important;
     height: 100px !important;
     
-}
+} */
 .card-image-container>div.css-6e7lq1-JoyAspectRatio-content {
     background-color: transparent !important;
 }
@@ -848,7 +848,7 @@
 }
 
 .tripDetails-day-accordion .Mui-expanded {
-    min-height: 50px !important;
+    min-height: 40px !important;
 }
 
 @media screen and (max-width: 767px) {
@@ -872,6 +872,10 @@
 
 .tripDetails-day-accordion-summary>div.css-yw020d-MuiAccordionSummary-expandIconWrapper {
     display: flex !important;
+    align-items: flex-end !important;
+}
+
+.css-1fx8m19.Mui-expanded {
     align-items: flex-end !important;
 }
 
@@ -985,7 +989,8 @@
     }
 
 }
-.trp-title{
+
+.trp-title {
     font-size: 24px;
     font-weight: 600;
     line-height: 29px;
