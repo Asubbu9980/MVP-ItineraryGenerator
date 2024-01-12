@@ -7,7 +7,7 @@ import { auth0 } from "./config";
 import { Auth0Provider } from '@auth0/auth0-react';
 import { LoaderProvider } from './context/LoaderContext';
 import { TripPayloadContextProvider } from './context/TripDataContext';
-
+import { CaptchaProvider } from './context/CaptchaVerifyContext';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -21,10 +21,11 @@ function App() {
           redirectUri={window.location.origin}
         >
           <LoaderProvider>
-            <TripPayloadContextProvider>
-              <Route />
-            </TripPayloadContextProvider>
-
+            <CaptchaProvider>
+              <TripPayloadContextProvider>
+                <Route />
+              </TripPayloadContextProvider>
+            </CaptchaProvider>
           </LoaderProvider>
         </Auth0Provider>
       </Provider>

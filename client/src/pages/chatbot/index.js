@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import 'react-chatbot-kit/build/main.css'
 
 import { useLocation } from 'react-router-dom'; // Assuming you are using React Router
@@ -17,14 +17,27 @@ import addIcon from "../../assets/new-add.png";
 import filmStrip from "../../assets/film-strip.png";
 import lightbulbFilament from "../../assets/lightbulb-filament.png";
 import comments from "../../assets/comments.png";
-
+import CaptchaContext from '../../context/CaptchaVerifyContext.jsx';
 import config from './config.js';
 import MessageParser from './MessageParser.jsx';
 import ActionProvider from './ActionProvider.jsx';
-
+import { useAuth0 } from '@auth0/auth0-react';
+import { useHistory } from "react-router-dom";
 function IndexPage() {
     // Added the class to HTML body element
     const location = useLocation();
+    const { isAuthenticated, isLoading } = useAuth0();
+    // console.log("isAuthenticated", isAuthenticated);
+    const history = useHistory();
+    const { isCaptchaVerified } = useContext(CaptchaContext);
+    useEffect(() => {
+        if (!isAuthenticated && !isLoading && !isCaptchaVerified) {
+            console.log("isAuthenticated", isAuthenticated, "isLoading", isLoading);
+            history.push('/captcha-verify')
+
+        }
+    }, [isAuthenticated]);
+
     useEffect(() => {
         const { pathname } = location;
         const className = pathname.substring(1).replace('/', '-');
@@ -226,7 +239,7 @@ function IndexPage() {
         if (input.length > 2) return true;
         return false
     }
-    const getChatConfig = (messages = []) => {
+    const getChatConfig = (messages = messageItem) => {
         return <Chatbot
             config={config(messages)}
             messageParser={MessageParser}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Container, Box } from '@mui/material';
 import codeIcon from "../../../assets/code-icon.png";
 import questionMark from "../../../assets/question-mark.png";
@@ -8,6 +8,17 @@ import bulbIcon from "../../../assets/bulb-icon.png";
 // import userIocn from "../../ass?ets/userIocn.png";
 // import chatBoatIcon from "../../assets/chatBoatIcon.png";
 const WelcomeWidget = (props) => {
+    console.log('welcome', props.messageHistory)
+    useEffect(() => {
+        if (props?.messageHistory?.length > 0) {
+            const filteredMessageHistory = props.messageHistory.filter((m) => typeof (m.message) === 'string')
+            props.actionProvider.setMessages(filteredMessageHistory)
+        }
+        // else {
+        //     // props.actionProvider.createChatBotMessage()
+        //     props.actionProvider.handleInitialWelcomeMessage()
+        // }
+    }, [props.messageHistory])
     return (
         <Box className='aiChatbot'>
             <Box >

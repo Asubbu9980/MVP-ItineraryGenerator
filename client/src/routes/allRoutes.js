@@ -6,7 +6,7 @@ import ChatbotPage from "../pages/chatbot";
 // import HomeSearch from "../pages/homeSearch";
 import PreferentialSearch from "../pages/preferentialSearch";
 import RecentSearches from "../pages/recentSearches/index";
-
+import CaptchaVerify from "../pages/captchaVerify/index";
 const authProtectedRoutes = [
 
 ]
@@ -20,7 +20,7 @@ const publicRoutes = [
     { path: "/preferential-search", component: PreferentialSearch },
     { path: "/recent-searches", component: RecentSearches },
     { path: "/chatbot", component: ChatbotPage },
-
+    { path: "/captcha-verify", component: CaptchaVerify },
     { path: "", component: HomePage },
 
 

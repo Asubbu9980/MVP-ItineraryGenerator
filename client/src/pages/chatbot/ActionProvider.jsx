@@ -64,12 +64,14 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             messages: [...prev.messages, botMessage],
         }));
     }
-    const setMessages = (messages) => {
+    const setMessages = (messages = []) => {
+        if (messages.length !== 0) {
+            setState((prev) => ({
+                ...prev,
+                messages: messages,
+            }));
 
-        setState((prev) => ({
-            ...prev,
-            messages: messages,
-        }));
+        }
     }
     const handleDestination = (destination, enterClinetMessage = true, message = null) => {
         const clientMessage = createClientMessage(message == null ? `${destination}` : message);

@@ -77,7 +77,7 @@ const config = (message) => {
         widgets: [
             {
                 widgetName: "welcome",
-                widgetFunc: (props) => <WelcomeWidget {...props} />,
+                widgetFunc: (props) => <WelcomeWidget {...props} messageHistory={message} />,
                 mapStateToProps: ["messages", "destination"]
             },
             {
@@ -94,7 +94,7 @@ const config = (message) => {
             },
             {
                 widgetName: "reset_messages",
-                widgetFunc: (props) => <PreloadMessages {...props} />,
+                widgetFunc: (props) => <PreloadMessages {...props} messageHistory={message} />,
                 mapStateToProps: ["messages", "destination", "start_date"]
             },
 
