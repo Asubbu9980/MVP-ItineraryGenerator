@@ -10,10 +10,10 @@ import ChatBoxIcon from './icons/chatBoxIcon';
 import CustomMessage from './widgets/CustomMessage';
 import PreloadMessages from './widgets/PreloadMessages';
 
-const currentDate = new Date();
+const currentDate = new Date()
 
-export const startDateInitialValue = dayjs(currentDate).add(1, 'day')
-export const endDateInitialValue = dayjs(currentDate).add(3, 'day')
+const startDateInitialValue = dayjs(currentDate).add(1, 'day')
+const endDateInitialValue = dayjs(currentDate).add(3, 'day')
 const botName = 'Ai Chatbot';
 
 const config = (message) => {

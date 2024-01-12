@@ -7,8 +7,8 @@ import dayjs from 'dayjs';
 const DatePickerWidget = (props) => {
     return (
         <div className='text-center my-4'>
-         <div> <label style={{ marginBottom: '8px' }}>Select your Start Date</label></div>
-        <div className='startDate mb-4'>
+            <div> <label style={{ marginBottom: '8px' }}>Select your Start Date</label></div>
+            <div className='startDate mb-4'>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         value={props.start_Date}
