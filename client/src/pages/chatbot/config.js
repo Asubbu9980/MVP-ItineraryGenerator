@@ -9,7 +9,10 @@ import WelcomeWidget from './widgets/welcome';
 import ChatBoxIcon from './icons/chatBoxIcon';
 import CustomMessage from './widgets/CustomMessage';
 import PreloadMessages from './widgets/PreloadMessages';
-
+import FamilyVacationPlaces from './widgets/familyVacationPlaces';
+import SoloVaccationPlaces from './widgets/soloVaccationPlaces';
+import TripPlanDuration from './widgets/tripPlanSuggestions/tripPlanDuration';
+import LocationTripPlanSuggestion from './widgets/tripPlanSuggestions/locationTripPlanSuggestion';
 const currentDate = new Date()
 
 const startDateInitialValue = dayjs(currentDate).add(1, 'day')
@@ -65,7 +68,11 @@ const config = (message) => {
             end_date: endDateInitialValue,
             transport: 'car',
             tripData: null,
-            tripTitle: null
+            tripTitle: null,
+            trip_suggestion_duration: '',
+            solo_destination: '',
+            family_destination: '',
+            trip_suggestions_destination: '',
         },
         customComponents: {
             botAvatar: (props) => <ChatBoxIcon {...props} />,
@@ -83,13 +90,13 @@ const config = (message) => {
             {
                 widgetName: "locations",
                 widgetFunc: (props) => <LocationWidget {...props} />,
-                mapStateToProps: ["messages", "destination"]
+                mapStateToProps: ["messages", "destination", 'trip_suggestion_duration']
 
             },
             {
                 widgetName: "start_date",
                 widgetFunc: (props) => <DatePickerWidget {...props} />,
-                mapStateToProps: ["messages", "destination", "start_date"]
+                mapStateToProps: ["messages", "destination", "start_date", "trip_suggestion_duration"]
 
             },
             {
@@ -110,6 +117,36 @@ const config = (message) => {
                 widgetName: "Itinerary",
                 widgetFunc: (props) => <ItineraryWidget {...props} />,
                 mapStateToProps: ["tripData", "tripTitle"]
+            },
+            {
+                widgetName: "family_locations",
+                widgetFunc: (props) => <FamilyVacationPlaces {...props} />,
+                mapStateToProps: ["messages", "destination", "family_destination"]
+
+            },
+            {
+                widgetName: "solo_locations",
+                widgetFunc: (props) => <SoloVaccationPlaces {...props} />,
+                mapStateToProps: ["messages", "destination", "solo_destination"]
+
+            },
+            {
+                widgetName: "trip_suggestion_duration",
+                widgetFunc: (props) => <TripPlanDuration {...props} />,
+                mapStateToProps: ["messages", "trip_suggestion_duration"]
+
+            },
+            {
+                widgetName: "trip_suggestion_destination",
+                widgetFunc: (props) => <LocationWidget {...props} />,
+                mapStateToProps: ["messages", 'trip_suggestions_destination,trip_suggestion_duration']
+
+            },
+            {
+                widgetName: "location_trip_suggestions",
+                widgetFunc: (props) => <LocationTripPlanSuggestion {...props} />,
+                mapStateToProps: ["messages", "trip_suggestion_duration", "trip_suggestions_destination"]
+
             },
 
             // {
