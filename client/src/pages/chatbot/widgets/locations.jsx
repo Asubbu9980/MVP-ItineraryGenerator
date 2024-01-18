@@ -1,6 +1,7 @@
 import React from 'react';
 import Options from './options';
 const LocationWidget = (props) => {
+    // console.log("props.trip_suggestion_duration", props.trip_suggestion_duration);
     const famousTouristCitiesInIndia = [
         "Agra",
         "Varanasi",
@@ -59,7 +60,7 @@ const LocationWidget = (props) => {
             text: "destination",
             name: m,
             handler: () => {
-                return props.actionProvider.handleDestination(m)
+                return (props.trip_suggestion_duration === '' ? props.actionProvider.handleDestination(m) : props.actionProvider.handleTripSuggestionsDestination(m))
 
             },
             id: i + 1

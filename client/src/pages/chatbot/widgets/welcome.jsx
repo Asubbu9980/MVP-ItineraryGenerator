@@ -13,11 +13,15 @@ const WelcomeWidget = (props) => {
             <Box >
                 <h1>Hi, Iam a Ai Chatbot </h1>
                 <ul className='chatbotList'>
-                    <li className='mb-2 p-2'>
+                    <li className='mb-2 p-2' onClick={() => {
+                        return props.actionProvider.showDestinationList()
+                    }}>
                         <span className='icon'> <img src={questionMark} alt='questionMark' /> </span>
                         <p className='m-0'>Where are you planning your vacation ?</p>
                     </li>
-                    <li className='mb-2 p-2'>
+                    <li className='mb-2 p-2' onClick={() => {
+                        return props.actionProvider.showSoloDestinationList()
+                    }}>
                         <span className='icon'><img src={codeIcon} alt='codeIcon' /> </span>
                         <p className='m-0'>Are you going solo for your trip ? </p></li>
                     <li className='mb-2 p-2' onClick={() => {
@@ -25,10 +29,14 @@ const WelcomeWidget = (props) => {
                     }}>
                         <span className='icon'><img src={bulbIcon} alt='bulbIcon' /> </span>
                         <p className='m-0'>Show best places in india </p></li>
-                    <li className='mb-2 p-2' >
+                    <li className='mb-2 p-2' onClick={() => {
+                        return props.actionProvider.showTripPlanSuggestions()
+                    }}>
                         <span className='icon' ><img src={pinIocn} alt='pinIocn' /> </span>
                         <p className='m-0'>Trip planning suggestions </p></li>
-                    <li className='mb-2 p-2' >
+                    <li className='mb-2 p-2' onClick={() => {
+                        return props.actionProvider.showFamiliesDestinationList()
+                    }}>
                         <span className='icon'><img src={bulbIcon} alt='bulbIcon' /> </span>
                         <p className='m-0'>Top vacation places for family trip </p></li>
 
