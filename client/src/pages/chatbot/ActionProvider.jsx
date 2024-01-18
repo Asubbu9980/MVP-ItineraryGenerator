@@ -46,11 +46,11 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
     const handleConfirmName = () => {
         console.log("state", state);
         const botMessage = createChatBotMessage(`Hello ${state.name}, where you want to go?`);
-        // setState((prev) => ({
-        //     ...prev,
-        //     name:
-        //         messages: [...prev.messages, botMessage],
-        // }));
+        setState((prev) => ({
+            ...prev,
+            // name:
+            messages: [...prev.messages, botMessage],
+        }));
     };
     const showDestinationList = () => {
         const botMessage = createChatBotMessage(`Best places in india`, {
@@ -118,13 +118,13 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
     }
     const handleTripSuggestionsDestination = (destination) => {
         const clientMessage = createClientMessage(`${destination}`);
-        const botMessage = createChatBotMessage(`Here trip planning suggestions for your ${destination} for ${state.trip_suggestion_duration}`, {
+        const botMessage = createChatBotMessage(`Here trip planning suggestions for ${destination} ${state.trip_suggestion_duration} trip plan`, {
             delay: 500,
             widget: "location_trip_suggestions",
             loading: true,
             terminateLoading: true,
         });
-        const botMessage2 = createChatBotMessage(`Select your start date to create the trip plan for ${destination}`, {
+        const botMessage2 = createChatBotMessage(`Select your start date to create the itinerary for ${destination} ${state.trip_suggestion_duration} trip plan`, {
             delay: 500,
             widget: "start_date",
             loading: true,
