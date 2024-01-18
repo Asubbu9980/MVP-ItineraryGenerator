@@ -3,7 +3,7 @@ import { createClientMessage } from 'react-chatbot-kit';
 import dayjs from 'dayjs';
 import { getTripDetailsApi } from '../../helpers/trip_helper';
 import PleaseWaitMsg from '../chatbot/widgets/pleaseWaitMsg';
-
+import { getChatBotMessagesFromChatgpt } from '../../helpers/trip_helper';
 const ActionProvider = ({ createChatBotMessage, state, setState, children }) => {
     const handleHello = () => {
         const botMessage = createChatBotMessage('Hello. Nice to meet you.');
@@ -23,6 +23,37 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
         }));
 
     };
+
+    const getResponseFromChatgpt = (message) => {
+        const botMessage = createChatBotMessage(
+            <PleaseWaitMsg message="Please wait..." />,
+            {
+                delay: 500,
+                loading: true,
+                terminateLoading: true,
+            }
+        );
+        setState((prev) => ({
+            ...prev,
+            messages: [...prev.messages, botMessage],
+        }));
+        getResponseMessage(message);
+
+        // console.log("response", response);
+    }
+    const getResponseMessage = async (message) => {
+        const response = await getChatBotMessagesFromChatgpt({ text: message });
+        const responseMessage = response?.data?.choices[0]?.message?.content;
+        if (responseMessage) {
+            console.log("responseMessage", state.messages)
+            const filteredMessages = state.messages.filter((m) => m.message.includes('Please wait') !== true);
+            const botMessage = createChatBotMessage(`${responseMessage}`);
+            setState((prev) => ({
+                ...prev,
+                messages: [...filteredMessages, botMessage],
+            }));
+        }
+    }
     const handleMessageChages = (m) => {
         // console.log("name", state);
         const lowerCaseMessage = m.toLowerCase();
@@ -37,11 +68,14 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             // break;
         }
         // let message = 
-        const botMessage = createChatBotMessage(`Hi I'm AI Chatbot assistance. I’m here to help you on Trip Itinerary. Please ask related to any vacations or destinations`);
-        setState((prev) => ({
-            ...prev,
-            messages: [...prev.messages, botMessage],
-        }));
+        else {
+            getResponseFromChatgpt(lowerCaseMessage)
+        }
+        // const botMessage = createChatBotMessage(`Hi I'm AI Chatbot assistance. I’m here to help you on Trip Itinerary. Please ask related to any vacations or destinations`);
+        // setState((prev) => ({
+        //     ...prev,
+        //     messages: [...prev.messages, botMessage],
+        // }));
     };
     const handleConfirmName = () => {
         console.log("state", state);
