@@ -62,6 +62,17 @@
 
             }
           }
+          .selected-destination,.selected-suggestions-destination{
+            box-shadow: inset 195px 0px 0px #2273c4;
+              color: #ffffff;
+            &:hover {
+              box-shadow: inset 195px 0px 0px #2273c4;
+              color: #ffffff;
+              animation: bounce 0.5s; // Apply bounce animation on hover
+
+            }
+          }
+
         }
 
         .options-header {
@@ -507,4 +518,87 @@
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
   }
+}
+.trip-location-list-items{
+  border-radius: 10px;
+  background-color: #fff;
+  width: 30%;
+  list-style-type: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+    &:hover {
+      // background: #757d85;
+      // color: #fff;
+      border: 1px solid #8775FD;
+      // 
+      animation: normal-bounce 0.5s;
+    }
+    h5{
+      font-size: 12px;
+      font-weight: 600;
+    }
+}
+.active-family-destination, .active-solo-destination{
+  border: 1px solid #8775FD;
+}
+@keyframes normal-bounce {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+.trip-location-list-items-paragraph{
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  font-size: 11px;
+  font-weight: 400;
+ 
+}
+.tripDurationChip, .tripDurationChip button{
+  background: #E4E4E4 !important;
+  color: #565E6C !important;
+  font-size: 11px !important;
+  font-weight: 600 ;
+  &:hover {
+    box-shadow: inset 195px 0px 0px #2273c4 !important;
+    color: #ffffff !important;
+    animation: bounce 0.5s; // Apply bounce animation on hover
+  }
+}
+
+.selected-trip-duration, .selected-trip-duration button{
+  // background: #E4E4E4 !important;
+  box-shadow: inset 195px 0px 0px #2273c4 !important;
+  color: #ffffff !important;
+  &:hover {
+    box-shadow: inset 195px 0px 0px #2273c4 !important;
+    color: #ffffff !important;
+    animation: bounce 0.5s; // Apply bounce animation on hover
+  }
+}
+.tripPlanSuggestionsCard{
+  border-radius: 10px;
+  background-color: #fff;
+  // list-style: disc;
+  li{
+    list-style-position: inside !important;
+  &::marker{
+    // content: "•";
+    color: #8775FD !important;
+  }
+  // span {
+  //   position: relative;
+  //   left: -10px;
+  // }
+}
 }
