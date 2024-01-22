@@ -552,6 +552,40 @@ class tripController {
     //         })
     //     }
     // }
+    generateChatbotMessages = async (req, res, next) => {
+        try {
+            const { text } = req.body;
+            const q = `${text}`
+            console.log("q", q);
+            const response = await openai.chat.completions.create({
+                messages: [
+                    { "role": "system", "content": `Hi you will be acting as AI chatbot` },
+                    { "role": "user", "content": q },
+                ],
+                model: 'gpt-3.5-turbo',
+                // model: 'gpt-4',
+                max_tokens: 3050,
+                temperature: 0,
+            });
+            console.log("response", response);
+            return commonResponse({
+                req,
+                res,
+                status: true,
+                data: response,
+                statusCode: 200,
+            })
+        } catch (error) {
+            console.log("Error", error);
+            return commonResponse({
+                req,
+                res,
+                status: false,
+                data: error,
+                statusCode: 500,
+            })
+        }
+    }
 }
 
 module.exports = new tripController;

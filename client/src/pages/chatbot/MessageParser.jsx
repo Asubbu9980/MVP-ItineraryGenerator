@@ -1,6 +1,8 @@
 // in MessageParser.jsx
 
 import React from 'react';
+import nlp from 'compromise';
+
 
 const MessageParser = (props) => {
     const famousTouristCitiesInIndia = [
@@ -55,9 +57,30 @@ const MessageParser = (props) => {
         "Uttar Pradesh",
         "Madhya Pradesh",
     ];
+
     const { children, actions } = props
-    const parse = (message) => {
-        const splitedText = message.split(" ");
+
+    const analyzeUserInput = (userInput) => {
+        const doc = nlp(userInput);
+
+        // Define keywords related to itinerary
+        const itineraryKeywords = ['itinerary', 'schedule', 'plan', 'trip'];
+
+        // Check if any of the itinerary keywords are present in the user's input
+        const isItineraryRelated = itineraryKeywords.some(keyword => doc.has(keyword));
+
+        // Check if the input is only "Goa" without any other clear indicators
+        // const isCasual = doc.out('array').length === 1;
+
+        if (isItineraryRelated) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    const getDestination = (userInput) => {
+        const splitedText = userInput.split(" ");
         let destination = null
         for (var i = 0; i < splitedText.length; i++) {
             const v = splitedText[i];
@@ -66,8 +89,22 @@ const MessageParser = (props) => {
                 destination = v
             }
         }
+        console.log(destination, "destination")
         if (destination) {
-            actions.handleDestination(destination, true, message);
+
+            actions.handleDestination(destination, true, userInput);
+        } else {
+            actions.handleMessageChages(userInput)
+
+        }
+    }
+
+    const parse = (message) => {
+        const isItineraryPlan = analyzeUserInput(message)
+        console.log(isItineraryPlan, "isItineraryPlan")
+        if (isItineraryPlan) {
+            getDestination(message)
+
         } else {
             actions.handleMessageChages(message)
 
