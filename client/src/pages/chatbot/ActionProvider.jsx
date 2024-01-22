@@ -3,7 +3,7 @@ import { createClientMessage } from 'react-chatbot-kit';
 import dayjs from 'dayjs';
 import { getTripDetailsApi } from '../../helpers/trip_helper';
 import PleaseWaitMsg from '../chatbot/widgets/pleaseWaitMsg';
-
+import { getChatBotMessagesFromChatgpt } from '../../helpers/trip_helper';
 const ActionProvider = ({ createChatBotMessage, state, setState, children }) => {
     const handleHello = () => {
         const botMessage = createChatBotMessage('Hello. Nice to meet you.');
@@ -23,25 +23,72 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
         }));
 
     };
-    const handleMessageChages = (m) => {
-        // console.log("name", state);
-        const lowerCaseMessage = m.toLowerCase();
-        if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
-            handleHello();
-            return;
-            // break
-        }
-        if (lowerCaseMessage.includes('my name') || lowerCaseMessage.includes('name')) {
-            handleConfirmName();
-            return;
-            // break;
-        }
-        // let message = 
-        const botMessage = createChatBotMessage(`Hi I'm AI Chatbot assistance. I’m here to help you on Trip Itinerary. Please ask related to any vacations or destinations`);
+
+    const getResponseFromChatgpt = (message) => {
+
+        const botMessage = createChatBotMessage(
+            <PleaseWaitMsg message="Please wait..." />,
+            {
+                delay: 500,
+                loading: true,
+                terminateLoading: true,
+            }
+        );
         setState((prev) => ({
             ...prev,
             messages: [...prev.messages, botMessage],
         }));
+        getResponseMessage(message);
+
+        // console.log("response", response);
+    }
+    const getResponseMessage = (message) => {
+        try {
+            getChatBotMessagesFromChatgpt({ text: message }).then((response) => {
+                const responseMessage = response?.data?.choices[0]?.message?.content;
+                if (responseMessage) {
+                    const botMessage = createChatBotMessage(`${responseMessage}`,
+                        {
+                            delay: 500,
+                            loading: true,
+                            terminateLoading: true,
+                        });
+                    const clientMessage = createClientMessage(`${message}`);
+                    const filteredMessages = state.messages.filter((m) => m.message.includes('Please wait') !== true);
+                    setState((prev) => ({
+                        ...prev,
+                        messages: [...filteredMessages, clientMessage, botMessage],
+                    }));
+                }
+            }).then((e) => { })
+        } catch (e) {
+            console.log("e", e);
+        }
+    }
+    console.log("responseMessage", state.messages)
+    const handleMessageChages = (m) => {
+        // console.log("name", state);
+        // const lowerCaseMessage = m.toLowerCase();
+        const Message = m;
+        // if (lowerCaseMessage.includes('hello') || lowerCaseMessage.includes('hi')) {
+        //     handleHello();
+        //     return;
+        //     // break
+        // }
+        // if (lowerCaseMessage.includes('my name') || lowerCaseMessage.includes('name')) {
+        //     handleConfirmName();
+        //     return;
+        //     // break;
+        // }
+        // // let message = 
+        // else {
+        getResponseFromChatgpt(Message)
+        // }
+        // const botMessage = createChatBotMessage(`Hi I'm AI Chatbot assistance. I’m here to help you on Trip Itinerary. Please ask related to any vacations or destinations`);
+        // setState((prev) => ({
+        //     ...prev,
+        //     messages: [...prev.messages, botMessage],
+        // }));
     };
     const handleConfirmName = () => {
         console.log("state", state);
