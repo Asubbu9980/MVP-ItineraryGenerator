@@ -8,7 +8,7 @@ import { TextField, Button, Container, Grid, Box, InputAdornment } from '@mui/ma
 import { useFormik } from 'formik';
 import Autocomplete from '@mui/material/Autocomplete';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'; 
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 // import Tripdata from './Tripdata.json';
 import dayjs from 'dayjs';
@@ -81,13 +81,17 @@ const famousTouristCitiesInIndia = [
     "Uttar Pradesh",
     "Madhya Pradesh",
 ];
+const destinationList = famousTouristCitiesInIndia.filter((city) => city !== 'Hyderabad');
 
 const IndexPage = () => {
     // const staticTripD = { "trip_start_date": "16 November, 2023", "trip_end_date": "21 November, 2023", "trip_duration": "6 days", "starting_location": "Goa", "ending_location": "Hyderabad", "places_visited": [{ "name": "Explore Old City", "description": "Take a walk through the narrow lanes of the Old City and experience the rich history and culture of Hyderabad. Visit iconic landmarks such as Charminar, Mecca Masjid, and Chowmahalla Palace.", "coordinates": { "title": "Charminar", "lat": "17.3616° N", "lng": "78.4747° E" }, "recommended_stay": "1 day", "activity": ["Sightseeing", "Photography", "Cultural Experience"], "popular_places": ["Charminar", "Mecca Masjid", "Chowmahalla Palace"], "accommodation": [{ "address": "Charminar Rd, Char Kaman, Ghansi Bazaar, Hyderabad, Telangana 500002", "name": "Hotel Charminar View", "type": "Budget Hotel", "coordinates": { "title": "Hotel Charminar View", "lat": "17.3616° N", "lng": "78.4747° E" }, "price_per_night": "INR 1500" }], "transportation": { "bus": { "Goa to Hyderabad": "INR 1000" }, "train": { "Goa to Hyderabad": "INR 1500" }, "flight": { "Goa to Hyderabad": "INR 3000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Biryani", "price": "INR 200", "address": "Paradise Restaurant, Secunderabad", "coordinates": { "title": "Paradise Restaurant", "lat": "17.4416° N", "lng": "78.4983° E" } }] }, { "name": "Visit Ramoji Film City", "description": "Spend a day at the world's largest integrated film city and explore the sets of famous Bollywood and Tollywood movies. Enjoy thrilling rides at the amusement park and watch live shows.", "coordinates": { "title": "Ramoji Film City", "lat": "17.2543° N", "lng": "78.6800° E" }, "recommended_stay": "1 day", "activity": ["Film City Tour", "Amusement Park", "Live Shows"], "popular_places": ["Ramoji Film City", "Eureka", "Movie Magic Park"], "accommodation": [{ "address": "Ramoji Film City Main Rd, Anaspur Village, Hayathnagar Mandal, Hyderabad, Telangana 501512", "name": "Tara Comfort Hotel", "type": "Luxury Hotel", "coordinates": { "title": "Tara Comfort Hotel", "lat": "17.2543° N", "lng": "78.6800° E" }, "price_per_night": "INR 5000" }], "transportation": { "bus": { "Hyderabad to Ramoji Film City": "INR 500" }, "train": { "Hyderabad to Ramoji Film City": "INR 1000" }, "flight": { "Hyderabad to Ramoji Film City": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "South Indian Thali", "price": "INR 300", "address": "Ramoji Film City, Hayathnagar Mandal, Hyderabad, Telangana 501512", "coordinates": { "title": "Ramoji Film City", "lat": "17.2543° N", "lng": "78.6800° E" } }] }, { "name": "Visit Salar Jung Museum", "description": "Explore one of the largest museums in the world and admire the vast collection of art, sculptures, and artifacts from different civilizations. Don't miss the famous Veiled Rebecca sculpture.", "coordinates": { "title": "Salar Jung Museum", "lat": "17.3713° N", "lng": "78.4804° E" }, "recommended_stay": "1 day", "activity": ["Museum Tour", "Art Appreciation", "History"], "popular_places": ["Salar Jung Museum", "Veiled Rebecca", "Clock Tower"], "accommodation": [{ "address": "Salar Jung Rd, Darulshifa, Hyderabad, Telangana 500002", "name": "Hotel Salar Jung Inn", "type": "Budget Hotel", "coordinates": { "title": "Hotel Salar Jung Inn", "lat": "17.3713° N", "lng": "78.4804° E" }, "price_per_night": "INR 2000" }], "transportation": { "bus": { "Local transportation in Hyderabad": "INR 500" }, "train": { "Local transportation in Hyderabad": "INR 1000" }, "flight": { "Local transportation in Hyderabad": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Haleem", "price": "INR 250", "address": "Hotel Shadab, Charminar", "coordinates": { "title": "Hotel Shadab", "lat": "17.3616° N", "lng": "78.4747° E" } }] }, { "name": "Visit Golconda Fort", "description": "Explore the majestic ruins of Golconda Fort and learn about its rich history and architecture. Don't miss the sound and light show in the evening which narrates the story of the fort.", "coordinates": { "title": "Golconda Fort", "lat": "17.3833° N", "lng": "78.4011° E" }, "recommended_stay": "1 day", "activity": ["Fort Tour", "History", "Sound and Light Show"], "popular_places": ["Golconda Fort", "Bala Hissar Gate", "Sound and Light Show"], "accommodation": [{ "address": "Golconda Fort, Ibrahim Bagh, Hyderabad, Telangana 500008", "name": "Fort View Guest House", "type": "Budget Hotel", "coordinates": { "title": "Fort View Guest House", "lat": "17.3833° N", "lng": "78.4011° E" }, "price_per_night": "INR 1500" }], "transportation": { "bus": { "Local transportation in Hyderabad": "INR 500" }, "train": { "Local transportation in Hyderabad": "INR 1000" }, "flight": { "Local transportation in Hyderabad": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Biryani", "price": "INR 200", "address": "Paradise Restaurant, Secunderabad", "coordinates": { "title": "Paradise Restaurant", "lat": "17.4416° N", "lng": "78.4983° E" } }] }, { "name": "Visit Hussain Sagar Lake", "description": "Take a boat ride on the iconic Hussain Sagar Lake and visit the famous Buddha statue located in the middle of the lake. Enjoy the beautiful views of the lake and the surrounding city.", "coordinates": { "title": "Hussain Sagar Lake", "lat": "17.4239° N", "lng": "78.4738° E" }, "recommended_stay": "1 day", "activity": ["Boat Ride", "Sightseeing", "Relaxation"], "popular_places": ["Hussain Sagar Lake", "Buddha Statue", "Lumbini Park"], "accommodation": [{ "address": "Hussain Sagar Lake, Khairatabad, Hyderabad, Telangana 500004", "name": "Lake View Resort", "type": "Luxury Hotel", "coordinates": { "title": "Lake View Resort", "lat": "17.4239° N", "lng": "78.4738° E" }, "price_per_night": "INR 5000" }], "transportation": { "bus": { "Local transportation in Hyderabad": "INR 500" }, "train": { "Local transportation in Hyderabad": "INR 1000" }, "flight": { "Local transportation in Hyderabad": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Biryani", "price": "INR 200", "address": "Paradise Restaurant, Secunderabad", "coordinates": { "title": "Paradise Restaurant", "lat": "17.4416° N", "lng": "78.4983° E" } }] }] }
     const [tripData, setTripData] = useState(null);
     const [modelState, setModelState] = useState(false);
     const loaderContext = useContext(LoaderContext);
-
+    const [topTouristCities, setTopTouristCities] = useState({
+        'originsList': famousTouristCitiesInIndia,
+        'destinationsList': destinationList
+    });
     const { isAuthenticated } = useAuth0();
 
     const [tripTitle, setTripTitle] = useState(null)
@@ -169,6 +173,7 @@ const IndexPage = () => {
     useEffect(() => {
         if (transcript !== "" && transcript !== null) {
             setSearchText(transcript)
+
         }
     }, [transcript])
 
@@ -277,6 +282,7 @@ const IndexPage = () => {
 
     const onChangeSearchText = (e) => {
         setSearchText(e.target.value)
+        setIsValidDestination(false)
     }
 
 
@@ -286,6 +292,13 @@ const IndexPage = () => {
         resetTranscript()
         setIsValidDestination(false)
     }
+    const onChangeDestinationList = (value) => {
+        setTopTouristCities({ ...topTouristCities, destinationsList: famousTouristCitiesInIndia.filter((city) => city !== value) })
+    }
+    const onChangeSourcesList = (value) => {
+        setTopTouristCities({ ...topTouristCities, originsList: famousTouristCitiesInIndia.filter((city) => city !== value) })
+    }
+
 
     return (
         <div>
@@ -339,6 +352,8 @@ const IndexPage = () => {
                                                         <span className="a11y-hidden">Search</span>
                                                     </button>
                                                 </div>
+                                                {(searchText && isValidDestination) ? <div><p className=' text-danger my-2 ms-3'>Please Try another destination ...</p></div> : ''}
+
                                                 {/* bubble would go here for expansion */}
                                             </div>
 
@@ -387,10 +402,17 @@ const IndexPage = () => {
                                                 className='originField'
                                                 disablePortal
                                                 id="combo-box-location"
-                                                options={famousTouristCitiesInIndia}
+                                                options={topTouristCities.originsList}
                                                 value={formik.values.source}
-                                                onChange={(e, value) => formik.setFieldValue('source', value)}
-                                                renderInput={(params) => <TextField {...params} />}
+                                                onChange={(e, value) => {
+
+                                                    formik.setFieldValue('source', value)
+                                                    onChangeDestinationList(value)
+                                                }}
+                                                renderInput={(params) => {
+                                                    // console.log("Params", params);
+                                                    return <TextField {...params} />
+                                                }}
 
                                             />
                                             {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
@@ -402,9 +424,14 @@ const IndexPage = () => {
                                                 className='destinationField'
                                                 disablePortal
                                                 id="combo-box-destination"
-                                                options={famousTouristCitiesInIndia}
+                                                options={topTouristCities.destinationsList}
                                                 value={formik.values.destination}
-                                                onChange={(e, value) => formik.setFieldValue('destination', value)}
+                                                // onChange={(e, value) => formik.setFieldValue('destination', value)}
+                                                onChange={(e, value) => {
+                                                    formik.setFieldValue('destination', value)
+                                                    onChangeSourcesList(value)
+
+                                                }}
                                                 renderInput={(params) => <TextField {...params} />}
                                             />
                                             {formik.errors.destination ? <p className='errors'>{formik.errors.destination}</p> : null}
@@ -432,11 +459,16 @@ const IndexPage = () => {
                                                     maxDate=''
                                                     minDate={dayjs(new Date())}
                                                     className="startDate"
+                                                    slotProps={{
+                                                        textField: {
+                                                            readOnly: true,
+                                                        },
+                                                    }}
 
                                                 />
                                             </LocalizationProvider>
                                             {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null}
-                                        </div> 
+                                        </div>
 
                                         {/* End Date */}
                                         <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
@@ -448,6 +480,11 @@ const IndexPage = () => {
                                                     onChange={(date) => formik.setFieldValue('end_date', date)}
                                                     maxDate={dayjs(formik.values.start_date).add(6, 'day')}
                                                     minDate={formik.values.start_date}
+                                                    slotProps={{
+                                                        textField: {
+                                                            readOnly: true,
+                                                        },
+                                                    }}
                                                 />
                                             </LocalizationProvider>
                                             {formik.errors.end_date ? <p className='errors'>{formik.errors.end_date}</p> : null}

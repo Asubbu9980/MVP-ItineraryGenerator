@@ -3,7 +3,9 @@ import { createClientMessage } from 'react-chatbot-kit';
 import dayjs from 'dayjs';
 import { getTripDetailsApi } from '../../helpers/trip_helper';
 import PleaseWaitMsg from '../chatbot/widgets/pleaseWaitMsg';
-import { getChatBotMessagesFromChatgpt } from '../../helpers/trip_helper';
+import { getChatBotMessagesFromChatgpt, getChatbotUserTripDetailsApi } from '../../helpers/trip_helper';
+import ChatGptResponse from './widgets/ChatGptResponse';
+
 const ActionProvider = ({ createChatBotMessage, state, setState, children }) => {
     const handleHello = () => {
         const botMessage = createChatBotMessage('Hello. Nice to meet you.');
@@ -47,14 +49,20 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             getChatBotMessagesFromChatgpt({ text: message }).then((response) => {
                 const responseMessage = response?.data?.choices[0]?.message?.content;
                 if (responseMessage) {
-                    const botMessage = createChatBotMessage(`${responseMessage}`,
+                    const botMessage = createChatBotMessage(<ChatGptResponse response={`${responseMessage}`} />,
                         {
                             delay: 500,
                             loading: true,
                             terminateLoading: true,
                         });
                     const clientMessage = createClientMessage(`${message}`);
-                    const filteredMessages = state.messages.filter((m) => m.message.includes('Please wait') !== true);
+                    const filteredMessages = state.messages.filter((m) => {
+                        if (typeof (m?.message) === 'string') {
+                            return m?.message?.includes('Please wait') !== true
+                        } else {
+                            return m?.message?.props?.message?.includes('Please wait') !== true;
+                        }
+                    });
                     setState((prev) => ({
                         ...prev,
                         messages: [...filteredMessages, clientMessage, botMessage],
@@ -230,7 +238,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             start_date: start_date,
             end_date: Enddate,
         }));
-        getTripDetails(start_date, Enddate);
+        getTripDetails(start_date, Enddate, selectedStartDate);
     }
     const handleStartDateChange = (start_date) => {
         // console.log("start_date", start_date);
@@ -252,10 +260,10 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             start_date: start_date,
             end_date: minimumTripEndDate,
         }));
-        getTripDetails(start_date, minimumTripEndDate);
+        getTripDetails(start_date, minimumTripEndDate, selectedStartDate);
     }
 
-    const getTripDetails = (start_date, end_date) => {
+    const getTripDetails = (start_date, end_date, selectedStartDate = '') => {
         try {
             console.log('state', state);
             const formattedStartDate = dayjs(start_date).format('DD MMMM, YYYY');
@@ -288,10 +296,19 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         tripTitle: `${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`
                     },
                 });
-                const filteredMessages = state.messages.filter((m) => m.message.includes('Please wait') !== true);
+                // const filteredMessages = state.messages.filter((m) => m.message.includes('Please wait') !== true);
+                const clientMessage = createClientMessage(`${selectedStartDate}`);
+
+                const filteredMessages = state.messages.filter((m) => {
+                    if (typeof (m?.message) === 'string') {
+                        return m?.message?.includes('Please wait') !== true
+                    } else {
+                        return m?.message?.props?.message?.includes('Please wait') !== true;
+                    }
+                });
                 setState((prev) => ({
                     ...prev,
-                    messages: [...filteredMessages, botMessage],
+                    messages: [...filteredMessages, clientMessage, botMessage],
                     // start_date: start_date,
                     tripData: fR,
                     tripTitle: `${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`
@@ -314,6 +331,89 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             messages: [...state.messages, message]
         }));
     };
+
+    const handleDestinationAlongWithDate = (destination, enterClinetMessage = true, message = null, startDate = '', endDate = '') => {
+        const clientMessage = createClientMessage(message == null ? `${destination}` : message);
+        const m = [...state.messages]
+        if (enterClinetMessage) {
+            m.push(clientMessage)
+        }
+        const botMessage = createChatBotMessage(
+            <PleaseWaitMsg message="Please wait..." />,
+            {
+                delay: 500,
+                loading: true,
+                terminateLoading: true,
+            }
+        );
+
+        // setState((prev) => ({
+        //     ...prev,
+        //     messages: [...prev.messages, clientMessage, botMessage],
+        //     start_date: start_date,
+        //     end_date: minimumTripEndDate,
+        // }));
+
+        setState((prev) => ({
+            ...prev,
+            destination: destination,
+            messages: [...m, botMessage]
+        }));
+        getUserTripDetails(startDate, endDate, message);
+
+    }
+    const getUserTripDetails = (start_date, end_date, message) => {
+        try {
+
+            const payload = {
+                destination: state.destination,
+                "source": "Hyderabad",
+                "start_date": start_date,
+                "end_date": end_date,
+            }
+            getChatbotUserTripDetailsApi(payload).then((r) => {
+                const p = r?.data.hasOwnProperty('trip') ? r?.data.trip : r?.data;
+                const fR = {}
+                Object.keys(p).forEach(function (key) {
+                    var value = p[key];
+                    if (key === 'activities' || key === "places") {
+                        fR['places_visited'] = value
+                    } else {
+                        fR[key] = value
+                    }
+                });
+                const botMessage = createChatBotMessage(`Here is your trip itinerary`, {
+                    delay: 500,
+                    widget: "Itinerary",
+                    loading: true,
+                    terminateLoading: true,
+                    payload: {
+                        tripData: fR,
+                        tripTitle: `${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  ${payload?.end_date ? ` to ${payload.end_date}` : ''}`
+                    },
+                });
+                // const filteredMessages = state.messages.filter((m) => m.message.includes('Please wait') !== true);
+                const clientMessage = createClientMessage(message == null ? `${payload.destination}` : message);
+                const filteredMessages = state.messages.filter((m) => {
+                    if (typeof (m?.message) === 'string') {
+                        return m?.message?.includes('Please wait') !== true
+                    } else {
+                        return m?.message?.props?.message?.includes('Please wait') !== true;
+                    }
+                });
+                setState((prev) => ({
+                    ...prev,
+                    messages: [...filteredMessages, clientMessage, botMessage],
+                    // start_date: start_date,
+                    tripData: fR,
+                    tripTitle: `${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`
+                }));
+            }).then((e) => {
+            })
+
+        } catch (error) {
+        }
+    }
     return (
         <div>
             {React.Children.map(children, (child) => {
@@ -332,7 +432,8 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
                         showTripPlanSuggestions,
                         handleTripSuggestionsDuration,
                         handleTripSuggestionsDestination,
-                        handleTripSuggestionsStartDateChange
+                        handleTripSuggestionsStartDateChange,
+                        handleDestinationAlongWithDate
                     },
                 });
             })}

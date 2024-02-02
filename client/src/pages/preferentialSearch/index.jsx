@@ -31,7 +31,7 @@ import Itinerary from '../../common/Itinerary'
 import { useAuth0 } from '@auth0/auth0-react';
 import Searchhistory from '../../common/Searchhistory';
 import ItinerarySkeleton from '../../common/ItinerarySkeleton';
-import TextField from '@mui/material/TextField';
+// import TextField from '@mui/material/TextField';
 import { Mic } from '@mui/icons-material';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import SpeechRecognitionModal from '../../common/SpeechRecognitionModal';
@@ -56,11 +56,11 @@ const PreferentialSearch = () => {
         resetTranscript,
     } = useSpeechRecognition();
 
-    useEffect(() => {
-        if (transcript) {
-            setTripPayloadState((prevState) => ({ ...prevState, destination: transcript }));
-        }
-    }, [transcript]);
+    // useEffect(() => {
+    //     if (transcript) {
+    //         setTripPayloadState((prevState) => ({ ...prevState, destination: transcript }));
+    //     }
+    // }, [transcript]);
 
     const [errors, setErrors] = useState({
         destination: null,
@@ -379,7 +379,7 @@ const PreferentialSearch = () => {
                                                 <h3>Where do you want to go?</h3>
                                                 <div className='citySearch d-flex justify-content-center'>
                                                     <Stack spacing={2}>
-                                                        {/* <Autocomplete
+                                                        <Autocomplete
                                                             startDecorator={<SearchIcon />}
                                                             placeholder="Search for a city"
                                                             value={tripPayloadState.destination}
@@ -388,31 +388,32 @@ const PreferentialSearch = () => {
                                                             onChange={(e, value) => handleChangeTripDestination('destination', value)}
                                                             options={cityNames}
                                                             style={{ height: '35px' }}
-                                                        /> */}
-                                                        <Autocomplete
+                                                        />
+                                                        {/* <Autocomplete
                                                             freeSolo
                                                             startDecorator={<SearchIcon />}
                                                             options={cityNames}
                                                             placeholder="Search for a city"
                                                             value={tripPayloadState.destination}
-                                                            // onChange={(event, newValue) => {
-                                                            //     handleChangeTripDestination('destination', newValue);
-                                                            // }}
-                                                            onInputChange={(event, newInputValue) => {
-                                                                handleChangeTripDestination('destination', newInputValue);
+                                                            disablePortal
+                                                            onChange={(event, newValue) => {
+                                                                handleChangeTripDestination('destination', newValue);
                                                             }}
+                                                            // onInputChange={(event, newInputValue) => {
+                                                            //     handleChangeTripDestination('destination', newInputValue);
+                                                            // }}
                                                             renderInput={(params) => (
                                                                 <TextField
                                                                     {...params}
-                                                                    InputProps={{
-                                                                        ...params.InputProps,
-                                                                        type: 'search',
-                                                                    }}
+                                                                    // InputProps={{
+                                                                    //     ...params.InputProps,
+                                                                    //     // type: 'search',
+                                                                    // }}
                                                                     style={{ height: '35px' }}
                                                                 />
                                                             )}
 
-                                                        />
+                                                        /> */}
                                                     </Stack>
                                                     <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()} className='ms-1 preferential-speech-btn'>
                                                         <Mic />

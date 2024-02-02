@@ -275,6 +275,165 @@ class tripController {
             })
         }
     }
+    generateChatbotUserMessageItinerary = async (req, res, next) => {
+        try {
+            const { source, destination, start_date, end_date } = req.body;
+
+
+            const q = `Create ${destination} Trip Itinerary for day wise starting from ${start_date}${end_date ? ` to ${end_date}` : ''} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
+            console.log("q", q);
+            const response = await openai.chat.completions.create({
+                messages: [
+                    { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format ` },
+                    { "role": "user", "content": q },
+                ],
+                model: 'gpt-3.5-turbo',
+                // model: 'gpt-4',
+                max_tokens: 3050,
+                temperature: 0,
+            });
+            const reData = JSON.parse(response.choices[0].message.content);
+            await Promise.all(reData.activities.map(async (element, index) => {
+                const popularPlaces = element['popular_places'];
+                if (popularPlaces != null) {
+                    await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                        const popularCacheKey = `_testss_ml_mvp_itinerary_map_places_new_${destination + "_" + place.name}`;
+                        let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
+                        if (cres != null) {
+                            popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
+                        } else {
+                            const response = await axios.get(
+                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                            );
+                            let placesInforesult = response.data.results
+                            if (response.data.results.length > 0) {
+                                await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                    const place_id = placeRef.place_id;
+                                    const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
+                                        params: {
+                                            place_id: place_id,
+                                            key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                        },
+                                    });
+                                    placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
+                                    placesInforesult[placeRefindex]["url"] = allPlaceData.data.result.url;
+                                }))
+                            }
+                            // popularPlaces[placeindex]['place_info'] = response.data.results;
+                            await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                                    // placesInforesult[placeRefindex]["info"] = allPlaceData;
+                                    await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                                        // console.log("placephotos", placephotos);
+                                        const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                                            params: {
+                                                photoreference: placephotos.photo_reference,
+                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                maxwidth: 400, // adjust maxwidth as needed
+                                                maxheight: 400, // adjust maxheight as needed
+                                            },
+                                        });
+                                        //;
+                                        placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                        // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                        // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                    }))
+                                }
+                            }))
+                            console.log(JSON.stringify(placesInforesult));
+                            // if (global.isCacheEnabled) {
+                            //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
+                            // }
+                            popularPlaces[placeindex]['place_info'] = placesInforesult;
+                        }
+                    }))
+                }
+            }))
+            // //    accommodation
+            await Promise.all(reData.activities.map(async (element, index) => {
+                const popularPlaces = element['accommodation'];
+                if (popularPlaces != null) {
+                    await Promise.all(popularPlaces.map(async (place, placeindex) => {
+                        const popularCacheKey = `_tests_mls_mvp_itinerary_map_accommodation_new_${destination + "_" + place.name}`;
+                        let cres = global.isCacheEnabled ? await RedisCache.getCache(popularCacheKey) : null;
+                        if (cres != null) {
+                            popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
+                        } else {
+                            const response = await axios.get(
+                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                            );
+                            let placesInforesult = response.data.results
+                            if (response.data.results.length > 0) {
+                                await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                    const place_id = placeRef.place_id;
+                                    const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
+                                        params: {
+                                            place_id: place_id,
+                                            key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                        },
+                                    });
+                                    placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
+                                    placesInforesult[placeRefindex]["url"] = allPlaceData.data.result.url;
+                                }))
+                            }
+                            // popularPlaces[placeindex]['place_info'] = response.data.results;
+                            await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
+                                if (placeRef.photos != undefined && placeRef.photos.length > 0) {
+                                    await Promise.all(placeRef.photos.map(async (placephotos, placephotosindex) => {
+                                        // console.log("placephotos", placephotos);
+                                        const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
+                                            params: {
+                                                photoreference: placephotos.photo_reference,
+                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                maxwidth: 400, // adjust maxwidth as needed
+                                                maxheight: 400, // adjust maxheight as needed
+                                            },
+                                        });
+                                        ;
+                                        placesInforesult[placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                        // placephotos[placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                        // popularPlaces[placeindex]['place_info'][placeRefindex]["photos"][placephotosindex]["images"] = responsePhoto.request.res.responseUrl;
+                                    }))
+                                }
+                            }))
+                            console.log(JSON.stringify(placesInforesult));
+                            // if (global.isCacheEnabled) {
+                            //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
+                            // }
+                            popularPlaces[placeindex]['place_info'] = placesInforesult;
+                        }
+                    }))
+                }
+            }))
+            // if (global.isCacheEnabled) {
+            //     await RedisCache.setDefaultCache(finalCacheKey, JSON.stringify(reData));
+            // }
+            // if (req?.userId != undefined && req.userId != "") {
+            //     await SearchHistoryModel.create({
+            //         user: req?.userId,
+            //         input: JSON.stringify({ source, destination, start_date, end_date }),
+            //         output: JSON.stringify(reData)
+            //     })
+            // }
+            return commonResponse({
+                req,
+                res,
+                status: true,
+                data: reData,
+                statusCode: 200,
+            })
+            // }
+        } catch (error) {
+            console.log("Error", error);
+            return commonResponse({
+                req,
+                res,
+                status: false,
+                data: error,
+                statusCode: 500,
+            })
+        }
+    }
     generateusingVoice = async (req, res, next) => {
         try {
             const { text, source } = req.body;
