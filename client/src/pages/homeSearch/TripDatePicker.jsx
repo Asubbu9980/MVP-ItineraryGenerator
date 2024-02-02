@@ -41,6 +41,11 @@ const TripDatePicker = ({ fieldName = '' }) => {
                             svg: { color: '#fff' },
                             input: { color: '#fff' },
                         }}
+                        slotProps={{
+                            textField: {
+                                readOnly: true,
+                            },
+                        }}
 
 
                     />

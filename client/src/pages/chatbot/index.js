@@ -228,7 +228,7 @@ function IndexPage() {
         setInputValue('');
     };
     const validator = (input) => {
-        if (input.length > 2) return true;
+        if (input.length > 1) return true;
         return false
     }
     const getChatConfig = (messages = []) => {
@@ -295,12 +295,15 @@ function IndexPage() {
                     </Box>
                 </div>
             </div>
-            <div className={`px-2 px-sm-0 rightBar custom-scroll ${isOpen ? '' : 'rightBarFull'}`}>
+            <div className={`px-2 px-sm-0 rightBar custom-scroll rightSide ${isOpen ? '' : 'rightBarFull'}`}>
 
 
-                <div onClick={toggleSidebar} className='vertical-line'></div>
+                {/* <div onClick={toggleSidebar} className={`vertical-line ${isOpen ? 'open-sidebar-content' : 'close-sidebar-content'}`}></div> */}
 
-
+                <div className="vertical-lines" onClick={toggleSidebar}>
+                    <div className="lines lineOne"></div>
+                    <div className="lines lineTwo"></div>
+                </div>
 
                 {/* <div className='ms-2'> */}
                 {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
