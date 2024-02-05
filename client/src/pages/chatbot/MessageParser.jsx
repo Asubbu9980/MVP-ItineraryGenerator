@@ -66,7 +66,7 @@ const MessageParser = (props) => {
         // const dateRegex = /(\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Dec|Nov|Sept|Aug|Oct|Feb|Jan)\b\s+\d{1,2}(?:th|st|nd|rd)?(?:\s*,?\s*\d{4})?\b)/gi;
 
         // Define keywords related to itinerary
-        const itineraryKeywords = ['itinerary', 'schedule', 'vacation', 'plan', 'trip', 'want go', 'Want to go', 'need to go', 'want to visit', 'need to visit', 'will go', 'will visit', 'want to travel', 'need to travel', 'will travel', 'want to explore', 'need to explore', 'will explore', 'want to see', 'need to see', 'will see', 'want to experience', 'need to experience', 'will experience', 'want to enjoy', 'need to enjoy', 'will enjoy', 'want to discover', 'need to discover', 'will discover', 'want to witness', 'need to witness', 'will witness', 'want to spend time', 'need to spend time', 'will spend time', 'want to spend some time', 'need to spend some time', 'will spend some time', 'want to spend some quality time', 'need to spend some quality time', 'will spend some quality time', 'want to spend some good time', 'need to spend some good time', 'will spend some good time', 'want to spend some quality time', 'need to spend some quality time', 'will spend some quality time', 'planning to go', 'planning visit', 'planning to visit', 'planning to travel', 'planning to explore', 'planning to see', 'planning to experience', 'planning to enjoy', 'planning to discover', 'planning to witness', 'planning to spend time', 'planning to spend some time', 'planning to spend some quality time', 'planning to spend some good time'];
+        const itineraryKeywords = ['itinerary', 'schedule', 'vacation', 'plan', 'trip', 'want go', 'Want togo', 'Want goto', 'Want to go', 'need to go', 'want to visit', 'need to visit', 'will go', 'will visit', 'want to travel', 'need to travel', 'will travel', 'want to explore', 'need to explore', 'will explore', 'want to see', 'need to see', 'will see', 'want to experience', 'need to experience', 'will experience', 'want to enjoy', 'need to enjoy', 'will enjoy', 'want to discover', 'need to discover', 'will discover', 'want to witness', 'need to witness', 'will witness', 'want to spend time', 'need to spend time', 'will spend time', 'want to spend some time', 'need to spend some time', 'will spend some time', 'want to spend some quality time', 'need to spend some quality time', 'will spend some quality time', 'want to spend some good time', 'need to spend some good time', 'will spend some good time', 'want to spend some quality time', 'need to spend some quality time', 'will spend some quality time', 'planning to go', 'planning visit', 'planning to visit', 'planning to travel', 'planning to explore', 'planning to see', 'planning to experience', 'planning to enjoy', 'planning to discover', 'planning to witness', 'planning to spend time', 'planning to spend some time', 'planning to spend some quality time', 'planning to spend some good time'];
 
         const isItineraryRelated = itineraryKeywords.some(keyword => doc.has(keyword));
         // console.log(isItineraryRelated, "isItineraryRelated")
@@ -86,7 +86,8 @@ const MessageParser = (props) => {
             const v = splitedText[i];
             const indexed = famousTouristCitiesInIndia.map(m => m.toLowerCase()).indexOf(v.toLowerCase());
             if (indexed >= 0) {
-                destination = v
+                const titleCaseString = v?.charAt(0)?.toUpperCase() + v?.slice(1)
+                destination = titleCaseString
             }
         }
         // console.log(destination, "destination")

@@ -73,7 +73,8 @@
   border-radius: 18px 18px 0px 18px;
   border: 1px solid #BEBFD3;
   background: #DEEBFF;
-  max-width: 50%;
+  /* max-width: 50%; */
+  max-width: 85%;
   width: -moz-fit-content;
   width: fit-content;
 
@@ -98,7 +99,7 @@
 
 .react-chatbot-kit-chat-bot-message-container {
   min-width: 10%;
-  max-width: 80%;
+  max-width: 90%;
   /* max-width: 50%; */
   width: fit-content;
 }
