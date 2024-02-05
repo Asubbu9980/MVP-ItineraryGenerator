@@ -359,14 +359,14 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             destination: destination,
             messages: [...m, botMessage]
         }));
-        getUserTripDetails(startDate, endDate, message);
+        getUserTripDetails(destination, startDate, endDate, message);
 
     }
-    const getUserTripDetails = (start_date, end_date, message) => {
+    const getUserTripDetails = (destination, start_date, end_date, message) => {
         try {
 
             const payload = {
-                destination: state.destination,
+                destination: destination,
                 "source": "Hyderabad",
                 "start_date": start_date,
                 "end_date": end_date,

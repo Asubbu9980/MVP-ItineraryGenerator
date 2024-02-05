@@ -251,8 +251,11 @@ function IndexPage() {
     };
     return (
         <div className="chatbot-container mt-3">
-            <div className={`px-2 px-sm-0 sideBar custom-scroll ${isOpen ? 'open' : ''}`}>
-
+            <div className={`px-2 px-sm-0 sideBar custom-scroll ${isOpen ? 'open sideBarFull' : ''}`}>
+                <div className="sidebar-vertical-lines" onClick={toggleSidebar}>
+                    <div className="lines lineOne"></div>
+                    <div className="lines lineTwo"></div>
+                </div>
 
                 <div className=' p-3'>
                     <h2 className='my-3'> Ai Chatbot</h2>
@@ -295,7 +298,7 @@ function IndexPage() {
                     </Box>
                 </div>
             </div>
-            <div className={`px-2 px-sm-0 rightBar custom-scroll rightSide ${isOpen ? '' : 'rightBarFull'}`}>
+            <div className={`px-0 px-sm-0 rightBar custom-scroll rightSide ${isOpen ? 'isOpenedClass' : 'rightBarFull'}`}>
 
 
                 {/* <div onClick={toggleSidebar} className={`vertical-line ${isOpen ? 'open-sidebar-content' : 'close-sidebar-content'}`}></div> */}
