@@ -25,7 +25,6 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
         }));
 
     };
-
     const getResponseFromChatgpt = (message) => {
 
         const botMessage = createChatBotMessage(
@@ -73,7 +72,7 @@ const ActionProvider = ({ createChatBotMessage, state, setState, children }) => 
             console.log("e", e);
         }
     }
-    console.log("responseMessage", state.messages)
+    // console.log("responseMessage", state.messages)
     const handleMessageChages = (m) => {
         // console.log("name", state);
         // const lowerCaseMessage = m.toLowerCase();

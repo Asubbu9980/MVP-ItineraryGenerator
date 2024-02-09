@@ -44,11 +44,11 @@ const ChatGptResponse = ({ response }) => {
     const serialNumbers = response?.match(serialNumbersRegex);
 
     const isOptionsRelated = serialNumbers !== null && serialNumbers?.length > 0;
-    console.log(response, 'isOptionsRelated');
+    // console.log(response, 'isOptionsRelated');
 
     if (isOptionsRelated) {
         const responseArray = response?.split(serialNumbersRegex);
-        console.log(responseArray, 'responseArray');
+        // console.log(responseArray, 'responseArray');
         return (
             <div className="p-3" style={{ width: '100%' }}>
                 {responseArray?.length > 0 &&

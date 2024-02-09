@@ -308,7 +308,34 @@ const IndexPage = () => {
 
                 <div className='searchBanner'>
                     <Container className='banner-container'>
-                        <Box style={{ borderRadius: '8px', paddingTop: "40px", background: '#fff', padding: '25px', paddingBottom: '35px' }}>
+                        <div className='col-12 mb-2'>
+                            <div className="search">
+                                <div className="input-bar">
+                                    <input type="search" placeholder='Speak/Search for your vacation trip' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
+                                    <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()
+                                    }>
+                                        <Mic />
+                                        <span className="a11y-hidden">Dictate new search</span>
+                                    </button>
+                                    <button title="Search" type='button' onClick={() => {
+                                        SpeechRecognition.stopListening()
+                                        resetTranscript()
+                                        if (searchText !== "" && searchText !== null) {
+                                            onVoiceSearchTripPlan(searchText)
+                                        }
+
+                                    }}>
+                                        <Search />
+                                        <span className="a11y-hidden">Search</span>
+                                    </button>
+                                </div>
+                                {(searchText && isValidDestination) ? <div><p className='text-danger fw-bold my-1 ms-3'
+                                //  style={{ backgroundColor: '#ffffff', maxWidth: '320px', borderRadius: '8px' }}
+                                >Please Try with another destination ...</p></div> : ''}
+
+                            </div>
+                        </div>
+                        <Box style={{ borderRadius: '8px', background: '#fff', padding: '25px', paddingTop: "30px", paddingBottom: '30px' }}>
                             <form autoComplete='off' className="search-form" onSubmit={formik.handleSubmit}>
                                 <div className="container">
                                     <div className="row ">
@@ -319,13 +346,14 @@ const IndexPage = () => {
                                         <button onClick={() => SpeechRecognition.stopListening()}>Stop</button>
                                         <button onClick={resetTranscript}>Reset</button>
                                         <p className='text-black'>{transcript}</p> */}
-                                        <div className="col-12 px-2 px-sm-0 my-3">
-                                            <div className="search">
-                                                <div className="input-bar">
-                                                    {/* <label htmlFor="search-text" id="search-label">
+
+                                        {/* <div className="col-12 px-2 px-sm-0 my-3"> */}
+                                        {/* <div className="search"> */}
+                                        {/* <div className="input-bar"> */}
+                                        {/* <label htmlFor="search-text" id="search-label">
                                                         Type <span>or dictate</span> to search
                                                     </label> */}
-                                                    <input type="search" placeholder='Speak/Search for your vacation trip' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
+                                        {/* <input type="search" placeholder='Speak/Search for your vacation trip' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
                                                     <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()
                                                         // {
                                                         //     resetTranscript()
@@ -350,14 +378,14 @@ const IndexPage = () => {
                                                     }}>
                                                         <Search />
                                                         <span className="a11y-hidden">Search</span>
-                                                    </button>
-                                                </div>
-                                                {(searchText && isValidDestination) ? <div><p className=' text-danger my-2 ms-3'>Please Try another destination ...</p></div> : ''}
+                                                    </button> */}
+                                        {/* </div> */}
+                                        {/* {(searchText && isValidDestination) ? <div><p className=' text-danger my-2 ms-3'>Please Try another destination ...</p></div> : ''} */}
 
-                                                {/* bubble would go here for expansion */}
-                                            </div>
+                                        {/* bubble would go here for expansion */}
+                                        {/* </div> */}
 
-                                            {/* <label style={{ marginBottom: '8px' }}>Please Hit on MIC</label>
+                                        {/* <label style={{ marginBottom: '8px' }}>Please Hit on MIC</label>
                                             <TextField
                                                 id="input-with-icon-textfield"
                                                 label="Please Hit on MIC"
@@ -393,7 +421,7 @@ const IndexPage = () => {
                                                 }}
                                                 variant="standard"
                                             /> */}
-                                        </div>
+                                        {/* </div> */}
 
                                         {/* Location */}
                                         <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
@@ -515,7 +543,7 @@ const IndexPage = () => {
                                     <TransportModes></TransportModes>
                                 </div>
                                 <Grid item xs={12} style={{ display: 'flex', height: '0' }}>
-                                    <Button type='submit' className='btn-submit' style={{ margin: '20px auto', position: "relative", top: '-5px' }}>
+                                    <Button type='submit' className='btn-submit' style={{ margin: '20px auto', position: "relative", top: '-12px' }}>
                                         Start Planning
                                     </Button>
                                 </Grid>
