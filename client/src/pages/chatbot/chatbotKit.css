@@ -2,6 +2,7 @@
   width: 100%;
   height: calc(100vh - 100px);
 }
+
 .react-chatbot-kit-chat-bot-message {
   width: 90%;
   color: #171A1F;
@@ -11,37 +12,46 @@
   margin-left: 55px;
 
 }
+
 .react-chatbot-kit-chat-bot-avatar~.react-chatbot-kit-chat-bot-message {
   margin-left: 0;
 }
+
 .react-chatbot-kit-chat-message-container {
   height: 100%;
 }
+
 .react-chatbot-kit-chat-inner-container {
   height: 100%;
   background-color: transparent;
 }
+
 .react-chatbot-kit-chat-header {
   background-color: transparent;
   display: none;
 }
+
 .react-chatbot-kit-chat-input-container {
   position: fixed;
   width: calc(100% - 270px);
   bottom: 5px;
 }
+
 .react-chatbot-kit-chat-input {
   padding: 10px;
   border-radius: 12px;
   border: 1px solid #0971D2;
   background: #FFF;
 }
+
 .react-chatbot-kit-chat-input:focus-visible {
   outline: none;
 }
+
 .react-chatbot-kit-chat-input-form {
   position: relative;
 }
+
 .react-chatbot-kit-chat-btn-send {
   position: absolute;
   right: 0;
@@ -50,6 +60,7 @@
   transition: transform 0.3s ease-in-out;
 
 }
+
 .react-chatbot-kit-chat-input-container:hover .react-chatbot-kit-chat-btn-send {
   animation: updown 0.5s ease-in-out infinite;
 }
@@ -57,46 +68,55 @@
 .react-chatbot-kit-chat-btn-send-icon {
   fill: #0971D2;
 }
+
 .react-chatbot-kit-user-chat-message {
   border-radius: 18px 18px 0px 18px;
   border: 1px solid #BEBFD3;
   background: #DEEBFF;
-  max-width: 50%;
+  /* max-width: 50%; */
+  max-width: 85%;
   width: -moz-fit-content;
   width: fit-content;
 
 }
+
 .react-chatbot-kit-user-chat-message-arrow,
 .react-chatbot-kit-chat-bot-message-arrow {
   display: none;
 }
 
-.rightBar .startDate{
+.rightBar .startDate {
   color: #fff;
   background-color: #ECF3FF;
   border-radius: 50px;
   width: fit-content;
   display: inline-block;
-} 
+}
+
 .rightBar .startDate fieldset {
   border: 0;
 }
-.react-chatbot-kit-chat-bot-message-container{
-  max-width: 50%;
+
+.react-chatbot-kit-chat-bot-message-container {
+  min-width: 10%;
+  max-width: 90%;
+  /* max-width: 50%; */
   width: fit-content;
 }
- 
+
 
 @keyframes updown {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0);
   }
-  
+
   50% {
     transform: translateY(-2px);
   }
 }
 
-#chatbot-loader{
+#chatbot-loader {
   fill: #565E6C !important;
 }

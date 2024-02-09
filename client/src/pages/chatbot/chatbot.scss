@@ -18,6 +18,10 @@
       background: #F8F8F8;
       width: 100%;
       margin-left: 16px;
+      @media screen and (max-width: 992px){
+        margin-right: 14px !important;
+        
+      }
 
       .toggleMenu {
         // position: absolute;
@@ -160,6 +164,11 @@
               }
             }
           }
+          @media screen and (max-width: 767px){
+            max-width: 90% !important;
+           min-width: 80%;
+            
+          }
         }
       }
 
@@ -176,7 +185,13 @@
           .card-image-container {
             width: 180px !important;
           }
-
+          @media screen and (max-width: 566px){
+            padding-left: 3px;
+            .card-image-container {
+              width: 100% !important;
+            }
+            
+          }
           .loopCard {
             width: 230px;
           }
@@ -191,6 +206,59 @@
             }
           }
 
+        }
+      }
+      &.isOpenedClass{
+        .tripDetails-grid { 
+          .tripDetails-item { 
+            @media screen and (min-width:993px){
+              .itinerary-trip-card-title {
+                width: 250px;
+              }
+              .text-over-flow-class{
+                max-width: 250px !important;
+              }
+              .product-slider-card {
+                width: 90% !important;
+              }
+            }
+            @media screen and (min-width:1200px)and (max-width: 1350px){
+              // .itinerary-trip-card-title {
+              //   width: 100% !important;
+              // }
+              // .text-over-flow-class{
+              //   max-width: 100% !important;
+              // }
+              .product-slider-card {
+                width: 90% !important;
+                display: flex;
+                flex-direction: column !important;
+              }
+              .card-image-container{
+                width: 100% !important;
+                height: 150px !important;
+                img{
+                  height: 150px !important;
+                }
+              }
+              .itinerary-card-content{
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+              }
+              
+            }    
+          }
+  
+          .trip-hotel-title {
+            img {
+              transition: transform 0.2s;
+  
+              &:hover {
+                animation: bounce 0.5s infinite;
+              }
+            }
+  
+          }
         }
       }
     }
@@ -482,43 +550,214 @@
   }
 }
 
-.vertical-line {
-  border-left: 3px solid black;
-  height: 25px;
-  position: relative;
-  display: inline-block;
-  width: 131px;
-  top:120px;
-  margin-left: 2px;
-  cursor: pointer;
+// .vertical-line {
+//   border-left: 3px solid black;
+//   height: 25px;
+//   position: fixed;
+//   // position: relative;
+//   display: inline-block;
+//   width: 131px;
+//   top: 40%;
+//   // top:160px;
+//   margin-left: 2px;
+//   cursor: pointer;
+//   &:hover{
+//      z-index: 11;
+//   // background: url("../../assets/accommodation_icon.svg") no-repeat;
 
+//    }
+
+// }
+
+// .vertical-line:hover::after {
+//   // content: "Close Sidebar";
+//   position: absolute;
+//   left: 10px;
+//   top: 50%;
+//   transform: translateY(-50%);
+//   background-color: #1565c0;
+//   padding: 5px 10px;
+//   border-radius: 10px;
+//   font-size: 12px;
+//   // z-index: 11 !important;
+//   color: #fff;
+
+//   &::before {
+//     content: "";
+//     position: absolute;
+//     top: 50%;
+//     left: -20px; // Adjust as needed
+//     border: solid black;
+//     border-width: 0 3px 3px 0;
+//     display: inline-block;
+//     padding: 3px;
+//     transform: rotate(135deg);
+//     -webkit-transform: rotate(135deg);
+//   }
+// }
+// .open-sidebar-content:hover::after {
+//   content: "Close Sidebar";
+// }
+// .close-sidebar-content:hover::after {
+//   content: "Open Sidebar";
+  
+// }
+
+.sidebar-vertical-lines{
+  display: none;
+}
+@media screen and (max-width:992px){
+  .sideBar{
+    position: absolute;
+    z-index: 1299;
+  }
+  .sideBar.open {
+    transform: translateX(0) !important;
+    width: 230px !important;
+}
+.sideBar.open .sidebar-vertical-lines{
+  position: fixed;
+  top: 43%;
+  right: 0;
+  margin-right: 4px;
+  cursor: pointer;
+  z-index: 1;
+  display: inline-block;
 }
 
-.vertical-line:hover::after {
-  content: "Close Sidebar";
+.sideBar .sidebar-vertical-lines .lines {
+  border-radius: 9999px;
+  height: 16px;
+  width: 4px;
+  background-color: #44A0BC;
+  cursor: pointer;
+}
+ 
+// .sideBar .sidebar-vertical-lines .lineOne {
+//   transform: translateY(0.15rem) rotate(0deg) ;
+// }
+ 
+// .sideBar .sidebar-vertical-lines .lineTwo {
+//   transform: translateY(-0.15rem) rotate(0deg);
+// }
+ 
+.sideBar .sidebar-vertical-lines .lineOne {
+  transform: translateY(0.15rem) rotate(15deg) !important;
+}
+ 
+.sideBar .sidebar-vertical-lines .lineTwo {
+  transform: translateY(0.15rem) rotate(-15deg) !important;
+  position: relative;
+  top: -3px;
+}
+ 
+.sideBar .sidebar-vertical-lines:hover::before {
+  content: "Close sidebar";
   position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #1565c0;
-  padding: 5px 10px;
-  border-radius: 10px;
+  background-color: #000;
   font-size: 12px;
   color: #fff;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -20px; // Adjust as needed
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
-  }
+  padding: 5px 8px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  top: 0;
+  right: 16px;
+  text-wrap: nowrap;
 }
+.react-chatbot-kit-chat-input-container {
+  width: calc(100% - 70px) !important;
+}
+
+}
+///////////////////////////////////////////////////////////////////////////////////
+
+.rightSide .vertical-lines {
+  // position: relative;
+  position: fixed;
+  // top: 100px;
+  top: 45%;
+  // left:0;
+  margin-left: 4px;
+  cursor: pointer;
+  z-index: 1;
+  display: inline-block;
+}
+ 
+.rightSide .vertical-lines .lines {
+  border-radius: 9999px;
+  height: 16px;
+  width: 4px;
+  background-color: #44A0BC;
+  cursor: pointer;
+}
+ 
+.rightSide .vertical-lines .lineOne {
+  transform: translateY(0.15rem) rotate(0deg) ;
+}
+ 
+.rightSide .vertical-lines .lineTwo {
+  transform: translateY(-0.15rem) rotate(0deg);
+}
+ 
+.rightSide .vertical-lines .lineOne {
+  transform: translateY(0.15rem) rotate(15deg) !important;
+}
+ 
+.rightSide .vertical-lines .lineTwo {
+  transform: translateY(0.15rem) rotate(-15deg) !important;
+  position: relative;
+  top: -3px;
+}
+ 
+.rightSide .vertical-lines:hover::after {
+  content: "Close sidebar";
+  position: absolute;
+  background-color: #000;
+  font-size: 12px;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 10px;
+  top: 0;
+  left: 16px;
+  text-wrap: nowrap;
+}
+ 
+.rightSide .vertical-lines:hover::before {
+  content: "";
+  position: absolute;
+  border-style: solid;
+  border-width: 0px 8px 8px 8px;
+  border-color: #000 transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+  transform: rotate(270deg);
+  bottom: 13px;
+  left: 5px;
+}
+ 
+.rightBarFull .vertical-lines:hover::after {
+  content: "Open sidebar";
+ 
+}
+ 
+.rightBarFull .vertical-lines .lineOne,
+.rightBarFull .vertical-lines .lineOne
+ {
+  transform: translateY(0.15rem) rotate(-15deg) !important;
+}
+ 
+.rightBarFull .vertical-lines .lineTwo,
+.rightBarFull .vertical-lines .lineTwo  {
+  transform: translateY(-0.15rem) rotate(15deg) translateZ(0px) !important;
+ top: 0;
+}
+   
+/////////////////////////////////////////////////////////////////////////
+
 .trip-location-list-items{
   border-radius: 10px;
   background-color: #fff;
@@ -537,6 +776,10 @@
       font-size: 12px;
       font-weight: 600;
     }
+    @media screen and (max-width: 767px){
+      width: 90%;
+          
+        }
 }
 .active-family-destination, .active-solo-destination{
   border: 1px solid #8775FD;

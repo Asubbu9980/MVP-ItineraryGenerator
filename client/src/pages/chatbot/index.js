@@ -155,7 +155,7 @@ function IndexPage() {
             const today = new Date().toLocaleDateString();
             // const todaysData = [];
             const todaysData = (messages.filter((f) => f.created_at == today))
-            console.log("tod", todaysData);
+            // console.log("tod", todaysData);
             // console.log("messages",messages);
             if (todaysData.length > 0) {
                 setTodayMessageHistory(todaysData);
@@ -228,7 +228,7 @@ function IndexPage() {
         setInputValue('');
     };
     const validator = (input) => {
-        if (input.length > 2) return true;
+        if (input.length > 1) return true;
         return false
     }
     const getChatConfig = (messages = []) => {
@@ -251,8 +251,11 @@ function IndexPage() {
     };
     return (
         <div className="chatbot-container mt-3">
-            <div className={`px-2 px-sm-0 sideBar custom-scroll ${isOpen ? 'open' : ''}`}>
-
+            <div className={`px-2 px-sm-0 sideBar shadow-sm custom-scroll ${isOpen ? 'open sideBarFull' : ''}`}>
+                <div className="sidebar-vertical-lines" onClick={toggleSidebar}>
+                    <div className="lines lineOne"></div>
+                    <div className="lines lineTwo"></div>
+                </div>
 
                 <div className=' p-3'>
                     <h2 className='my-3'> Ai Chatbot</h2>
@@ -295,12 +298,15 @@ function IndexPage() {
                     </Box>
                 </div>
             </div>
-            <div className={`px-2 px-sm-0 rightBar custom-scroll ${isOpen ? '' : 'rightBarFull'}`}>
+            <div className={`px-0 px-sm-0 rightBar custom-scroll rightSide ${isOpen ? 'isOpenedClass' : 'rightBarFull'}`}>
 
 
-                <div onClick={toggleSidebar} className='vertical-line'></div>
+                {/* <div onClick={toggleSidebar} className={`vertical-line ${isOpen ? 'open-sidebar-content' : 'close-sidebar-content'}`}></div> */}
 
-
+                <div className="vertical-lines" onClick={toggleSidebar}>
+                    <div className="lines lineOne"></div>
+                    <div className="lines lineTwo"></div>
+                </div>
 
                 {/* <div className='ms-2'> */}
                 {/* <div className='ms-2 ' style={{height:'100vh', overflowY:'scroll'}}> */}
