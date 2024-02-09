@@ -20,7 +20,7 @@ const endDateInitialValue = dayjs(currentDate).add(3, 'day')
 const botName = 'Ai Chatbot';
 
 const config = (message) => {
-    console.log("me", (message));
+    // console.log("me", (message));
     return {
         initialMessages: [
             createChatBotMessage(

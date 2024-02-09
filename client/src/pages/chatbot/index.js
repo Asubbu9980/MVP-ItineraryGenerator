@@ -155,7 +155,7 @@ function IndexPage() {
             const today = new Date().toLocaleDateString();
             // const todaysData = [];
             const todaysData = (messages.filter((f) => f.created_at == today))
-            console.log("tod", todaysData);
+            // console.log("tod", todaysData);
             // console.log("messages",messages);
             if (todaysData.length > 0) {
                 setTodayMessageHistory(todaysData);
@@ -251,7 +251,7 @@ function IndexPage() {
     };
     return (
         <div className="chatbot-container mt-3">
-            <div className={`px-2 px-sm-0 sideBar custom-scroll ${isOpen ? 'open sideBarFull' : ''}`}>
+            <div className={`px-2 px-sm-0 sideBar shadow-sm custom-scroll ${isOpen ? 'open sideBarFull' : ''}`}>
                 <div className="sidebar-vertical-lines" onClick={toggleSidebar}>
                     <div className="lines lineOne"></div>
                     <div className="lines lineTwo"></div>
