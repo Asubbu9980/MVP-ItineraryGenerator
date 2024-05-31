@@ -144,8 +144,9 @@ class tripController {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                                 );
+                                console.log("response",response);
                                 let placesInforesult = response.data.results
                                 if (response.data.results.length > 0) {
                                     await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
@@ -153,7 +154,7 @@ class tripController {
                                         const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
                                             params: {
                                                 place_id: place_id,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                key: process.env.GOOGLE_MAPS_API_KEY,
                                             },
                                         });
                                         placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
@@ -169,7 +170,7 @@ class tripController {
                                             const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
                                                 params: {
                                                     photoreference: placephotos.photo_reference,
-                                                    key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                    key: process.env.GOOGLE_MAPS_API_KEY,
                                                     maxwidth: 400, // adjust maxwidth as needed
                                                     maxheight: 400, // adjust maxheight as needed
                                                 },
@@ -201,7 +202,7 @@ class tripController {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                                 );
                                 let placesInforesult = response.data.results
                                 if (response.data.results.length > 0) {
@@ -210,7 +211,7 @@ class tripController {
                                         const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
                                             params: {
                                                 place_id: place_id,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                key: process.env.GOOGLE_MAPS_API_KEY,
                                             },
                                         });
                                         placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
@@ -225,7 +226,7 @@ class tripController {
                                             const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
                                                 params: {
                                                     photoreference: placephotos.photo_reference,
-                                                    key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                    key: process.env.GOOGLE_MAPS_API_KEY,
                                                     maxwidth: 400, // adjust maxwidth as needed
                                                     maxheight: 400, // adjust maxheight as needed
                                                 },
@@ -303,7 +304,7 @@ class tripController {
                             popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                         } else {
                             const response = await axios.get(
-                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                             );
                             let placesInforesult = response.data.results
                             if (response.data.results.length > 0) {
@@ -312,7 +313,7 @@ class tripController {
                                     const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
                                         params: {
                                             place_id: place_id,
-                                            key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                            key: process.env.GOOGLE_MAPS_API_KEY,
                                         },
                                     });
                                     placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
@@ -328,7 +329,7 @@ class tripController {
                                         const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
                                             params: {
                                                 photoreference: placephotos.photo_reference,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                key: process.env.GOOGLE_MAPS_API_KEY,
                                                 maxwidth: 400, // adjust maxwidth as needed
                                                 maxheight: 400, // adjust maxheight as needed
                                             },
@@ -360,7 +361,7 @@ class tripController {
                             popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                         } else {
                             const response = await axios.get(
-                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                             );
                             let placesInforesult = response.data.results
                             if (response.data.results.length > 0) {
@@ -369,7 +370,7 @@ class tripController {
                                     const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
                                         params: {
                                             place_id: place_id,
-                                            key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                            key: process.env.GOOGLE_MAPS_API_KEY,
                                         },
                                     });
                                     placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
@@ -384,7 +385,7 @@ class tripController {
                                         const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
                                             params: {
                                                 photoreference: placephotos.photo_reference,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                key: process.env.GOOGLE_MAPS_API_KEY,
                                                 maxwidth: 400, // adjust maxwidth as needed
                                                 maxheight: 400, // adjust maxheight as needed
                                             },
@@ -504,7 +505,7 @@ class tripController {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                                 );
                                 let placesInforesult = response.data.results
                                 if (response.data.results.length > 0) {
@@ -513,7 +514,7 @@ class tripController {
                                         const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
                                             params: {
                                                 place_id: place_id,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                key: process.env.GOOGLE_MAPS_API_KEY,
                                             },
                                         });
                                         placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
@@ -529,7 +530,7 @@ class tripController {
                                             const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
                                                 params: {
                                                     photoreference: placephotos.photo_reference,
-                                                    key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                    key: process.env.GOOGLE_MAPS_API_KEY,
                                                     maxwidth: 400, // adjust maxwidth as needed
                                                     maxheight: 400, // adjust maxheight as needed
                                                 },
@@ -561,7 +562,7 @@ class tripController {
                                 popularPlaces[placeindex]['place_info'] = JSON.parse(cres);
                             } else {
                                 const response = await axios.get(
-                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M`
+                                    `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                                 );
                                 let placesInforesult = response.data.results
                                 if (response.data.results.length > 0) {
@@ -570,7 +571,7 @@ class tripController {
                                         const allPlaceData = await axios.get('https://maps.googleapis.com/maps/api/place/details/json', {
                                             params: {
                                                 place_id: place_id,
-                                                key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                key: process.env.GOOGLE_MAPS_API_KEY,
                                             },
                                         });
                                         placesInforesult[placeRefindex]["reviews"] = allPlaceData.data.result.reviews;
@@ -585,7 +586,7 @@ class tripController {
                                             const responsePhoto = await axios.get('https://maps.googleapis.com/maps/api/place/photo', {
                                                 params: {
                                                     photoreference: placephotos.photo_reference,
-                                                    key: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+                                                    key: process.env.GOOGLE_MAPS_API_KEY,
                                                     maxwidth: 400, // adjust maxwidth as needed
                                                     maxheight: 400, // adjust maxheight as needed
                                                 },
