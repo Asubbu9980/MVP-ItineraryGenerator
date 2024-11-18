@@ -534,7 +534,7 @@ const IndexPage = () => {
                                                 placeholder={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
                                                 value={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
                                             />
-                                                <img src={calenderIcon} alt='' height={16} width={16} onClick={(e)=>(setShowCalender(!showcalender),handleClick(e))} />
+                                                <img src={calenderIcon?calenderIcon : 'string' } alt='' height={16} width={16} onClick={(e)=>(setShowCalender(!showcalender),handleClick(e))} />
                                             </div>
                                             {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DatePicker
