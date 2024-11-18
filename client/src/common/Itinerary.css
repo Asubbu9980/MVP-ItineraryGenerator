@@ -319,6 +319,36 @@
     display: none !important;
 }
 
+
+.date-box{
+    width: 260px;
+    height: 70px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #C4C4C4;
+}
+
+.date-box img{
+    align-self: center;
+    cursor: pointer;
+}
+.date-box input {
+    border: none !important; 
+    outline: none; 
+    align-self: flex-end;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.date-box input:hover,
+.date-box input:focus,
+.date-box input:active {
+    border: none !important; 
+}
+
+
+
 @media screen and (max-width: 768px) {
     .recommended-stay {
         display: none;
