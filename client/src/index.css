@@ -208,6 +208,9 @@ body {
   /* width: 90%; */
   /* max-width: 30rem; */
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .search .input-bar {
@@ -222,7 +225,9 @@ body {
   height: 3rem;
   overflow: hidden;
   transition: box-shadow 0.5s;
-  width: 100%;
+  /* width: 100%; */
+  width: 80%;
+
 }
 
 .search .input-bar:focus-within {
@@ -276,7 +281,7 @@ body {
   margin-left: 0.5rem;
   min-width: 8rem;
   outline: none;
-  padding-left: 1rem;
+  padding-left: 0rem;
   position: relative;
   z-index: 1;
 }
