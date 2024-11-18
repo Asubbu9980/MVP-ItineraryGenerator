@@ -172,6 +172,11 @@ const ItineraryMapModal = (props) => {
     //      console.log("aa",places);
     //     // const bounds = getMapBounds(map, maps, places);
     //   };
+    console.log(isLoaded,"isLoaded isLoaded")
+    console.log(coordinatesData,"coordinatesData")
+    console.log(props.data,"props.data")
+
+
     return (
         <div>
             {/* <Modal

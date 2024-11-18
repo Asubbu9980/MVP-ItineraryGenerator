@@ -29,11 +29,16 @@ import ItinerarySkeleton from '../../common/ItinerarySkeleton';
 import { Search, Mic } from '@mui/icons-material';
 import Popover from '@mui/material/Popover';
 import SpeechRecognitionModal from '../../common/SpeechRecognitionModal';
+import { Icon } from '@iconify/react';
+import { Link, useLocation } from 'react-router-dom'
+// import SearchSharpIcon from '@mui/icons-material/SearchSharp';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import LocationImage from "../../assets/location.png";
+import TravelType from "../../assets/travel-type.png";
 import { DateRange } from "react-date-range";
-import "react-date-range/dist/styles.css"; 
-import "react-date-range/dist/theme/default.css";
-// import calenderIcon  from '../../assets/calendar.png'
+import calenderIcon from '../../assets/calendar.png'
 import moment from "moment";
+import { enUS } from "date-fns/locale";
 
 const famousTouristCitiesInIndia = [
     "Agra",
@@ -89,12 +94,14 @@ const famousTouristCitiesInIndia = [
 ];
 const destinationList = famousTouristCitiesInIndia.filter((city) => city !== 'Hyderabad');
 
+const TravelTypes = ["All", "Car", "Bus", "Train", "Flight"]
+
 const IndexPage = () => {
     // const staticTripD = { "trip_start_date": "16 November, 2023", "trip_end_date": "21 November, 2023", "trip_duration": "6 days", "starting_location": "Goa", "ending_location": "Hyderabad", "places_visited": [{ "name": "Explore Old City", "description": "Take a walk through the narrow lanes of the Old City and experience the rich history and culture of Hyderabad. Visit iconic landmarks such as Charminar, Mecca Masjid, and Chowmahalla Palace.", "coordinates": { "title": "Charminar", "lat": "17.3616° N", "lng": "78.4747° E" }, "recommended_stay": "1 day", "activity": ["Sightseeing", "Photography", "Cultural Experience"], "popular_places": ["Charminar", "Mecca Masjid", "Chowmahalla Palace"], "accommodation": [{ "address": "Charminar Rd, Char Kaman, Ghansi Bazaar, Hyderabad, Telangana 500002", "name": "Hotel Charminar View", "type": "Budget Hotel", "coordinates": { "title": "Hotel Charminar View", "lat": "17.3616° N", "lng": "78.4747° E" }, "price_per_night": "INR 1500" }], "transportation": { "bus": { "Goa to Hyderabad": "INR 1000" }, "train": { "Goa to Hyderabad": "INR 1500" }, "flight": { "Goa to Hyderabad": "INR 3000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Biryani", "price": "INR 200", "address": "Paradise Restaurant, Secunderabad", "coordinates": { "title": "Paradise Restaurant", "lat": "17.4416° N", "lng": "78.4983° E" } }] }, { "name": "Visit Ramoji Film City", "description": "Spend a day at the world's largest integrated film city and explore the sets of famous Bollywood and Tollywood movies. Enjoy thrilling rides at the amusement park and watch live shows.", "coordinates": { "title": "Ramoji Film City", "lat": "17.2543° N", "lng": "78.6800° E" }, "recommended_stay": "1 day", "activity": ["Film City Tour", "Amusement Park", "Live Shows"], "popular_places": ["Ramoji Film City", "Eureka", "Movie Magic Park"], "accommodation": [{ "address": "Ramoji Film City Main Rd, Anaspur Village, Hayathnagar Mandal, Hyderabad, Telangana 501512", "name": "Tara Comfort Hotel", "type": "Luxury Hotel", "coordinates": { "title": "Tara Comfort Hotel", "lat": "17.2543° N", "lng": "78.6800° E" }, "price_per_night": "INR 5000" }], "transportation": { "bus": { "Hyderabad to Ramoji Film City": "INR 500" }, "train": { "Hyderabad to Ramoji Film City": "INR 1000" }, "flight": { "Hyderabad to Ramoji Film City": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "South Indian Thali", "price": "INR 300", "address": "Ramoji Film City, Hayathnagar Mandal, Hyderabad, Telangana 501512", "coordinates": { "title": "Ramoji Film City", "lat": "17.2543° N", "lng": "78.6800° E" } }] }, { "name": "Visit Salar Jung Museum", "description": "Explore one of the largest museums in the world and admire the vast collection of art, sculptures, and artifacts from different civilizations. Don't miss the famous Veiled Rebecca sculpture.", "coordinates": { "title": "Salar Jung Museum", "lat": "17.3713° N", "lng": "78.4804° E" }, "recommended_stay": "1 day", "activity": ["Museum Tour", "Art Appreciation", "History"], "popular_places": ["Salar Jung Museum", "Veiled Rebecca", "Clock Tower"], "accommodation": [{ "address": "Salar Jung Rd, Darulshifa, Hyderabad, Telangana 500002", "name": "Hotel Salar Jung Inn", "type": "Budget Hotel", "coordinates": { "title": "Hotel Salar Jung Inn", "lat": "17.3713° N", "lng": "78.4804° E" }, "price_per_night": "INR 2000" }], "transportation": { "bus": { "Local transportation in Hyderabad": "INR 500" }, "train": { "Local transportation in Hyderabad": "INR 1000" }, "flight": { "Local transportation in Hyderabad": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Haleem", "price": "INR 250", "address": "Hotel Shadab, Charminar", "coordinates": { "title": "Hotel Shadab", "lat": "17.3616° N", "lng": "78.4747° E" } }] }, { "name": "Visit Golconda Fort", "description": "Explore the majestic ruins of Golconda Fort and learn about its rich history and architecture. Don't miss the sound and light show in the evening which narrates the story of the fort.", "coordinates": { "title": "Golconda Fort", "lat": "17.3833° N", "lng": "78.4011° E" }, "recommended_stay": "1 day", "activity": ["Fort Tour", "History", "Sound and Light Show"], "popular_places": ["Golconda Fort", "Bala Hissar Gate", "Sound and Light Show"], "accommodation": [{ "address": "Golconda Fort, Ibrahim Bagh, Hyderabad, Telangana 500008", "name": "Fort View Guest House", "type": "Budget Hotel", "coordinates": { "title": "Fort View Guest House", "lat": "17.3833° N", "lng": "78.4011° E" }, "price_per_night": "INR 1500" }], "transportation": { "bus": { "Local transportation in Hyderabad": "INR 500" }, "train": { "Local transportation in Hyderabad": "INR 1000" }, "flight": { "Local transportation in Hyderabad": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Biryani", "price": "INR 200", "address": "Paradise Restaurant, Secunderabad", "coordinates": { "title": "Paradise Restaurant", "lat": "17.4416° N", "lng": "78.4983° E" } }] }, { "name": "Visit Hussain Sagar Lake", "description": "Take a boat ride on the iconic Hussain Sagar Lake and visit the famous Buddha statue located in the middle of the lake. Enjoy the beautiful views of the lake and the surrounding city.", "coordinates": { "title": "Hussain Sagar Lake", "lat": "17.4239° N", "lng": "78.4738° E" }, "recommended_stay": "1 day", "activity": ["Boat Ride", "Sightseeing", "Relaxation"], "popular_places": ["Hussain Sagar Lake", "Buddha Statue", "Lumbini Park"], "accommodation": [{ "address": "Hussain Sagar Lake, Khairatabad, Hyderabad, Telangana 500004", "name": "Lake View Resort", "type": "Luxury Hotel", "coordinates": { "title": "Lake View Resort", "lat": "17.4239° N", "lng": "78.4738° E" }, "price_per_night": "INR 5000" }], "transportation": { "bus": { "Local transportation in Hyderabad": "INR 500" }, "train": { "Local transportation in Hyderabad": "INR 1000" }, "flight": { "Local transportation in Hyderabad": "INR 2000" }, "car": { "Local transportation in Hyderabad": "INR 2000" } }, "food_choices": [{ "name": "Hyderabadi Biryani", "price": "INR 200", "address": "Paradise Restaurant, Secunderabad", "coordinates": { "title": "Paradise Restaurant", "lat": "17.4416° N", "lng": "78.4983° E" } }] }] }
     const [tripData, setTripData] = useState(null);
     const [modelState, setModelState] = useState(false);
-    const [showcalender , setShowCalender]=useState(false)
-    
+    const [showcalender, setShowCalender] = useState(false)
+
     const loaderContext = useContext(LoaderContext);
     const [topTouristCities, setTopTouristCities] = useState({
         'originsList': famousTouristCitiesInIndia,
@@ -108,31 +115,32 @@ const IndexPage = () => {
 
     const [anchorEl, setAnchorEl] = useState(null)
 
-  const handleDateClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const handleDateClick = (event) => {
+        setAnchorEl(event?.currentTarget);
+    };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-    setShowCalender(false)
-  };
+    const handleClose = () => {
+        setAnchorEl(null);
+        setShowCalender(false)
+    };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+    const open = Boolean(anchorEl);
+    const id = open ? 'simple-popover' : undefined;
 
     const {
         transcript,
-        listening,
+        // listening,
         resetTranscript,
-        getRecognition,
-        browserSupportsSpeechRecognition
+        // getRecognition,
+        // browserSupportsSpeechRecognition
     } = useSpeechRecognition();
     console.log(transcript, 'transcript')
+
     let today = new Date();
-    let tomorrow= new Date(today);
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    let tomorrow = new Date(today);
+    tomorrow?.setDate(tomorrow?.getDate() + 1);
     let nextReqDay = new Date(today);
-    
+
     nextReqDay.setDate(nextReqDay.getDate() + 3);
 
     const initialValues = {
@@ -141,8 +149,8 @@ const IndexPage = () => {
         // budget: '',
         start_date: moment(new Date()).format('DD MMMM YYYY'),
         end_date: moment(new Date(nextReqDay)).format('DD MMMM YYYY'),
-        transport: 'car', // Default value,
-        datees:[{startDate:moment(new Date()).format('DD MMMM YYYY'),endDate:moment(new Date(nextReqDay)).format('DD MMMM YYYY')}]
+        transport: 'All', // Default value,
+        datees: [{ startDate: moment(new Date()).format('DD MMMM YYYY'), endDate: moment(new Date(nextReqDay)).format('DD MMMM YYYY') }]
     };
 
 
@@ -172,8 +180,8 @@ const IndexPage = () => {
         initialValues,
         validate,
         onSubmit: (values) => {
-           
-           
+
+
             // Handle form submission here
             const formattedStartDate = dayjs(values.datees[0].startDate).format('DD MMMM, YYYY');
             // const formattedStartDate = dayjs(values.start_date).format('DD-MM-YYYY');
@@ -331,19 +339,19 @@ const IndexPage = () => {
     }
 
 
-    
+
     const [date, setDateRange] = useState([
         {
-          startDate: tomorrow,
-          endDate: nextReqDay || new Date(),
-    
-          key: "selection",
+            startDate: tomorrow,
+            endDate: nextReqDay || new Date(),
+
+            key: "selection",
         },
-      ]);
+    ]);
 
 
-    let maxDate= new Date(date[0].startDate);
-    maxDate.setDate(maxDate.getDate() + 6);
+    let maxDate = new Date(date[0]?.startDate);
+    maxDate?.setDate(maxDate?.getDate() + 6);
 
     return (
         <div>
@@ -353,16 +361,28 @@ const IndexPage = () => {
 
                 <div className='searchBanner'>
                     <Container className='banner-container'>
-                        <div className='col-12 mb-2'>
+                        <div className='col-12'><h5 className='banner-title'>Unlock the Power of Personalized Travel with Ai</h5></div>
+                        <div className='col-12 mb-3'>
                             <div className="search">
                                 <div className="input-bar">
+                                    <button title="Search" type='button' onClick={() => {
+                                        SpeechRecognition.stopListening()
+                                        resetTranscript()
+                                        if (searchText !== "" && searchText !== null) {
+                                            onVoiceSearchTripPlan(searchText)
+                                        }
+
+                                    }} className='ms-2'>
+                                        <Search />
+                                        <span className="a11y-hidden">Search</span>
+                                    </button>
                                     <input type="search" placeholder='Speak/Search for your vacation trip' value={searchText} onChange={onChangeSearchText} name="search" id="search-text" autoComplete="off" />
                                     <button title="Dictate" type='button' onClick={() => onStartSpeechRecognition()
                                     }>
                                         <Mic />
                                         <span className="a11y-hidden">Dictate new search</span>
                                     </button>
-                                    <button title="Search" type='button' onClick={() => {
+                                    {/* <button title="Search" type='button' onClick={() => {
                                         SpeechRecognition.stopListening()
                                         resetTranscript()
                                         if (searchText !== "" && searchText !== null) {
@@ -372,7 +392,7 @@ const IndexPage = () => {
                                     }}>
                                         <Search />
                                         <span className="a11y-hidden">Search</span>
-                                    </button>
+                                    </button> */}
                                 </div>
                                 {(searchText && isValidDestination) ? <div><p className='text-danger fw-bold my-1 ms-3'
                                 //  style={{ backgroundColor: '#ffffff', maxWidth: '320px', borderRadius: '8px' }}
@@ -380,10 +400,10 @@ const IndexPage = () => {
 
                             </div>
                         </div>
-                        <Box style={{ borderRadius: '8px', background: '#fff', padding: '25px', paddingTop: "30px", paddingBottom: '30px' }}>
+                        <Box style={{ borderRadius: '8px', background: '#fff', padding: '25px', paddingTop: "30px", paddingBottom: '25px' }}>
                             <form autoComplete='off' className="search-form" onSubmit={formik.handleSubmit}>
                                 <div className="container">
-                                    <div className="row ">
+                                    <div className="row form-row-container-cls py-lg-2 d-flex align-items-center">
                                         {/* <p className='text-black'>Microphone: {listening ? 'on' : 'off'}</p>
                                         <button onClick={() => SpeechRecognition.startListening({
                                             continuous: true,
@@ -468,47 +488,7 @@ const IndexPage = () => {
                                             /> */}
                                         {/* </div> */}
 
-                                        {/* Location */}
-                                        <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
-                                            <label style={{ marginBottom: '8px' }}>Origin</label>
-                                            <Autocomplete
-                                                className='originField'
-                                                disablePortal
-                                                id="combo-box-location"
-                                                options={topTouristCities.originsList}
-                                                value={formik.values.source}
-                                                onChange={(e, value) => {
 
-                                                    formik.setFieldValue('source', value)
-                                                    onChangeDestinationList(value)
-                                                }}
-                                                renderInput={(params) => {
-                                                    // console.log("Params", params);
-                                                    return <TextField {...params} />
-                                                }}
-
-                                            />
-                                            {formik.errors.source ? <p className='errors'>{formik.errors.source}</p> : null}
-                                        </div>
-                                        {/* Destination */}
-                                        <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
-                                            <label style={{ marginBottom: '8px' }}>Destination </label>
-                                            <Autocomplete
-                                                className='destinationField'
-                                                disablePortal
-                                                id="combo-box-destination"
-                                                options={topTouristCities.destinationsList}
-                                                value={formik.values.destination}
-                                                // onChange={(e, value) => formik.setFieldValue('destination', value)}
-                                                onChange={(e, value) => {
-                                                    formik.setFieldValue('destination', value)
-                                                    onChangeSourcesList(value)
-
-                                                }}
-                                                renderInput={(params) => <TextField {...params} />}
-                                            />
-                                            {formik.errors.destination ? <p className='errors'>{formik.errors.destination}</p> : null}
-                                        </div>
                                         {/* Budget */}
                                         {/* <Grid item xs={2}>
                                             <label style={{ marginBottom: '8px' }}>Budget</label>
@@ -523,84 +503,194 @@ const IndexPage = () => {
                                             {formik.errors.budget ? <p className='errors'>{formik.errors.budget}</p> : null}
                                         </Grid> */}
                                         {/* Start Date */}
-                                        <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
-                                           
-                                            <label style={{ marginBottom: '8px' }} onClick={()=>setShowCalender(!showcalender)}>Depart - Return</label>
-                                            <div className='date-box'>
-                                            <input
-                                           
-                                           onClick={(e)=>(setShowCalender(!showcalender),handleDateClick(e))}
-                                                readOnly
-                                                onChange={(item) => setDateRange([item.selection])}
-                                                placeholder={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
-                                                value={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
-                                            />
-                                                <img src={"calenderIcon"?"calenderIcon" : 'string' } alt='' height={16} width={16} onClick={(e)=>(setShowCalender(!showcalender),handleDateClick(e))} />
+                                        <div className='col-12 col-lg-10'>
+                                            <div className='row form-sub-row-container-cls'>
+                                                {/* Location */}
+                                                <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
+                                                    <label style={{ marginBottom: '8px' }}>Origin</label>
+                                                    <Autocomplete
+                                                        className='originField'
+                                                        disablePortal
+                                                        id="combo-box-location"
+                                                        popupIcon={<ExpandMoreIcon />}
+                                                        options={topTouristCities.originsList}
+                                                        value={formik.values.source}
+                                                        onChange={(e, value) => {
+
+                                                            formik.setFieldValue('source', value)
+                                                            onChangeDestinationList(value)
+                                                        }}
+                                                        renderInput={(params) => {
+                                                            // console.log("Params", params);
+                                                            return <TextField {...params} sx={{ width: "100%" }}
+                                                                InputProps={{
+                                                                    ...params.InputProps,
+                                                                    startAdornment: (
+                                                                        <InputAdornment position='end'>
+                                                                            <img src={LocationImage} alt='LocationImage' style={{ paddingTop: '20px' }} />
+                                                                        </InputAdornment>
+                                                                    ),
+                                                                }}
+                                                            />
+                                                        }}
+                                                        sx={{ width: "100%" }}
+                                                    />
+                                                    {formik.errors.source ? <p className='errors mb-0'>{formik.errors.source}</p> : null}
+                                                </div>
+                                                {/* Destination */}
+                                                <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
+                                                    <label style={{ marginBottom: '8px' }}>Destination </label>
+                                                    <Autocomplete
+                                                        className='destinationField'
+                                                        disablePortal
+                                                        sx={{ width: "100%" }}
+                                                        id="combo-box-destination"
+                                                        options={topTouristCities.destinationsList}
+                                                        value={formik.values.destination}
+                                                        popupIcon={<ExpandMoreIcon />}
+                                                        // onChange={(e, value) => formik.setFieldValue('destination', value)}
+                                                        onChange={(e, value) => {
+                                                            formik.setFieldValue('destination', value)
+                                                            onChangeSourcesList(value)
+
+                                                        }}
+                                                        renderInput={(params) => <TextField {...params} sx={{ width: "100%" }}
+                                                            InputProps={{
+                                                                ...params.InputProps,
+                                                                startAdornment: (
+                                                                    <InputAdornment position='end'>
+                                                                        <img src={LocationImage} alt='LocationImage' style={{ paddingTop: '20px' }} />
+                                                                    </InputAdornment>
+                                                                ),
+                                                            }}
+                                                        />}
+                                                    />
+                                                    {formik.errors.destination ? <p className='errors mb-0'>{formik.errors.destination}</p> : null}
+                                                </div>
+
+                                                {/* <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
+                                                    <label style={{ marginBottom: '8px' }}>Start Date</label>
+                                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                        <DatePicker
+                                                            value={formik.values.start_date}
+                                                            onChange={(date) => formik.setFieldValue('start_date', date)}
+                                                            maxDate=''
+                                                            minDate={dayjs(new Date())}
+                                                            className="startDate"
+                                                            slotProps={{
+                                                                textField: {
+                                                                    readOnly: true,
+                                                                },
+                                                            }}
+
+                                                        />
+                                                    </LocalizationProvider>
+                                                    {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null}
+                                                </div> */}
+
+                                                <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
+
+                                                    <label style={{ marginBottom: '8px' }} onClick={() => setShowCalender(!showcalender)}>Depart - Return</label>
+                                                    <div className='date-box'>
+                                                        <input
+
+                                                            onClick={(e) => (setShowCalender(!showcalender), handleDateClick(e))}
+                                                            readOnly
+                                                            onChange={(item) => setDateRange([item.selection])}
+                                                            placeholder={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
+                                                            value={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
+                                                        />
+                                                        <img src={calenderIcon} alt='' height={16} width={16} onClick={(e) => (setShowCalender(!showcalender), handleDateClick(e))} />
+                                                    </div>
+                                                    {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                               <DatePicker
+                                                   value={formik.values.start_date}
+                                                   onChange={(date) => formik.setFieldValue('start_date', date)}
+                                                   maxDate=''
+                                                   minDate={dayjs(new Date())}
+                                                   className="startDate"
+                                                   slotProps={{
+                                                       textField: {
+                                                           readOnly: true,
+                                                       },
+                                                   }}
+
+                                               />
+                                           </LocalizationProvider>
+                                           {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null} */}
+                                                    {showcalender &&
+                                                        <Popover
+                                                            id={id}
+                                                            open={open}
+                                                            anchorEl={anchorEl}
+                                                            onClose={handleClose}
+                                                            anchorOrigin={{
+                                                                vertical: 'bottom',
+                                                                horizontal: 'right',
+                                                            }}
+                                                            transformOrigin={{
+                                                                vertical: 'top',
+                                                                horizontal: 'right',
+                                                            }}
+                                                        >
+                                                            <DateRange
+                                                                className="datePicker"
+                                                                editableDateInputs={true}
+                                                                onChange={(item) => (setDateRange([item.selection], formik.setFieldValue('datees', [item.selection])))}
+                                                                minDate={tomorrow}
+                                                                moveRangeOnFirstSelection={false}
+                                                                ranges={date}
+                                                                maxDate={maxDate}
+                                                                locale={enUS} // Add the locale here
+                                                            />
+                                                        </Popover>}
+
+                                                </div>
+
+                                                {/* </div> */}
+                                                <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
+                                                    <label style={{ marginBottom: '8px' }}>Mode of Transport </label>
+                                                    <Autocomplete
+                                                        className='destinationField'
+                                                        disablePortal
+                                                        id="combo-box-destination"
+                                                        options={TravelTypes}
+                                                        value={formik.values.transport}
+                                                        // onChange={(e, value) => formik.setFieldValue('destination', value)}
+                                                        onChange={(e, value) => {
+                                                            formik.setFieldValue('transport', value)
+                                                            // onChangeSourcesList(value)
+
+                                                        }}
+                                                        renderInput={(params) => <TextField {...params} sx={{ width: "100%" }}
+                                                            InputProps={{
+                                                                ...params.InputProps,
+                                                                startAdornment: (
+                                                                    <InputAdornment position='end'>
+                                                                        <img src={TravelType} alt='LocationImage' style={{ paddingTop: '20px' }} />
+                                                                    </InputAdornment>
+                                                                ),
+                                                            }}
+                                                        />}
+                                                        popupIcon={<ExpandMoreIcon />}
+                                                        sx={{ width: "100%" }}
+                                                    />
+                                                    {/* {formik.errors.transport ? <p className='errors'>{formik.errors.transport}</p> : null} */}
+                                                </div>
                                             </div>
-                                            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <DatePicker
-                                                    value={formik.values.start_date}
-                                                    onChange={(date) => formik.setFieldValue('start_date', date)}
-                                                    maxDate=''
-                                                    minDate={dayjs(new Date())}
-                                                    className="startDate"
-                                                    slotProps={{
-                                                        textField: {
-                                                            readOnly: true,
-                                                        },
-                                                    }}
 
-                                                />
-                                            </LocalizationProvider>
-                                            {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null} */}
-                                                                {showcalender && 
-                                                                <Popover
-                                                                id={id}
-                                                                open={open}
-                                                                anchorEl={anchorEl}
-                                                                onClose={handleClose}
-                                                                anchorOrigin={{
-                                                                    vertical: 'bottom',
-                                                                    horizontal: 'right',
-                                                                  }}
-                                                                  transformOrigin={{
-                                                                    vertical: 'top',
-                                                                    horizontal: 'right',
-                                                                  }}
-                                                              >
-                                                                <DateRange
-                                                                    className="datePicker"
-                                                                    editableDateInputs={true}
-                                                                    onChange={(item) => (setDateRange([item.selection] ,formik.setFieldValue('datees', [item.selection]) ))}
-                                                                    minDate={tomorrow}
-                                                                    moveRangeOnFirstSelection={false}
-                                                                    ranges={date}
-                                                                    maxDate={maxDate}
-                                                                />
-                                                              </Popover>}               
-                                                               
                                         </div>
+                                        <div className='col-12 col-lg-2'>
+                                            <div className='row'>
 
-                                        {/* End Date */}
-                                        {/* <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
-                                            <label style={{ marginBottom: '8px' }}>End Date</label>
-                                            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                <DatePicker
-                                                    className="endDate"
-                                                    value={dayjs(formik.values.start_date).add(2, 'day')}
-                                                    onChange={(date) => formik.setFieldValue('end_date', date)}
-                                                    maxDate={dayjs(formik.values.start_date).add(6, 'day')}
-                                                    minDate={formik.values.start_date}
-                                                    slotProps={{
-                                                        textField: {
-                                                            readOnly: true,
-                                                        },
-                                                    }}
-                                                />
-                                            </LocalizationProvider>
-                                            {formik.errors.end_date ? <p className='errors'>{formik.errors.end_date}</p> : null}
+                                                <div className="col col-12 d-flex justify-content-center align-items-center" >
+                                                    <Button type='submit' className='btn-submit' style={{}} startIcon={<Icon icon="cuida:search-outline" />}>
+                                                        Start Planning
+                                                    </Button>
+                                                </div>
+                                            </div>
 
-                                        </div> */}
+                                        </div>
                                     </div>
                                 </div>
                                 {/* <Grid container spacing={2} style={{ marginTop: '8px' }}>
@@ -622,14 +712,17 @@ const IndexPage = () => {
                                     {formik.errors.transport ? <p className='errors'>{formik.errors.transport}</p> : null}
                                 </Grid> */}
 
-                                <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', color: '#000' }} className='home-transport-modes-container'>
-                                    <TransportModes></TransportModes>
+                                <div style={{ marginTop: '15px', display: 'flex', justifyContent: 'center', color: '#000' }} className='home-navigation-modes-container'>
+                                    {/* <TransportModes></TransportModes> */}
+                                    <Link to="/chatbot"><button className='navigation-btn-cls me-3'>Chatboat AI {"  "} <Icon icon="teenyicons:top-right-outline" className='ms-2' /></button></Link>
+                                    <Link to="/preferential-search"><button className='navigation-btn-cls'>Customized Search {"  "}<Icon icon="teenyicons:top-right-outline" className='ms-2' /></button></Link>
+
                                 </div>
-                                <Grid item xs={12} style={{ display: 'flex', height: '0' }}>
+                                {/* <Grid item xs={12} style={{ display: 'flex', height: '0' }}>
                                     <Button type='submit' className='btn-submit' style={{ margin: '20px auto', position: "relative", top: '-12px' }}>
                                         Start Planning
                                     </Button>
-                                </Grid>
+                                </Grid> */}
                             </form>
 
                         </Box>

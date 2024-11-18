@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Box } from '@mui/material';
-import Logo from '../assets/logo.svg';
-import './header.css'
+import Logo from '../assets/itinerary-logo.svg';
+import './header.scss'
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -61,16 +61,16 @@ const HeaderComponent = () => {
                 </Box>
                 {/* <ProfileDropdown /> */}
                 <Box className='d-flex align-items-center'>
-                    <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark pt-3 home-search-link'>
+                    {/* <Link to={location.pathname === "/" ? "/preferential-search" : '/'} className='text-decoration-none text-dark pt-3 home-search-link'>
                         <p >{location.pathname === "/" ? 'Preferential Search' : 'Home'}</p>
 
                     </Link>
                     <Link to={location.pathname === "/chatbot" ? "/chatbot" : "/chatbot"} className='text-decoration-none text-dark pt-3 home-search-link'>
                         <p>Chatbot</p>
-                    </Link>
+                    </Link> */}
                     {!isLoading ?
                         <>
-                            {!isAuthenticated ? <Button onClick={() => loginWithPopup()} variant='contained' size='small'>Login</Button> : null}
+                            {!isAuthenticated ? <Button onClick={() => loginWithPopup()} variant='contained' size='small' className='header-login-btn-cls'>Login</Button> : null}
                             {isAuthenticated && <div style={{ cursor: 'pointer' }}>
                                 <div onClick={avatarClick} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                     <Avatar

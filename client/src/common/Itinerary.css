@@ -1,12 +1,30 @@
 .searchBanner {
-    background: url("../assets/banner.png") no-repeat;
+    /* background: url("../assets/banner.png") no-repeat; */
+    background: url("../assets/itinerary-bg-img.png");
     background-size: cover;
-    min-height: 310px;
-    padding-top: 50px;
+    /* min-height: 310px; */
+    background-position: center;
+    min-height: 410px;
+    padding-top: 30px;
 }
 
 .search-form {
     color: #fff;
+}
+
+.form-row-container-cls {
+    border: 1px solid #E4E6E8;
+    border-radius: 16px;
+    /* min-height: 104px; */
+}
+
+.form-row-container-cls:hover {
+    border: 1px solid #26A2E9;
+
+}
+
+.form-sub-row-container-cls .col {
+    /* border-right: 1px solid #E4E6E8 !important; */
 }
 
 .recommended-stay {
@@ -30,24 +48,54 @@
 .search-form .endDate input {
     padding-top: 38px !important;
     color: #000;
-    font-size: 18px;
+    /* font-size: 18px;
     font-weight: 600;
+    line-height: 22px; */
+    font-size: 14px;
+    font-weight: 700;
     line-height: 22px;
+
 }
 
 .search-form fieldset {
-    /* border-right: 0; */
+    /* border-right: 0;
+    border-left: 0; */
+    border: 0px;
+    border-right: 1px solid #E4E6E8 !important;
+
 }
 
+
+/* .search-form fieldset:first-child {
+    border-right: 1px;
+    border-left: 1px;
+
+} */
+
 .search-form .btn-submit {
-    border-radius: 8px;
+    /* border-radius: 8px;
     background: #018AD3;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.26);
     padding: 20px 15px;
     color: #FFF;
     text-align: center;
     font-size: 16px;
+    text-transform: capitalize; */
+    /* width: 170px;
+    height: 58px; */
+    padding: 16px;
+    border-radius: 36px;
+    background: #26A2E9;
+    color: #FFF;
     text-transform: capitalize;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 26px;
+    /* gap: 0px !important; */
+    position: relative !important;
+    top: 20 !important;
+
 }
 
 .search-form .btn-submit:hover {
@@ -67,23 +115,32 @@
 }
 
 .search-form .container .col label {
-    color: #616161;
+    /* color: #616161;
     font-size: 16px;
     font-weight: 400;
     line-height: 22px;
     display: flex;
     position: absolute;
     top: 8px;
+    left: 16px; */
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+    color: #737373;
+    display: flex;
+    position: absolute;
+    top: 8px;
     left: 16px;
+
 }
 
-.search-form .container .col label::after {
+/* .search-form .container .col label::after {
     content: "";
     display: inline-block;
     background: url('/src/assets/lable_down-line.svg');
     width: 20px;
     height: 20px;
-}
+} */
 
 /* 
 .search-form [class*="MuiInputBase-root-MuiOutlinedInput-root"] {   
@@ -104,10 +161,15 @@
 .search-form .originField input,
 .search-form .destinationField input {
     padding-top: 30px !important;
-    color: #000;
+    /* color: #000;
     font-size: 18px;
     font-weight: 600;
+    line-height: 22px; */
+    font-size: 14px;
+    font-weight: 700;
     line-height: 22px;
+    color: #000000;
+
 }
 
 .radio_sheets .radio_btn {
@@ -175,6 +237,36 @@
 
 .radio_sheets .radio_btn:hover .train-icon {
     background: url('../assets/train-hover-icon.svg');
+}
+
+.navigation-btn-cls {
+    width: 207px;
+    height: 48px;
+    /* padding: 16.11px 23px 16.89px 21px; */
+    border-radius: 36px;
+    border: 1px solid #050B20;
+    background-color: transparent;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 15px;
+
+
+
+}
+
+
+.navigation-btn-cls:hover {
+
+    border: 1px solid #26A2E9;
+    color: #26A2E9;
+}
+
+.banner-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 56px;
+    text-align: center;
+    color: #fff;
 }
 
 .tripDetails-grid .tripDetails-item {
@@ -261,6 +353,8 @@
 
 .errors {
     color: red;
+    /* font-size: 12px !important;
+    padding-left: 3px !important; */
 }
 
 .search_info {
@@ -320,33 +414,41 @@
 }
 
 
-.date-box{
-    width: 260px;
-    height: 70px;
+.date-box {
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    border: 1px solid #C4C4C4;
+    border-right: 1px solid #E4E6E8;
 }
 
-.date-box img{
+.date-box img {
     align-self: center;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 28px;
 }
+
 .date-box input {
-    border: none !important; 
-    outline: none; 
+    border: none !important;
+    outline: none;
     cursor: pointer;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 28px;
+    /* width: 80%; */
     width: 80%;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 22px;
+
+
+
 }
 
 .date-box input:hover,
 .date-box input:focus,
 .date-box input:active {
-    border: none !important; 
+    border: none !important;
 }
 
 
@@ -802,6 +904,14 @@
     }
 }
 
+@media screen and (max-width: 1200px) {
+    .search-form .btn-submit {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16px;
+    }
+}
+
 .voice-icon {
     /* animation: pulse 2s infinite */
     /* position: absolute; */
@@ -1028,4 +1138,50 @@
     line-height: 29px;
     color: #3A3A3A;
     margin-bottom: 0px;
+}
+
+@media screen and (max-width:992px) {
+    .search-form fieldset {
+        border: 1px solid #E4E6E8 !important;
+
+    }
+
+    .form-row-container-cls {
+        border: 0px;
+    }
+
+    .search-form .btn-submit {
+        margin-top: 8px;
+        border-radius: 6px !important;
+        padding: 10px !important;
+
+    }
+
+    .home-navigation-modes-container {
+        margin-top: 8px !important;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .navigation-btn-cls {
+        width: 150px;
+        height: 38px;
+        /* padding: 16.11px 23px 16.89px 21px; */
+        border-radius: 26px;
+        font-size: 12px;
+        font-weight: 500;
+        line-height: 15px;
+
+    }
+
+    .banner-title {
+        font-size: 1.4rem !important;
+        line-height: 26px !important;
+
+    }
+}
+
+[class*="MuiAutocomplete-endAdornment"] {
+    top: inherit !important;
+    bottom: 6px !important;
 }

@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { BrowserRouter } from "react-router-dom";
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
