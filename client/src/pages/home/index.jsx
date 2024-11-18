@@ -32,7 +32,7 @@ import SpeechRecognitionModal from '../../common/SpeechRecognitionModal';
 import { DateRange } from "react-date-range";
 import "react-date-range/dist/styles.css"; 
 import "react-date-range/dist/theme/default.css";
-import calenderIcon  from '../../assets/calendar.png'
+// import calenderIcon  from '../../assets/calendar.png'
 import moment from "moment";
 
 const famousTouristCitiesInIndia = [
@@ -108,12 +108,13 @@ const IndexPage = () => {
 
     const [anchorEl, setAnchorEl] = useState(null)
 
-  const handleClick = (event) => {
+  const handleDateClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setShowCalender(false)
   };
 
   const open = Boolean(anchorEl);
@@ -527,14 +528,14 @@ const IndexPage = () => {
                                             <label style={{ marginBottom: '8px' }} onClick={()=>setShowCalender(!showcalender)}>Depart - Return</label>
                                             <div className='date-box'>
                                             <input
-                                            style={{height:"100%" , width:"80%"}}
-                                                onClick={()=>setShowCalender(!showcalender)}
+                                           
+                                           onClick={(e)=>(setShowCalender(!showcalender),handleDateClick(e))}
                                                 readOnly
                                                 onChange={(item) => setDateRange([item.selection])}
                                                 placeholder={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
                                                 value={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
                                             />
-                                                <img src={calenderIcon?calenderIcon : 'string' } alt='' height={16} width={16} onClick={(e)=>(setShowCalender(!showcalender),handleClick(e))} />
+                                                <img src={"calenderIcon"?"calenderIcon" : 'string' } alt='' height={16} width={16} onClick={(e)=>(setShowCalender(!showcalender),handleDateClick(e))} />
                                             </div>
                                             {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                 <DatePicker

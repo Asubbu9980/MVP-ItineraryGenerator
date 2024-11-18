@@ -332,13 +332,15 @@
 .date-box img{
     align-self: center;
     cursor: pointer;
+    margin-top: 20px;
 }
 .date-box input {
     border: none !important; 
     outline: none; 
-    align-self: flex-end;
     cursor: pointer;
     font-weight: bold;
+    margin-top: 20px;
+    width: 80%;
 }
 
 .date-box input:hover,
