@@ -274,7 +274,22 @@ const IndexPage = () => {
 
                 });
                 //console.log(JSON.stringify(fR));
-                // setTripTitle(`${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`)
+               
+                // console.log(fR , 'frrrrr')
+
+        let data=fR.places_visited;
+        let startDate=moment(data[0].date ,  ["DD/MM/YYYY", "DD-MM-YYYY"]).format('DD MMM YYYY');
+        let endDate= moment(data[(data?.length)-1].date ,  ["DD/MM/YYYY", "DD-MM-YYYY"]).format('DD MMM YYYY');
+        setDateRange([
+            {
+                startDate: startDate,
+                endDate: endDate ,
+                key: "selection",
+            }
+        ])
+
+ setTripTitle(`${formik.values.source}  to  ${formik.values.destination}  from  ${startDate}  to  ${endDate}`)
+
                 setTripData(fR)
             }).then((e) => {
             })
