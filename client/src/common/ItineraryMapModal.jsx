@@ -27,7 +27,7 @@ const ItineraryMapModal = (props) => {
 
       const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyDBOOKUbB5AjZGROTna4SGgfnF4_BgDX5M",
+        googleMapsApiKey: "AIzaSyAMwgQJXSd9t0siBoGxJVnoA87atRGw6fI",
 
       })
 
