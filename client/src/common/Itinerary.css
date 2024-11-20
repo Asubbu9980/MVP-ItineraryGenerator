@@ -72,7 +72,7 @@
 
 } */
 
-.search-form .btn-submit {
+.search-form .btn-submit ,.search-form .btn-submit:disabled  {
     /* border-radius: 8px;
     background: #018AD3;
     box-shadow: 0px 4px 6px 0px rgba(0, 0, 0, 0.26);
@@ -85,8 +85,8 @@
     height: 58px; */
     padding: 16px;
     border-radius: 36px;
-    background: #26A2E9;
-    color: #FFF;
+    background: #26A2E9 !important;
+    color: #FFF !important;
     text-transform: capitalize;
     text-align: center;
     font-size: 16px;
@@ -449,6 +449,11 @@
 .date-box input:focus,
 .date-box input:active {
     border: none !important;
+}
+
+.date-box input:disabled{
+    background-color: transparent !important;
+    color: #9E9E9E !important;
 }
 
 

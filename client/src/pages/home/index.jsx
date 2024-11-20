@@ -134,7 +134,7 @@ const IndexPage = () => {
         // getRecognition,
         // browserSupportsSpeechRecognition
     } = useSpeechRecognition();
-    console.log(transcript, 'transcript')
+    // console.log(transcript, 'transcript')
 
     let today = new Date();
     let tomorrow = new Date(today);
@@ -147,7 +147,7 @@ const IndexPage = () => {
         destination: '',
         source: 'Hyderabad',
         // budget: '',
-        start_date: moment(new Date()).format('DD MMMM YYYY'),
+        start_date: moment(tomorrow).format('DD MMMM YYYY'),
         end_date: moment(new Date(nextReqDay)).format('DD MMMM YYYY'),
         transport: 'All', // Default value,
         datees: [{ startDate: moment(new Date()).format('DD MMMM YYYY'), endDate: moment(new Date(nextReqDay)).format('DD MMMM YYYY') }]
@@ -180,13 +180,12 @@ const IndexPage = () => {
         initialValues,
         validate,
         onSubmit: (values) => {
-
-
-            // Handle form submission here
+          
             const formattedStartDate = dayjs(values.datees[0].startDate).format('DD MMMM, YYYY');
-            // const formattedStartDate = dayjs(values.start_date).format('DD-MM-YYYY');
+          
             const formattedEndDate = dayjs(values.datees[0].endDate).format('DD MMMM, YYYY');
-            // const formattedEndDate = dayjs(values.end_date).format('DD-MM-YYYY');
+           formik.setFieldValue('start_date' ,formattedStartDate )
+           formik.setFieldValue('end_date' ,formattedEndDate )
 
             // Update the values with the formatted dates
             const formattedValues = {
@@ -195,7 +194,8 @@ const IndexPage = () => {
                 end_date: formattedEndDate,
             };
             // Now you can send the `formattedValues` to the server
-            console.log(formattedValues);
+            //console.log(formattedValues , 'formatted');
+
             loaderContext.startLoading(true)
             requestAnimationFrame(() => { window.scrollTo(0, 420); });
 
@@ -230,7 +230,7 @@ const IndexPage = () => {
 
         try {
             getTripDetailsApi(payload).then((r) => {
-                console.log("ChatGPT Resp", r);
+                // console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
                 const p = r?.data.hasOwnProperty('trip') ? r?.data.trip : r?.data;
                 const fR = {}
@@ -243,8 +243,8 @@ const IndexPage = () => {
                     }
 
                 });
-                console.log(JSON.stringify(fR));
-                setTripTitle(`${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`)
+                //console.log(JSON.stringify(fR));
+                setTripTitle(`${formik.values.source}  to  ${formik.values.destination}  from  ${payload.start_date}  to  ${payload.end_date}`)
                 setTripData(fR)
             }).then((e) => {
             })
@@ -260,7 +260,7 @@ const IndexPage = () => {
                 text: payload,
                 source: initialValues.source
             }).then((r) => {
-                console.log("ChatGPT Resp", r);
+                //console.log("ChatGPT Resp", r);
                 loaderContext.startLoading(false)
                 const p = r?.data.hasOwnProperty('trip') ? r?.data.trip : r?.data;
                 const fR = {}
@@ -273,7 +273,7 @@ const IndexPage = () => {
                     }
 
                 });
-                console.log(JSON.stringify(fR));
+                //console.log(JSON.stringify(fR));
                 // setTripTitle(`${payload.source}  to  ${payload.destination}  from  ${payload.start_date}  to  ${payload.end_date}`)
                 setTripData(fR)
             }).then((e) => {
@@ -285,6 +285,7 @@ const IndexPage = () => {
     }
 
     const onVoiceSearchTripPlan = (text) => {
+        setSearchText('')
         const splitedText = text.split(" ");
         let destination = null
         for (var i = 0; i < splitedText.length; i++) {
@@ -295,9 +296,12 @@ const IndexPage = () => {
             }
         }
         if (destination) {
+            setTripTitle(`${formik.values.source}  to  ${destination.charAt(0).toUpperCase() + destination.slice(1).toLowerCase()}  from  ${formik.values.start_date}  to  ${formik.values.end_date}`)
+            formik.setFieldValue('destination', destination.charAt(0).toUpperCase() + destination.slice(1).toLowerCase())
             SpeechRecognition.stopListening()
             resetTranscript()
             setModelState(false)
+           
             setIsValidDestination(false)
             loaderContext.startLoading(true)
             requestAnimationFrame(() => { window.scrollTo(0, 420); });
@@ -352,6 +356,36 @@ const IndexPage = () => {
 
     let maxDate = new Date(date[0]?.startDate);
     maxDate?.setDate(maxDate?.getDate() + 6);
+
+
+
+
+    const handleSelect = (ranges) => {
+        const { startDate, endDate } = ranges.selection;
+    
+        const diffInDays = Math.floor(
+          (new Date(endDate) - new Date(startDate)) / (1000 * 60 * 60 * 24)
+        );
+    
+        if (diffInDays > 6) {
+          const maxEndDate = new Date(startDate);
+          maxEndDate.setDate(maxEndDate.getDate() + 6);
+          const restrictedRange = {
+            startDate,
+            endDate: maxEndDate,
+            key: "selection",
+          };
+          setDateRange([restrictedRange]);
+          formik.setFieldValue('start_date' ,moment(restrictedRange?.startDate).format('DD MMMM, YYYY') )
+          formik.setFieldValue('end_date' , moment(restrictedRange?.endDate).format('DD MMMM, YYYY'))
+          formik.setFieldValue("datees", [restrictedRange]);
+        } else {
+            formik.setFieldValue('start_date' ,moment(startDate).format('DD MMMM, YYYY') )
+            formik.setFieldValue('end_date' , moment(endDate).format('DD MMMM, YYYY'))
+          setDateRange([ranges.selection]);
+          formik.setFieldValue("datees", [ranges.selection]);
+        }
+      };
 
     return (
         <div>
@@ -511,6 +545,7 @@ const IndexPage = () => {
                                                     <Autocomplete
                                                         className='originField'
                                                         disablePortal
+                                                        disabled={loaderContext.loading}
                                                         id="combo-box-location"
                                                         popupIcon={<ExpandMoreIcon />}
                                                         options={topTouristCities.originsList}
@@ -543,6 +578,7 @@ const IndexPage = () => {
                                                     <Autocomplete
                                                         className='destinationField'
                                                         disablePortal
+                                                        disabled={loaderContext.loading}
                                                         sx={{ width: "100%" }}
                                                         id="combo-box-destination"
                                                         options={topTouristCities.destinationsList}
@@ -593,14 +629,14 @@ const IndexPage = () => {
                                                     <label style={{ marginBottom: '8px' }} onClick={() => setShowCalender(!showcalender)}>Depart - Return</label>
                                                     <div className='date-box'>
                                                         <input
-
+                                                             disabled={loaderContext.loading}
                                                             onClick={(e) => (setShowCalender(!showcalender), handleDateClick(e))}
                                                             readOnly
                                                             onChange={(item) => setDateRange([item.selection])}
                                                             placeholder={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
                                                             value={`${moment(new Date(date[0].startDate)).format("DD MMM YYYY")} - ${moment(new Date(date[0].endDate)).format("DD MMM YYYY")}`}
                                                         />
-                                                        <img src={calenderIcon} alt='' height={16} width={16} onClick={(e) => (setShowCalender(!showcalender), handleDateClick(e))} />
+                                                        <img src={calenderIcon} alt='' height={16} width={16} onClick={(e) => (setShowCalender(!showcalender), handleDateClick(e))}  disabled={loaderContext.loading}/>
                                                     </div>
                                                     {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                                                <DatePicker
@@ -618,7 +654,7 @@ const IndexPage = () => {
                                                />
                                            </LocalizationProvider>
                                            {formik.errors.start_date ? <p className='errors'>{formik.errors.start_date}</p> : null} */}
-                                                    {showcalender &&
+                                                    {showcalender && !loaderContext.loading &&
                                                         <Popover
                                                             id={id}
                                                             open={open}
@@ -636,12 +672,15 @@ const IndexPage = () => {
                                                             <DateRange
                                                                 className="datePicker"
                                                                 editableDateInputs={true}
-                                                                onChange={(item) => (setDateRange([item.selection], formik.setFieldValue('datees', [item.selection])))}
+                                                                //  onChange={(item) => (setDateRange([item.selection], formik.setFieldValue('datees', [item.selection])))}
                                                                 minDate={tomorrow}
-                                                                moveRangeOnFirstSelection={false}
+                                                                moveRangeOnFirstSelection={true}
                                                                 ranges={date}
-                                                                maxDate={maxDate}
-                                                                locale={enUS} // Add the locale here
+                                                                // maxDate={maxDate}
+                                                                locale={enUS} 
+                                                                onChange={handleSelect}
+                                                              
+                                                               
                                                             />
                                                         </Popover>}
 
@@ -651,6 +690,7 @@ const IndexPage = () => {
                                                 <div className="col col-12 col-sm-6 col-md-6 col-lg-3 px-2 px-sm-0">
                                                     <label style={{ marginBottom: '8px' }}>Mode of Transport </label>
                                                     <Autocomplete
+                                                     disabled={loaderContext.loading}
                                                         className='destinationField'
                                                         disablePortal
                                                         id="combo-box-destination"
@@ -684,8 +724,8 @@ const IndexPage = () => {
                                             <div className='row'>
 
                                                 <div className="col col-12 d-flex justify-content-center align-items-center" >
-                                                    <Button type='submit' className='btn-submit' style={{}} startIcon={<Icon icon="cuida:search-outline" />}>
-                                                        Start Planning
+                                                    <Button type='submit' disabled={loaderContext.loading} className='btn-submit' style={{}} startIcon={<Icon icon="cuida:search-outline" />}>
+                                                    {!loaderContext.loading ? "Start Planning" : "Planning..."}
                                                     </Button>
                                                 </div>
                                             </div>
