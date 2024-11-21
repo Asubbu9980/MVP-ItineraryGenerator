@@ -180,26 +180,29 @@ const IndexPage = () => {
         initialValues,
         validate,
         onSubmit: (values) => {
-          
-            const formattedStartDate = dayjs(values.datees[0].startDate).format('DD MMMM, YYYY');
-          
-            const formattedEndDate = dayjs(values.datees[0].endDate).format('DD MMMM, YYYY');
-           formik.setFieldValue('start_date' ,formattedStartDate )
-           formik.setFieldValue('end_date' ,formattedEndDate )
+        const formattedStartDate = dayjs(values.datees[0].startDate).format('DD MMMM, YYYY');
+        const formattedEndDate = dayjs(values.datees[0].endDate).format('DD MMMM, YYYY');
+        formik.setFieldValue('start_date' ,formattedStartDate )
+        formik.setFieldValue('end_date' ,formattedEndDate )
+
+        //console.log(formik.values , 'values')
 
             // Update the values with the formatted dates
-            const formattedValues = {
-                ...values,
-                start_date: formattedStartDate,
-                end_date: formattedEndDate,
-            };
+            // const formattedValues = {
+            //     ...values,
+            //     start_date: formattedStartDate,
+            //     end_date: formattedEndDate,
+            // };
             // Now you can send the `formattedValues` to the server
             //console.log(formattedValues , 'formatted');
 
             loaderContext.startLoading(true)
             requestAnimationFrame(() => { window.scrollTo(0, 420); });
 
-            getResult(formattedValues)
+            console.log(formik.values , 'formattedValues.....')
+            
+
+            getResult(formik.values)
 
         },
     });
@@ -227,6 +230,7 @@ const IndexPage = () => {
         "end_date": "5-11-2023",
 
     }) => {
+        console.log(payload , 'payload')
 
         try {
             getTripDetailsApi(payload).then((r) => {
@@ -244,6 +248,7 @@ const IndexPage = () => {
 
                 });
                 //console.log(JSON.stringify(fR));
+              
                 setTripTitle(`${formik.values.source}  to  ${formik.values.destination}  from  ${payload.start_date}  to  ${payload.end_date}`)
                 setTripData(fR)
             }).then((e) => {
@@ -362,7 +367,7 @@ const IndexPage = () => {
     const [date, setDateRange] = useState([
         {
             startDate: tomorrow,
-            endDate: nextReqDay || new Date(),
+            endDate: nextReqDay,
 
             key: "selection",
         },
