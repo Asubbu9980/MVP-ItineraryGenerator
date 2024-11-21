@@ -150,7 +150,7 @@ const IndexPage = () => {
         start_date: moment(tomorrow).format('DD MMMM YYYY'),
         end_date: moment(new Date(nextReqDay)).format('DD MMMM YYYY'),
         transport: 'All', // Default value,
-        datees: [{ startDate: moment(new Date()).format('DD MMMM YYYY'), endDate: moment(new Date(nextReqDay)).format('DD MMMM YYYY') }]
+        datees: [{ startDate: moment(tomorrow).format('DD MMMM YYYY'), endDate: moment(new Date(nextReqDay)).format('DD MMMM YYYY') }]
     };
 
 
@@ -180,6 +180,7 @@ const IndexPage = () => {
         initialValues,
         validate,
         onSubmit: (values) => {
+        
         const formattedStartDate = dayjs(values.datees[0].startDate).format('DD MMMM, YYYY');
         const formattedEndDate = dayjs(values.datees[0].endDate).format('DD MMMM, YYYY');
         formik.setFieldValue('start_date' ,formattedStartDate )
@@ -188,21 +189,21 @@ const IndexPage = () => {
         //console.log(formik.values , 'values')
 
             // Update the values with the formatted dates
-            // const formattedValues = {
-            //     ...values,
-            //     start_date: formattedStartDate,
-            //     end_date: formattedEndDate,
-            // };
+            const formattedValues = {
+                ...values,
+                start_date: formattedStartDate,
+                end_date: formattedEndDate,
+            };
             // Now you can send the `formattedValues` to the server
             //console.log(formattedValues , 'formatted');
 
             loaderContext.startLoading(true)
             requestAnimationFrame(() => { window.scrollTo(0, 420); });
 
-            console.log(formik.values , 'formattedValues.....')
+            // console.log(formik.values , 'formattedValues.....')
             
 
-            getResult(formik.values)
+            getResult(formattedValues)
 
         },
     });
@@ -219,7 +220,7 @@ const IndexPage = () => {
         }
     }, [transcript])
 
-    const getResult = (payload = {
+    const getResult = (payload  = {
 
         "source": "Hyderabad",
 
@@ -230,7 +231,7 @@ const IndexPage = () => {
         "end_date": "5-11-2023",
 
     }) => {
-        console.log(payload , 'payload')
+       
 
         try {
             getTripDetailsApi(payload).then((r) => {
@@ -258,8 +259,8 @@ const IndexPage = () => {
             loaderContext.startLoading(false)
         }
     }
-    const getTripByVoice = (payload) => {
-
+    const getTripByVoice = (payload , destination) => {
+       
         try {
             getTripDetailsByVoiceApi({
                 text: payload,
@@ -293,7 +294,7 @@ const IndexPage = () => {
             }
         ])
 
- setTripTitle(`${formik.values.source}  to  ${formik.values.destination}  from  ${startDate}  to  ${endDate}`)
+ setTripTitle(`${formik.values.source}  to  ${destination || formik.values.destination}  from  ${startDate}  to  ${endDate}`)
 
                 setTripData(fR)
             }).then((e) => {
@@ -316,8 +317,8 @@ const IndexPage = () => {
             }
         }
         if (destination) {
-            setTripTitle(`${formik.values.source}  to  ${destination.charAt(0).toUpperCase() + destination.slice(1).toLowerCase()}  from  ${formik.values.start_date}  to  ${formik.values.end_date}`)
             formik.setFieldValue('destination', destination.charAt(0).toUpperCase() + destination.slice(1).toLowerCase())
+            //setTripTitle(`${formik.values.source}  to  ${destination.charAt(0).toUpperCase() + destination.slice(1).toLowerCase()}  from  ${formik.values.start_date}  to  ${formik.values.end_date}`)
             SpeechRecognition.stopListening()
             resetTranscript()
             setModelState(false)
@@ -325,7 +326,7 @@ const IndexPage = () => {
             setIsValidDestination(false)
             loaderContext.startLoading(true)
             requestAnimationFrame(() => { window.scrollTo(0, 420); });
-            getTripByVoice(text)
+            getTripByVoice(text , destination)
         } else {
             console.log("No destination found");
             setIsValidDestination(true)

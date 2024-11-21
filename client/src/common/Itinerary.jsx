@@ -193,6 +193,9 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
 
     }
 
+    const handleEventStop =(e)=>{
+        e.stopPropagation()
+    }
     // const handleDownloadPDF = () => {
     //     const element = document.getElementById('pdf-content');
 
@@ -245,7 +248,7 @@ const Itinerary = ({ tripData, cardBackGroundColor = '#fff', tripTitle }) => {
                                                     className='tripDetails-day-accordion-summary'
                                                     defaultExpanded={true}
                                                 >
-                                                    <div className='d-flex'> <h5>{m?.name?.includes(`Day ${i + 1}`) ? getTheDayTitle(m.name, `Day ${i + 1}`, m?.description, true) : `Day ${i + 1} -  ${getTheDayTitle(m.name, `Day ${i + 1}`, m?.description, false)}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} /></div>
+                                                    <div className='d-flex'> <h5 >{m?.name?.includes(`Day ${i + 1}`) ? getTheDayTitle(m.name, `Day ${i + 1}`, m?.description, true) : `Day ${i + 1} -  ${getTheDayTitle(m.name, `Day ${i + 1}`, m?.description, false)}`}</h5><WeatherReport placeCoordinates={m?.coordinates} date={m?.date} handleEventStop={handleEventStop} /></div>
 
                                                 </AccordionSummary>
                                                 <AccordionDetails >
