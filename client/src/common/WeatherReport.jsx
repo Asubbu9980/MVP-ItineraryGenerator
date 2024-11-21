@@ -8,7 +8,7 @@ import { List, ListItem, ListItemText } from '@mui/material';
 import Tooltip from '@mui/joy/Tooltip';
 
 
-const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
+const WeatherReport = ({ placeCoordinates, date = new Date(), handleEventStop=()=>{} }) => {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [weatherData, setWeatherData] = useState(null)
@@ -58,10 +58,12 @@ const WeatherReport = ({ placeCoordinates, date = new Date() }) => {
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
+        handleEventStop(event)
     };
 
-    const handleClose = () => {
+    const handleClose = (e) => {
         setAnchorEl(null);
+        handleEventStop(e)
     };
 
     const open = Boolean(anchorEl);
