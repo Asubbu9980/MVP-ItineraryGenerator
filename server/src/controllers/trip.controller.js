@@ -117,11 +117,11 @@ class tripController {
                 })
             } else {
                 var date1 = moment(start_date);
-                console.log("date1", date1);
+                // console.log("date1", date1);
                 var date2 = moment(end_date);
-                console.log("date2", date2);
+                // console.log("date2", date2);
                 var days = date2.diff(date1, 'days')
-                console.log("days", days);
+                // console.log("days", days);
                 const q = `Create ${destination} Trip Itinerary for ${days + 1} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
                 const response = await openai.chat.completions.create({
                     messages: [
@@ -146,7 +146,7 @@ class tripController {
                                 const response = await axios.get(
                                     `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination + " " + place.name}&key=${process.env.GOOGLE_MAPS_API_KEY}`
                                 );
-                                console.log("response",response);
+                                // console.log("response",response);
                                 let placesInforesult = response.data.results
                                 if (response.data.results.length > 0) {
                                     await Promise.all(placesInforesult.map(async (placeRef, placeRefindex) => {
@@ -182,7 +182,7 @@ class tripController {
                                         }))
                                     }
                                 }))
-                                console.log(JSON.stringify(placesInforesult));
+                                // console.log(JSON.stringify(placesInforesult));
                                 // if (global.isCacheEnabled) {
                                 //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                                 // }
@@ -238,7 +238,7 @@ class tripController {
                                         }))
                                     }
                                 }))
-                                console.log(JSON.stringify(placesInforesult));
+                                // console.log(JSON.stringify(placesInforesult));
                                 // if (global.isCacheEnabled) {
                                 //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                                 // }
@@ -282,7 +282,7 @@ class tripController {
 
 
             const q = `Create ${destination} Trip Itinerary for day wise starting from ${start_date}${end_date ? ` to ${end_date}` : ''} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
-            console.log("q", q);
+            // console.log("q", q);
             const response = await openai.chat.completions.create({
                 messages: [
                     { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format ` },
@@ -341,7 +341,7 @@ class tripController {
                                     }))
                                 }
                             }))
-                            console.log(JSON.stringify(placesInforesult));
+                            // console.log(JSON.stringify(placesInforesult));
                             // if (global.isCacheEnabled) {
                             //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                             // }
@@ -397,7 +397,7 @@ class tripController {
                                     }))
                                 }
                             }))
-                            console.log(JSON.stringify(placesInforesult));
+                            // console.log(JSON.stringify(placesInforesult));
                             // if (global.isCacheEnabled) {
                             //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                             // }
@@ -440,7 +440,7 @@ class tripController {
             const { text, source } = req.body;
             const splitedText = text.split(" ");
             const dates = extractDate(text, { direction: 'DMY', locale: 'en', timezone: 'Asia/Kolkata' });
-            console.log("daytes", dates);
+            // console.log("daytes", dates);
             let destination, start_date, end_date = null
             for (var i = 0; i < splitedText.length; i++) {
                 const v = splitedText[i];
@@ -451,11 +451,11 @@ class tripController {
             }
             if (dates.length > 0) {
                 const fDates = dates.map(m => m.date);
-                console.log("f", fDates);
+                // console.log("f", fDates);
                 const min = fDates.reduce((acc, date) => { return acc && new Date(acc) < new Date(date) ? acc : date }, '')
                 const max = fDates.reduce((acc, date) => { return acc && new Date(acc) > new Date(date) ? acc : date }, '')
-                console.log("min", min);
-                console.log("max", max);
+                // console.log("min", min);
+                // console.log("max", max);
                 if (max != null && max != undefined && max != "" && min != max) {
                     start_date = min;
                     end_date = max;
@@ -483,7 +483,7 @@ class tripController {
                 var date2 = moment(end_date);
                 var days = date2.diff(date1, 'days')
                 const q = `Create ${destination} Trip Itinerary for ${days + 1} days starting from ${moment(date1).format("DD/MM/YYYY")} to ${moment(date2).format("DD/MM/YYYY")} with activities with detailed places with accommodation with transportation prices in rupees in valid JSON format {"activities": [{ "name": "","date": "","coordinates": { "title":"","lat":"", "lng":""},"description": "","recommended_stay": "","activity":[],"popular_places":[{"name": "","type": "","fee":""}],"accommodation": [{ "address":"","name": "", "type": "","price_per_night": "" }],"transportation": {"bus":{},"train":{},"flight":{},},"food_choices": [{ "name":"","price":"","address":"",}]},]}`;
-                console.log("q", q);
+                // console.log("q", q);
                 const response = await openai.chat.completions.create({
                     messages: [
                         { "role": "system", "content": `Hi you will be acting as AI trip Itinerary Generator,get output in given json format` },
@@ -542,7 +542,7 @@ class tripController {
                                         }))
                                     }
                                 }))
-                                console.log(JSON.stringify(placesInforesult));
+                                // console.log(JSON.stringify(placesInforesult));
                                 // if (global.isCacheEnabled) {
                                 //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                                 // }
@@ -598,7 +598,7 @@ class tripController {
                                         }))
                                     }
                                 }))
-                                console.log(JSON.stringify(placesInforesult));
+                                // console.log(JSON.stringify(placesInforesult));
                                 // if (global.isCacheEnabled) {
                                 //     await RedisCache.setCache(popularCacheKey, JSON.stringify(placesInforesult));
                                 // }
@@ -716,7 +716,7 @@ class tripController {
         try {
             const { text } = req.body;
             const q = `${text}`
-            console.log("q", q);
+            // console.log("q", q);
             const response = await openai.chat.completions.create({
                 messages: [
                     { "role": "system", "content": `Hi you will be acting as AI chatbot` },
@@ -727,7 +727,7 @@ class tripController {
                 max_tokens: 3050,
                 temperature: 0,
             });
-            console.log("response", response);
+            // console.log("response", response);
             return commonResponse({
                 req,
                 res,
