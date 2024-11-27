@@ -16,9 +16,10 @@ function App() {
     <React.Fragment>
       <Provider store={configureStore({})}>
         <Auth0Provider
-          domain={auth0.domain}
-          clientId={auth0.clientId}
+          domain={process.env.REACT_APP_AUTH0_DOMAIN}
+          clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
           redirectUri={window.location.origin}
+          
         >
           <LoaderProvider>
             <TripPayloadContextProvider>
