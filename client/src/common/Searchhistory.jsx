@@ -8,11 +8,14 @@ import CircularProgress from '@mui/joy/CircularProgress';
 import { Link } from 'react-router-dom'
 // import { Button } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 function Searchhistory({ setTripData, setTripTitle, tripData, searchHistoryClassName = 'searchHistory', containerType = 'container', setBannerHeight = () => { } }) {
   const [recentSearchesTripData, setrecentSearchesTripData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const { user, isAuthenticated } = useAuth0();
+
   // const chipData = [
   //   {
   //     "id": 1,
@@ -42,7 +45,7 @@ function Searchhistory({ setTripData, setTripTitle, tripData, searchHistoryClass
   useEffect(() => {
     // setIsLoading(true)
     getResult()
-  }, [tripData])
+  }, [tripData, isAuthenticated, user])
 
   // console.log(tripData, 'tripDatafghjkl;')
 

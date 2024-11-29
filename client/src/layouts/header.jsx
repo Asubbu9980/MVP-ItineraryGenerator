@@ -90,7 +90,11 @@ const HeaderComponent = () => {
                                     <MenuItem onClick={avatarClose}><Link to='/recent-searches' className='text-decoration-none text-dark user-profile-links'>Recent Searches</Link></MenuItem>
                                     {/* <MenuItem>Settings</MenuItem> */}
                                     <MenuItem>
-                                        <Button onClick={() => logout()} variant='contained' size='small'>Logout</Button>
+                                        <Button onClick={() => {
+                                            logout()
+                                            window.localStorage.removeItem("token")
+                                            window.localStorage.removeItem("userId")
+                                        }} variant='contained' size='small'>Logout</Button>
                                     </MenuItem>
                                 </Menu>
                             </div>}
