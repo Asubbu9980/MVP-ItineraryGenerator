@@ -35,6 +35,8 @@ import ItinerarySkeleton from '../../common/ItinerarySkeleton';
 import { Mic } from '@mui/icons-material';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import SpeechRecognitionModal from '../../common/SpeechRecognitionModal';
+import axios from 'axios';
+import SuggestedCities from '../../common/suggestedcities';
 
 // import TripDailyPlanningData from '../../TripDailyPlanningData';
 // import NoTripDataAvailable from './NoTripDataAvailable';
@@ -49,6 +51,9 @@ const PreferentialSearch = () => {
     const [bannerHeight, setBannerHeight] = useState('380px');
     const [isValidDestination, setIsValidDestination] = useState(false)
     const [modelState, setModelState] = useState(false);
+    const [showSuggestedCities,setShowSuggestedCities]=useState(false)
+    const [aiExtractedInfo , setAiExtractedInfo]=useState({})
+    
 
 
     const {
@@ -74,10 +79,22 @@ const PreferentialSearch = () => {
     const { isAuthenticated } = useAuth0();
 
 
-    const next = () => {
+    const next = async() => {
         if (currentSlide === 0) {
-            if (tripPayloadState.destination) {
+            let openAiResponse= await Extract_Info_from_Ai(`make a trip  to ${tripPayloadState?.destination}`)
+            setAiExtractedInfo(openAiResponse)
+
+            const { destination, destination_close_match } = openAiResponse || {};
+            if(destination && destination_close_match?.length==0){
                 slider.current.slickNext();
+                setTripPayloadState((prevState) => ({ ...prevState, "destination": destination }));
+            }
+    
+            if(destination==null || destination_close_match?.length){
+                setShowSuggestedCities(true)
+            }
+            if (destination) {
+               
                 setErrors({ ...errors, destination: '' })
             } else {
                 setErrors({ ...errors, destination: 'Please Select Your Destination' })
@@ -121,6 +138,8 @@ const PreferentialSearch = () => {
         slidesToScroll: 1,
         arrows: false,
         beforeChange: (current, next) => {
+
+           
             setCurrentSlide(next)
             // console.log(current, 'current')
             // console.log(next, 'next')
@@ -157,6 +176,132 @@ const PreferentialSearch = () => {
     const handleChangeTripDestination = (name, value) => {
         //console.log(name, value)
         setTripPayloadState((prevState) => ({ ...prevState, [name]: value }));
+      
+    }
+
+
+
+    const Extract_Info_from_Ai = async (input) => {
+        try {
+          const res = await axios.post(
+            'https://api.openai.com/v1/chat/completions',
+            {
+              model: 'gpt-3.5-turbo',
+              messages: [
+                {
+                  role: 'system',
+                  content:`Destination Handling:
+    
+    If only one valid city is found, set it as the destination.
+    If no source is explicitly mentioned, default the source to "Hyderabad".
+    If the user mentions the source city explicitly but it is invalid, set source to null and populate source_close_match with nearby or similar city names.
+    Source Handling:
+    
+    If the source city is invalid or non-existent, set it to null and suggest similar cities in source_close_match.
+    If no source is found in the input, default to "Hyderabad".
+    if source is any of the known place like(state name or country name then set that as source)
+    if destination is any of the known place like(state name or country name then set that as destination)
+    Invalid Destination:
+    
+    If the destination city is invalid or non-existent, set it to null and populate destination_close_match with similar city names.
+    Default Dates:
+    
+    If no dates are provided, set:
+    start_date as ${new Date()} date.
+    end_date as two days after start_date.
+    Use the format DD MMM YYYY ex:02 Dec 2024.
+    City Validation:
+    
+    Validate both source and destination against real city names.
+    If either is invalid, include close matches in their respective arrays (source_close_match or destination_close_match).
+    Close Match Suggestions:
+    
+    If a city is invalid, provide suggestions for similar city names , if minor spelling mistakes then provide the most close matched city:
+    Example: "tiru" → "source_close_match": ["tirupathi", "thiruvannamalai"].
+    Example: "palassssssa" → "destination_close_match": ["palasa", "palasa-kasibugga"].
+    
+    Common Names for Cities:
+    
+    If the user inputs a city with a common or well-known alternative name, replace it with the most common name:
+    Example: "Vizag" → "Visakhapatnam".
+    Example: "Bombay" → "Mumbai".
+    
+    
+    Feasibility Validation:
+    
+    if source  valid city is found , then send source_close_match:[]
+    if destination valid city is found , then send destination_close_match:[]
+    
+    Check if the trip is feasible based on the given or default dates.
+    If not feasible, suggest alternative cities in destination_close_match.
+    return the information in   {
+      "start_date": "",
+      "end_date": "",
+      "destination": "",
+      "source": "",
+      "source_close_match": [],
+      "destination_close_match": []
+    }
+    
+    `
+    
+                //   content: `Hi, you will be acting as an AI chatbot. Based on the user input, send the information in JSON format exactly like this: { "start_date": "", "end_date": "", "destination": "", "source": "",source_close_match:[], destination_close_match:[] }. 
+                //     1.If only one city is found, make it as  destination and set the source as Hyderabad(only if user does not trying to specify the source , if you find user trying to mention the source city then set source as null and send me the source_close_match:[] ).
+                //    2.If no dates are found, assume from ${tomorrow} to 2 days, using the DD MMM YYYY format. 
+                //    3. If invalid or non-existent source  city  found , set source values as null, like if user enterd a text and you(AI ) extracted the source  but if the source is not a valid city name then set source value as null ,
+                //    4.If invalid or non-existent destination  city  found , set destination values as null, like if user enterd a text and you(AI ) extracted the destination,  but if the destination is not a valid city name then set destination value as null 
+                //    5.if source is not a valid city but it has near matched city names then send array as if user source is tiru {source_close_match:["tirupathi","thiruvannmali" ]}
+                //    6.if destination is not a valid city but it has near matched city names then send array as if user destination is palassssssa {destination_close_match:["palasa","palasa-kasibugga" ]}
+                //    7.validate source and destination and based on user time line , if user can finish the trip compfortablly then okay , but if not possible then suggest the some cities that are close match to user destination city , destination_close_match:[] 
+                //    7.return then extracted information as JSON format exactly like this: { "start_date": "", "end_date": "", "destination": "", "source": "",source_close_match:[], destination_close_match:[] }`,
+                },
+                { role: 'user', content: input },
+              ],
+            },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${process.env.REACT_APP_GPT_API_KEY}`,
+              },
+            }
+          );
+      
+          // Parse the response content into an object
+          const response = res?.choices[0].message.content.trim();
+          return JSON.parse(response); // Parse the JSON response
+        } catch (error) {
+          console.error('Error communicating with ChatGPT:', error);
+          return null; // Return null on error
+        }
+      };
+
+      const handleSelectedDestination =(city)=>{
+        setTripPayloadState((prevState) => ({ ...prevState, "destination": city }));
+        setShowSuggestedCities(false)
+        // slider.current.slickNext();
+        
+    }
+
+    
+
+
+
+    const handleChangeCustomDestination = async(userInput)=>{
+        try{
+        // let openAiResponse= await Extract_Info_from_Ai(`make a trip  to ${userInput}`)
+        // const { destination, destination_close_match } = openAiResponse || {};
+        // if(destination){
+        //     setTripPayloadState((prevState) => ({ ...prevState, "destination": destination }));
+        // }
+
+        // if(destination==null || destination_close_match?.length){
+        //     setShowSuggestedCities(true)
+        // }
+        setTripPayloadState((prevState) => ({ ...prevState, "destination": userInput }));
+        }
+        catch(error){
+
+        }
     }
 
 
@@ -335,27 +480,39 @@ const PreferentialSearch = () => {
         }
     }
 
-    const onVoiceSearchTripPlan = () => {
+    const onVoiceSearchTripPlan = async() => {
 
-        const splitedText = transcript.split(" ");
-        let destination = null
-        for (var i = 0; i < splitedText.length; i++) {
-            const v = splitedText[i];
-            const indexed = cityNames.map(m => m.toLowerCase()).indexOf(v.toLowerCase());
-            if (indexed > 0) {
-                destination = v
-            }
-        }
+        let openAiResponse= await Extract_Info_from_Ai(transcript)
+        setAiExtractedInfo(openAiResponse)
+        const { source , start_date, end_date, destination, source_close_match , destination_close_match } = openAiResponse || {};
+
+        //const splitedText = transcript.split(" ");
+        // let destination = null
+        // for (var i = 0; i < splitedText.length; i++) {
+        //     const v = splitedText[i];
+        //     const indexed = cityNames.map(m => m.toLowerCase()).indexOf(v.toLowerCase());
+        //     if (indexed > 0) {
+        //         destination = v
+        //     }
+        // }
         if (destination) {
+            setTripPayloadState((prevState) => ({ ...prevState, "destination": destination }));
             SpeechRecognition.stopListening()
             resetTranscript()
             setModelState(false)
             setIsValidDestination(false)
             loaderContext.startLoading(true)
             requestAnimationFrame(() => { window.scrollTo(0, 220); });
-            getTripByVoice()
+            getResult(openAiResponse)
+            // getTripByVoice()
         } else {
             setIsValidDestination(true)
+        }
+
+        if(destination==null || destination_close_match?.length){
+            
+            setShowSuggestedCities(true)
+
         }
 
     }
@@ -380,12 +537,14 @@ const PreferentialSearch = () => {
                                                 <div className='citySearch d-flex justify-content-center'>
                                                     <Stack spacing={2}>
                                                         <Autocomplete
+                                                            freeSolo={true}
                                                             startDecorator={<SearchIcon />}
                                                             placeholder="Search for a city"
                                                             value={tripPayloadState.destination}
                                                             // width='400px'
                                                             name='destination'
                                                             onChange={(e, value) => handleChangeTripDestination('destination', value)}
+                                                            onInputChange={(e, inputValue) => handleChangeCustomDestination(inputValue)}
                                                             options={cityNames}
                                                             style={{ height: '35px' }}
                                                         />
@@ -536,6 +695,7 @@ const PreferentialSearch = () => {
                                             {isAuthenticated ? <Searchhistory setTripData={setTripData} tripData={tripData} setTripTitle={setTripTitle} searchHistoryClassName='preferential-search-history' containerType='container-fluid' setBannerHeight={setBannerHeight} /> : null}
                                         </div>
                                         {<SpeechRecognitionModal isOpen={modelState} speechText={transcript} onClose={onClose} onVoiceSearchTripPlan={onVoiceSearchTripPlan} isValidDestination={isValidDestination} onStartSpeechRecognition={onStartSpeechRecognition} />}
+                                        {showSuggestedCities && <SuggestedCities aiExtractedInfo={aiExtractedInfo}  handleSelectedDestination={handleSelectedDestination} showSuggestedCities={showSuggestedCities} setShowSuggestedCities={setShowSuggestedCities} /> }
 
                                     </div>
                                 </div>
